@@ -1,0 +1,5554 @@
+{
+  "loadedAt": "2026-10-08T14:52:54.231Z",
+  "sourceRepository": "https://github.com/In-Pro-Org/CliToolRegistry",
+  "sourceRef": "develop",
+  "fileCount": 8,
+  "tools": [
+    {
+      "id": "dotnet",
+      "name": ".NET SDK 10",
+      "description": "Aktuelles .NET SDK für Build, Tooling und plattformübergreifende .NET-Entwicklung.",
+      "category": "runtime",
+      "tier": "recommended",
+      "command": "dotnet",
+      "website": "https://dotnet.microsoft.com/",
+      "repository": "https://github.com/dotnet/sdk",
+      "wingetId": "Microsoft.DotNet.SDK.10",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": [
+          "curl"
+        ]
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Microsoft.DotNet.SDK.10",
+            "command": "winget install --id Microsoft.DotNet.SDK.10 --exact --accept-package-agreements --accept-source-agreements"
+          }
+        },
+        "linux": {
+          "standalone": "curl -fsSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 10.0 --install-dir $HOME/.dotnet"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 10.0 --install-dir $HOME/.dotnet"
+        },
+        "macos": {
+          "standalone": "curl -fsSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 10.0 --install-dir $HOME/.dotnet"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id Microsoft.DotNet.SDK.10 --exact --accept-package-agreements --accept-source-agreements",
+        "linux": "curl -fsSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 10.0 --install-dir $HOME/.dotnet",
+        "wsl2": "curl -fsSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 10.0 --install-dir $HOME/.dotnet",
+        "macos": "curl -fsSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 10.0 --install-dir $HOME/.dotnet"
+      },
+      "healthCheck": "dotnet --info",
+      "versionCommand": "dotnet --version",
+      "capabilitiesCommand": "dotnet --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "runtime",
+        "dotnet",
+        "sdk"
+      ],
+      "notes": [
+        "Non-Windows install uses the official dotnet-install script; PATH persistence is Phase 3."
+      ],
+      "provenance": [
+        "Microsoft .NET install docs verified 2026-09-13."
+      ],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "7zip",
+      "name": "7Zip",
+      "description": "Archivwerkzeug",
+      "category": "terminal",
+      "tier": "recommended",
+      "command": "7z",
+      "website": "https://www.7-zip.org/",
+      "repository": null,
+      "wingetId": "7Zip.7Zip",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "7Zip.7Zip",
+            "command": "winget install --id 7Zip.7Zip --exact --accept-package-agreements --accept-source-agreements"
+          }
+        },
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y p7zip-full"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id 7Zip.7Zip --exact --accept-package-agreements --accept-source-agreements",
+        "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y p7zip-full"
+      },
+      "healthCheck": "7z",
+      "versionCommand": "7z",
+      "capabilitiesCommand": "7z -h",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "archive"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "act",
+      "name": "act",
+      "description": "Run GitHub Actions locally",
+      "category": "ci",
+      "tier": "optional",
+      "command": "act",
+      "website": "https://github.com/nektos/act",
+      "repository": "https://github.com/nektos/act",
+      "wingetId": "nektos.act",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "docker-cli"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "nektos.act",
+            "command": "winget install --id nektos.act --exact"
+          }
+        },
+        "linux": {
+          "standalone": "curl -s https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id nektos.act --exact"
+      },
+      "healthCheck": "act --version",
+      "versionCommand": "act --version",
+      "capabilitiesCommand": "act --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "github-actions",
+        "ci"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "workflow-infrastructure.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+    },
+    {
+      "id": "asb",
+      "name": "Agent Settings Backup",
+      "description": "Git-versioned agent settings backup",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "asb",
+      "website": "https://github.com/Dicklesworthstone/agent_settings_backup_script",
+      "repository": "https://github.com/Dicklesworthstone/agent_settings_backup_script",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": [
+          "codex-standalone"
+        ]
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/agent_settings_backup_script/main/install.sh | bash"
+        }
+      },
+      "update": {
+        "all": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/agent_settings_backup_script/main/install.sh | bash"
+      },
+      "healthCheck": "asb --help",
+      "versionCommand": "asb --help",
+      "capabilitiesCommand": "asb --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "backup"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "agentic-utilities.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-utilities.yml"
+    },
+    {
+      "id": "acfs",
+      "name": "Agentic Coding Flywheel Setup",
+      "description": "Bootstrap and update the complete Dicklesworthstone agentic coding environment.",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "acfs",
+      "website": "https://github.com/Dicklesworthstone/agentic_coding_flywheel_setup",
+      "repository": "https://github.com/Dicklesworthstone/agentic_coding_flywheel_setup",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "git",
+          "curl"
+        ],
+        "recommended": [
+          "bun",
+          "uv"
+        ]
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/agentic_coding_flywheel_setup/main/install.sh\" | bash -s -- --yes --mode vibe"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/agentic_coding_flywheel_setup/main/install.sh\" | bash -s -- --yes --mode vibe"
+        }
+      },
+      "update": {
+        "all": "acfs update --all"
+      },
+      "healthCheck": "acfs doctor --json",
+      "versionCommand": "acfs --version",
+      "capabilitiesCommand": "acfs --help",
+      "robotMode": {
+        "supported": true,
+        "command": "acfs doctor --json",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "bootstrap",
+        "flywheel",
+        "environment"
+      ],
+      "notes": [
+        "Upstream targets Ubuntu VPS environments; WSL2 is retained as a compatible local Linux environment."
+      ],
+      "provenance": [
+        "Dicklesworthstone Flywheel profile and ACFS documentation verified 2026-09-16."
+      ],
+      "catalogFile": "agentic-flywheel.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+    },
+    {
+      "id": "apr",
+      "name": "APR",
+      "description": "Agentic planning/review utility",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "apr",
+      "website": null,
+      "repository": null,
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "nodejs-lts",
+          "oracle"
+        ],
+        "recommended": [
+          "git",
+          "jq",
+          "delta",
+          "codex-standalone"
+        ]
+      },
+      "install": {
+        "linux": {
+          "standalone": "echo \"Install apr through ACFS\""
+        }
+      },
+      "update": {
+        "linux": "echo \"Update apr through ACFS\""
+      },
+      "healthCheck": "apr --help",
+      "versionCommand": "apr --version",
+      "capabilitiesCommand": "apr --help",
+      "robotMode": {
+        "supported": true,
+        "command": "apr --help",
+        "format": "text"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "planning",
+        "review"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "agentic-utilities.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-utilities.yml"
+    },
+    {
+      "id": "bat",
+      "name": "bat",
+      "description": "Moderner cat-Ersatz",
+      "category": "terminal",
+      "tier": "recommended",
+      "command": "bat",
+      "website": "https://github.com/sharkdp/bat",
+      "repository": "https://github.com/sharkdp/bat",
+      "wingetId": "sharkdp.bat",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "sharkdp.bat",
+            "command": "winget install --id sharkdp.bat --exact --accept-package-agreements --accept-source-agreements"
+          }
+        },
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y bat"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id sharkdp.bat --exact --accept-package-agreements --accept-source-agreements",
+        "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y bat"
+      },
+      "healthCheck": "bat --version",
+      "versionCommand": "bat --version",
+      "capabilitiesCommand": "bat --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "viewer"
+      ],
+      "notes": [
+        "Ubuntu may expose the binary as batcat; Phase 3 handles PATH/post-install normalization."
+      ],
+      "provenance": [],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "beads",
+      "name": "Beads",
+      "description": "Git-backed issue/task tracker for agents",
+      "category": "workflow",
+      "tier": "recommended-agent",
+      "command": "bd",
+      "website": "https://github.com/steveyegge/beads",
+      "repository": "https://github.com/steveyegge/beads",
+      "wingetId": "GasTownHall.Beads",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": [
+          "dolt"
+        ]
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "GasTownHall.Beads",
+            "command": "winget install --id GasTownHall.Beads --exact"
+          }
+        },
+        "linux": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id GasTownHall.Beads --exact",
+        "linux": "curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash"
+      },
+      "healthCheck": "bd --version",
+      "versionCommand": "bd --version",
+      "capabilitiesCommand": "bd --help",
+      "robotMode": {
+        "supported": true,
+        "command": "bd ready --json",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "tasks",
+        "agents"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "workflow-infrastructure.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+    },
+    {
+      "id": "br",
+      "name": "Beads Rust",
+      "description": "Local-first issue tracker for Git repositories with dependency-aware planning and machine-readable output.",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "br",
+      "website": "https://github.com/Dicklesworthstone/beads_rust",
+      "repository": "https://github.com/Dicklesworthstone/beads_rust",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": [
+          "git"
+        ]
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/beads_rust/main/install.sh?$(date +%s)\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/beads_rust/main/install.sh?$(date +%s)\" | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/beads_rust/main/install.sh?$(date +%s)\" | bash"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/beads_rust/main/install.sh?$(date +%s)\" | bash",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/beads_rust/main/install.sh?$(date +%s)\" | bash",
+        "macos": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/beads_rust/main/install.sh?$(date +%s)\" | bash"
+      },
+      "healthCheck": "br --version",
+      "versionCommand": "br --version",
+      "capabilitiesCommand": "br capabilities --format json",
+      "robotMode": {
+        "supported": true,
+        "command": "br ready --json",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "issues",
+        "beads",
+        "planning",
+        "dependencies"
+      ],
+      "notes": [],
+      "provenance": [
+        "Dicklesworthstone Flywheel profile and Beads Rust upstream guidance verified 2026-09-16."
+      ],
+      "catalogFile": "agentic-flywheel.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+    },
+    {
+      "id": "bv",
+      "name": "Beads Viewer",
+      "description": "Graph-aware Beads TUI with PageRank, critical-path analysis, dependency views, and robot-mode output.",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "bv",
+      "website": "https://github.com/Dicklesworthstone/beads_viewer",
+      "repository": "https://github.com/Dicklesworthstone/beads_viewer",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "scoop",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "brew"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "br"
+        ],
+        "recommended": [
+          "git"
+        ]
+      },
+      "install": {
+        "windows": {
+          "scoop": "scoop bucket add dicklesworthstone https://github.com/Dicklesworthstone/scoop-bucket; scoop install dicklesworthstone/bv"
+        },
+        "linux": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/beads_viewer/main/install.sh | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/beads_viewer/main/install.sh | bash"
+        },
+        "macos": {
+          "brew": "brew install dicklesworthstone/tap/bv"
+        }
+      },
+      "update": {
+        "windows": "scoop update dicklesworthstone/bv",
+        "linux": "bv upgrade",
+        "wsl2": "bv upgrade",
+        "macos": "brew upgrade dicklesworthstone/tap/bv"
+      },
+      "healthCheck": "bv --version",
+      "versionCommand": "bv --version",
+      "capabilitiesCommand": "bv --robot-help",
+      "robotMode": {
+        "supported": true,
+        "command": "bv --robot-help",
+        "format": "text"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "beads",
+        "visualization",
+        "graph",
+        "triage"
+      ],
+      "notes": [
+        "bv upgrade is the current self-update path for standalone installations."
+      ],
+      "provenance": [
+        "Dicklesworthstone Flywheel profile and Beads Viewer upstream guidance verified 2026-09-16."
+      ],
+      "catalogFile": "agentic-flywheel.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+    },
+    {
+      "id": "bun",
+      "name": "Bun",
+      "description": "JavaScript/TypeScript runtime",
+      "category": "runtime",
+      "tier": "recommended",
+      "command": "bun",
+      "website": "https://bun.sh/",
+      "repository": null,
+      "wingetId": "Oven-sh.Bun",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Oven-sh.Bun",
+            "command": "winget install --id Oven-sh.Bun --exact --accept-package-agreements --accept-source-agreements"
+          }
+        },
+        "linux": {
+          "standalone": "curl -fsSL https://bun.sh/install | bash"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id Oven-sh.Bun --exact --accept-package-agreements --accept-source-agreements",
+        "linux": "bun upgrade"
+      },
+      "healthCheck": "bun --version",
+      "versionCommand": "bun --version",
+      "capabilitiesCommand": "bun --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "runtime",
+        "javascript"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "caam",
+      "name": "CAAM",
+      "description": "Coding agent account manager",
+      "category": "agentic",
+      "tier": "optional",
+      "command": "caam",
+      "website": null,
+      "repository": null,
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "echo \"Install caam through ACFS\""
+        }
+      },
+      "update": {
+        "linux": "echo \"Update caam through ACFS\""
+      },
+      "healthCheck": "caam doctor",
+      "versionCommand": "caam version",
+      "capabilitiesCommand": "caam --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "accounts"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "agentic-utilities.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-utilities.yml"
+    },
+    {
+      "id": "casr",
+      "name": "CASR",
+      "description": "Agentic coding research utility",
+      "category": "agentic",
+      "tier": "optional",
+      "command": "casr",
+      "website": null,
+      "repository": null,
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "echo \"Install casr through ACFS\""
+        }
+      },
+      "update": {
+        "linux": "echo \"Update casr through ACFS\""
+      },
+      "healthCheck": "casr --help",
+      "versionCommand": "casr --version",
+      "capabilitiesCommand": "casr --help",
+      "robotMode": {
+        "supported": true,
+        "command": "casr --help",
+        "format": "text"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "agentic"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "agentic-utilities.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-utilities.yml"
+    },
+    {
+      "id": "cass",
+      "name": "CASS",
+      "description": "Unified search and indexing across local AI coding-agent session histories.",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "cass",
+      "website": "https://github.com/Dicklesworthstone/coding_agent_session_search",
+      "repository": "https://github.com/Dicklesworthstone/coding_agent_session_search",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "standalone",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": [
+          "git"
+        ]
+      },
+      "install": {
+        "windows": {
+          "standalone": "& ([scriptblock]::Create((irm 'https://raw.githubusercontent.com/Dicklesworthstone/coding_agent_session_search/main/install.ps1'))) -EasyMode"
+        },
+        "linux": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/coding_agent_session_search/main/install.sh | bash -s -- --easy-mode --verify"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/coding_agent_session_search/main/install.sh | bash -s -- --easy-mode --verify"
+        },
+        "macos": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/coding_agent_session_search/main/install.sh | bash -s -- --easy-mode --verify"
+        }
+      },
+      "update": {
+        "windows": "& ([scriptblock]::Create((irm 'https://raw.githubusercontent.com/Dicklesworthstone/coding_agent_session_search/main/install.ps1'))) -EasyMode",
+        "linux": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/coding_agent_session_search/main/install.sh | bash -s -- --easy-mode --verify",
+        "wsl2": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/coding_agent_session_search/main/install.sh | bash -s -- --easy-mode --verify",
+        "macos": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/coding_agent_session_search/main/install.sh | bash -s -- --easy-mode --verify"
+      },
+      "healthCheck": "cass health --json",
+      "versionCommand": "cass --version",
+      "capabilitiesCommand": "cass capabilities --json",
+      "robotMode": {
+        "supported": true,
+        "command": "cass status --json",
+        "format": "json"
+      },
+      "completions": {
+        "bash": "cass completions bash",
+        "elvish": "cass completions elvish",
+        "fish": "cass completions fish",
+        "powershell": "cass completions powershell",
+        "zsh": "cass completions zsh"
+      },
+      "skill": null,
+      "tags": [
+        "sessions",
+        "search",
+        "history",
+        "agents"
+      ],
+      "notes": [
+        "Upstream skill installer has no documented non-interactive single-skill selector; skill installation is intentionally not automated here."
+      ],
+      "provenance": [
+        "Dicklesworthstone Flywheel profile and CASS command guidance verified 2026-09-16."
+      ],
+      "catalogFile": "agentic-flywheel.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+    },
+    {
+      "id": "cm",
+      "name": "CASS Memory",
+      "description": "Persistent cognitive memory and context layer built around coding-agent session history.",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "cm",
+      "website": "https://github.com/Dicklesworthstone/cass_memory_system",
+      "repository": "https://github.com/Dicklesworthstone/cass_memory_system",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "scoop",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "brew"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "cass",
+          "curl"
+        ],
+        "recommended": [
+          "bun"
+        ]
+      },
+      "install": {
+        "windows": {
+          "scoop": "scoop bucket add dicklesworthstone https://github.com/Dicklesworthstone/scoop-bucket; scoop install dicklesworthstone/cm"
+        },
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/cass_memory_system/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode --verify"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/cass_memory_system/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode --verify"
+        },
+        "macos": {
+          "brew": "brew install dicklesworthstone/tap/cm"
+        }
+      },
+      "update": {
+        "windows": "scoop update dicklesworthstone/cm",
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/cass_memory_system/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode --verify",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/cass_memory_system/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode --verify",
+        "macos": "brew upgrade dicklesworthstone/tap/cm"
+      },
+      "healthCheck": "cm doctor --json",
+      "versionCommand": "cm --version",
+      "capabilitiesCommand": "cm --help",
+      "robotMode": {
+        "supported": true,
+        "command": "cm context \"health check\" --json",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "memory",
+        "context",
+        "sessions"
+      ],
+      "notes": [],
+      "provenance": [
+        "Dicklesworthstone Flywheel profile and CASS Memory upstream guidance verified 2026-09-16."
+      ],
+      "catalogFile": "agentic-flywheel.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+    },
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "description": "Anthropic coding-agent CLI.",
+      "category": "ai",
+      "tier": "recommended-agent",
+      "command": "claude",
+      "website": "https://claude.com/product/claude-code",
+      "repository": "https://github.com/anthropics/claude-code",
+      "wingetId": "Anthropic.ClaudeCode",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "standalone",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "git",
+          "curl"
+        ],
+        "recommended": [
+          "gh"
+        ]
+      },
+      "install": {
+        "windows": {
+          "standalone": "irm https://claude.ai/install.ps1 | iex"
+        },
+        "linux": {
+          "standalone": "curl -fsSL https://claude.ai/install.sh | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL https://claude.ai/install.sh | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL https://claude.ai/install.sh | bash"
+        }
+      },
+      "update": {
+        "all": "claude update"
+      },
+      "healthCheck": "claude doctor",
+      "versionCommand": "claude --version",
+      "capabilitiesCommand": "claude --help",
+      "robotMode": {
+        "supported": true,
+        "command": "claude -p \"<prompt>\" --output-format json",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "anthropic",
+        "coding-agent",
+        "ai"
+      ],
+      "notes": [
+        "Native installer is preferred; npm installation is deprecated by Anthropic.",
+        "Authentication is intentionally outside installation orchestration."
+      ],
+      "provenance": [
+        "Anthropic Claude Code native installation/update guidance verified 2026-09-16."
+      ],
+      "catalogFile": "ai-agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/ai-agents.yml"
+    },
+    {
+      "id": "codex-standalone",
+      "name": "Codex CLI",
+      "description": "OpenAI coding-agent CLI using the native standalone installer.",
+      "category": "ai",
+      "tier": "recommended-agent",
+      "command": "codex",
+      "website": "https://developers.openai.com/codex/",
+      "repository": "https://github.com/openai/codex",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "standalone",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": [
+          "git",
+          "gh"
+        ]
+      },
+      "install": {
+        "windows": {
+          "standalone": "irm https://chatgpt.com/codex/install.ps1 | iex"
+        },
+        "linux": {
+          "standalone": "curl -fsSL https://chatgpt.com/codex/install.sh | sh"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL https://chatgpt.com/codex/install.sh | sh"
+        },
+        "macos": {
+          "standalone": "curl -fsSL https://chatgpt.com/codex/install.sh | sh"
+        }
+      },
+      "update": {
+        "windows": "irm https://chatgpt.com/codex/install.ps1 | iex",
+        "linux": "curl -fsSL https://chatgpt.com/codex/install.sh | sh",
+        "wsl2": "curl -fsSL https://chatgpt.com/codex/install.sh | sh",
+        "macos": "curl -fsSL https://chatgpt.com/codex/install.sh | sh"
+      },
+      "healthCheck": "codex --version",
+      "versionCommand": "codex --version",
+      "capabilitiesCommand": "codex --help",
+      "robotMode": {
+        "supported": true,
+        "command": "codex exec --help",
+        "format": "text"
+      },
+      "completions": {
+        "bash": "codex completion bash",
+        "elvish": "codex completion elvish",
+        "fish": "codex completion fish",
+        "powershell": "codex completion powershell",
+        "zsh": "codex completion zsh"
+      },
+      "skill": null,
+      "tags": [
+        "openai",
+        "coding-agent",
+        "ai"
+      ],
+      "notes": [
+        "Stable id remains codex-standalone to preserve compatibility with existing catalog dependencies.",
+        "Authentication and account setup are intentionally outside installation orchestration."
+      ],
+      "provenance": [
+        "OpenAI Codex native standalone installation guidance verified 2026-09-16."
+      ],
+      "catalogFile": "ai-agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/ai-agents.yml"
+    },
+    {
+      "id": "curl",
+      "name": "curl",
+      "description": "HTTP-/Download-CLI; wird von vielen Standalone-Installern des Agentic-Stacks verwendet.",
+      "category": "foundation",
+      "tier": "required-linux",
+      "command": "curl",
+      "website": "https://curl.se/",
+      "repository": null,
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "os-component",
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y curl"
+        }
+      },
+      "update": {
+        "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y curl"
+      },
+      "healthCheck": "curl --version",
+      "versionCommand": "curl --version",
+      "capabilitiesCommand": "curl --help all",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "download",
+        "http"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "foundation.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+    },
+    {
+      "id": "delta",
+      "name": "delta",
+      "description": "Git diff pager",
+      "category": "terminal",
+      "tier": "recommended",
+      "command": "delta",
+      "website": "https://github.com/dandavison/delta",
+      "repository": "https://github.com/dandavison/delta",
+      "wingetId": "dandavison.delta",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "git",
+          "curl",
+          "jq"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "dandavison.delta",
+            "command": "winget install --id dandavison.delta --exact --accept-package-agreements --accept-source-agreements"
+          }
+        },
+        "linux": {
+          "standalone": "echo Install-current-git-delta-.deb-from-the-official-GitHub-release"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id dandavison.delta --exact --accept-package-agreements --accept-source-agreements"
+      },
+      "healthCheck": "delta --version",
+      "versionCommand": "delta --version",
+      "capabilitiesCommand": "delta --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "git",
+        "diff"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "dcg",
+      "name": "Destructive Command Guard",
+      "description": "Command safety guard that blocks destructive shell and Git operations before execution.",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "dcg",
+      "website": "https://github.com/Dicklesworthstone/destructive_command_guard",
+      "repository": "https://github.com/Dicklesworthstone/destructive_command_guard",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "standalone",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "brew"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": [
+          "git"
+        ]
+      },
+      "install": {
+        "windows": {
+          "standalone": "& ([scriptblock]::Create((irm 'https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.ps1'))) -EasyMode -Verify"
+        },
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode"
+        },
+        "macos": {
+          "brew": "brew install dicklesworthstone/tap/dcg"
+        }
+      },
+      "update": {
+        "windows": "& ([scriptblock]::Create((irm 'https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.ps1'))) -EasyMode -Verify",
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode",
+        "macos": "brew upgrade dicklesworthstone/tap/dcg"
+      },
+      "healthCheck": "dcg --help",
+      "versionCommand": "dcg --version",
+      "capabilitiesCommand": "dcg --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "guard",
+        "safety",
+        "git",
+        "shell"
+      ],
+      "notes": [],
+      "provenance": [
+        "Dicklesworthstone Flywheel profile and DCG upstream installation guidance verified 2026-09-16."
+      ],
+      "catalogFile": "agentic-flywheel.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+    },
+    {
+      "id": "docker-buildx",
+      "name": "Docker Buildx",
+      "description": "Extended Docker build frontend",
+      "category": "containers",
+      "tier": "optional",
+      "command": "docker",
+      "website": "https://docs.docker.com/buildx/",
+      "repository": "https://github.com/docker/buildx",
+      "wingetId": "Docker.Buildx",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "docker-cli"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Docker.Buildx",
+            "command": "winget install --id Docker.Buildx --exact"
+          }
+        },
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y docker-buildx-plugin"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id Docker.Buildx --exact",
+        "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y docker-buildx-plugin"
+      },
+      "healthCheck": "docker buildx version",
+      "versionCommand": "docker buildx version",
+      "capabilitiesCommand": "docker buildx --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "containers",
+        "build"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "workflow-infrastructure.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+    },
+    {
+      "id": "docker-cli",
+      "name": "Docker CLI",
+      "description": "Docker command line client",
+      "category": "containers",
+      "tier": "optional",
+      "command": "docker",
+      "website": "https://docs.docker.com/",
+      "repository": null,
+      "wingetId": "Docker.DockerCLI",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Docker.DockerCLI",
+            "command": "winget install --id Docker.DockerCLI --exact"
+          }
+        },
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y docker.io"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id Docker.DockerCLI --exact",
+        "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y docker.io"
+      },
+      "healthCheck": "docker --version",
+      "versionCommand": "docker --version",
+      "capabilitiesCommand": "docker --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "containers"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "workflow-infrastructure.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+    },
+    {
+      "id": "docker-desktop",
+      "name": "Docker Desktop",
+      "description": "Desktop Docker environment",
+      "category": "containers",
+      "tier": "optional-windows",
+      "command": "docker",
+      "website": "https://www.docker.com/products/docker-desktop/",
+      "repository": null,
+      "wingetId": "Docker.DockerDesktop",
+      "platforms": [
+        "windows",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": [
+          "wsl2"
+        ]
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Docker.DockerDesktop",
+            "command": "winget install --id Docker.DockerDesktop --exact"
+          }
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id Docker.DockerDesktop --exact"
+      },
+      "healthCheck": "docker info",
+      "versionCommand": "docker --version",
+      "capabilitiesCommand": "docker --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "containers",
+        "desktop"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "workflow-infrastructure.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+    },
+    {
+      "id": "dolt",
+      "name": "Dolt",
+      "description": "SQL database with Git-like versioning",
+      "category": "database",
+      "tier": "recommended-agent",
+      "command": "dolt",
+      "website": "https://www.dolthub.com/",
+      "repository": "https://github.com/dolthub/dolt",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "sudo bash -c 'curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | bash'"
+        }
+      },
+      "update": {
+        "linux": "sudo bash -c 'curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | bash'"
+      },
+      "healthCheck": "dolt version",
+      "versionCommand": "dolt version",
+      "capabilitiesCommand": "dolt --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "database",
+        "versioning"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "workflow-infrastructure.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+    },
+    {
+      "id": "ee",
+      "name": "Eidetic Engine",
+      "description": "Durable, local-first, explainable memory CLI for coding agents.",
+      "category": "ai",
+      "tier": "recommended-agent",
+      "command": "ee",
+      "website": "https://github.com/Dicklesworthstone/eidetic_engine_cli",
+      "repository": "https://github.com/Dicklesworthstone/eidetic_engine_cli",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "standalone",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": [
+          "cass",
+          "jq"
+        ]
+      },
+      "install": {
+        "windows": {
+          "standalone": "$Installer = Join-Path $env:TEMP 'install-ee.ps1'; Invoke-WebRequest -UseBasicParsing 'https://github.com/Dicklesworthstone/eidetic_engine_cli/releases/download/v0.16.0/install.ps1' -OutFile $Installer; if (Test-Path $Installer) { & $Installer -Version '0.16.0' -Verify } else { Write-Error 'Installer download failed' }"
+        },
+        "linux": {
+          "standalone": "set -euo pipefail; Installer=\"$(mktemp)\"; trap 'rm -f \"$Installer\"' EXIT; curl -fsSL \"https://github.com/Dicklesworthstone/eidetic_engine_cli/releases/download/v0.16.0/install.sh\" -o \"$Installer\"; test -s \"$Installer\"; EE_VERSION=v0.16.0 bash \"$Installer\" --easy-mode --verify"
+        },
+        "wsl2": {
+          "standalone": "set -euo pipefail; Installer=\"$(mktemp)\"; trap 'rm -f \"$Installer\"' EXIT; curl -fsSL \"https://github.com/Dicklesworthstone/eidetic_engine_cli/releases/download/v0.16.0/install.sh\" -o \"$Installer\"; test -s \"$Installer\"; EE_VERSION=v0.16.0 bash \"$Installer\" --easy-mode --verify"
+        },
+        "macos": {
+          "standalone": "brew install Dicklesworthstone/tap/ee"
+        }
+      },
+      "update": {
+        "windows": "ee update",
+        "linux": "ee update",
+        "wsl2": "ee update",
+        "macos": "brew upgrade Dicklesworthstone/tap/ee"
+      },
+      "healthCheck": "ee doctor --quick --json",
+      "versionCommand": "ee --version",
+      "capabilitiesCommand": "ee capabilities --json",
+      "robotMode": {
+        "supported": true,
+        "command": "ee capabilities --json",
+        "format": "json"
+      },
+      "completions": {
+        "bash": "ee completion bash",
+        "elvish": "ee completion elvish",
+        "fish": "ee completion fish",
+        "powershell": "ee completion powershell",
+        "zsh": "ee completion zsh"
+      },
+      "skill": null,
+      "tags": [
+        "dicklesworthstone",
+        "coding-agent",
+        "memory",
+        "local-first"
+      ],
+      "notes": [
+        "Binary and command identifier are ee; the upstream repository and Cargo package use different names.",
+        "Local-first memory store; initialize each workspace explicitly with ee init --workspace . before workspace workflows.",
+        "Installation does not modify agent settings or automatically import CASS history; use ee import cass explicitly when desired.",
+        "Release installer verifies SHA-256 checksums; add --require-provenance to require provenance verification when available."
+      ],
+      "provenance": [
+        "Eidetic Engine README and installation guide verified 2026-09-30; release v0.16.0."
+      ],
+      "catalogFile": "agentic-flywheel.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+    },
+    {
+      "id": "fdgr",
+      "name": "Franken Drone Geometry Reconstruction",
+      "description": "Semantic 3D reconstruction from owner-authorized drone video with traceable geometric evidence.",
+      "category": "frankensuite",
+      "tier": "source-cli",
+      "command": "fdgr",
+      "website": "https://github.com/Dicklesworthstone/franken_drone_geometry_reconstruction",
+      "repository": "https://github.com/Dicklesworthstone/franken_drone_geometry_reconstruction",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": null,
+      "versionCommand": null,
+      "capabilitiesCommand": null,
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "drone",
+        "geometry",
+        "reconstruction",
+        "vision",
+        "rust"
+      ],
+      "notes": [
+        "No stable standalone end-user CLI/installer was verified upstream.",
+        "The project-specific command value is a registry sentinel until upstream publishes a stable executable contract."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_drone_geometry_reconstruction upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "fss",
+      "name": "Franken Surveillance System",
+      "description": "Local-first Rust sensor system for owner-authorized cameras and capture drones with evidence tracking in the data model.",
+      "category": "frankensuite",
+      "tier": "source-cli",
+      "command": "fss",
+      "website": "https://github.com/Dicklesworthstone/franken_surveillance_system",
+      "repository": "https://github.com/Dicklesworthstone/franken_surveillance_system",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": "fss doctor --json",
+      "versionCommand": null,
+      "capabilitiesCommand": "fss capabilities --json",
+      "robotMode": {
+        "supported": true,
+        "command": "fss capabilities --json",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "sensors",
+        "vision",
+        "evidence",
+        "rust",
+        "agentic"
+      ],
+      "notes": [
+        "Upstream exposes doctor/capabilities through the fss-cli package; no stable one-line installer was verified."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_surveillance_system upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "franken-code-browser",
+      "name": "FrankenCodeBrowser",
+      "description": "Spatial source-code browser for Apple Silicon with a Rust engine and native Metal application.",
+      "category": "frankensuite",
+      "tier": "application",
+      "command": "franken-code-browser",
+      "website": "https://github.com/Dicklesworthstone/franken_code_browser",
+      "repository": "https://github.com/Dicklesworthstone/franken_code_browser",
+      "wingetId": null,
+      "platforms": [
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": null,
+      "versionCommand": null,
+      "capabilitiesCommand": null,
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "code-browser",
+        "metal",
+        "macos",
+        "rust"
+      ],
+      "notes": [
+        "No stable standalone end-user CLI/installer was verified upstream.",
+        "The project-specific command value is a registry sentinel until upstream publishes a stable executable contract."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_code_browser upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "frankenctl",
+      "name": "FrankenEngine",
+      "description": "Rust runtime for untrusted extensions with deterministic replay and cryptographic execution receipts.",
+      "category": "frankensuite",
+      "tier": "recommended",
+      "command": "frankenctl",
+      "website": "https://github.com/Dicklesworthstone/franken_engine",
+      "repository": "https://github.com/Dicklesworthstone/franken_engine",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "standalone",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_engine/main/install.sh?$(date +%s)\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_engine/main/install.sh?$(date +%s)\" | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_engine/main/install.sh?$(date +%s)\" | bash"
+        },
+        "windows": {
+          "standalone": "irm https://raw.githubusercontent.com/Dicklesworthstone/franken_engine/main/install.ps1 | iex"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_engine/main/install.sh?$(date +%s)\" | bash",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_engine/main/install.sh?$(date +%s)\" | bash",
+        "macos": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_engine/main/install.sh?$(date +%s)\" | bash",
+        "windows": "irm https://raw.githubusercontent.com/Dicklesworthstone/franken_engine/main/install.ps1 | iex"
+      },
+      "healthCheck": "frankenctl version",
+      "versionCommand": "frankenctl version",
+      "capabilitiesCommand": "frankenctl --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "runtime",
+        "extensions",
+        "replay",
+        "security",
+        "rust"
+      ],
+      "notes": [],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_engine upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "frankenfs",
+      "name": "FrankenFS",
+      "description": "Rust ext4/btrfs filesystem implementation via FUSE with block-level MVCC and repair-oriented durability.",
+      "category": "frankensuite",
+      "tier": "library",
+      "command": "frankenfs",
+      "website": "https://github.com/Dicklesworthstone/frankenfs",
+      "repository": "https://github.com/Dicklesworthstone/frankenfs",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": null,
+      "versionCommand": null,
+      "capabilitiesCommand": null,
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "filesystem",
+        "fuse",
+        "mvcc",
+        "rust"
+      ],
+      "notes": [
+        "No stable standalone end-user CLI/installer was verified upstream.",
+        "The project-specific command value is a registry sentinel until upstream publishes a stable executable contract."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenfs upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "frankengit",
+      "name": "FrankenGit",
+      "description": "Git-compatible Rust forge for human and coding-agent workflows with verifiable recovery and an immutable decision stream.",
+      "category": "frankensuite",
+      "tier": "source-cli",
+      "command": "frankengit",
+      "website": "https://github.com/Dicklesworthstone/frankengit",
+      "repository": "https://github.com/Dicklesworthstone/frankengit",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": "frankengit --help",
+      "versionCommand": null,
+      "capabilitiesCommand": "frankengit --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "git",
+        "forge",
+        "recovery",
+        "agents",
+        "rust"
+      ],
+      "notes": [
+        "No stable one-line installer was verified; source-first metadata is retained."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankengit upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "fgdb",
+      "name": "FrankenGraphDB",
+      "description": "Rust property-graph database with MVCC, time travel, branches, incremental maintenance, and fountain-coded replication.",
+      "category": "frankensuite",
+      "tier": "recommended",
+      "command": "fgdb",
+      "website": "https://github.com/Dicklesworthstone/frankengraphdb",
+      "repository": "https://github.com/Dicklesworthstone/frankengraphdb",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/frankengraphdb/main/scripts/install.sh | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/frankengraphdb/main/scripts/install.sh | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/frankengraphdb/main/scripts/install.sh | bash"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/frankengraphdb/main/scripts/install.sh | bash",
+        "wsl2": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/frankengraphdb/main/scripts/install.sh | bash",
+        "macos": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/frankengraphdb/main/scripts/install.sh | bash"
+      },
+      "healthCheck": "fgdb --help",
+      "versionCommand": "fgdb --version",
+      "capabilitiesCommand": "fgdb --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "graph-database",
+        "mvcc",
+        "replication",
+        "rust"
+      ],
+      "notes": [
+        "Upstream installer installs the fgdb CLI and fgdbd daemon."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankengraphdb upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "frankenjax",
+      "name": "FrankenJAX",
+      "description": "Rust implementation of JAX-style transform semantics including jit, grad, vmap, and a JAXPR-like IR.",
+      "category": "frankensuite",
+      "tier": "library",
+      "command": "frankenjax",
+      "website": "https://github.com/Dicklesworthstone/frankenjax",
+      "repository": "https://github.com/Dicklesworthstone/frankenjax",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": null,
+      "versionCommand": null,
+      "capabilitiesCommand": null,
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "jax",
+        "autodiff",
+        "numerics",
+        "rust"
+      ],
+      "notes": [
+        "No stable standalone end-user CLI/installer was verified upstream.",
+        "The project-specific command value is a registry sentinel until upstream publishes a stable executable contract."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenjax upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "fln",
+      "name": "FrankenLean",
+      "description": "Rust implementation of the Lean 4 toolchain including parser, elaborator, kernel, VM, olean handling, and C ABI.",
+      "category": "frankensuite",
+      "tier": "source-cli",
+      "command": "fln",
+      "website": "https://github.com/Dicklesworthstone/franken_lean",
+      "repository": "https://github.com/Dicklesworthstone/franken_lean",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": "fln --help",
+      "versionCommand": null,
+      "capabilitiesCommand": "fln --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "lean",
+        "proof",
+        "theorem-prover",
+        "rust"
+      ],
+      "notes": [
+        "Upstream explicitly does not yet publish a supported one-line installer.",
+        "Source builds produce lean, leanc, lake, and fln; fln is used as the suite-specific executable probe."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_lean upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "frankenlibc",
+      "name": "FrankenLibC",
+      "description": "Rust libc interposition layer using LD_PRELOAD to check memory operations in existing C programs.",
+      "category": "frankensuite",
+      "tier": "library",
+      "command": "frankenlibc",
+      "website": "https://github.com/Dicklesworthstone/frankenlibc",
+      "repository": "https://github.com/Dicklesworthstone/frankenlibc",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": null,
+      "versionCommand": null,
+      "capabilitiesCommand": null,
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "libc",
+        "memory-safety",
+        "ld-preload",
+        "rust"
+      ],
+      "notes": [
+        "No stable standalone end-user CLI/installer was verified upstream.",
+        "The project-specific command value is a registry sentinel until upstream publishes a stable executable contract."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenlibc upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "fmn",
+      "name": "FrankenManim",
+      "description": "Deterministic Rust rewrite of Manim with native TeX handling and an analytic Bezier renderer.",
+      "category": "frankensuite",
+      "tier": "recommended",
+      "command": "fmn",
+      "website": "https://github.com/Dicklesworthstone/franken_manim",
+      "repository": "https://github.com/Dicklesworthstone/franken_manim",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/franken_manim/main/scripts/install.sh | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/franken_manim/main/scripts/install.sh | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/franken_manim/main/scripts/install.sh | bash"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/franken_manim/main/scripts/install.sh | bash",
+        "wsl2": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/franken_manim/main/scripts/install.sh | bash",
+        "macos": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/franken_manim/main/scripts/install.sh | bash"
+      },
+      "healthCheck": "fmn --help",
+      "versionCommand": "fmn --version",
+      "capabilitiesCommand": "fmn --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "animation",
+        "manim",
+        "graphics",
+        "rust"
+      ],
+      "notes": [],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_manim upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "fmd",
+      "name": "FrankenMarkdown",
+      "description": "Zero-dependency Markdown-to-HTML and tagged-PDF engine with its own parser, typesetter, font subsetter, and PDF writer.",
+      "category": "frankensuite",
+      "tier": "recommended",
+      "command": "fmd",
+      "website": "https://franken-markdown.com",
+      "repository": "https://github.com/Dicklesworthstone/franken_markdown",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "standalone",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_markdown/main/install.sh\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_markdown/main/install.sh\" | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_markdown/main/install.sh\" | bash"
+        },
+        "windows": {
+          "standalone": "irm https://raw.githubusercontent.com/Dicklesworthstone/franken_markdown/main/install.ps1 | iex"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_markdown/main/install.sh\" | bash",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_markdown/main/install.sh\" | bash",
+        "macos": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_markdown/main/install.sh\" | bash",
+        "windows": "irm https://raw.githubusercontent.com/Dicklesworthstone/franken_markdown/main/install.ps1 | iex"
+      },
+      "healthCheck": "fmd doctor --json",
+      "versionCommand": "fmd --version",
+      "capabilitiesCommand": "fmd capabilities --json",
+      "robotMode": {
+        "supported": true,
+        "command": "fmd capabilities --json",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "markdown",
+        "pdf",
+        "wasm",
+        "rust",
+        "agentic"
+      ],
+      "notes": [],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_markdown upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "frankenmermaid",
+      "name": "FrankenMermaid",
+      "description": "Mermaid-compatible diagram engine in Rust with deterministic layout and WASM support.",
+      "category": "frankensuite",
+      "tier": "recommended",
+      "command": "frankenmermaid",
+      "website": "https://frankenmermaid.com",
+      "repository": "https://github.com/Dicklesworthstone/frankenmermaid",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "git",
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankenmermaid/main/install.sh\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankenmermaid/main/install.sh\" | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankenmermaid/main/install.sh\" | bash"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankenmermaid/main/install.sh\" | bash",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankenmermaid/main/install.sh\" | bash",
+        "macos": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankenmermaid/main/install.sh\" | bash"
+      },
+      "healthCheck": "frankenmermaid --version",
+      "versionCommand": "frankenmermaid --version",
+      "capabilitiesCommand": "frankenmermaid --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "mermaid",
+        "diagrams",
+        "wasm",
+        "rust"
+      ],
+      "notes": [
+        "Installer builds frankenmermaid-cli and exposes frankenmermaid plus legacy fm-cli."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenmermaid upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "franken-networkx",
+      "name": "FrankenNetworkX",
+      "description": "Rust graph library with NetworkX-compatible Python bindings and conformance tooling.",
+      "category": "frankensuite",
+      "tier": "library",
+      "command": "franken-networkx",
+      "website": "https://github.com/Dicklesworthstone/franken_networkx",
+      "repository": "https://github.com/Dicklesworthstone/franken_networkx",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": null,
+      "versionCommand": null,
+      "capabilitiesCommand": null,
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "graph",
+        "networkx",
+        "python",
+        "rust"
+      ],
+      "notes": [
+        "No stable standalone end-user CLI/installer was verified upstream.",
+        "The project-specific command value is a registry sentinel until upstream publishes a stable executable contract."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_networkx upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "franken-node",
+      "name": "FrankenNode",
+      "description": "JavaScript/TypeScript runtime built on FrankenEngine with migration analysis and extension trust metadata.",
+      "category": "frankensuite",
+      "tier": "recommended",
+      "command": "franken-node",
+      "website": "https://github.com/Dicklesworthstone/franken_node",
+      "repository": "https://github.com/Dicklesworthstone/franken_node",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "standalone",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_node/main/install.sh?$(date +%s)\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_node/main/install.sh?$(date +%s)\" | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_node/main/install.sh?$(date +%s)\" | bash"
+        },
+        "windows": {
+          "standalone": "irm https://raw.githubusercontent.com/Dicklesworthstone/franken_node/main/install.ps1 | iex"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_node/main/install.sh?$(date +%s)\" | bash",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_node/main/install.sh?$(date +%s)\" | bash",
+        "macos": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_node/main/install.sh?$(date +%s)\" | bash",
+        "windows": "irm https://raw.githubusercontent.com/Dicklesworthstone/franken_node/main/install.ps1 | iex"
+      },
+      "healthCheck": "franken-node --help",
+      "versionCommand": "franken-node --version",
+      "capabilitiesCommand": "franken-node --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "javascript",
+        "typescript",
+        "runtime",
+        "rust"
+      ],
+      "notes": [],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_node upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "franken-numpy",
+      "name": "FrankenNumPy",
+      "description": "Rust NumPy reimplementation with a multi-crate architecture and compatibility-focused numerical behavior.",
+      "category": "frankensuite",
+      "tier": "library",
+      "command": "franken-numpy",
+      "website": "https://github.com/Dicklesworthstone/franken_numpy",
+      "repository": "https://github.com/Dicklesworthstone/franken_numpy",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": null,
+      "versionCommand": null,
+      "capabilitiesCommand": null,
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "numpy",
+        "numerics",
+        "python",
+        "rust"
+      ],
+      "notes": [
+        "No stable standalone end-user CLI/installer was verified upstream.",
+        "The project-specific command value is a registry sentinel until upstream publishes a stable executable contract."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_numpy upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "focr",
+      "name": "FrankenOCR",
+      "description": "Pure-Rust CPU OCR using Baidu Unlimited-OCR models with custom int8 kernels and agent-oriented diagnostics.",
+      "category": "frankensuite",
+      "tier": "recommended",
+      "command": "focr",
+      "website": "https://franken-ocr.com",
+      "repository": "https://github.com/Dicklesworthstone/franken_ocr",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "standalone",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_ocr/main/install.sh?$(date +%s)\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_ocr/main/install.sh?$(date +%s)\" | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_ocr/main/install.sh?$(date +%s)\" | bash"
+        },
+        "windows": {
+          "standalone": "irm https://raw.githubusercontent.com/Dicklesworthstone/franken_ocr/main/install.ps1 | iex"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_ocr/main/install.sh?$(date +%s)\" | bash",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_ocr/main/install.sh?$(date +%s)\" | bash",
+        "macos": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_ocr/main/install.sh?$(date +%s)\" | bash",
+        "windows": "irm https://raw.githubusercontent.com/Dicklesworthstone/franken_ocr/main/install.ps1 | iex"
+      },
+      "healthCheck": "focr doctor --json",
+      "versionCommand": "focr --version",
+      "capabilitiesCommand": "focr doctor capabilities --json",
+      "robotMode": {
+        "supported": true,
+        "command": "focr robot triage",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "ocr",
+        "vision",
+        "rust",
+        "agentic"
+      ],
+      "notes": [
+        "Model acquisition is intentionally not added beyond upstream installer behavior."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_ocr upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "fo-search",
+      "name": "FrankenOverlap",
+      "description": "Sparse-spectral textual overlap detection and approximate alignment toolkit.",
+      "category": "frankensuite",
+      "tier": "source-cli",
+      "command": "fo-search",
+      "website": "https://github.com/Dicklesworthstone/franken_overlap",
+      "repository": "https://github.com/Dicklesworthstone/franken_overlap",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": "fo-search --help",
+      "versionCommand": null,
+      "capabilitiesCommand": "fo-search --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "text",
+        "similarity",
+        "alignment",
+        "rust"
+      ],
+      "notes": [
+        "The fo-cli package exposes fo-search; upstream currently documents source execution/builds."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_overlap upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "frankenpandas",
+      "name": "FrankenPandas",
+      "description": "Safe-Rust dataframe engine with pandas-style APIs, columnar storage, and differential conformance testing.",
+      "category": "frankensuite",
+      "tier": "library",
+      "command": "frankenpandas",
+      "website": "https://github.com/Dicklesworthstone/frankenpandas",
+      "repository": "https://github.com/Dicklesworthstone/frankenpandas",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": null,
+      "versionCommand": null,
+      "capabilitiesCommand": null,
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "dataframe",
+        "pandas",
+        "python",
+        "rust"
+      ],
+      "notes": [
+        "No stable standalone end-user CLI/installer was verified upstream.",
+        "The project-specific command value is a registry sentinel until upstream publishes a stable executable contract."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenpandas upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "frankenredis",
+      "name": "FrankenRedis",
+      "description": "Redis-protocol implementation in Rust with deterministic behavior and replication-oriented design.",
+      "category": "frankensuite",
+      "tier": "source-cli",
+      "command": "frankenredis",
+      "website": "https://github.com/Dicklesworthstone/frankenredis",
+      "repository": "https://github.com/Dicklesworthstone/frankenredis",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": "frankenredis --help",
+      "versionCommand": "frankenredis --version",
+      "capabilitiesCommand": "frankenredis --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "redis",
+        "database",
+        "server",
+        "rust"
+      ],
+      "notes": [
+        "Upstream documents source builds including the fr-server package; no stable release installer was verified."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenredis upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "frankenscipy",
+      "name": "FrankenSciPy",
+      "description": "Rust SciPy reimplementation featuring a condition-aware solver portfolio and compatibility-oriented numerical modules.",
+      "category": "frankensuite",
+      "tier": "library",
+      "command": "frankenscipy",
+      "website": "https://github.com/Dicklesworthstone/frankenscipy",
+      "repository": "https://github.com/Dicklesworthstone/frankenscipy",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": null,
+      "versionCommand": null,
+      "capabilitiesCommand": null,
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "scipy",
+        "numerics",
+        "solvers",
+        "rust"
+      ],
+      "notes": [
+        "No stable standalone end-user CLI/installer was verified upstream.",
+        "The project-specific command value is a registry sentinel until upstream publishes a stable executable contract."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenscipy upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "fsfs",
+      "name": "FrankenSearch",
+      "description": "Hybrid search engine combining HNSW ANN, Tantivy full-text search, and cross-encoder reranking.",
+      "category": "frankensuite",
+      "tier": "recommended",
+      "command": "fsfs",
+      "website": "https://github.com/Dicklesworthstone/frankensearch",
+      "repository": "https://github.com/Dicklesworthstone/frankensearch",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/frankensearch/main/install.sh | bash -s -- --easy-mode"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/frankensearch/main/install.sh | bash -s -- --easy-mode"
+        },
+        "macos": {
+          "standalone": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/frankensearch/main/install.sh | bash -s -- --easy-mode"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/frankensearch/main/install.sh | bash -s -- --easy-mode",
+        "wsl2": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/frankensearch/main/install.sh | bash -s -- --easy-mode",
+        "macos": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/frankensearch/main/install.sh | bash -s -- --easy-mode"
+      },
+      "healthCheck": "fsfs doctor --format json",
+      "versionCommand": "fsfs version",
+      "capabilitiesCommand": "fsfs --help",
+      "robotMode": {
+        "supported": true,
+        "command": "fsfs doctor --format json",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "search",
+        "vector",
+        "tantivy",
+        "hnsw",
+        "rust"
+      ],
+      "notes": [],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankensearch upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "frankensim",
+      "name": "FrankenSim",
+      "description": "Rust simulation workspace covering geometry, numerics, meshing, solvers, optimization, and rendering.",
+      "category": "frankensuite",
+      "tier": "source-cli",
+      "command": "frankensim",
+      "website": "https://frankensim.org",
+      "repository": "https://github.com/Dicklesworthstone/frankensim",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": "frankensim --help",
+      "versionCommand": null,
+      "capabilitiesCommand": "frankensim --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "simulation",
+        "geometry",
+        "numerics",
+        "rust"
+      ],
+      "notes": [
+        "Upstream documents `cargo run -p fs-cli --bin frankensim -- validate ...`; no stable release installer was verified."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankensim upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "franken-snowflake",
+      "name": "FrankenSnowflake",
+      "description": "Native Snowflake driver and agent-ergonomic CLI in Rust using the direct SQL API without ODBC/JDBC.",
+      "category": "frankensuite",
+      "tier": "recommended",
+      "command": "franken-snowflake",
+      "website": "https://github.com/Dicklesworthstone/franken_snowflake",
+      "repository": "https://github.com/Dicklesworthstone/franken_snowflake",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "standalone",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_snowflake/main/install.sh?$(date +%s)\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_snowflake/main/install.sh?$(date +%s)\" | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_snowflake/main/install.sh?$(date +%s)\" | bash"
+        },
+        "windows": {
+          "standalone": "irm https://raw.githubusercontent.com/Dicklesworthstone/franken_snowflake/main/install.ps1 | iex"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_snowflake/main/install.sh?$(date +%s)\" | bash",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_snowflake/main/install.sh?$(date +%s)\" | bash",
+        "macos": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_snowflake/main/install.sh?$(date +%s)\" | bash",
+        "windows": "irm https://raw.githubusercontent.com/Dicklesworthstone/franken_snowflake/main/install.ps1 | iex"
+      },
+      "healthCheck": "franken-snowflake doctor --json",
+      "versionCommand": "franken-snowflake --version",
+      "capabilitiesCommand": "franken-snowflake capabilities --json",
+      "robotMode": {
+        "supported": true,
+        "command": "franken-snowflake agent-handbook --json",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "snowflake",
+        "database",
+        "sql",
+        "rust",
+        "agentic"
+      ],
+      "notes": [],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_snowflake upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "fsqlite",
+      "name": "FrankenSQLite",
+      "description": "SQLite-compatible Rust database with page-level MVCC concurrent writers and RaptorQ durability components.",
+      "category": "frankensuite",
+      "tier": "recommended",
+      "command": "fsqlite",
+      "website": "https://frankensqlite.com",
+      "repository": "https://github.com/Dicklesworthstone/frankensqlite",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "standalone",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankensqlite/main/install.sh?$(date +%s)\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankensqlite/main/install.sh?$(date +%s)\" | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankensqlite/main/install.sh?$(date +%s)\" | bash"
+        },
+        "windows": {
+          "standalone": "irm https://raw.githubusercontent.com/Dicklesworthstone/frankensqlite/main/install.ps1 | iex"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankensqlite/main/install.sh?$(date +%s)\" | bash",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankensqlite/main/install.sh?$(date +%s)\" | bash",
+        "macos": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankensqlite/main/install.sh?$(date +%s)\" | bash",
+        "windows": "irm https://raw.githubusercontent.com/Dicklesworthstone/frankensqlite/main/install.ps1 | iex"
+      },
+      "healthCheck": "fsqlite --version",
+      "versionCommand": "fsqlite --version",
+      "capabilitiesCommand": "fsqlite --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "database",
+        "sqlite",
+        "mvcc",
+        "rust"
+      ],
+      "notes": [
+        "Upstream also documents cargo +nightly install fsqlite-cli --locked."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankensqlite upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "frankensympy",
+      "name": "FrankenSymPy",
+      "description": "Proof-carrying symbolic mathematics in Rust with a Python compatibility layer.",
+      "category": "frankensuite",
+      "tier": "library",
+      "command": "frankensympy",
+      "website": "https://github.com/Dicklesworthstone/frankensympy",
+      "repository": "https://github.com/Dicklesworthstone/frankensympy",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": null,
+      "versionCommand": null,
+      "capabilitiesCommand": null,
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "sympy",
+        "symbolic-math",
+        "python",
+        "rust"
+      ],
+      "notes": [
+        "No stable standalone end-user CLI/installer was verified upstream.",
+        "The project-specific command value is a registry sentinel until upstream publishes a stable executable contract."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankensympy upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "ft",
+      "name": "FrankenTerm",
+      "description": "WezTerm-derived terminal for AI-agent swarms with pane capture, state-machine detection, and JSON control APIs.",
+      "category": "frankensuite",
+      "tier": "recommended",
+      "command": "ft",
+      "website": "https://github.com/Dicklesworthstone/frankenterm",
+      "repository": "https://github.com/Dicklesworthstone/frankenterm",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankenterm/main/install.sh?$(date +%s)\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankenterm/main/install.sh?$(date +%s)\" | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankenterm/main/install.sh?$(date +%s)\" | bash"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankenterm/main/install.sh?$(date +%s)\" | bash",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankenterm/main/install.sh?$(date +%s)\" | bash",
+        "macos": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/frankenterm/main/install.sh?$(date +%s)\" | bash"
+      },
+      "healthCheck": "ft doctor",
+      "versionCommand": "ft --version",
+      "capabilitiesCommand": "ft --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "terminal",
+        "wezterm",
+        "agents",
+        "rust"
+      ],
+      "notes": [],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenterm upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "frankentorch",
+      "name": "FrankenTorch",
+      "description": "Rust reimplementation of PyTorch concepts with deterministic autograd behavior and CPU kernels.",
+      "category": "frankensuite",
+      "tier": "library",
+      "command": "frankentorch",
+      "website": "https://github.com/Dicklesworthstone/frankentorch",
+      "repository": "https://github.com/Dicklesworthstone/frankentorch",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": null,
+      "versionCommand": null,
+      "capabilitiesCommand": null,
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "pytorch",
+        "tensor",
+        "autograd",
+        "rust"
+      ],
+      "notes": [
+        "No stable standalone end-user CLI/installer was verified upstream.",
+        "The project-specific command value is a registry sentinel until upstream publishes a stable executable contract."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankentorch upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "ftts",
+      "name": "FrankenTTS",
+      "description": "Pure-Rust Qwen3-TTS implementation for CPU speech synthesis and zero-shot voice cloning.",
+      "category": "frankensuite",
+      "tier": "recommended",
+      "command": "ftts",
+      "website": "https://frankentts.com",
+      "repository": "https://github.com/Dicklesworthstone/franken_tts",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "standalone",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_tts/main/install.sh?$(date +%s)\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_tts/main/install.sh?$(date +%s)\" | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_tts/main/install.sh?$(date +%s)\" | bash"
+        },
+        "windows": {
+          "standalone": "& ([scriptblock]::Create((irm 'https://raw.githubusercontent.com/Dicklesworthstone/franken_tts/main/install.ps1'))) -EasyMode"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_tts/main/install.sh?$(date +%s)\" | bash",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_tts/main/install.sh?$(date +%s)\" | bash",
+        "macos": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_tts/main/install.sh?$(date +%s)\" | bash",
+        "windows": "& ([scriptblock]::Create((irm 'https://raw.githubusercontent.com/Dicklesworthstone/franken_tts/main/install.ps1'))) -EasyMode"
+      },
+      "healthCheck": "ftts --help",
+      "versionCommand": "ftts --version",
+      "capabilitiesCommand": "ftts --help",
+      "robotMode": {
+        "supported": true,
+        "command": "ftts robot schema",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "tts",
+        "speech",
+        "voice-cloning",
+        "rust",
+        "agentic"
+      ],
+      "notes": [
+        "Large model pulls are intentionally not automated by CliToolRegistry."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_tts upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "frankentui",
+      "name": "FrankenTUI",
+      "description": "Rust terminal UI rendering kernel spanning a multi-crate widget and runtime ecosystem.",
+      "category": "frankensuite",
+      "tier": "library",
+      "command": "ftui-demo-showcase",
+      "website": "https://github.com/Dicklesworthstone/frankentui",
+      "repository": "https://github.com/Dicklesworthstone/frankentui",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {}
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {},
+      "update": {},
+      "healthCheck": "ftui-demo-showcase --help",
+      "versionCommand": null,
+      "capabilitiesCommand": "ftui-demo-showcase --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "tui",
+        "terminal",
+        "rust",
+        "library"
+      ],
+      "notes": [
+        "Upstream documents source builds rather than a stable standalone end-user installer.",
+        "The documented ftui-demo-showcase package/binary is used as the executable probe."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankentui upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "franken_whisper",
+      "name": "FrankenWhisper",
+      "description": "Agent-first Rust speech-recognition orchestrator with ffmpeg normalization and FrankenSQLite-backed persistence.",
+      "category": "frankensuite",
+      "tier": "recommended",
+      "command": "franken_whisper",
+      "website": "https://franken-whisper.com",
+      "repository": "https://github.com/Dicklesworthstone/franken_whisper",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_whisper/main/install.sh?$(date +%s)\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_whisper/main/install.sh?$(date +%s)\" | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_whisper/main/install.sh?$(date +%s)\" | bash"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_whisper/main/install.sh?$(date +%s)\" | bash",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_whisper/main/install.sh?$(date +%s)\" | bash",
+        "macos": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/franken_whisper/main/install.sh?$(date +%s)\" | bash"
+      },
+      "healthCheck": "franken_whisper --help",
+      "versionCommand": "franken_whisper --version",
+      "capabilitiesCommand": "franken_whisper --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "frankensuite",
+        "speech",
+        "whisper",
+        "asr",
+        "rust"
+      ],
+      "notes": [
+        "Windows x64 release artifact exists, but upstream Bash installer explicitly covers Linux/macOS/WSL only."
+      ],
+      "provenance": [
+        "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_whisper upstream repository verified 2026-09-25."
+      ],
+      "catalogFile": "frankensuite.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+    },
+    {
+      "id": "fzf",
+      "name": "fzf",
+      "description": "Fuzzy finder",
+      "category": "terminal",
+      "tier": "recommended",
+      "command": "fzf",
+      "website": "https://github.com/junegunn/fzf",
+      "repository": "https://github.com/junegunn/fzf",
+      "wingetId": "junegunn.fzf",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "junegunn.fzf",
+            "command": "winget install --id junegunn.fzf --exact --accept-package-agreements --accept-source-agreements"
+          }
+        },
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y fzf"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id junegunn.fzf --exact --accept-package-agreements --accept-source-agreements",
+        "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y fzf"
+      },
+      "healthCheck": "fzf --version",
+      "versionCommand": "fzf --version",
+      "capabilitiesCommand": "fzf --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "search"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "giil",
+      "name": "GIIL",
+      "description": "Download full-resolution images from supported cloud share links for agent workflows.",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "giil",
+      "website": "https://github.com/Dicklesworthstone/giil",
+      "repository": "https://github.com/Dicklesworthstone/giil",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/giil/main/install.sh?$(date +%s)\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/giil/main/install.sh?$(date +%s)\" | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/giil/main/install.sh?$(date +%s)\" | bash"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/giil/main/install.sh?$(date +%s)\" | bash",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/giil/main/install.sh?$(date +%s)\" | bash",
+        "macos": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/giil/main/install.sh?$(date +%s)\" | bash"
+      },
+      "healthCheck": "giil --version",
+      "versionCommand": "giil --version",
+      "capabilitiesCommand": "giil --help",
+      "robotMode": {
+        "supported": true,
+        "command": "giil --help",
+        "format": "text"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "images",
+        "icloud",
+        "dropbox",
+        "download"
+      ],
+      "notes": [
+        "GIIL exposes agent-friendly JSON/base64 output options for actual download operations."
+      ],
+      "provenance": [
+        "Dicklesworthstone Flywheel profile and GIIL upstream guidance verified 2026-09-16."
+      ],
+      "catalogFile": "agentic-flywheel.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "description": "Verteilte Versionsverwaltung; Grundlage für Repository-, Branch-, Worktree- und Agenten-Workflows.",
+      "category": "foundation",
+      "tier": "required",
+      "command": "git",
+      "website": "https://git-scm.com/",
+      "repository": null,
+      "wingetId": "Git.Git",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget:Git.Git",
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": [
+          "git-lfs"
+        ]
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Git.Git",
+            "command": "winget install --id Git.Git --exact --accept-package-agreements --accept-source-agreements"
+          }
+        },
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y git"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id Git.Git --exact --accept-package-agreements --accept-source-agreements",
+        "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y git"
+      },
+      "healthCheck": "git --version",
+      "versionCommand": "git --version",
+      "capabilitiesCommand": "git help -a",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "scm",
+        "repository"
+      ],
+      "notes": [],
+      "provenance": [
+        "WingetIds.yml enthält Microsoft.Git; Git.Git ist als allgemeine Git-for-Windows-Variante bevorzugt."
+      ],
+      "catalogFile": "foundation.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+    },
+    {
+      "id": "git-lfs",
+      "name": "Git LFS",
+      "description": "Git large file support",
+      "category": "scm",
+      "tier": "optional",
+      "command": "git",
+      "website": "https://git-lfs.com/",
+      "repository": "https://github.com/git-lfs/git-lfs",
+      "wingetId": "GitHub.GitLFS",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "GitHub.GitLFS",
+            "command": "winget install --id GitHub.GitLFS --exact"
+          }
+        },
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y git-lfs"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id GitHub.GitLFS --exact",
+        "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y git-lfs"
+      },
+      "healthCheck": "git lfs version",
+      "versionCommand": "git lfs version",
+      "capabilitiesCommand": "git lfs help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "git"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "gh",
+      "name": "GitHub CLI",
+      "description": "Offizielle GitHub-CLI für Repositories, Issues, Pull Requests, Releases und Actions.",
+      "category": "foundation",
+      "tier": "required",
+      "command": "gh",
+      "website": "https://cli.github.com/",
+      "repository": "https://github.com/cli/cli",
+      "wingetId": "GitHub.cli",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "git"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "GitHub.cli",
+            "command": "winget install --id GitHub.cli --exact --accept-package-agreements --accept-source-agreements"
+          }
+        },
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y gh"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id GitHub.cli --exact --accept-package-agreements --accept-source-agreements",
+        "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y gh"
+      },
+      "healthCheck": "gh --version",
+      "versionCommand": "gh --version",
+      "capabilitiesCommand": "gh help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "github",
+        "scm"
+      ],
+      "notes": [],
+      "provenance": [
+        "WingetIds.yml: GitHub CLI / GitHub.cli."
+      ],
+      "catalogFile": "foundation.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+    },
+    {
+      "id": "go",
+      "name": "Go",
+      "description": "Go toolchain",
+      "category": "runtime",
+      "tier": "optional",
+      "command": "go",
+      "website": "https://go.dev/",
+      "repository": null,
+      "wingetId": "GoLang.Go",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "GoLang.Go",
+            "command": "winget install --id GoLang.Go --exact"
+          }
+        },
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y golang-go"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id GoLang.Go --exact"
+      },
+      "healthCheck": "go version",
+      "versionCommand": "go version",
+      "capabilitiesCommand": "go help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "golang"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "gum",
+      "name": "Gum",
+      "description": "Charmbracelet CLI für interaktive Shell- und Setup-Workflows.",
+      "category": "cli",
+      "tier": "recommended",
+      "command": "gum",
+      "website": "https://github.com/charmbracelet/gum",
+      "repository": "https://github.com/charmbracelet/gum",
+      "wingetId": "charmbracelet.gum",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "apt",
+          "wsl2": "apt",
+          "macos": "brew"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": [
+          "curl"
+        ]
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "charmbracelet.gum",
+            "command": "winget install --id charmbracelet.gum --exact --accept-package-agreements --accept-source-agreements"
+          }
+        },
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y curl gpg && sudo mkdir -p /etc/apt/keyrings && curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg && printf '%s\\n' 'deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *' | sudo tee /etc/apt/sources.list.d/charm.list >/dev/null && sudo apt-get update && sudo apt-get install -y gum"
+        },
+        "wsl2": {
+          "apt": "sudo apt-get update && sudo apt-get install -y curl gpg && sudo mkdir -p /etc/apt/keyrings && curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg && printf '%s\\n' 'deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *' | sudo tee /etc/apt/sources.list.d/charm.list >/dev/null && sudo apt-get update && sudo apt-get install -y gum"
+        },
+        "macos": {
+          "brew": "brew install gum"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id charmbracelet.gum --exact --accept-package-agreements --accept-source-agreements",
+        "linux": "sudo apt-get update && sudo apt-get install -y gum",
+        "wsl2": "sudo apt-get update && sudo apt-get install -y gum",
+        "macos": "brew update && brew upgrade gum"
+      },
+      "healthCheck": "gum --version",
+      "versionCommand": "gum --version",
+      "capabilitiesCommand": "gum --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "shell",
+        "tui",
+        "ux"
+      ],
+      "notes": [],
+      "provenance": [
+        "Charmbracelet Gum README installation instructions verified 2026-09-13."
+      ],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "jq",
+      "name": "jq",
+      "description": "JSON processor",
+      "category": "terminal",
+      "tier": "recommended",
+      "command": "jq",
+      "website": "https://jqlang.org/",
+      "repository": null,
+      "wingetId": "jqlang.jq",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "jqlang.jq",
+            "command": "winget install --id jqlang.jq --exact --accept-package-agreements --accept-source-agreements"
+          }
+        },
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y jq"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id jqlang.jq --exact --accept-package-agreements --accept-source-agreements",
+        "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y jq"
+      },
+      "healthCheck": "jq --version",
+      "versionCommand": "jq --version",
+      "capabilitiesCommand": "jq --help",
+      "robotMode": {
+        "supported": true,
+        "command": "jq --help",
+        "format": "text"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "json"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "less",
+      "name": "less",
+      "description": "Terminal pager",
+      "category": "terminal",
+      "tier": "optional",
+      "command": "less",
+      "website": "https://www.greenwoodsoftware.com/less/",
+      "repository": null,
+      "wingetId": "jftuga.less",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "jftuga.less",
+            "command": "winget install --id jftuga.less --exact"
+          }
+        },
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y less"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id jftuga.less --exact",
+        "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y less"
+      },
+      "healthCheck": "less --version",
+      "versionCommand": "less --version",
+      "capabilitiesCommand": "less --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "pager"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "mcp-agent-mail",
+      "name": "MCP Agent Mail",
+      "description": "Asynchronous coordination layer for coding agents with messaging, searchable threads, and advisory file leases.",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "am",
+      "website": "https://mcpagentmail.com/",
+      "repository": "https://github.com/Dicklesworthstone/mcp_agent_mail",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "git",
+          "curl",
+          "uv",
+          "python3"
+        ],
+        "recommended": [
+          "br",
+          "bv"
+        ]
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/mcp_agent_mail/main/scripts/install.sh?$(date +%s)\" | bash -s -- --yes"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/mcp_agent_mail/main/scripts/install.sh?$(date +%s)\" | bash -s -- --yes"
+        },
+        "macos": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/mcp_agent_mail/main/scripts/install.sh?$(date +%s)\" | bash -s -- --yes"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/mcp_agent_mail/main/scripts/install.sh?$(date +%s)\" | bash -s -- --yes",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/mcp_agent_mail/main/scripts/install.sh?$(date +%s)\" | bash -s -- --yes",
+        "macos": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/mcp_agent_mail/main/scripts/install.sh?$(date +%s)\" | bash -s -- --yes"
+      },
+      "healthCheck": "am doctor check --json",
+      "versionCommand": "am --version",
+      "capabilitiesCommand": "am --help",
+      "robotMode": {
+        "supported": true,
+        "command": "am doctor check --json",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "coordination",
+        "mcp",
+        "mail",
+        "file-leases"
+      ],
+      "notes": [
+        "The official Flywheel profile currently links the mcp_agent_mail repository; newer ACFS internals may also use the Rust rewrite."
+      ],
+      "provenance": [
+        "Dicklesworthstone Flywheel profile and MCP Agent Mail upstream guidance verified 2026-09-16."
+      ],
+      "catalogFile": "agentic-flywheel.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+    },
+    {
+      "id": "ms",
+      "name": "Meta Skill",
+      "description": "Skill management platform with CASS mining, discovery, and MCP-oriented workflows.",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "ms",
+      "website": "https://github.com/Dicklesworthstone/meta_skill",
+      "repository": "https://github.com/Dicklesworthstone/meta_skill",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "git",
+          "curl"
+        ],
+        "recommended": [
+          "cass",
+          "cm"
+        ]
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/meta_skill/main/scripts/install.sh?$(date +%s)\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/meta_skill/main/scripts/install.sh?$(date +%s)\" | bash"
+        },
+        "macos": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/meta_skill/main/scripts/install.sh?$(date +%s)\" | bash"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/meta_skill/main/scripts/install.sh?$(date +%s)\" | bash",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/meta_skill/main/scripts/install.sh?$(date +%s)\" | bash",
+        "macos": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/meta_skill/main/scripts/install.sh?$(date +%s)\" | bash"
+      },
+      "healthCheck": "ms doctor",
+      "versionCommand": "ms --version",
+      "capabilitiesCommand": "ms --help",
+      "robotMode": {
+        "supported": true,
+        "command": "ms list --robot",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "skills",
+        "mcp",
+        "discovery",
+        "memory"
+      ],
+      "notes": [
+        "The verified installer is used for updates rather than relying on the in-place updater."
+      ],
+      "provenance": [
+        "Dicklesworthstone Flywheel profile and Meta Skill upstream guidance verified 2026-09-16."
+      ],
+      "catalogFile": "agentic-flywheel.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+    },
+    {
+      "id": "mise",
+      "name": "mise-en-place",
+      "description": "Runtime and tool version manager",
+      "category": "runtime",
+      "tier": "recommended",
+      "command": "mise",
+      "website": "https://mise.jdx.dev/",
+      "repository": "https://github.com/jdx/mise",
+      "wingetId": "jdx.mise",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "jdx.mise",
+            "command": "winget install --id jdx.mise --exact"
+          }
+        },
+        "linux": {
+          "standalone": "curl https://mise.run | sh"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id jdx.mise --exact",
+        "linux": "mise self-update"
+      },
+      "healthCheck": "mise doctor",
+      "versionCommand": "mise --version",
+      "capabilitiesCommand": "mise help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "toolchain"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "nodejs-lts",
+      "name": "Node.js LTS",
+      "description": "JavaScript-Laufzeit inklusive npm; Voraussetzung für npm-basierte CLIs.",
+      "category": "foundation",
+      "tier": "required-for-npm-tools",
+      "command": "node",
+      "website": "https://nodejs.org/",
+      "repository": null,
+      "wingetId": "OpenJS.NodeJS.LTS",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "mise"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": [
+          "mise"
+        ]
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "OpenJS.NodeJS.LTS",
+            "command": "winget install --id OpenJS.NodeJS.LTS --exact --accept-package-agreements --accept-source-agreements"
+          }
+        },
+        "linux": {
+          "mise": "mise use --global node@lts"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id OpenJS.NodeJS.LTS --exact --accept-package-agreements --accept-source-agreements",
+        "linux": "mise upgrade node"
+      },
+      "healthCheck": "node --version && npm --version",
+      "versionCommand": "node --version",
+      "capabilitiesCommand": "node --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "runtime",
+        "javascript",
+        "npm"
+      ],
+      "notes": [],
+      "provenance": [
+        "WingetIds.yml: Node.js (LTS) / OpenJS.NodeJS.LTS."
+      ],
+      "catalogFile": "foundation.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+    },
+    {
+      "id": "ntm",
+      "name": "NTM",
+      "description": "Multi-agent tmux orchestration with dashboards and machine-readable robot commands.",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "ntm",
+      "website": "https://github.com/Dicklesworthstone/ntm",
+      "repository": "https://github.com/Dicklesworthstone/ntm",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "brew"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": [
+          "mcp-agent-mail",
+          "br",
+          "bv",
+          "cass",
+          "dcg"
+        ]
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/ntm/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/ntm/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode"
+        },
+        "macos": {
+          "brew": "brew install dicklesworthstone/tap/ntm"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/ntm/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/ntm/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode",
+        "macos": "brew upgrade dicklesworthstone/tap/ntm"
+      },
+      "healthCheck": "ntm --version",
+      "versionCommand": "ntm --version",
+      "capabilitiesCommand": "ntm --robot-capabilities",
+      "robotMode": {
+        "supported": true,
+        "command": "ntm --robot-status",
+        "format": "json"
+      },
+      "completions": {
+        "bash": "ntm completion bash",
+        "fish": "ntm completion fish",
+        "powershell": "ntm completion powershell",
+        "zsh": "ntm completion zsh"
+      },
+      "skill": null,
+      "tags": [
+        "tmux",
+        "orchestration",
+        "agents",
+        "dashboard"
+      ],
+      "notes": [
+        "Upstream skill installer has no documented non-interactive single-skill selector; skill installation is intentionally not automated here."
+      ],
+      "provenance": [
+        "Dicklesworthstone Flywheel profile and NTM robot-mode guidance verified 2026-09-16."
+      ],
+      "catalogFile": "agentic-flywheel.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+    },
+    {
+      "id": "ollama",
+      "name": "Ollama",
+      "description": "Local model runtime and CLI.",
+      "category": "ai",
+      "tier": "recommended-agent",
+      "command": "ollama",
+      "website": "https://ollama.com/",
+      "repository": "https://github.com/ollama/ollama",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "standalone",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": [
+          "curl"
+        ]
+      },
+      "install": {
+        "windows": {
+          "standalone": "irm https://ollama.com/install.ps1 | iex"
+        },
+        "linux": {
+          "standalone": "curl -fsSL https://ollama.com/install.sh | sh"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL https://ollama.com/install.sh | sh"
+        },
+        "macos": {
+          "standalone": "curl -fsSL https://ollama.com/install.sh | sh"
+        }
+      },
+      "update": {
+        "windows": "irm https://ollama.com/install.ps1 | iex",
+        "linux": "curl -fsSL https://ollama.com/install.sh | sh",
+        "wsl2": "curl -fsSL https://ollama.com/install.sh | sh",
+        "macos": "curl -fsSL https://ollama.com/install.sh | sh"
+      },
+      "healthCheck": "ollama --version",
+      "versionCommand": "ollama --version",
+      "capabilitiesCommand": "ollama --help",
+      "robotMode": {
+        "supported": true,
+        "command": "ollama list",
+        "format": "text"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "local-ai",
+        "models",
+        "runtime"
+      ],
+      "notes": [
+        "Models are intentionally not pulled automatically."
+      ],
+      "provenance": [
+        "Ollama installation/update guidance verified 2026-09-16."
+      ],
+      "catalogFile": "ai-agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/ai-agents.yml"
+    },
+    {
+      "id": "oracle",
+      "name": "Oracle",
+      "description": "AI review/oracle CLI used by APR",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "oracle",
+      "website": "https://askoracle.sh",
+      "repository": "https://github.com/steipete/oracle",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "all": "npm"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "nodejs-lts"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "all": {
+          "npm": "npm install --global @steipete/oracle"
+        }
+      },
+      "update": {
+        "all": "npm update --global @steipete/oracle"
+      },
+      "healthCheck": "oracle --version",
+      "versionCommand": "oracle --version",
+      "capabilitiesCommand": "oracle --help",
+      "robotMode": {
+        "supported": true,
+        "command": "oracle --help",
+        "format": "text"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "review",
+        "ai"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "agentic-utilities.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-utilities.yml"
+    },
+    {
+      "id": "pandoc",
+      "name": "Pandoc",
+      "description": "Universal document converter",
+      "category": "documentation",
+      "tier": "optional",
+      "command": "pandoc",
+      "website": "https://pandoc.org/",
+      "repository": "https://github.com/jgm/pandoc",
+      "wingetId": "JohnMacFarlane.Pandoc",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "JohnMacFarlane.Pandoc",
+            "command": "winget install --id JohnMacFarlane.Pandoc --exact"
+          }
+        },
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y pandoc"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id JohnMacFarlane.Pandoc --exact",
+        "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y pandoc"
+      },
+      "healthCheck": "pandoc --version",
+      "versionCommand": "pandoc --version",
+      "capabilitiesCommand": "pandoc --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "docs"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "workflow-infrastructure.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+    },
+    {
+      "id": "powershell7",
+      "name": "PowerShell 7",
+      "description": "Plattformübergreifende PowerShell-Laufzeit für Automatisierung, Setup-Skripte und Windows-Administration.",
+      "category": "foundation",
+      "tier": "required-windows",
+      "command": "pwsh",
+      "website": "https://github.com/PowerShell/PowerShell",
+      "repository": "https://github.com/PowerShell/PowerShell",
+      "wingetId": "Microsoft.PowerShell",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "wsl2": "apt",
+          "linux": "apt",
+          "macos": "brew"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": [
+          "curl"
+        ]
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Microsoft.PowerShell",
+            "command": "winget install --id Microsoft.PowerShell --exact --source winget --accept-package-agreements --accept-source-agreements"
+          }
+        },
+        "wsl2": {
+          "apt": ". /etc/os-release && curl -fsSLo /tmp/packages-microsoft-prod.deb \"https://packages.microsoft.com/config/${ID}/${VERSION_ID}/packages-microsoft-prod.deb\" && sudo dpkg -i /tmp/packages-microsoft-prod.deb && rm -f /tmp/packages-microsoft-prod.deb && sudo apt-get update && sudo apt-get install -y powershell"
+        },
+        "linux": {
+          "apt": ". /etc/os-release && curl -fsSLo /tmp/packages-microsoft-prod.deb \"https://packages.microsoft.com/config/${ID}/${VERSION_ID}/packages-microsoft-prod.deb\" && sudo dpkg -i /tmp/packages-microsoft-prod.deb && rm -f /tmp/packages-microsoft-prod.deb && sudo apt-get update && sudo apt-get install -y powershell"
+        },
+        "macos": {
+          "brew": "brew install powershell"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id Microsoft.PowerShell --exact --source winget --accept-package-agreements --accept-source-agreements",
+        "wsl2": "sudo apt-get update && sudo apt-get install -y powershell",
+        "linux": "sudo apt-get update && sudo apt-get install -y powershell",
+        "macos": "brew update && brew upgrade powershell"
+      },
+      "healthCheck": "pwsh -NoLogo -NoProfile -Command \"$PSVersionTable.PSVersion\"",
+      "versionCommand": "pwsh --version",
+      "capabilitiesCommand": "pwsh -Help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "shell",
+        "automation",
+        "powershell"
+      ],
+      "notes": [],
+      "provenance": [
+        "Microsoft PowerShell installation docs verified 2026-09-13."
+      ],
+      "catalogFile": "foundation.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+    },
+    {
+      "id": "python3",
+      "name": "Python 3",
+      "description": "Python runtime",
+      "category": "runtime",
+      "tier": "recommended-agent",
+      "command": "python3",
+      "website": "https://www.python.org/",
+      "repository": null,
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": [
+          "uv"
+        ]
+      },
+      "install": {
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y python3"
+        }
+      },
+      "update": {
+        "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y python3"
+      },
+      "healthCheck": "python3 --version",
+      "versionCommand": "python3 --version",
+      "capabilitiesCommand": "python3 --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "python"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "rch",
+      "name": "RCH",
+      "description": "Remote compilation/helper utility",
+      "category": "agentic",
+      "tier": "optional",
+      "command": "rch",
+      "website": null,
+      "repository": null,
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "standalone": "echo \"Install rch through ACFS\""
+        }
+      },
+      "update": {
+        "linux": "echo \"Update rch through ACFS\""
+      },
+      "healthCheck": "rch --help",
+      "versionCommand": "rch --version",
+      "capabilitiesCommand": "rch --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "agentic"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "agentic-utilities.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-utilities.yml"
+    },
+    {
+      "id": "ru",
+      "name": "Repo Updater",
+      "description": "Repository synchronization utility for keeping large collections of Git repositories current.",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "ru",
+      "website": "https://github.com/Dicklesworthstone/repo_updater",
+      "repository": "https://github.com/Dicklesworthstone/repo_updater",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "scoop",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "brew"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "git",
+          "curl"
+        ],
+        "recommended": [
+          "gh",
+          "jq",
+          "ntm"
+        ]
+      },
+      "install": {
+        "windows": {
+          "scoop": "scoop bucket add dicklesworthstone https://github.com/Dicklesworthstone/scoop-bucket; scoop install dicklesworthstone/ru"
+        },
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/repo_updater/main/install.sh?ru_cb=$(date +%s)\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/repo_updater/main/install.sh?ru_cb=$(date +%s)\" | bash"
+        },
+        "macos": {
+          "brew": "brew install dicklesworthstone/tap/ru"
+        }
+      },
+      "update": {
+        "all": "ru self-update"
+      },
+      "healthCheck": "ru doctor",
+      "versionCommand": "ru --version",
+      "capabilitiesCommand": "ru robot-docs",
+      "robotMode": {
+        "supported": true,
+        "command": "ru status --no-fetch --json",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "repositories",
+        "sync",
+        "git"
+      ],
+      "notes": [],
+      "provenance": [
+        "Dicklesworthstone Flywheel profile and Repo Updater upstream guidance verified 2026-09-16."
+      ],
+      "catalogFile": "agentic-flywheel.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+    },
+    {
+      "id": "ripgrep",
+      "name": "ripgrep",
+      "description": "Schnelle rekursive Suche",
+      "category": "terminal",
+      "tier": "recommended",
+      "command": "rg",
+      "website": "https://github.com/BurntSushi/ripgrep",
+      "repository": "https://github.com/BurntSushi/ripgrep",
+      "wingetId": "BurntSushi.ripgrep.MSVC",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "BurntSushi.ripgrep.MSVC",
+            "command": "winget install --id BurntSushi.ripgrep.MSVC --exact --accept-package-agreements --accept-source-agreements"
+          }
+        },
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y ripgrep"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id BurntSushi.ripgrep.MSVC --exact --accept-package-agreements --accept-source-agreements",
+        "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y ripgrep"
+      },
+      "healthCheck": "rg --version",
+      "versionCommand": "rg --version",
+      "capabilitiesCommand": "rg --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "search"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "scoop",
+      "name": "Scoop",
+      "description": "Windows-Kommandozeilen-Paketmanager; offizieller Windows-Kanal für mehrere Agentic-Tools.",
+      "category": "foundation",
+      "tier": "optional-windows",
+      "command": "scoop",
+      "website": "https://scoop.sh/",
+      "repository": "https://github.com/ScoopInstaller/Scoop",
+      "wingetId": null,
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": [
+          "powershell7"
+        ]
+      },
+      "install": {
+        "windows": {
+          "standalone": "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser; Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression"
+        }
+      },
+      "update": {
+        "windows": "scoop update"
+      },
+      "healthCheck": "scoop --version",
+      "versionCommand": "scoop --version",
+      "capabilitiesCommand": "scoop help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "package-manager",
+        "windows"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "foundation.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+    },
+    {
+      "id": "sed",
+      "name": "sed",
+      "description": "Stream editor",
+      "category": "terminal",
+      "tier": "optional",
+      "command": "sed",
+      "website": "https://www.gnu.org/software/sed/",
+      "repository": null,
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "apt"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "linux": {
+          "apt": "sudo apt-get update && sudo apt-get install -y sed"
+        }
+      },
+      "update": {
+        "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y sed"
+      },
+      "healthCheck": "sed --version",
+      "versionCommand": "sed --version",
+      "capabilitiesCommand": "sed --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "text"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "slb",
+      "name": "SLB",
+      "description": "Two-person-rule approval gate for potentially dangerous agent commands.",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "slb",
+      "website": "https://github.com/Dicklesworthstone/slb",
+      "repository": "https://github.com/Dicklesworthstone/slb",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "scoop",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "brew"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": [
+          "mcp-agent-mail",
+          "dcg"
+        ]
+      },
+      "install": {
+        "windows": {
+          "scoop": "scoop bucket add dicklesworthstone https://github.com/Dicklesworthstone/scoop-bucket; scoop install dicklesworthstone/slb"
+        },
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/slb/main/scripts/install.sh?$(date +%s)\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/slb/main/scripts/install.sh?$(date +%s)\" | bash"
+        },
+        "macos": {
+          "brew": "brew install dicklesworthstone/tap/slb"
+        }
+      },
+      "update": {
+        "windows": "scoop update dicklesworthstone/slb",
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/slb/main/scripts/install.sh?$(date +%s)\" | bash",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/slb/main/scripts/install.sh?$(date +%s)\" | bash",
+        "macos": "brew upgrade dicklesworthstone/tap/slb"
+      },
+      "healthCheck": "slb --version",
+      "versionCommand": "slb --version",
+      "capabilitiesCommand": "slb --help",
+      "robotMode": {
+        "supported": true,
+        "command": "slb pending --json",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "approval",
+        "safety",
+        "coordination"
+      ],
+      "notes": [],
+      "provenance": [
+        "Dicklesworthstone Flywheel profile and SLB upstream guidance verified 2026-09-16."
+      ],
+      "catalogFile": "agentic-flywheel.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+    },
+    {
+      "id": "source2prompt",
+      "name": "Source2Prompt",
+      "description": "Repository source-to-prompt utility",
+      "category": "agentic",
+      "tier": "optional",
+      "command": "s2p",
+      "website": null,
+      "repository": null,
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "git",
+          "ripgrep"
+        ],
+        "recommended": [
+          "bun"
+        ]
+      },
+      "install": {
+        "linux": {
+          "standalone": "echo \"Install source2prompt through ACFS\""
+        }
+      },
+      "update": {
+        "linux": "echo \"Update source2prompt through ACFS\""
+      },
+      "healthCheck": "s2p --help",
+      "versionCommand": "s2p --help",
+      "capabilitiesCommand": "s2p --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "prompt",
+        "source"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "agentic-utilities.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-utilities.yml"
+    },
+    {
+      "id": "ubs",
+      "name": "Ultimate Bug Scanner",
+      "description": "Pattern-based multi-language bug scanner designed for fast pre-commit quality checks.",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "ubs",
+      "website": "https://github.com/Dicklesworthstone/ultimate_bug_scanner",
+      "repository": "https://github.com/Dicklesworthstone/ultimate_bug_scanner",
+      "wingetId": null,
+      "platforms": [
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "brew"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": [
+          "ripgrep",
+          "jq"
+        ]
+      },
+      "install": {
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/ultimate_bug_scanner/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/ultimate_bug_scanner/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode"
+        },
+        "macos": {
+          "brew": "brew install dicklesworthstone/tap/ubs"
+        }
+      },
+      "update": {
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/ultimate_bug_scanner/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/ultimate_bug_scanner/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode",
+        "macos": "brew upgrade dicklesworthstone/tap/ubs"
+      },
+      "healthCheck": "ubs --version",
+      "versionCommand": "ubs --version",
+      "capabilitiesCommand": "ubs --help",
+      "robotMode": {
+        "supported": true,
+        "command": "ubs --format=json .",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "quality",
+        "scanner",
+        "bugs",
+        "pre-commit"
+      ],
+      "notes": [
+        "Native Windows PowerShell installation is not advertised here; use WSL2 for the supported Windows-host workflow."
+      ],
+      "provenance": [
+        "Dicklesworthstone Flywheel profile and UBS upstream guidance verified 2026-09-16."
+      ],
+      "catalogFile": "agentic-flywheel.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+    },
+    {
+      "id": "uv",
+      "name": "uv",
+      "description": "Python package/tool manager",
+      "category": "runtime",
+      "tier": "recommended",
+      "command": "uv",
+      "website": "https://docs.astral.sh/uv/",
+      "repository": "https://github.com/astral-sh/uv",
+      "wingetId": "astral-sh.uv",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget",
+          "linux": "standalone"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "astral-sh.uv",
+            "command": "winget install --id astral-sh.uv --exact --accept-package-agreements --accept-source-agreements"
+          }
+        },
+        "linux": {
+          "standalone": "curl -LsSf https://astral.sh/uv/install.sh | sh"
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id astral-sh.uv --exact --accept-package-agreements --accept-source-agreements",
+        "linux": "uv self update"
+      },
+      "healthCheck": "uv --version",
+      "versionCommand": "uv --version",
+      "capabilitiesCommand": "uv --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "python"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "recommended-cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+    },
+    {
+      "id": "vercel-cli",
+      "name": "Vercel CLI",
+      "description": "CLI für Vercel-Projekte, Deployments und Umgebungen.",
+      "category": "deployment",
+      "tier": "optional",
+      "command": "vercel",
+      "website": "https://vercel.com/docs/cli",
+      "repository": "https://github.com/vercel/vercel",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "all": "npm"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "nodejs-lts"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "all": {
+          "npm": "npm install --global vercel"
+        }
+      },
+      "update": {
+        "all": "npm update --global vercel"
+      },
+      "healthCheck": "vercel --version",
+      "versionCommand": "vercel --version",
+      "capabilitiesCommand": "vercel --help",
+      "robotMode": {
+        "supported": true,
+        "command": "vercel --version",
+        "format": "text"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "deployment",
+        "vercel"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "deployment.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/deployment.yml"
+    },
+    {
+      "id": "vscode-cli",
+      "name": "Visual Studio Code CLI",
+      "description": "VS Code command-line launcher",
+      "category": "development",
+      "tier": "optional",
+      "command": "code",
+      "website": "https://code.visualstudio.com/",
+      "repository": null,
+      "wingetId": "Microsoft.VisualStudioCode",
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Microsoft.VisualStudioCode",
+            "command": "winget install --id Microsoft.VisualStudioCode --exact"
+          }
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --id Microsoft.VisualStudioCode --exact"
+      },
+      "healthCheck": "code --version",
+      "versionCommand": "code --version",
+      "capabilitiesCommand": "code --help",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "editor"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "workflow-infrastructure.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+    },
+    {
+      "id": "winget",
+      "name": "Windows Package Manager",
+      "description": "Windows-Paketmanager für reproduzierbare CLI- und Desktop-Installationen über Paket-IDs.",
+      "category": "foundation",
+      "tier": "required-windows",
+      "command": "winget",
+      "website": "https://learn.microsoft.com/windows/package-manager/winget/",
+      "repository": null,
+      "wingetId": null,
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "os-component"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "method": "os-component",
+          "note": "Wird über App Installer/Windows bereitgestellt."
+        }
+      },
+      "update": {
+        "windows": "winget upgrade --all"
+      },
+      "healthCheck": "winget --info",
+      "versionCommand": "winget --version",
+      "capabilitiesCommand": "winget --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "package-manager",
+        "windows"
+      ],
+      "notes": [],
+      "provenance": [
+        "Registry-Erweiterung; keine WingetIds.yml-Zeile erforderlich."
+      ],
+      "catalogFile": "foundation.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+    },
+    {
+      "id": "wsl2",
+      "name": "Windows Subsystem for Linux 2",
+      "description": "Linux-Umgebung unter Windows; für ACFS und Linux-first Agent-Tooling wird Ubuntu unter WSL2 empfohlen.",
+      "category": "foundation",
+      "tier": "required-acfs-on-windows",
+      "command": "wsl",
+      "website": "https://learn.microsoft.com/windows/wsl/",
+      "repository": null,
+      "wingetId": null,
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "windows-feature"
+        }
+      },
+      "dependencies": {
+        "required": [],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "command": "wsl --install -d Ubuntu"
+        }
+      },
+      "update": {
+        "windows": "wsl --update"
+      },
+      "healthCheck": "wsl --status",
+      "versionCommand": "wsl --version",
+      "capabilitiesCommand": "wsl --help",
+      "robotMode": {
+        "supported": false,
+        "command": null,
+        "format": null
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "wsl",
+        "linux",
+        "environment"
+      ],
+      "notes": [],
+      "provenance": [],
+      "catalogFile": "foundation.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+    },
+    {
+      "id": "xf",
+      "name": "XF",
+      "description": "High-performance local search over X/Twitter archive data.",
+      "category": "agentic",
+      "tier": "recommended-agent",
+      "command": "xf",
+      "website": "https://github.com/Dicklesworthstone/xf",
+      "repository": "https://github.com/Dicklesworthstone/xf",
+      "wingetId": null,
+      "platforms": [
+        "windows",
+        "linux",
+        "wsl2",
+        "macos"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "scoop",
+          "linux": "standalone",
+          "wsl2": "standalone",
+          "macos": "brew"
+        }
+      },
+      "dependencies": {
+        "required": [
+          "curl"
+        ],
+        "recommended": []
+      },
+      "install": {
+        "windows": {
+          "scoop": "scoop bucket add dicklesworthstone https://github.com/Dicklesworthstone/scoop-bucket; scoop install dicklesworthstone/xf"
+        },
+        "linux": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/xf/main/install.sh?$(date +%s)\" | bash"
+        },
+        "wsl2": {
+          "standalone": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/xf/main/install.sh?$(date +%s)\" | bash"
+        },
+        "macos": {
+          "brew": "brew install dicklesworthstone/tap/xf"
+        }
+      },
+      "update": {
+        "windows": "scoop update dicklesworthstone/xf",
+        "linux": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/xf/main/install.sh?$(date +%s)\" | bash",
+        "wsl2": "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/xf/main/install.sh?$(date +%s)\" | bash",
+        "macos": "brew upgrade dicklesworthstone/tap/xf"
+      },
+      "healthCheck": "xf --version",
+      "versionCommand": "xf --version",
+      "capabilitiesCommand": "xf --help",
+      "robotMode": {
+        "supported": true,
+        "command": "xf stats --format json",
+        "format": "json"
+      },
+      "completions": {},
+      "skill": null,
+      "tags": [
+        "search",
+        "archive",
+        "twitter",
+        "x"
+      ],
+      "notes": [],
+      "provenance": [
+        "Dicklesworthstone Flywheel profile and XF upstream guidance verified 2026-09-16."
+      ],
+      "catalogFile": "agentic-flywheel.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+    }
+  ]
+}
