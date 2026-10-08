@@ -1,13 +1,12 @@
-import { createContext, useContext, useMemo, useState, type ReactNode } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import type { Locale } from '../types/app'
 import { translations, type TranslationKey } from './translations'
 
-const STORAGE_KEY = 'app-list.locale'
+const STORAGE_KEY = 'cli-tool-registry.locale'
 
 function detectInitialLocale(): Locale {
   const stored = localStorage.getItem(STORAGE_KEY)
-  if (stored === 'en-us' || stored === 'zh-tw') return stored
-  return navigator.language.toLowerCase().startsWith('zh') ? 'zh-tw' : 'en-us'
+  return stored === 'en' ? 'en' : 'de'
 }
 
 interface LocaleContextValue {
@@ -20,6 +19,10 @@ const LocaleContext = createContext<LocaleContextValue | null>(null)
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(detectInitialLocale)
+
+  useEffect(() => {
+    document.documentElement.lang = locale
+  }, [locale])
 
   const setLocale = (next: Locale) => {
     setLocaleState(next)

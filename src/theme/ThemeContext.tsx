@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from '
 
 export type Theme = 'light' | 'dark' | 'system'
 
-const STORAGE_KEY = 'app-list.theme'
+const STORAGE_KEY = 'cli-tool-registry.theme'
 
 function detectInitialTheme(): Theme {
   const stored = localStorage.getItem(STORAGE_KEY)

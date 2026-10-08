@@ -1,19 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>App List</title>
-    <meta name="description" content="A collection of recommended apps" />
-    <script>
-      (function () {
-        var theme = localStorage.getItem('app-list.theme')
-        if (theme === 'light' || theme === 'dark') {
-          document.documentElement.setAttribute('data-theme', theme)
-        }
-      })()
-    </script>
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="description" content="CliToolRegistry-Katalog mit Werkzeugen, Installationsbefehlen und Plattformen." />
+    <title>CLI Tool Registry</title>
   </head>
   <body>
     <div id="root"></div>

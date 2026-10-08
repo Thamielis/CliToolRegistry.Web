@@ -1,7 +1,7 @@
 import { useLocale } from '../i18n/LocaleContext'
 
-const REPO_URL = 'https://github.com/ychsieh95/app-list'
-const LICENSE_URL = 'https://github.com/ychsieh95/app-list/blob/main/LICENSE'
+const REPO_URL = 'https://github.com/Thamielis/CliToolRegistry.Web'
+const LICENSE_URL = REPO_URL + '/blob/main/LICENSE'
 
 export function Footer() {
   const { t } = useLocale()

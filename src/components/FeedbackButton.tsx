@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useLocale } from '../i18n/LocaleContext'
 
-const REPO_URL = 'https://github.com/ychsieh95/app-list'
+const REPO_URL = 'https://github.com/Thamielis/CliToolRegistry.Web'
 
 export function FeedbackButton() {
   const { t } = useLocale()

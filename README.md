@@ -1,48 +1,54 @@
-# App List
+# CLI Tool Registry Web
 
-A static site listing recommended apps, available in English (en-us) and Traditional Chinese (zh-tw), with card/list view modes. Built with Vite + React + TypeScript, deployed to GitHub Pages.
+Eine deutschsprachige Weboberfläche für die Werkzeuge aus
+[In-Pro-Org/CliToolRegistry](https://github.com/In-Pro-Org/CliToolRegistry).
+Die Oberfläche ist mit Vite, React und TypeScript erstellt und wird über GitHub
+Pages veröffentlicht.
 
-## Adding an app
+## Datenquelle und Aktualisierung
 
-Add a new JSON file to [src/data/apps/](src/data/apps/), named after the app (e.g. `my-app.json`):
+Die kanonischen YAML-Dateien liegen im Registry-Repository unter
+`src/CliToolRegistry/Data/Tools/`. `npm run sync:catalog` liest alle
+Katalogdateien ein und erstellt `public/registry-catalog.json`. `npm run dev`
+und `npm run build` führen diesen Abgleich automatisch aus, wenn das
+CliToolRegistry-Repository unter `../CliToolRegistry` liegt. Ein anderer Pfad
+kann über `CLI_TOOL_REGISTRY_PATH` gesetzt werden.
 
-```json
-{
-  "id": "my-app",
-  "name": "My App",
-  "url": "https://example.com",
-  "icon": "🚀",
-  "tags": ["tag1", "tag2"],
-  "category": {
-    "en-us": "Category in English",
-    "zh-tw": "分類的繁體中文"
-  },
-  "description": {
-    "en-us": "Short description in English.",
-    "zh-tw": "簡短的繁體中文說明。"
-  }
-}
-```
+Die Website lädt den erzeugten Katalog beim Start und beim manuellen Neuladen
+und hält den letzten erfolgreichen Stand im Browsercache. Der Export ist Teil
+der veröffentlichten Website und damit für deren Besucher sichtbar.
 
-Every `.json` file in that folder is picked up automatically — no other code changes needed. Commit and push to `main` and the site rebuilds and redeploys automatically.
+Der GitHub-Pages-Workflow prüft alle sechs Stunden auf einen neuen Stand in
+CliToolRegistry. Dafür muss im Web-Repository das Secret
+`CLI_TOOL_REGISTRY_READ_TOKEN` mit lesendem Zugriff auf das private
+CliToolRegistry-Repository hinterlegt sein. Ohne dieses Secret verwendet der
+Workflow den zuletzt gespeicherten Export; lokal aktualisiert `npm run sync:catalog`
+den Export aus dem benachbarten Repository.
 
-## Development
+Die Oberfläche ist standardmäßig Deutsch; Englisch kann über den Sprachschalter
+gewählt werden. Beschreibungen und Befehle werden in der Originalsprache des
+Registry-Katalogs angezeigt.
 
-```bash
+## Entwicklung
+
+```sh
 npm install
 npm run dev
 ```
 
+## Katalog manuell aktualisieren
+
+```sh
+npm run sync:catalog
+```
+
 ## Build
 
-```bash
+```sh
 npm run build
 ```
 
 ## Deployment
 
-Pushing to `main` triggers [.github/workflows/deploy.yml](.github/workflows/deploy.yml), which builds the site and publishes it to GitHub Pages.
-
-One-time setup after creating the GitHub repo: go to **Settings → Pages** and set **Source** to **GitHub Actions**.
-
-The site will be available at `https://<your-username>.github.io/app-list/`.
+Ein Push auf `main` startet [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
+und veröffentlicht den Build auf GitHub Pages.

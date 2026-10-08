@@ -2,15 +2,15 @@ import { useLocale } from '../i18n/LocaleContext'
 import type { Locale } from '../types/app'
 
 const OPTIONS: { value: Locale; label: string }[] = [
-  { value: 'en-us', label: 'EN' },
-  { value: 'zh-tw', label: '繁中' },
+  { value: 'de', label: 'DE' },
+  { value: 'en', label: 'EN' },
 ]
 
 export function LocaleSwitcher() {
   const { locale, setLocale } = useLocale()
 
   return (
-    <div className="locale-switcher" role="group" aria-label="Language">
+    <div className="locale-switcher" role="group" aria-label={locale === 'de' ? 'Sprache' : 'Language'}>
       {OPTIONS.map((opt) => (
         <button
           key={opt.value}

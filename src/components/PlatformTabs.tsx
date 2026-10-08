@@ -3,7 +3,9 @@ import type { Platform } from '../types/app'
 
 const PLATFORM_LABELS: Record<Platform, string> = {
   windows: 'Windows',
-  kubuntu: 'Kubuntu',
+  linux: 'Linux',
+  wsl2: 'WSL 2',
+  macos: 'macOS',
 }
 
 export function PlatformTabs({
