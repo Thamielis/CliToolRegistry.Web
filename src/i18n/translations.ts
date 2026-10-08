@@ -93,6 +93,7 @@ export const translations = {
     footerCopyright: '© {year} CLI Tool Registry',
     footerSource: 'Quellcode auf GitHub',
     footerLicense: 'MIT-Lizenz',
+    pythonTrademark: 'Python und das Python-Logo sind Marken der Python Software Foundation. Dieses Projekt ist nicht mit der PSF verbunden und wird von ihr nicht unterstützt.',
   },
   en: {
     siteTitle: 'CLI Tool Registry',
@@ -186,6 +187,7 @@ export const translations = {
     footerCopyright: '© {year} CLI Tool Registry',
     footerSource: 'View source on GitHub',
     footerLicense: 'MIT License',
+    pythonTrademark: 'Python and the Python logo are trademarks of the Python Software Foundation. This project is not affiliated with or endorsed by the PSF.',
   },
 } satisfies Record<Locale, Record<string, string>>
 

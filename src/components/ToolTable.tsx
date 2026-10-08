@@ -3,6 +3,7 @@ import { useLocale } from '../i18n/LocaleContext'
 import { categoryLabel, platformLabel } from '../i18n/catalogLabels'
 import { getInstallCommand } from '../data/loadApps'
 import { CommandBlock } from './CommandBlock'
+import { AppIcon } from './AppIcon'
 
 export function ToolTable({
   tools,
@@ -47,7 +48,10 @@ export function ToolTable({
                     aria-controls={selected ? 'tool-details-' + tool.id : undefined}
                     aria-label={tool.name + ', ' + (selected ? t('closeDetails') : t('details'))}
                   >
-                    <span className="tool-name">{tool.name}</span>
+                    <span className="tool-name-line">
+                      <AppIcon app={tool} className="tool-table-logo" />
+                      <span className="tool-name">{tool.name}</span>
+                    </span>
                     <span className="tool-description">{tool.description}</span>
                   </button>
                 </td>

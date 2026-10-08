@@ -89,3 +89,7 @@ The glyphs follow the existing inline SVG family; terminal marks use literal `>_
 - Do preserve selection context and restore focus when closing details.
 - Don't infer tool health, version, or install support from a decorative badge.
 - Don't require hover, hidden scrollbars, or animation to access an action.
+
+## Tool Identity Marks
+
+Cards, table rows, and the open detail heading use the same `AppIcon` manifest keyed by the stable tool ID. The 46px card frame, 28px table frame, and 40px detail frame reserve their dimensions before image load; the image uses `object-fit: contain` and keeps its source colors. Theme variants are selected from `ThemeContext.resolvedTheme`. `BASE_URL` prefixes relative local asset paths. A known image error falls back in that frame; unknown IDs use stable initials. Legacy plain text and emoji remain valid fallbacks, while URL and file-path strings are ignored. The source inventory in `docs/tool-logo-sources.md` is the authority for marks, attribution, legal terms, and fallback decisions. Logos identify catalog entries only and do not signal tool health or endorsement.

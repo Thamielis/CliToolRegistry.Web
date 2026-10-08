@@ -24,6 +24,14 @@ Visual intent and token ownership are in [DESIGN.md](DESIGN.md). Product evidenc
 - All owned labels and accessible names follow LocaleContext. Catalog text remains as published. Source timestamps follow the selected locale.
 - Keyboard focus is visible. Native selects retain native keyboard behavior. Reduced motion and forced colors use the global stylesheet rules.
 
+## Identity Marks
+
+- The card, table, and detail views resolve the same local logo by stable tool ID. The manifest does not change the catalog schema or trigger external image requests.
+- Each frame reserves its size before load. A broken or missing image changes only its contents to the same deterministic fallback; source changes and theme variants are keyed to their actual local URL.
+- Logo images are decorative (`alt=""`, `aria-hidden` container); the adjacent tool name remains the accessible identity. Legacy plain text/emoji remain visible when there is no mapped mark. URL-like or path-like legacy strings are never fetched or rendered as fallback text.
+- `system` theme updates the resolved logo variant on live OS changes. Mark colors are preserved, and surface metadata is explicit.
+- `docs/tool-logo-sources.md` records identity evidence, attribution, and remaining fallbacks. Logos do not communicate availability, health, or endorsement.
+
 ## Evidence
 
 `tests/catalog-ui.spec.ts` verifies theme/view persistence, local filtering, platform commands, detail focus, clipboard feedback, retry/cache handling, localization, mobile reflow, reduced motion, and automated accessibility. `npm run test:ui`, `npm run lint`, and `npm run build` are the required project checks.

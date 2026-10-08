@@ -337,6 +337,7 @@ function App() {
         <p>{t('footerCopyright').replace('{year}', String(new Date().getFullYear()))}</p>
         <span>{t('catalogFiles').replace('{count}', String(snapshot?.fileCount ?? 0))}</span>
         <a href={CATALOG_REPOSITORY_URL} target="_blank" rel="noreferrer">{t('footerSource')}</a>
+        <p className="footer-trademark-note">{t('pythonTrademark')}</p>
       </footer>
     </div>
   )

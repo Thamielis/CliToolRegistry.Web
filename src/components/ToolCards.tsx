@@ -5,6 +5,7 @@ import { categoryLabel, platformLabel, tierLabel } from '../i18n/catalogLabels'
 import { getPlatformCommand } from '../data/loadApps'
 import { CommandBlock } from './CommandBlock'
 import { ToolDetails } from './ToolDetails'
+import { AppIcon } from './AppIcon'
 
 interface ToolCardsProps {
   tools: CliTool[]
@@ -34,7 +35,7 @@ function ToolCard({ tool, enhanced, activePlatform, selected, onSelect, onClose 
     <article className={'tool-card' + (enhanced ? ' tool-card-enhanced' : '') + (selected ? ' is-expanded' : '')} aria-labelledby={headingId}>
       <div className="tool-card-overview">
         <header className="tool-card-header">
-          <span className="tool-card-symbol" aria-hidden="true">{'>'}_</span>
+          <AppIcon app={tool} className="tool-card-symbol" />
           <div className="tool-card-title">
             <span className="category-label">{categoryLabel(tool.category, locale)}</span>
             <h3 id={headingId}>{tool.name}</h3>

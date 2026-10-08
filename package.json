@@ -11,7 +11,8 @@
     "lint": "oxlint",
     "test:ui": "playwright test",
     "preview": "vite preview",
-    "sync:catalog": "node scripts/sync-catalog.mjs"
+    "sync:catalog": "node scripts/sync-catalog.mjs",
+    "validate:logos": "node scripts/validate-tool-logos.mjs"
   },
   "dependencies": {
     "react": "^19.2.7",

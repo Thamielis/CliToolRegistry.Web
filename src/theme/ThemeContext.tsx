@@ -1,8 +1,10 @@
 import { createContext, useContext, useLayoutEffect, useState, type ReactNode } from 'react'
 
 export type Theme = 'light' | 'dark' | 'system'
+export type ResolvedTheme = 'light' | 'dark'
 
 const STORAGE_KEY = 'cli-tool-registry.theme'
+const COLOR_SCHEME_QUERY = '(prefers-color-scheme: dark)'
 
 function detectInitialTheme(): Theme {
   try {
@@ -13,12 +15,14 @@ function detectInitialTheme(): Theme {
   }
 }
 
-function applyTheme(theme: Theme) {
-  const root = document.documentElement
-  const resolved = theme === 'system'
-    ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    : theme
-  root.setAttribute('data-theme', resolved)
+function detectSystemTheme(): ResolvedTheme {
+  return typeof window !== 'undefined' && window.matchMedia(COLOR_SCHEME_QUERY).matches
+    ? 'dark'
+    : 'light'
+}
+
+function applyResolvedTheme(resolved: ResolvedTheme) {
+  document.documentElement.setAttribute('data-theme', resolved)
   document.querySelector('meta[name="theme-color"]')?.setAttribute(
     'content', resolved === 'dark' ? '#080e1a' : '#f5f7fa',
   )
@@ -26,6 +30,7 @@ function applyTheme(theme: Theme) {
 
 interface ThemeContextValue {
   theme: Theme
+  resolvedTheme: ResolvedTheme
   setTheme: (theme: Theme) => void
 }
 
@@ -33,11 +38,19 @@ const ThemeContext = createContext<ThemeContextValue | null>(null)
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(detectInitialTheme)
+  const [systemTheme, setSystemTheme] = useState<ResolvedTheme>(detectSystemTheme)
+  const resolvedTheme = theme === 'system' ? systemTheme : theme
 
   useLayoutEffect(() => {
-    applyTheme(theme)
-    const media = window.matchMedia('(prefers-color-scheme: dark)')
-    const update = () => applyTheme(theme)
+    const media = window.matchMedia(COLOR_SCHEME_QUERY)
+    const update = () => {
+      const nextSystemTheme: ResolvedTheme = media.matches ? 'dark' : 'light'
+      setSystemTheme(nextSystemTheme)
+      const resolved = theme === 'system' ? nextSystemTheme : theme
+      applyResolvedTheme(resolved)
+    }
+
+    update()
     if (theme === 'system') media.addEventListener('change', update)
     return () => media.removeEventListener('change', update)
   }, [theme])
@@ -51,7 +64,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>
+  return <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme }}>{children}</ThemeContext.Provider>
 }
 
 export function useTheme() {

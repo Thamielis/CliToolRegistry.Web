@@ -4,6 +4,7 @@ import { useLocale } from '../i18n/LocaleContext'
 import { categoryLabel, platformLabel, tierLabel } from '../i18n/catalogLabels'
 import { getPlatformCommand } from '../data/loadApps'
 import { CommandBlock } from './CommandBlock'
+import { AppIcon } from './AppIcon'
 
 const PLATFORMS: ToolPlatform[] = ['windows', 'linux', 'wsl2', 'macos']
 
@@ -65,9 +66,12 @@ export function ToolDetails({ tool, onClose }: { tool: CliTool; onClose: () => v
     <section className="tool-details" id={'tool-details-' + tool.id} aria-labelledby={headingId}
       onKeyDown={(event) => { if (event.key === 'Escape') { event.stopPropagation(); onClose() } }}>
       <header className="detail-header">
-        <div>
-          <span className="detail-kicker">{t('details')}</span>
-          <h2 id={headingId} ref={headingRef} tabIndex={-1}>{tool.name}</h2>
+        <div className="detail-title-group">
+          <AppIcon app={tool} className="detail-logo" />
+          <div className="detail-title-copy">
+            <span className="detail-kicker">{t('details')}</span>
+            <h2 id={headingId} ref={headingRef} tabIndex={-1}>{tool.name}</h2>
+          </div>
         </div>
         <button type="button" className="quiet-button" onClick={onClose}>
           {t('closeDetails')}

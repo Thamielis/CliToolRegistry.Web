@@ -18,6 +18,7 @@ export function Footer() {
       <a href={LICENSE_URL} target="_blank" rel="noopener noreferrer">
         {t('footerLicense')}
       </a>
+      <p className="footer-trademark-note">{t('pythonTrademark')}</p>
     </footer>
   )
 }
