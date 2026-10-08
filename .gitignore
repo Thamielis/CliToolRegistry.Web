@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Project-local ACFS runtime artifacts
+/.beads/.br-wal-index-*/
+/.cass/blocked.log
+/.ee/ee.db*
+/.ee/index/
+/.ee/keys/
+/.ee/*.lock
+/.ee/hook-state/

@@ -1,0 +1,35 @@
+# Project-specific NTM configuration
+# Overrides global settings for this project
+
+[project]
+name = "CliToolRegistry.Web"
+created = "2026-10-08T13:47:09Z"
+
+[integrations]
+agent_mail = true
+beads = true
+cass = true
+cm = true
+
+agent_mail_project_key = "/home/mario/GitHub/CliToolRegistry.Web"
+agent_mail_registered = true
+agent_mail_registered_at = "2026-10-08T13:47:09Z"
+[defaults]
+# Project-level spawn defaults. Use these instead of [agents], because
+# project configs intentionally do not override agent command templates.
+# agents = { cc = 2, cod = 1 }
+
+[assign]
+# Additional approval labels for this repository. These extend the user's
+# global and NTM built-in gates; project config cannot remove a gate.
+# operator_gated_labels = ["security-review", "legal-approval"]
+
+[palette]
+# file = "palette.md"  # Relative to .ntm/
+
+[palette_state]
+# pinned = ["build", "test"]
+# favorites = ["build"]
+
+[templates]
+# dir = "templates"    # Relative to .ntm/
