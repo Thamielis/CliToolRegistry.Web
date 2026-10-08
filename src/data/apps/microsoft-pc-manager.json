@@ -1,0 +1,21 @@
+{
+  "id": "microsoft-pc-manager",
+  "name": "Microsoft PC Manager",
+  "url": "https://pcmanager.microsoft.com/",
+  "tags": [
+    "windows",
+    "cleanup",
+    "optimization"
+  ],
+  "platforms": [
+    "windows"
+  ],
+  "category": {
+    "en-us": "System & Utilities",
+    "zh-tw": "系統與工具"
+  },
+  "description": {
+    "en-us": "Official lightweight utility for one-click cleanup, storage management, and startup optimization.",
+    "zh-tw": "微軟官方輕量工具，提供一鍵清理、儲存空間管理與開機優化。"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "mobaxterm",
+  "name": "MobaXterm",
+  "url": "https://mobaxterm.mobatek.net/",
+  "tags": [
+    "windows",
+    "ssh",
+    "remote"
+  ],
+  "platforms": [
+    "windows"
+  ],
+  "category": {
+    "en-us": "Terminal & Remote",
+    "zh-tw": "終端機與遠端"
+  },
+  "description": {
+    "en-us": "All-in-one toolbox for SSH, RDP, VNC, and other remote computing sessions.",
+    "zh-tw": "整合 SSH、RDP、VNC 等多種連線的全能遠端運算工具箱。"
+  }
+}

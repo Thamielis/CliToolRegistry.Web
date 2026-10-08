@@ -1,0 +1,16 @@
+{
+  "id": "filelight",
+  "name": "Filelight",
+  "url": "https://apps.kde.org/filelight/",
+  "icon": "https://apps.kde.org/app-icons/org.kde.filelight.svg",
+  "tags": ["kubuntu", "disk-usage", "kde", "open-source"],
+  "platforms": ["kubuntu"],
+  "category": {
+    "en-us": "System & Utilities",
+    "zh-tw": "系統與工具"
+  },
+  "description": {
+    "en-us": "KDE utility that visualizes disk usage with interactive radial and tree maps.",
+    "zh-tw": "KDE 磁碟空間分析工具，以互動式圓餅圖與樹狀圖呈現磁碟使用狀況。"
+  }
+}

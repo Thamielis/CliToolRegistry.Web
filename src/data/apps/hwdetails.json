@@ -1,0 +1,15 @@
+{
+  "id": "hwdetails",
+  "name": "HWdetails V2.0",
+  "url": "https://www.tkosoft.com/products/hwdetails/",
+  "tags": ["windows", "diagnostics", "hardware", "system-info"],
+  "platforms": ["windows"],
+  "category": {
+    "en-us": "System & Utilities",
+    "zh-tw": "系統與工具"
+  },
+  "description": {
+    "en-us": "Free tool that gives a modernized DxDiag-like overview of CPU, RAM, GPU, storage, and network details.",
+    "zh-tw": "免費工具，如同現代化的 DxDiag，提供 CPU、記憶體、顯示卡、儲存裝置與網路的詳細資訊。"
+  }
+}

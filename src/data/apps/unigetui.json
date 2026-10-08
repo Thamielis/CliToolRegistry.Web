@@ -1,0 +1,22 @@
+{
+  "id": "unigetui",
+  "name": "UniGetUI",
+  "url": "https://github.com/marticliment/UniGetUI",
+  "icon": "https://raw.githubusercontent.com/Devolutions/UniGetUI/main/media/Icon%20sizes/128.png",
+  "tags": [
+    "windows",
+    "package-manager",
+    "winget"
+  ],
+  "platforms": [
+    "windows"
+  ],
+  "category": {
+    "en-us": "System & Utilities",
+    "zh-tw": "系統與工具"
+  },
+  "description": {
+    "en-us": "Graphical interface for managing WinGet, Scoop, Chocolatey, and other command-line package managers.",
+    "zh-tw": "整合 WinGet、Scoop、Chocolatey 等命令列套件管理器的圖形化介面。"
+  }
+}

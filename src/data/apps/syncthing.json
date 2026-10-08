@@ -1,0 +1,15 @@
+{
+  "id": "syncthing",
+  "name": "Syncthing",
+  "url": "https://syncthing.net",
+  "tags": ["sync", "privacy", "open-source"],
+  "platforms": ["windows", "kubuntu"],
+  "category": {
+    "en-us": "Utilities",
+    "zh-tw": "實用工具"
+  },
+  "description": {
+    "en-us": "Continuous file synchronization between devices without a central server.",
+    "zh-tw": "無需中央伺服器即可在裝置間持續同步檔案。"
+  }
+}

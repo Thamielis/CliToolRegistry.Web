@@ -1,0 +1,15 @@
+{
+  "id": "winboat",
+  "name": "WinBoat",
+  "url": "https://winboat.app/",
+  "tags": ["kubuntu", "windows-apps", "virtualization", "open-source"],
+  "platforms": ["kubuntu"],
+  "category": {
+    "en-us": "System & Utilities",
+    "zh-tw": "系統與工具"
+  },
+  "description": {
+    "en-us": "Run Windows apps seamlessly on Linux, integrated with the desktop like native applications.",
+    "zh-tw": "在 Linux 上無縫執行 Windows 應用程式，如同原生應用般整合至桌面環境。"
+  }
+}

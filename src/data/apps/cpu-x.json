@@ -1,0 +1,16 @@
+{
+  "id": "cpu-x",
+  "name": "CPU-X",
+  "url": "https://thetumultuousunicornofdarkness.github.io/CPU-X/",
+  "icon": "https://raw.githubusercontent.com/TheTumultuousUnicornOfDarkness/CPU-X/master/data/icons/CPU-X_128x128.png",
+  "tags": ["kubuntu", "diagnostics", "hardware", "open-source"],
+  "platforms": ["kubuntu"],
+  "category": {
+    "en-us": "System & Utilities",
+    "zh-tw": "系統與工具"
+  },
+  "description": {
+    "en-us": "Free tool for gathering CPU, motherboard, memory, and system information on Linux.",
+    "zh-tw": "免費工具，可在 Linux 上檢視 CPU、主機板、記憶體與系統資訊。"
+  }
+}

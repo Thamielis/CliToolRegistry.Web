@@ -1,0 +1,48 @@
+import type { Locale } from '../types/app'
+
+export const translations = {
+  'en-us': {
+    siteTitle: 'App List',
+    siteSubtitle: 'A collection of apps I recommend',
+    viewCard: 'Card',
+    viewList: 'List',
+    visit: 'Visit',
+    noApps: 'No apps yet. Check back soon.',
+    allCategories: 'All',
+    noMatches: 'No apps match this category.',
+    allPlatforms: 'All',
+    feedbackTitle: 'Send feedback',
+    feedbackPlaceholder: "What's on your mind?",
+    feedbackCancel: 'Cancel',
+    feedbackSend: 'Send',
+    themeLight: 'Light',
+    themeDark: 'Dark',
+    themeSystem: 'System',
+    footerCopyright: '© {year} App List',
+    footerSource: 'View source on GitHub',
+    footerLicense: 'MIT License',
+  },
+  'zh-tw': {
+    siteTitle: '應用程式清單',
+    siteSubtitle: '我推薦的應用程式收藏',
+    viewCard: '卡片',
+    viewList: '列表',
+    visit: '前往',
+    noApps: '目前尚無應用程式，請稍後再回來查看。',
+    allCategories: '全部',
+    noMatches: '沒有符合此分類的應用程式。',
+    allPlatforms: '全部',
+    feedbackTitle: '傳送意見回饋',
+    feedbackPlaceholder: '想說些什麼？',
+    feedbackCancel: '取消',
+    feedbackSend: '送出',
+    themeLight: '淺色',
+    themeDark: '深色',
+    themeSystem: '系統',
+    footerCopyright: '© {year} 應用程式清單',
+    footerSource: '在 GitHub 上查看原始碼',
+    footerLicense: 'MIT 授權條款',
+  },
+} satisfies Record<Locale, Record<string, string>>
+
+export type TranslationKey = keyof (typeof translations)['en-us']

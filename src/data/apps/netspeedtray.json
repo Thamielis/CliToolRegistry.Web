@@ -1,0 +1,22 @@
+{
+  "id": "netspeedtray",
+  "name": "NetSpeedTray",
+  "url": "https://github.com/erez-c137/NetSpeedTray",
+  "icon": "https://raw.githubusercontent.com/erez-c137/NetSpeedTray/main/assets/NetSpeedTray.ico",
+  "tags": [
+    "windows",
+    "network",
+    "monitoring"
+  ],
+  "platforms": [
+    "windows"
+  ],
+  "category": {
+    "en-us": "System & Utilities",
+    "zh-tw": "系統與工具"
+  },
+  "description": {
+    "en-us": "Shows live network speed and hardware stats directly in the Windows taskbar.",
+    "zh-tw": "在工作列即時顯示網路速度與硬體狀態的輕量工具。"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "glow",
+  "name": "Glow",
+  "url": "https://github.com/turkaysoft/glow",
+  "icon": "https://raw.githubusercontent.com/turkaysoft/glow/main/Glow/glow_images/glow_logo/GlowLogo.png",
+  "tags": [
+    "windows",
+    "diagnostics",
+    "hardware"
+  ],
+  "platforms": [
+    "windows"
+  ],
+  "category": {
+    "en-us": "System & Utilities",
+    "zh-tw": "系統與工具"
+  },
+  "description": {
+    "en-us": "Open-source system analysis tool for deep hardware and software diagnostics.",
+    "zh-tw": "開源系統分析工具，可深入診斷硬體與軟體組態。"
+  }
+}

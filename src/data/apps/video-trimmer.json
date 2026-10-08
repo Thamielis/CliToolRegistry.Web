@@ -1,0 +1,16 @@
+{
+  "id": "video-trimmer",
+  "name": "Video Trimmer",
+  "url": "https://flathub.org/en/apps/org.gnome.gitlab.YaLTeR.VideoTrimmer",
+  "icon": "https://imgproxy.flathub.org/insecure/dpr:1/f:webp/q:100/rs:fit:128:128/aHR0cHM6Ly9kbC5mbGF0aHViLm9yZy9tZWRpYS9vcmcvZ25vbWUvZ2l0bGFiLllhTFRlUi5WaWRlb1RyaW1tZXIvNDVkNzQ4YmMxYmIyZmU4MjRjMjdiMjhlMDViNGMwMWMvaWNvbnMvMTI4eDEyOC9vcmcuZ25vbWUuZ2l0bGFiLllhTFRlUi5WaWRlb1RyaW1tZXIucG5n",
+  "tags": ["video", "editing", "gnome"],
+  "platforms": ["kubuntu"],
+  "category": {
+    "en-us": "Utilities",
+    "zh-tw": "實用工具"
+  },
+  "description": {
+    "en-us": "Quickly cuts video fragments without re-encoding, preserving the original quality.",
+    "zh-tw": "快速剪輯影片片段且不需重新編碼，保留原始畫質。"
+  }
+}

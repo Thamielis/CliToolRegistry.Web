@@ -1,0 +1,15 @@
+{
+  "id": "bottles",
+  "name": "Bottles",
+  "url": "https://usebottles.com/",
+  "tags": ["kubuntu", "windows-apps", "wine", "open-source"],
+  "platforms": ["kubuntu"],
+  "category": {
+    "en-us": "System & Utilities",
+    "zh-tw": "系統與工具"
+  },
+  "description": {
+    "en-us": "Manages isolated Wine prefixes with a friendly UI to run Windows software on Linux.",
+    "zh-tw": "以友善介面管理獨立的 Wine 環境，讓你在 Linux 上執行 Windows 軟體。"
+  }
+}

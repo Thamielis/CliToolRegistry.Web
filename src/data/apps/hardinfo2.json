@@ -1,0 +1,15 @@
+{
+  "id": "hardinfo2",
+  "name": "Hardinfo2",
+  "url": "https://hardinfo2.org",
+  "tags": ["kubuntu", "diagnostics", "hardware", "open-source", "benchmark"],
+  "platforms": ["kubuntu"],
+  "category": {
+    "en-us": "System & Utilities",
+    "zh-tw": "系統與工具"
+  },
+  "description": {
+    "en-us": "System profiler and benchmark tool that displays detailed hardware and software information on Linux.",
+    "zh-tw": "Linux 系統資訊與效能測試工具，可顯示詳細的硬體與軟體資訊。"
+  }
+}

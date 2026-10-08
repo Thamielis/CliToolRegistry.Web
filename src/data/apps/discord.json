@@ -1,0 +1,16 @@
+{
+  "id": "discord",
+  "name": "Discord",
+  "url": "https://discord.com",
+  "icon": "https://cdn.simpleicons.org/discord",
+  "tags": ["voice-chat", "chat", "communication"],
+  "platforms": ["windows", "kubuntu"],
+  "category": {
+    "en-us": "Communication",
+    "zh-tw": "通訊"
+  },
+  "description": {
+    "en-us": "Voice, video, and text chat app popular with gaming and community groups.",
+    "zh-tw": "廣受遊戲與社群愛用的語音、視訊與文字聊天軟體。"
+  }
+}

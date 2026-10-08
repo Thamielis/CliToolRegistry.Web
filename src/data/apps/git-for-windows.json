@@ -1,0 +1,22 @@
+{
+  "id": "git-for-windows",
+  "name": "Git for Windows / Git Bash",
+  "url": "https://gitforwindows.org/",
+  "icon": "https://gitforwindows.org/favicon.ico",
+  "tags": [
+    "windows",
+    "git",
+    "shell"
+  ],
+  "platforms": [
+    "windows"
+  ],
+  "category": {
+    "en-us": "Shell Customization",
+    "zh-tw": "殼層自訂"
+  },
+  "description": {
+    "en-us": "Brings a Unix-like Bash environment and Git version control to Windows.",
+    "zh-tw": "為 Windows 帶來類 Unix 的 Bash 環境與 Git 版本控制工具。"
+  }
+}

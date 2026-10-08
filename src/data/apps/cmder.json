@@ -1,0 +1,21 @@
+{
+  "id": "cmder",
+  "name": "Cmder",
+  "url": "https://cmder.app/",
+  "tags": [
+    "windows",
+    "terminal",
+    "portable"
+  ],
+  "platforms": [
+    "windows"
+  ],
+  "category": {
+    "en-us": "Terminal & Remote",
+    "zh-tw": "終端機與遠端"
+  },
+  "description": {
+    "en-us": "Portable terminal emulator with Git integration and enhanced shell features.",
+    "zh-tw": "可攜式終端機模擬器，整合 Git 並強化 Shell 功能。"
+  }
+}

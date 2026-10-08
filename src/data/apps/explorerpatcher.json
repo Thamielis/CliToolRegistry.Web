@@ -1,0 +1,22 @@
+{
+  "id": "explorerpatcher",
+  "name": "ExplorerPatcher",
+  "url": "https://explorerpatcher.net/",
+  "icon": "https://explorerpatcher.net/wp-content/uploads/2025/10/Explorer-Patcher-icon-150x150.png",
+  "tags": [
+    "windows",
+    "customization",
+    "taskbar"
+  ],
+  "platforms": [
+    "windows"
+  ],
+  "category": {
+    "en-us": "System & Utilities",
+    "zh-tw": "系統與工具"
+  },
+  "description": {
+    "en-us": "Restores classic Windows 10 taskbar, Start menu, and context menu behavior on Windows 11.",
+    "zh-tw": "為 Windows 11 帶回經典的 Windows 10 工作列、開始功能表與右鍵選單。"
+  }
+}
