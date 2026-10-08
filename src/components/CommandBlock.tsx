@@ -56,7 +56,8 @@ export function CommandBlock({
           </svg>
         )}
       </button>
-      {failed && <span className="copy-error">{t('copyFailed')}</span>}
+      <span className="sr-only" role="status">{copied ? t('copied') : ''}</span>
+      {failed && <span className="copy-error" role="alert">{t('copyFailed')}</span>}
     </div>
   )
 }

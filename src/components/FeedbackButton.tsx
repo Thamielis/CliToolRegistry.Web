@@ -22,7 +22,7 @@ export function FeedbackButton() {
         <div className="feedback-panel">
           <p className="feedback-panel-title">{t('feedbackTitle')}</p>
           <textarea
-            className="feedback-textarea"
+            className="feedback-textarea resize-none"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder={t('feedbackPlaceholder')}

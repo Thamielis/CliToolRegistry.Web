@@ -13,7 +13,7 @@ export function ThemeToggle() {
   const { t } = useLocale()
 
   return (
-    <div className="theme-toggle" role="group" aria-label="Theme">
+    <div className="theme-toggle" role="group" aria-label={t('themeLabel')}>
       {OPTIONS.map((opt) => (
         <button
           key={opt.value}

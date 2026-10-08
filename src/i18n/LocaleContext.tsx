@@ -5,8 +5,12 @@ import { translations, type TranslationKey } from './translations'
 const STORAGE_KEY = 'cli-tool-registry.locale'
 
 function detectInitialLocale(): Locale {
-  const stored = localStorage.getItem(STORAGE_KEY)
-  return stored === 'en' ? 'en' : 'de'
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    return stored === 'en' ? 'en' : 'de'
+  } catch {
+    return 'de'
+  }
 }
 
 interface LocaleContextValue {
@@ -26,7 +30,11 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   const setLocale = (next: Locale) => {
     setLocaleState(next)
-    localStorage.setItem(STORAGE_KEY, next)
+    try {
+      localStorage.setItem(STORAGE_KEY, next)
+    } catch {
+      // Locale changes still work when preference storage is blocked.
+    }
   }
 
   const value = useMemo<LocaleContextValue>(
