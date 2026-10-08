@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import type { CliTool, ToolPlatform } from '../types/app'
 import { useLocale } from '../i18n/LocaleContext'
 import { categoryLabel, platformLabel, tierLabel } from '../i18n/catalogLabels'
@@ -51,15 +52,22 @@ function CommandSection({
 
 export function ToolDetails({ tool, onClose }: { tool: CliTool; onClose: () => void }) {
   const { locale, t } = useLocale()
+  const headingRef = useRef<HTMLHeadingElement>(null)
+  const headingId = 'tool-details-heading-' + tool.id
+  useEffect(() => {
+    headingRef.current?.focus({ preventScroll: true })
+    headingRef.current?.scrollIntoView({ block: 'nearest' })
+  }, [tool.id])
   const installCommands = commandEntries(tool.install, tool.platforms, t('allPlatforms'))
   const updateCommands = commandEntries(tool.update, tool.platforms, t('allPlatforms'))
 
   return (
-    <section className="tool-details" aria-labelledby="tool-details-heading">
+    <section className="tool-details" id={'tool-details-' + tool.id} aria-labelledby={headingId}
+      onKeyDown={(event) => { if (event.key === 'Escape') { event.stopPropagation(); onClose() } }}>
       <header className="detail-header">
         <div>
           <span className="detail-kicker">{t('details')}</span>
-          <h2 id="tool-details-heading">{tool.name}</h2>
+          <h2 id={headingId} ref={headingRef} tabIndex={-1}>{tool.name}</h2>
         </div>
         <button type="button" className="quiet-button" onClick={onClose}>
           {t('closeDetails')}

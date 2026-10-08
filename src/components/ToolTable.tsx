@@ -14,7 +14,7 @@ export function ToolTable({
   tools: CliTool[]
   selectedToolId: string | null
   activePlatform: ToolPlatform | 'all'
-  onSelect: (tool: CliTool) => void
+  onSelect: (tool: CliTool, trigger: HTMLButtonElement) => void
   locale: Locale
 }) {
   const { t } = useLocale()
@@ -42,8 +42,9 @@ export function ToolTable({
                   <button
                     type="button"
                     className="tool-name-button"
-                    onClick={() => onSelect(tool)}
+                    onClick={(event) => onSelect(tool, event.currentTarget)}
                     aria-expanded={selected}
+                    aria-controls={selected ? 'tool-details-' + tool.id : undefined}
                     aria-label={tool.name + ', ' + (selected ? t('closeDetails') : t('details'))}
                   >
                     <span className="tool-name">{tool.name}</span>

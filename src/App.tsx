@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   CATALOG_REPOSITORY_URL,
   CATALOG_SOURCE_URL,
@@ -10,11 +10,24 @@ import { useLocale } from './i18n/LocaleContext'
 import { LocaleSwitcher } from './components/LocaleSwitcher'
 import { ToolTable } from './components/ToolTable'
 import { ToolDetails } from './components/ToolDetails'
+import { ToolCards } from './components/ToolCards'
+import { ThemeToggle } from './components/ThemeToggle'
+import { ViewToggle, type ViewMode } from './components/ViewToggle'
 import { categoryLabel, platformLabel } from './i18n/catalogLabels'
-import type { CatalogSnapshot, ToolPlatform } from './types/app'
+import type { CatalogSnapshot, CliTool, ToolPlatform } from './types/app'
 
 const PLATFORMS: ToolPlatform[] = ['windows', 'linux', 'wsl2', 'macos']
 const EMPTY_TOOLS: CatalogSnapshot['tools'] = []
+const VIEW_STORAGE_KEY = 'cli-tool-registry.view'
+
+function initialView(): ViewMode {
+  try {
+    const saved = localStorage.getItem(VIEW_STORAGE_KEY)
+    return saved === 'card' || saved === 'list' || saved === 'enhanced' ? saved : 'enhanced'
+  } catch {
+    return 'enhanced'
+  }
+}
 
 function App() {
   const { locale, t } = useLocale()
@@ -26,6 +39,23 @@ function App() {
   const [platform, setPlatform] = useState<ToolPlatform | 'all'>('all')
   const [category, setCategory] = useState('all')
   const [selectedToolId, setSelectedToolId] = useState<string | null>(null)
+  const [view, setView] = useState<ViewMode>(initialView)
+  const searchRef = useRef<HTMLInputElement>(null)
+  const detailsTrigger = useRef<HTMLButtonElement | null>(null)
+
+  const closeDetails = () => {
+    setSelectedToolId(null)
+    detailsTrigger.current?.focus({ preventScroll: true })
+  }
+  const selectTool = (tool: CliTool, trigger: HTMLButtonElement) => {
+    detailsTrigger.current = trigger
+    setSelectedToolId((current) => current === tool.id ? null : tool.id)
+  }
+  const changeView = (next: ViewMode) => {
+    setView(next)
+    setSelectedToolId(null)
+    try { localStorage.setItem(VIEW_STORAGE_KEY, next) } catch { /* View remains usable without storage. */ }
+  }
 
   useEffect(() => {
     let mounted = true
@@ -117,6 +147,7 @@ function App() {
 
   return (
     <div className="registry-app" id="top">
+      <a className="skip-link" href="#tools">{t('navCatalog')}</a>
       <header className="topbar">
         <a className="brand" href="#top" aria-label={t('siteTitle')}>
           <span className="brand-mark" aria-hidden="true">
@@ -167,12 +198,14 @@ function App() {
             </span>
           </button>
           <LocaleSwitcher />
+          <ThemeToggle />
         </div>
       </header>
 
       <main className="page-shell">
         <section className="catalog-intro">
           <div>
+            <span className="catalog-eyebrow">{t('catalogEyebrow')}</span>
             <h1>{t('catalogHeading')}</h1>
             <p>{t('catalogSubtitle')}</p>
           </div>
@@ -197,11 +230,15 @@ function App() {
             </svg>
             <input
               id="tool-search"
+              ref={searchRef}
+              aria-label={t('searchLabel')}
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder={t('searchPlaceholder')}
             />
+            {query && <button type="button" className="search-clear" aria-label={t('clearSearch')}
+              onClick={() => { setQuery(''); searchRef.current?.focus() }}>×</button>}
           </label>
 
           <label className="select-field">
@@ -241,18 +278,22 @@ function App() {
           </div>
         )}
 
-        <section className="results-section" id="tools" aria-live="polite">
+        <section className="results-section" id="tools" aria-busy={isLoading}>
           <div className="results-heading">
             <div>
               <h2>{t('navCatalog')}</h2>
-              <p>{countLabel}</p>
+              <p role="status">{countLabel}</p>
             </div>
+            <div className="results-controls">
             {snapshot && (
               <span className="catalog-file-count">
                 {t('catalogFiles').replace('{count}', String(snapshot.fileCount))}
               </span>
             )}
+              <ViewToggle mode={view} onChange={changeView} />
+            </div>
           </div>
+          <p className="view-description">{t(view === 'enhanced' ? 'enhancedHint' : view === 'card' ? 'cardHint' : 'tableHint')}</p>
 
           {!snapshot && isLoading ? (
             <div className="empty-state">
@@ -271,22 +312,24 @@ function App() {
           ) : filteredTools.length === 0 ? (
             <div className="empty-state">
               <p>{tools.length === 0 ? t('noTools') : t('noMatches')}</p>
+              {tools.length > 0 && <button type="button" className="refresh-button" onClick={resetFilters}>{t('resetFilters')}</button>}
             </div>
-          ) : (
+          ) : view === 'list' ? (
             <ToolTable
               tools={filteredTools}
               selectedToolId={selectedToolId}
               activePlatform={platform}
-              onSelect={(tool) =>
-                setSelectedToolId((current) => (current === tool.id ? null : tool.id))
-              }
+              onSelect={selectTool}
               locale={locale}
             />
+          ) : (
+            <ToolCards tools={filteredTools} enhanced={view === 'enhanced'} activePlatform={platform}
+              selectedToolId={selectedToolId} onSelect={selectTool} onClose={closeDetails} />
           )}
         </section>
 
-        {selectedTool && (
-          <ToolDetails tool={selectedTool} onClose={() => setSelectedToolId(null)} />
+        {selectedTool && view === 'list' && filteredTools.some((tool) => tool.id === selectedToolId) && (
+          <ToolDetails tool={selectedTool} onClose={closeDetails} />
         )}
       </main>
 
