@@ -29,6 +29,22 @@ Die Oberfläche ist standardmäßig Deutsch; Englisch kann über den Sprachschal
 gewählt werden. Beschreibungen und Befehle werden in der Originalsprache des
 Registry-Katalogs angezeigt.
 
+## Darstellung und Bedienung
+
+Neue Besucher starten im dunklen Theme mit Glow-Akzenten und der erweiterten
+Ansicht **Karten+**. Über die Schalter stehen auch die kompakte Kartenansicht,
+die Tabelle sowie ein helles oder systemabhängiges Theme zur Verfügung.
+Theme und Darstellung bleiben im Browser gespeichert; Suche und Filter bleiben
+beim Wechsel der Darstellung erhalten.
+
+Karten+ zeigt kopierbare Befehle und eine Installationsplattform pro Werkzeug.
+Ein globaler Plattformfilter bestimmt auch die angezeigten Installationsbefehle.
+Details öffnen direkt an der Karte; Escape oder „Details schließen“ führt den
+Tastaturfokus zum auslösenden Schalter zurück. Die Seite führt keine Befehle aus.
+
+Design und Interaktionsregeln sind in [DESIGN.md](DESIGN.md) und
+[UX-CONTRACT.md](UX-CONTRACT.md) dokumentiert.
+
 ## Entwicklung
 
 ```sh
@@ -52,3 +68,18 @@ npm run build
 
 Ein Push auf `main` startet [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
 und veröffentlicht den Build auf GitHub Pages.
+
+## UI-Prüfungen
+
+```sh
+npx playwright install chromium
+npm run test:ui
+npm run lint
+```
+
+Die Browserprüfungen verwenden reproduzierbare Katalogdaten für Interaktionen
+und den vollständigen lokalen Katalog für Desktop- und Mobilaufnahmen.
+Sie prüfen Themes, Ansichten, Filter, Plattformbefehle, Kopierfeedback,
+Tastaturfokus, Fehlerbehandlung, Cache, responsive Darstellung und
+automatische Barrierefreiheitsregeln in beiden Themes.
+Screenshots und Fehler-Traces liegen im ignorierten Verzeichnis `test-results/`.
