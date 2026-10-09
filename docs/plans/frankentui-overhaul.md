@@ -264,5 +264,10 @@ German heading overflow at 320px that the English screen checks did not cover.
 The mobile heading now uses a smaller responsive size with a long-word fallback;
 the real-catalog production test includes the German 320px assertion.
 
-These are local validation results. Remote CI and publication are verified
-separately after pushing the implementation.
+Implementation and mobile correction are published on `main`. The GitHub Pages
+[build/deploy for `c2054ca`](https://github.com/Thamielis/CliToolRegistry.Web/actions/runs/37937005112)
+completed successfully. A separate live Chromium check of
+[the published site](https://thamielis.github.io/CliToolRegistry.Web/)
+returned HTTP 200, confirmed the German 320px overview without horizontal
+overflow, loaded its local logo, resolved `apr -> oracle` and reloaded the
+dependency deep link without JavaScript errors.

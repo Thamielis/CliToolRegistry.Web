@@ -49,6 +49,7 @@ test('validation rejects corrupt cached/live data and unsafe resource links', ()
     snapshot([tool('git'), tool('git')]), snapshot([tool('x', { website: 'javascript:alert(1)' })]),
     snapshot([tool('x', { platforms: ['unknown'] as unknown as CliTool['platforms'] })]),
     snapshot([tool('x', { dependencies: { required: [42] as unknown as string[] } })])]
+  // Isolate each invalid case; UBS's intermodule taint analysis does not converge on a loop here.
   invalidSnapshots.forEach((value) => {
     assert.equal(isCatalogSnapshot(value), false)
   })
