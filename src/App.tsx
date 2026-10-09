@@ -184,18 +184,15 @@ function App() {
           <span className="updated-label">{t('lastUpdated').replace('{time}', updatedAt)}</span>
           <button
             type="button"
-            className="refresh-button"
+            className="refresh-button header-icon-button"
             onClick={refreshCatalog}
             disabled={isLoading}
             aria-label={t(isLoading ? 'refreshing' : 'refresh')}
+            title={t(isLoading ? 'refreshing' : 'refresh')}
           >
             <svg viewBox="0 0 20 20" aria-hidden="true" className={isLoading ? 'spin' : ''}>
               <path d="M16.2 7.3A6.5 6.5 0 0 0 5 4.7L3.4 6.3M3.8 3.8v2.7h2.7M3.8 12.7A6.5 6.5 0 0 0 15 15.3l1.6-1.6m-.4 2.5v-2.7h-2.7" />
             </svg>
-            <span className="refresh-label-wide">{t(isLoading ? 'refreshing' : 'refresh')}</span>
-            <span className="refresh-label-compact">
-              {t(isLoading ? 'refreshingShort' : 'refreshShort')}
-            </span>
           </button>
           <LocaleSwitcher />
           <ThemeToggle />

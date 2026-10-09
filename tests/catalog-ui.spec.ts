@@ -36,11 +36,20 @@ test('first visit is dark even with a light OS; preferences survive reload and f
   await openCatalog(page)
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
   await expect(page.getByRole('button', { name: 'Karten+', exact: true })).toHaveAttribute('aria-pressed', 'true')
+  const themeTrigger = page.getByRole('button', { name: 'Farbschema', exact: true })
+  await themeTrigger.focus()
+  await page.keyboard.press('Enter')
+  await expect(page.getByRole('button', { name: 'Hell', exact: true })).toBeVisible()
+  await page.keyboard.press('Escape')
+  await expect(themeTrigger).toBeFocused()
+  await expect(page.getByRole('button', { name: 'Hell', exact: true })).toBeHidden()
+  await themeTrigger.click()
   await page.getByRole('button', { name: 'Hell', exact: true }).click()
   await page.getByRole('button', { name: 'Karten', exact: true }).click()
   await page.reload()
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
   await expect(page.getByRole('button', { name: 'Karten', exact: true })).toHaveAttribute('aria-pressed', 'true')
+  await page.getByRole('button', { name: 'Farbschema', exact: true }).click()
   await page.getByRole('button', { name: 'System', exact: true }).click()
   await page.emulateMedia({ colorScheme: 'dark' })
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
@@ -151,6 +160,7 @@ test('blocked preference storage does not break theme or view changes', async ({
     Storage.prototype.setItem = () => { throw new Error('Blocked') }
   })
   await openCatalog(page)
+  await page.getByRole('button', { name: 'Farbschema', exact: true }).click()
   await page.getByRole('button', { name: 'Hell', exact: true }).click()
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
   await page.getByRole('button', { name: 'Tabelle', exact: true }).click()
@@ -160,9 +170,12 @@ test('blocked preference storage does not break theme or view changes', async ({
 for (const theme of ['Dunkel', 'Hell']) {
   test(`accessibility in ${theme}: each view and expanded detail in English`, async ({ page }) => {
     await openCatalog(page)
+    await page.getByRole('button', { name: 'Farbschema', exact: true }).click()
     await page.getByRole('button', { name: theme, exact: true }).click()
-    await page.getByRole('button', { name: 'EN', exact: true }).click()
-    await expect(page.getByRole('group', { name: 'Color theme' })).toBeVisible()
+    await page.getByRole('button', { name: 'Sprache', exact: true }).click()
+    await page.getByRole('button', { name: 'English', exact: true }).click()
+    await expect(page.getByRole('button', { name: 'Color theme', exact: true })).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Language', exact: true })).toBeFocused()
     for (const view of ['Cards', 'Cards+', 'Table']) {
       await page.getByRole('button', { name: view, exact: true }).click()
       await expect(page.getByRole('button', { name: view, exact: true })).toHaveAttribute('aria-pressed', 'true')
@@ -184,6 +197,13 @@ test('mobile reflow, reduced motion, forced colors, and desktop screenshot of re
   await page.emulateMedia({ reducedMotion: 'reduce' })
   for (const width of [320, 390, 768]) {
     await page.setViewportSize({ width, height: 844 })
+    for (const name of ['Farbschema', 'Sprache']) {
+      await page.getByRole('button', { name, exact: true }).click()
+      await expect(page.getByRole('group', { name, exact: true })).toBeVisible()
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
+      await page.keyboard.press('Escape')
+      await expect(page.getByRole('group', { name, exact: true })).toBeHidden()
+    }
     for (const view of ['Karten', 'Karten+', 'Tabelle']) {
       await page.getByRole('button', { name: view, exact: true }).click()
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
@@ -192,6 +212,7 @@ test('mobile reflow, reduced motion, forced colors, and desktop screenshot of re
   await page.setViewportSize({ width: 390, height: 844 })
   await page.getByRole('button', { name: 'Karten+', exact: true }).click()
   await page.screenshot({ path: testInfo.outputPath('catalog-mobile-dark.png') })
+  await page.getByRole('button', { name: 'Farbschema', exact: true }).click()
   await page.getByRole('button', { name: 'Hell', exact: true }).click()
   await page.screenshot({ path: testInfo.outputPath('catalog-mobile-light.png') })
   await page.emulateMedia({ forcedColors: 'active' })

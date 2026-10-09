@@ -168,6 +168,7 @@ test('catalog views and details keep the same marks across desktop and mobile', 
   await expectLoadedImage(page, '.tool-card .app-icon-frame[data-logo-id="git"] img', '/CliToolRegistry.Web/tool-logos/git.svg')
   await page.screenshot({ path: testInfo.outputPath('cards-dark-desktop.png'), fullPage: true })
 
+  await page.getByRole('button', { name: 'Farbschema', exact: true }).click()
   await page.getByRole('button', { name: 'Hell', exact: true }).click()
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
   await page.screenshot({ path: testInfo.outputPath('cards-light-desktop.png'), fullPage: true })
@@ -181,6 +182,7 @@ test('catalog views and details keep the same marks across desktop and mobile', 
 
   const axe = await new AxeBuilder({ page }).analyze()
   expect(axe.violations).toEqual([])
+  await page.getByRole('button', { name: 'Farbschema', exact: true }).click()
   await page.getByRole('button', { name: 'Dunkel', exact: true }).click()
   await page.screenshot({ path: testInfo.outputPath('details-dark-desktop.png'), fullPage: true })
 
