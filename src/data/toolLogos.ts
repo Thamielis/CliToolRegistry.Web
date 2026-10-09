@@ -84,7 +84,7 @@ export const TOOL_LOGO_MANIFEST = [
   { id: "ollama", kind: "fallback" },
   { id: "oracle", kind: "fallback" },
   { id: "pandoc", kind: "project-logo", asset: "pandoc.svg" },
-  { id: "powershell7", kind: "family-logo", asset: "PowerShell.png" },
+  { id: "powershell7", kind: "project-logo", asset: "PowerShell.png" },
   { id: "python3", kind: "project-logo", asset: "python.svg" },
   { id: "rch", kind: "fallback" },
   { id: "ru", kind: "fallback" },
