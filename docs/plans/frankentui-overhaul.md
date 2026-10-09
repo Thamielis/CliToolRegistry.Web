@@ -253,5 +253,16 @@ a browser-object loop in the existing logo test. Replacing that loop with five
 explicit helper calls preserves coverage; all six logo tests and its subsequent
 UBS scan pass. No scanner rules or Git hooks were disabled.
 
+The combined commit scan exposed the same taint fixpoint problem in the model
+test's invalid-snapshot loop. A callback retains all eight invalid cases and
+avoids that pathological analysis. All five model tests and the normal commit
+hook subsequently pass.
+
+Remote build/deploy succeeded for implementation commit `e30f580`. A live
+browser check confirmed graph direction and deep-link reload, and exposed a
+German heading overflow at 320px that the English screen checks did not cover.
+The mobile heading now uses a smaller responsive size with a long-word fallback;
+the real-catalog production test includes the German 320px assertion.
+
 These are local validation results. Remote CI and publication are verified
 separately after pushing the implementation.

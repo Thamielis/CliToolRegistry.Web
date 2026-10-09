@@ -212,6 +212,8 @@ test('real catalog loads with subpath assets and deep query links reload', async
   await page.screenshot({ path: testInfo.outputPath('real-overview-desktop.png') })
   await page.setViewportSize({ width: 390, height: 844 })
   await page.screenshot({ path: testInfo.outputPath('real-overview-mobile.png'), fullPage: true })
+  await page.setViewportSize({ width: 320, height: 900 })
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
   await expect(page.locator('.terminal-preview img').first()).toHaveAttribute('src', /\/CliToolRegistry.Web\/tool-logos\//)
 })
 
