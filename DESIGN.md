@@ -1,16 +1,16 @@
 ---
 version: alpha
 name: CLI Tool Registry
-description: A luminous terminal workbench for discovering CLI tools and their installation commands.
+description: An orange-accented terminal workbench inspired by Agent Flywheel, for discovering CLI tools and their installation commands.
 colors:
-  primary: "#82b9ff"
-  secondary: "#71dfdb"
-  background: "#080e1a"
-  surface: "#101a2b"
-  raised: "#162238"
-  text: "#edf4ff"
-  muted: "#adbed5"
-  border: "#293b55"
+  primary: "#ff9b54"
+  secondary: "#ffc18a"
+  background: "#08090d"
+  surface: "#111319"
+  raised: "#191c24"
+  text: "#f1f2f5"
+  muted: "#b0b4c0"
+  border: "#2b2f3a"
   success: "#77dda8"
   warning: "#f4c56b"
   danger: "#ffaaaa"
@@ -37,13 +37,13 @@ components:
 
 ## Overview
 
-A terminal workbench: navy surfaces, readable command panels, and a thin blue-to-cyan light rail on each tool card. The audience is developers and administrators choosing tools and copying installation commands. Product behavior is grounded in README.md, the published registry catalog, and the existing table/detail workflow. The interface supports German and English; upstream catalog descriptions remain in their source language.
+A terminal workbench inspired by [Agent Flywheel](https://agent-flywheel.com/): near-black surfaces, a faint background grid, prominent monospace headings, and warm orange accents. The audience is developers and administrators choosing tools and copying installation commands. Product behavior is grounded in README.md, the published registry catalog, and the existing table/detail workflow. The interface supports German and English; upstream catalog descriptions remain in their source language.
 
-This redesign follows the user's dark/glow brief. Keep expressive light at card edges and the page background; commands and actions retain familiar controls. Avoid decorative charts, fabricated health scores, or motion that competes with reading.
+This redesign follows the user's Agent Flywheel reference with an orange accent. Keep expressive light in the page background and restrained card edges; commands and actions retain familiar controls. Avoid decorative charts, fabricated health scores, or motion that competes with reading.
 
 ## Colors
 
-Dark is the first-visit default. Light and system preferences are explicit, persistent choices. Color never substitutes for labels. Success indicates catalog capability or completed copying, not live tool health. Blue denotes actions and selection; cyan denotes terminal content.
+Dark is the first-visit default. Light and system preferences are explicit, persistent choices. Color never substitutes for labels. Success indicates catalog capability or completed copying, not live tool health. Orange denotes actions and selection; warm pale orange denotes terminal content. Light mode uses a darker burnt orange on warm white surfaces for readable contrast. Tier labels use neutral tones. The established runtime token names `--registry-blue` and `--registry-cyan` now carry these orange action and highlight roles.
 
 Runtime ownership is **model B**: `src/catalog-visuals.css` owns the theme tokens and maps the old generic variables to the registry system. This document mirrors accepted dark values. Light remaps semantic roles under `[data-theme='light']`; `ThemeContext` resolves system preferences and follows OS changes. The initial HTML script applies the saved theme before styles render.
 
@@ -60,7 +60,7 @@ Verify exact color mirrors against runtime declarations and inspect both themes 
 
 ## Typography
 
-Use the established system sans stack for navigation and prose; Cascadia Code and local monospace fallbacks for terminal identity. No external font loading is required. Tool names use 19px, descriptions 13px with 1.65 line height, headings scale with viewport. Full descriptions and tags wrap. Detail commands wrap and remain selectable; compact commands expose the full string through copying and the detail panel.
+Use the established system sans stack for navigation and prose; Cascadia Code and local monospace fallbacks for the brand, main heading, and terminal identity. No external font loading is required. The main heading scales from 34px to 64px with viewport width. Tool names use 19px, descriptions 13px with 1.65 line height. Full descriptions and tags wrap. Detail commands wrap and remain selectable; compact commands expose the full string through copying and the detail panel.
 
 ## Layout
 
@@ -68,11 +68,11 @@ The existing 1480px shell remains canonical. Cards use three columns, two below 
 
 ## Elevation & Depth
 
-Use tonal separation, a one-pixel border, and restrained static radial glow. Cards brighten their border and shadow on hover or focus-within, without moving the pointer target. Keep command panels darker than cards. Reserve document scrollbar space and retain visible, tokenized scrollbars.
+Use tonal separation, a one-pixel border, and restrained static orange radial glow over a faint 64px grid. Cards have a subtle tonal gradient and brighten their border and shadow on hover or focus-within, without moving the pointer target. Keep command panels darker than cards. Reserve document scrollbar space and retain visible, tokenized scrollbars.
 
 ## Shapes
 
-Controls use an 8px radius, cards 14px, terminal marks 10px. Small labels may use 5px. No decorative pill counters or oversized hero statistics.
+Controls use an 8px radius, cards 14px, terminal marks 10px, and the brand mark 12px. The catalog eyebrow uses a pill outline to echo the reference's introductory label. Small labels may use 5px. No decorative pill counters or oversized hero statistics.
 
 ## Components
 

@@ -115,13 +115,14 @@ test('resolved theme switches Vercel variants and follows live system preference
 
   await page.getByTestId('theme-light').click()
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
-  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#f5f7fa')
+  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#faf8f6')
   await expect(page.getByTestId('resolved-theme')).toHaveAttribute('data-resolved-theme', 'light')
   await expectLoadedImage(page, '[data-testid="active-logo"] img', '/CliToolRegistry.Web/tool-logos/vercel-light.svg')
 
   await page.getByTestId('theme-system').click()
   await page.emulateMedia({ colorScheme: 'dark' })
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
+  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#08090d')
   await expect(page.getByTestId('resolved-theme')).toHaveAttribute('data-resolved-theme', 'dark')
   await expectLoadedImage(page, '[data-testid="active-logo"] img', '/CliToolRegistry.Web/tool-logos/vercel-dark.svg')
   await page.emulateMedia({ colorScheme: 'light' })

@@ -24,7 +24,7 @@ function detectSystemTheme(): ResolvedTheme {
 function applyResolvedTheme(resolved: ResolvedTheme) {
   document.documentElement.setAttribute('data-theme', resolved)
   document.querySelector('meta[name="theme-color"]')?.setAttribute(
-    'content', resolved === 'dark' ? '#080e1a' : '#f5f7fa',
+    'content', resolved === 'dark' ? '#08090d' : '#faf8f6',
   )
 }
 

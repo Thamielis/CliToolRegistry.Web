@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#080e1a" />
+    <meta name="theme-color" content="#08090d" />
     <script>
       (() => {
         let theme = 'dark';
@@ -16,7 +16,7 @@
           ? matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
           : theme;
         document.documentElement.dataset.theme = resolved;
-        document.querySelector('meta[name="theme-color"]').content = resolved === 'dark' ? '#080e1a' : '#f5f7fa';
+        document.querySelector('meta[name="theme-color"]').content = resolved === 'dark' ? '#08090d' : '#faf8f6';
       })();
     </script>
     <meta name="description" content="CliToolRegistry-Katalog mit Werkzeugen, Installationsbefehlen und Plattformen." />
