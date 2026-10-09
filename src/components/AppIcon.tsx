@@ -50,8 +50,8 @@ export function AppIcon({ app, className = '' }: { app: ToolIconIdentity; classN
           className="app-icon-image"
           src={currentSource}
           alt=""
-          width={32}
-          height={32}
+          width={42}
+          height={42}
           loading="lazy"
           decoding="async"
           onError={() => setFailedSource(currentSource)}
