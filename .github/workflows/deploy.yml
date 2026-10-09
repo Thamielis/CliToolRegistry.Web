@@ -33,9 +33,10 @@ jobs:
           token: ${{ secrets.CLI_TOOL_REGISTRY_READ_TOKEN }}
       - uses: actions/setup-node@v7.1.0
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
       - run: npm ci
+      - run: npm run typecheck && npm run lint && npm run test:model && npm run validate:logos
       - run: npm run build
         env:
           CLI_TOOL_REGISTRY_PATH: ${{ github.workspace }}/registry-source

@@ -27,7 +27,7 @@ const snapshot = {
 
 async function openCatalog(page: Page) {
   await page.route('**/registry-catalog.json?*', (route) => route.fulfill({ json: snapshot }))
-  await page.goto('./')
+  await page.goto('./?section=catalog')
   await expect(page.locator('.tool-card')).toHaveCount(3)
 }
 
@@ -133,7 +133,7 @@ test('loading and initial failure recover on retry; cached refresh preserves car
     await new Promise((resolve) => setTimeout(resolve, 150))
     await route.fulfill(fail ? { status: 503, body: 'Unavailable' } : { json: snapshot })
   })
-  await page.goto('./')
+  await page.goto('./?section=catalog')
   await expect(page.getByText('Werkzeuge werden geladen …')).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Katalog konnte nicht geladen werden', exact: true })).toBeVisible()
   fail = false
@@ -150,7 +150,7 @@ test('loading and initial failure recover on retry; cached refresh preserves car
 
 test('empty catalog has a truthful empty state', async ({ page }) => {
   await page.route('**/registry-catalog.json?*', (route) => route.fulfill({ json: { ...snapshot, tools: [] } }))
-  await page.goto('./')
+  await page.goto('./?section=catalog')
   await expect(page.getByText('Der Katalog enthält keine Werkzeuge.')).toBeVisible()
 })
 
@@ -191,8 +191,8 @@ for (const theme of ['Dunkel', 'Hell']) {
 test('mobile reflow, reduced motion, forced colors, and desktop screenshot of real catalog', async ({ page }, testInfo) => {
   const catalog = JSON.parse(readFileSync(new URL('../public/registry-catalog.json', import.meta.url), 'utf8'))
   await page.route('**/registry-catalog.json?*', (route) => route.fulfill({ json: catalog }))
-  await page.goto('./')
-  await expect(page.locator('.tool-card')).toHaveCount(catalog.tools.length)
+  await page.goto('./?section=catalog')
+  await expect(page.locator('.tool-card')).toHaveCount(Math.min(48, catalog.tools.length))
   await page.screenshot({ path: testInfo.outputPath('catalog-desktop-dark.png') })
   await page.emulateMedia({ reducedMotion: 'reduce' })
   for (const width of [320, 390, 768]) {

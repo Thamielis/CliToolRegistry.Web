@@ -4,9 +4,13 @@
   "canonicalMap": "UX-CONTRACT.md",
   "requiredCapabilities": ["Select/Listbox", "Scrollbar"],
   "ownership": { "Select/Listbox": "native" },
-  "requiredCommands": ["ui", "lint", "build"],
+  "requiredCommands": ["ui", "model", "typecheck", "lint", "build", "production", "logos"],
   "commands": {
     "ui": "npm run test:ui",
+    "model": "npm run test:model",
+    "typecheck": "npm run typecheck",
+    "production": "npm run test:production",
+    "logos": "npm run validate:logos",
     "lint": "npm run lint",
     "build": "npm run build"
   },

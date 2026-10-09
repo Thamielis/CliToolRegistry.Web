@@ -1,10 +1,10 @@
 import { readdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { TOOL_LOGO_MANIFEST } from '../src/data/toolLogos.ts'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const catalogPath = path.join(root, 'public/registry-catalog.json')
-const manifestPath = path.join(root, 'src/data/toolLogos.ts')
 const sourcesPath = path.join(root, 'docs/tool-logo-sources.md')
 const assetsDir = path.join(root, 'public/tool-logos')
 
@@ -13,20 +13,15 @@ function fail(message) {
   process.exitCode = 1
 }
 
-const [catalogText, manifestText, sourcesText] = await Promise.all([
+const [catalogText, sourcesText] = await Promise.all([
   readFile(catalogPath, 'utf8'),
-  readFile(manifestPath, 'utf8'),
   readFile(sourcesPath, 'utf8'),
 ])
 const catalogIds = JSON.parse(catalogText).tools.map(({ id }) => id)
-const manifestStart = manifestText.indexOf('export const TOOL_LOGO_MANIFEST = [')
-const arrayStart = manifestText.indexOf('[', manifestStart)
-const arrayEnd = manifestText.indexOf('] as const satisfies readonly ToolLogoEntry[]', arrayStart)
-if (manifestStart < 0 || arrayStart < 0 || arrayEnd < 0) throw new Error('Could not locate the literal logo manifest')
-const manifest = JSON.parse(manifestText.slice(arrayStart, arrayEnd + 1))
+const manifest = TOOL_LOGO_MANIFEST
 const manifestIds = manifest.map(({ id }) => id)
 const inventoryStart = sourcesText.indexOf('## Vollständige Zuordnung')
-const inventoryText = inventoryStart >= 0 ? sourcesText.slice(inventoryStart) : ''
+const inventoryText = inventoryStart >= 0 ? sourcesText.slice(inventoryStart).split('\n## ')[0] : ''
 const documentedIds = Array.from(inventoryText.matchAll(/^\|\s*`([^`]+)`\s*\|/gm), ([, id]) => id)
 
 function compareIds(label, actual) {
@@ -58,12 +53,24 @@ for (const entry of manifest) {
 
 const files = await readdir(assetsDir)
 const actualAssets = new Set(files)
+const retainedStart = sourcesText.indexOf('## Nicht verwendete Bestandsdateien')
+const retainedText = retainedStart < 0 ? '' : sourcesText.slice(retainedStart).split('\n## ')[0]
+const retainedAssets = new Set(Array.from(retainedText.matchAll(/^\|\s*`public\/tool-logos\/([^`]+)`\s*\|/gm), ([, name]) => name))
 for (const asset of referencedAssets) {
   if (!actualAssets.has(asset)) {
     fail(`missing asset: ${asset}`)
     continue
   }
-  const svg = await readFile(path.join(assetsDir, asset), 'utf8')
+  const bytes = await readFile(path.join(assetsDir, asset))
+  if (asset.toLowerCase().endsWith('.png')) {
+    if (bytes.length < 24 || !bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])) ||
+      bytes.toString('ascii', 12, 16) !== 'IHDR' || !bytes.readUInt32BE(16) || !bytes.readUInt32BE(20)) {
+      fail(`${asset} is not a PNG with valid dimensions`)
+    }
+    continue
+  }
+  if (!asset.toLowerCase().endsWith('.svg')) { fail(`${asset} has an unsupported image format`); continue }
+  const svg = bytes.toString('utf8')
   if (!/<svg\b/i.test(svg)) fail(`${asset} is not an SVG`)
   if (/<\s*(?:script|foreignObject|image|iframe|object|embed|animate|set)\b/i.test(svg)) fail(`${asset} contains active or external SVG content`)
   if (/\son[a-z]+\s*=/i.test(svg)) fail(`${asset} contains an event-handler attribute`)
@@ -75,7 +82,7 @@ for (const asset of referencedAssets) {
   }
 }
 for (const asset of actualAssets) {
-  if (!referencedAssets.has(asset)) fail(`undocumented/unreferenced asset: ${asset}`)
+  if (!referencedAssets.has(asset) && !retainedAssets.has(asset)) fail(`undocumented/unreferenced asset: ${asset}`)
   if (!sourcesText.includes(`public/tool-logos/${asset}`)) fail(`${asset} has no source documentation`)
 }
 
@@ -85,5 +92,6 @@ const counts = Object.fromEntries(['project-logo', 'family-logo', 'fallback'].ma
 ]))
 console.log(`Catalog IDs: ${catalogIds.length}; manifest IDs: ${manifestIds.length}; source rows: ${documentedIds.length}`)
 console.log(`Project logos: ${counts['project-logo']}; family-logo IDs: ${counts['family-logo']}; fallbacks: ${counts.fallback}`)
-console.log(`Local files: ${actualAssets.size}; referenced files: ${referencedAssets.size}`)
-if (!process.exitCode) console.log('Tool-logo manifest, inventory, and SVG safety checks passed.')
+for (const asset of retainedAssets) if (!actualAssets.has(asset)) fail(`missing retained asset: ${asset}`)
+console.log(`Local files: ${actualAssets.size}; referenced files: ${referencedAssets.size}; retained files: ${retainedAssets.size}`)
+if (!process.exitCode) console.log('Tool-logo manifest, inventory, PNG structure, and SVG safety checks passed.')

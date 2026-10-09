@@ -1,5 +1,5 @@
 {
-  "loadedAt": "2026-10-08T15:34:59.516Z",
+  "loadedAt": "2026-10-09T13:00:18.350Z",
   "sourceRepository": "https://github.com/In-Pro-Org/CliToolRegistry",
   "sourceRef": "develop",
   "fileCount": 8,
@@ -4203,7 +4203,13 @@
         "command": "ms list --robot",
         "format": "json"
       },
-      "completions": {},
+      "completions": {
+        "bash": "ms setup --completions --bash",
+        "elvish": "ms setup --completions --elvish",
+        "fish": "ms setup --completions --fish",
+        "powershell": "ms setup --completions --powershell",
+        "zsh": "ms setup --completions --zsh"
+      },
       "skill": null,
       "tags": [
         "skills",

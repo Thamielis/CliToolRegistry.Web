@@ -11,6 +11,38 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
+export function isCatalogSnapshot(value: unknown): value is CatalogSnapshot {
+  if (!isRecord(value) || !Array.isArray(value.tools) || typeof value.loadedAt !== 'string' ||
+    !Number.isFinite(Date.parse(value.loadedAt)) || typeof value.fileCount !== 'number' ||
+    !Number.isSafeInteger(value.fileCount) || value.fileCount < 0) return false
+  if (['sourceRef', 'sourceRepository'].some((key) => value[key] != null && typeof value[key] !== 'string')) return false
+  const ids = new Set<string>()
+  const strings = (items: unknown) => items === undefined ||
+    Array.isArray(items) && items.every((item) => typeof item === 'string')
+  const safeLink = (link: unknown) => {
+    if (link == null) return true
+    if (typeof link !== 'string') return false
+    try { return ['http:', 'https:'].includes(new URL(link).protocol) } catch { return false }
+  }
+  return value.tools.every((tool) => {
+    if (!isRecord(tool) || !['id', 'name', 'description', 'category', 'tier', 'command', 'catalogFile', 'catalogUrl']
+      .every((key) => typeof tool[key] === 'string') || !tool.id || ids.has(tool.id as string) ||
+      !Array.isArray(tool.platforms) || !tool.platforms.every((p) => ['windows', 'linux', 'wsl2', 'macos'].includes(p)) ||
+      !strings(tool.tags) || !strings(tool.notes) || !safeLink(tool.website) || !safeLink(tool.repository) ||
+      !safeLink(tool.catalogUrl)) return false
+    if (tool.dependencies != null && (!isRecord(tool.dependencies) ||
+      !strings(tool.dependencies.required) || !strings(tool.dependencies.recommended))) return false
+    for (const key of ['install', 'update', 'robotMode']) {
+      if (tool[key] != null && !isRecord(tool[key])) return false
+    }
+    for (const key of ['healthCheck', 'versionCommand', 'capabilitiesCommand']) {
+      if (tool[key] != null && typeof tool[key] !== 'string') return false
+    }
+    ids.add(tool.id as string)
+    return true
+  })
+}
+
 async function fetchCatalog(): Promise<CatalogSnapshot> {
   const catalogUrl = import.meta.env.BASE_URL + 'registry-catalog.json?refresh=' + Date.now()
   const response = await fetch(catalogUrl, {
@@ -20,15 +52,10 @@ async function fetchCatalog(): Promise<CatalogSnapshot> {
   if (!response.ok) throw new Error('Der veröffentlichte Registry-Katalog konnte nicht geladen werden.')
 
   const snapshot: unknown = await response.json()
-  if (
-    !isRecord(snapshot) ||
-    !Array.isArray(snapshot.tools) ||
-    typeof snapshot.loadedAt !== 'string' ||
-    typeof snapshot.fileCount !== 'number'
-  ) {
+  if (!isCatalogSnapshot(snapshot)) {
     throw new Error('Der veröffentlichte Registry-Katalog hat ein ungültiges Format.')
   }
-  return snapshot as unknown as CatalogSnapshot
+  return snapshot
 }
 
 export function loadToolCatalog(): Promise<CatalogSnapshot> {
@@ -45,20 +72,21 @@ export function readCatalogCache(): CatalogSnapshot | null {
     const stored = localStorage.getItem(CACHE_KEY)
     if (!stored) return null
     const snapshot: unknown = JSON.parse(stored)
-    if (!isRecord(snapshot) || !Array.isArray(snapshot.tools) || typeof snapshot.loadedAt !== 'string') {
+    if (!isCatalogSnapshot(snapshot)) {
       return null
     }
-    return snapshot as unknown as CatalogSnapshot
+    return snapshot
   } catch {
     return null
   }
 }
 
-export function writeCatalogCache(snapshot: CatalogSnapshot): void {
+export function writeCatalogCache(snapshot: CatalogSnapshot): boolean {
   try {
     localStorage.setItem(CACHE_KEY, JSON.stringify(snapshot))
+    return true
   } catch {
-    // Private browsing and storage limits must not block a live catalog update.
+    return false
   }
 }
 

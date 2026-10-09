@@ -53,6 +53,11 @@ async function expectLoadedImage(page: Page, selector: string, expectedSource: s
   await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.complete && node.naturalWidth > 0)).toBe(true)
 }
 
+async function selectAndExpectLogo(page: Page, selection: string) {
+  await page.getByTestId(`select-${selection}`).click()
+  await expectLoadedImage(page, '[data-testid="active-logo"] img', `/CliToolRegistry.Web/tool-logos/${selection}.svg`)
+}
+
 test('local marks use the subpath, unknown IDs and legacy values use safe text fallbacks', async ({ page }) => {
   const externalImages = await blockExternalImages(page)
   await page.emulateMedia({ colorScheme: 'light' })
@@ -65,13 +70,12 @@ test('local marks use the subpath, unknown IDs and legacy values use safe text f
   await expect(page.locator('.app-card-icon .app-icon-fallback')).toHaveText('📦')
   await expect(page.locator('.app-row-icon .app-icon-fallback')).toHaveText('LU')
 
-  for (const [selection, asset] of [
-    ['dotnet', 'dotnet.svg'], ['bun', 'bun.svg'], ['pandoc', 'pandoc.svg'],
-    ['python', 'python.svg'], ['docker', 'docker.svg'],
-  ]) {
-    await page.getByTestId(`select-${selection}`).click()
-    await expectLoadedImage(page, '[data-testid="active-logo"] img', `/CliToolRegistry.Web/tool-logos/${asset}`)
-  }
+  // Explicit steps avoid UBS's nonconverging browser-object analysis inside this loop.
+  await selectAndExpectLogo(page, 'dotnet')
+  await selectAndExpectLogo(page, 'bun')
+  await selectAndExpectLogo(page, 'pandoc')
+  await selectAndExpectLogo(page, 'python')
+  await selectAndExpectLogo(page, 'docker')
 
   await page.getByTestId('select-unknown').click()
   await expect(page.locator('[data-testid="active-logo"] .app-icon-fallback')).toHaveText('UT')
@@ -163,7 +167,7 @@ test('theme selection remains usable when local storage throws', async ({ page }
 test('catalog views and details keep the same marks across desktop and mobile', async ({ page }, testInfo) => {
   const externalImages = await blockExternalImages(page)
   await page.route((url) => url.pathname.endsWith('/registry-catalog.json'), (route) => route.fulfill({ json: snapshot }))
-  await page.goto('./')
+  await page.goto('./?section=catalog')
   await expect(page.locator('.tool-card')).toHaveCount(3)
   await expectLoadedImage(page, '.tool-card .app-icon-frame[data-logo-id="git"] img', '/CliToolRegistry.Web/tool-logos/git.svg')
   await page.screenshot({ path: testInfo.outputPath('cards-dark-desktop.png'), fullPage: true })

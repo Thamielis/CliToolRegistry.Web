@@ -31,11 +31,29 @@ Registry-Katalogs angezeigt.
 
 ## Darstellung und Bedienung
 
-Neue Besucher starten im dunklen Theme mit Glow-Akzenten und der erweiterten
-Ansicht **Karten+**. Über die Schalter stehen auch die kompakte Kartenansicht,
-die Tabelle sowie ein helles oder systemabhängiges Theme zur Verfügung.
-Theme und Darstellung bleiben im Browser gespeichert; Suche und Filter bleiben
-beim Wechsel der Darstellung erhalten.
+Neue Besucher starten in der **Übersicht** mit einer interaktiven
+Befehlsvorschau. Die vollständig überarbeitete Oberfläche verwendet eigenständig
+umgesetzte Funktionsmuster der
+[FrankenTUI Website](https://github.com/Dicklesworthstone/frankentui_website).
+Die [Feature-Zuordnung](docs/frankentui-feature-map.md) dokumentiert die Adaption.
+Quellcode, Bildmaterial und WASM-Komponenten der Referenz werden nicht übernommen.
+
+- **Katalog:** Suche, Plattform-/Kategoriefilter, Sortierung, Karten, Karten+
+  und Tabelle; zunächst 48 Treffer mit „Weitere Werkzeuge laden“.
+- **Abhängigkeiten:** Graph und vollständige Listen erforderlicher/empfohlener
+  Abhängigkeiten sowie abhängiger Werkzeuge. Fehlende IDs sind externe Referenzen.
+- **Kataloglabor:** Tatsächliche Datenstände vergleichen, Änderungen als
+  Vorher-/Nachher-JSON prüfen und Katalog/Vergleich herunterladen. Ohne
+  Vergleichsbasis gibt es einen ausdrücklichen Hinweis; eine Commit-Historie
+  wird nicht simuliert.
+- **Anleitung:** Werkzeuge, Plattformen, Automatisierung und Datenstände erklärt.
+- **Befehlspalette:** Ctrl/Cmd+K, Pfeiltasten, Enter und Escape; alternativ
+  über den sichtbaren Schalter erreichbar.
+
+Hell, Dunkel und System bleiben als gespeicherte Theme-Präferenzen verfügbar.
+Suche, Filter, Darstellung, Bereich und Werkzeugdetails sind im URL-Zustand
+teilbar; Zurück/Vorwärts stellt den Kontext wieder her. Die Website bleibt eine
+statische React/Vite-Anwendung unter `/CliToolRegistry.Web/`.
 
 Karten+ zeigt kopierbare Befehle und eine Installationsplattform pro Werkzeug.
 Ein globaler Plattformfilter bestimmt auch die angezeigten Installationsbefehle.
@@ -46,6 +64,8 @@ Design und Interaktionsregeln sind in [DESIGN.md](DESIGN.md) und
 [UX-CONTRACT.md](UX-CONTRACT.md) dokumentiert.
 
 ## Entwicklung
+
+Node.js 24 wird für die lokalen Prüfungen und den CI-Build verwendet.
 
 ```sh
 npm install
@@ -74,7 +94,11 @@ und veröffentlicht den Build auf GitHub Pages.
 ```sh
 npx playwright install chromium
 npm run test:ui
+npm run test:model
+npm run typecheck
 npm run lint
+npm run build
+npm run test:production
 ```
 
 Die Browserprüfungen verwenden reproduzierbare Katalogdaten für Interaktionen
@@ -82,4 +106,8 @@ und den vollständigen lokalen Katalog für Desktop- und Mobilaufnahmen.
 Sie prüfen Themes, Ansichten, Filter, Plattformbefehle, Kopierfeedback,
 Tastaturfokus, Fehlerbehandlung, Cache, responsive Darstellung und
 automatische Barrierefreiheitsregeln in beiden Themes.
+Zusätzlich werden Befehlspalette, URL-Navigation, Graphbeziehungen,
+Datenstandsvergleich/Exporte, ungültige Katalogdaten und ein synthetischer
+Katalog mit 1000 Werkzeugen geprüft. Die Produktionsprüfung verwendet den
+Build unter dem tatsächlichen GitHub-Pages-Unterpfad.
 Screenshots und Fehler-Traces liegen im ignorierten Verzeichnis `test-results/`.

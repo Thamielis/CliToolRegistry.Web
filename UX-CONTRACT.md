@@ -11,18 +11,35 @@ Visual intent and token ownership are in [DESIGN.md](DESIGN.md). Product evidenc
 | Disclosure | ToolDetails with App selection state | This contract | inline card / below table | focus, Escape, close restoration |
 | Copy feedback | CommandBlock | This contract | compact / regular | clipboard success and rejection |
 | View/theme | ViewToggle / ThemeToggle / ThemeContext | DESIGN.md and this contract | cards / cards+ / table, dark / light / system | reload, locale, OS change |
+| Navigation | App + workbench.parseNavigation/navigationUrl | This contract | five query-addressed sections, selected stable tool ID | direct reload, back/forward |
+| Command palette | CommandPalette | This contract | native modal, combobox/listbox | focus, keyboard, IME, Escape |
+| Dependency graph | DependencyExplorer + workbench.dependencyEdges | Catalog dependency IDs | bounded drawing / complete lists | exact direction, external/self/cycle/high degree |
+| Snapshot comparison | App catalog state + CatalogLab + workbench.compareCatalogs | Successful catalog snapshots | baseline/current, JSON exports | add/remove/modify, failed refresh |
 
 ## Behavior
 
-- First visit: dark theme and Cards+. Existing explicit theme and view choices win. Storage failure must not prevent choosing either preference.
+- First visit: Overview in the dark theme. Catalog starts in Cards+ unless an explicit stored/URL representation exists. Storage failure must not prevent preference changes or successful catalog loading.
 - All three views consume the same locally filtered catalog. View switching preserves search and filters and closes detail selection. The chosen view survives reload.
-- Search is immediate and local. Its clear button returns focus to search. Queries and filters are intentionally transient for this single-screen catalog; switching representation does not navigate away or commit a URL query.
+- Search is immediate and local. Its clear button returns focus to search. The URL owns section, q, category, platform, sort, view, tool and count. Section/tool navigation pushes; search/filter/sort/view/count changes replace. Popstate reads without writing. Unrelated URL parameters survive. Closing details replaces tool state and never blindly goes back out of the application.
+- All catalog representations initially render at most 48 matches. Load more adds 48, with a visible range and total. Filtering/sorting resets the range. Names/categories sort according to locale with stable ID tiebreakers. Direct tool URLs expose canonical details even when the tool falls beyond the currently drawn page.
 - Detail selection is exclusive. Opening focuses the detail heading and brings it into view. Closing or Escape restores focus to the initiating button. Details are a nonmodal disclosure with normal document scrolling.
 - Installation is labeled by platform. A global platform filter governs card commands; with all platforms selected, each enhanced card offers its supported platforms. No available command means explicit absence, never a command borrowed from another OS.
 - Commands are copied, never executed. Success has a live status; clipboard failure has an inline alert. Long detail commands remain readable without hover.
 - Loading, no results, empty catalog, initial failure/retry, and cached-data warnings reuse App's state handling. No-results offers filter reset. Background refresh keeps current catalog data usable.
+- HTTP data and cached data pass the same validation before rendering: valid timestamp/file count, required tool fields, unique IDs, valid platforms/dependency lists and HTTP(S) resource links. Invalid refresh preserves good data/cache; invalid startup cache is ignored. Failed persistent cache writes have a separate warning and do not discard the valid current snapshot.
 - All owned labels and accessible names follow LocaleContext. Catalog text remains as published. Source timestamps follow the selected locale.
 - Keyboard focus is visible. Native selects retain native keyboard behavior. Reduced motion and forced colors use the global stylesheet rules.
+
+## Workbench surfaces
+
+- Native links expose every section with `aria-current`. Normal in-app navigation focuses its heading; initial rendering does not steal focus. Modified clicks follow native link behavior. Document titles follow section and locale. The skip link targets the main content region.
+- Overview's terminal is explicitly a command preview. It selects real tools and declared platforms, uses the canonical installation selector and CommandBlock, and exposes no shell execution.
+- Ctrl/Cmd+K is an optional shortcut with a visible trigger. Ignore IME composition and unintended modifier combinations. A native modal dialog owns inertness/Tab containment. Search retains DOM focus while arrow/Home/End update active descendant, Enter activates, Escape closes. At most 20 section/tool results are shown. Clear restores input focus. Closing restores connected opener focus; activation navigates to a section or reveals the real tool in canonical details.
+- Dependency edges mean tool → dependency. Exact stable IDs resolve registered nodes; missing IDs keep their original strings as external references. Duplicate triples collapse; both kinds, self-links and cycles remain represented. Show outgoing required/recommended and incoming required/recommended groups separately. The drawing has at most 49 nodes; lists contain all edges and provide keyboard/pointer equivalents. Nodes, zoom, pan and reset use native buttons. Node/list activation opens canonical details with URL state and close-focus restoration while retaining the chosen graph root. The graph-root dropdown is a local exploration choice; selected details remain shareable by tool ID.
+- The lab has a real baseline only after a valid startup cache, explicit Set baseline or successful refresh replacing current. First visit states absence. Successful refresh changes A→B to B→C; failed refresh retains A→B. Snapshots are immutable. Comparison uses stable IDs and all tool fields, recursively stable object keys and sorted unique tags/platforms/dependency lists. Ordered notes and other arrays remain ordered. Snapshot timestamp changes alone create no tool modifications. Source/ref differences have a warning.
+- Lab exports are JSON catalog snapshots or a versioned comparison report with source metadata and actual changes. Blob URLs are revoked after download starts. No fabricated commit/release history is presented.
+- Dependencies and Lab are lazy screens with localized loading and app-owned failure feedback. Failed chunk recovery reloads the page, retaining its query state; merely resetting a rejected React.lazy promise is insufficient.
+- Guide uses bilingual copy and the same panels/navigation actions. All source warnings remain globally visible and retryable on every screen.
 
 ## Identity Marks
 
@@ -35,3 +52,5 @@ Visual intent and token ownership are in [DESIGN.md](DESIGN.md). Product evidenc
 ## Evidence
 
 `tests/catalog-ui.spec.ts` verifies theme/view persistence, local filtering, platform commands, detail focus, clipboard feedback, retry/cache handling, localization, mobile reflow, reduced motion, and automated accessibility. `npm run test:ui`, `npm run lint`, and `npm run build` are the required project checks.
+
+`tests/workbench-model.test.ts` verifies URL round trips/bounds, validation, exact dependency edges, canonical comparison and a synthetic 1000-tool catalog. `tests/workbench-ui.spec.ts` verifies all sections, native palette keyboard/IME/focus, URL/back/forward/deep reload, baseline/refresh/export, corrupt cache recovery, structural rendering limits, locale/theme, narrow layouts and Axe. `npm run test:production` exercises the built artifact under the real Pages subpath.

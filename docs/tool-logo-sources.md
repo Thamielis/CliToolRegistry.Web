@@ -1,6 +1,6 @@
 # Tool-Logo-Quellen und Nutzungsentscheidung
 
-Stand: 2026-10-08. Grundlage ist der aktuelle `public/registry-catalog.json`-Stand mit 89 IDs. Die Matrix enthält jede ID genau einmal. Für die Felder `website` und `repository` ist der jeweilige Katalogeintrag die kanonische Quelle. Ein Fallback bedeutet: Für die konkrete Identität ist keine ausreichend belegte, lokal verwendbare Bildmarke eingecheckt; es werden deterministische Initialen angezeigt.
+Stand: 2026-10-09. Grundlage ist der aktuelle `public/registry-catalog.json`-Stand mit 89 IDs. Die Matrix enthält jede ID genau einmal. Für die Felder `website` und `repository` ist der jeweilige Katalogeintrag die kanonische Quelle. Ein Fallback bedeutet: Es wird keine Bildmarke aus dem Manifest verwendet; die Oberfläche zeigt deterministische Initialen. Die Tabelle unterscheidet belegte Quellen von bereits vorhandenen Dateien ohne dokumentierte Herkunft.
 
 ## Geprüfte Assets
 
@@ -13,6 +13,9 @@ Stand: 2026-10-08. Grundlage ist der aktuelle `public/registry-catalog.json`-Sta
 | `public/tool-logos/python.svg` | `python3` | Offizielles Python-Logo `python-logo-only.svg` von [python.org](https://www.python.org/community/logos/), abgerufen am 2026-10-08. | Nominative Verwendung zur Bezeichnung der Python-Programmiersprache; sichtbares ™ am Logo und Nichtzugehörigkeitshinweis im Footer gemäß [PSF Trademark FAQ](https://www.python.org/psf/trademarks-faq/). |
 | `public/tool-logos/docker.svg` | `docker-buildx`, `docker-cli`, `docker-desktop` | Ocean Blue Docker-Mark aus dem offiziellen [Docker Media Resources](https://www.docker.com/company/newsroom/media-resources/) Paket, abgerufen am 2026-10-08. | Offizielles Produktfamilien-Mark; Originalfarbe `#2560ff`, keine Umfärbung. Markenrechte bleiben bei Docker; die Nutzung behauptet keine Partnerschaft oder Unterstützung. |
 | `public/tool-logos/vercel-dark.svg`, `public/tool-logos/vercel-light.svg` | `vercel-cli` | Offizielle schwarze/weiße Symbolvarianten aus dem Vercel Brand-Asset-Paket, abgerufen am 2026-10-08; [Vercel Brand Guidelines](https://vercel.com/geist/brands). | Das Symbol wird nur in der Markenübersicht mit mehreren Marken verwendet. Originale Varianten werden passend zum aufgelösten Theme gewählt; keine Partnerschaft oder Unterstützung wird behauptet. |
+| `public/tool-logos/7-Zip.png` | `7zip` | Bereits im Ausgangscheckout vorhandenes PNG; das Manifest verwendet diese Datei. | Im Umbau unverändert erhalten. Downloadquelle und Nutzungsnachweis sind im Bestand nicht dokumentiert; keine neue Lizenzprüfung behauptet. |
+| `public/tool-logos/GitHub.png` | `gh` | Bereits im Ausgangscheckout vorhandenes PNG; das Manifest verwendet diese Datei. | Im Umbau unverändert erhalten. Downloadquelle und Nutzungsnachweis sind im Bestand nicht dokumentiert; keine neue Lizenzprüfung behauptet. |
+| `public/tool-logos/PowerShell.png` | `powershell7` | Bereits im Ausgangscheckout vorhandenes PNG; das Manifest verwendet diese Datei. | Im Umbau unverändert erhalten. Downloadquelle und Nutzungsnachweis sind im Bestand nicht dokumentiert; keine neue Lizenzprüfung behauptet. |
 
 Simple Icons wurde ebenfalls geprüft. Seine Paketlizenz ist kein pauschaler Nachweis für einzelne Markenlogos; einzelne Icons ohne konkrete Lizenz-/Nutzungsangabe wurden daher nicht übernommen. GitHub, Go und Node.js erhielten keine pauschalen Domain- oder Technologie-Logos: Die jeweilige offizielle Markenregel schränkt die hier nötige Darstellung ein ([GitHub](https://brand.github.com/foundations/logo), [Go](https://go.dev/brand), [Node.js/OpenJS](https://nodejs.org/static/documents/trademark-policy.pdf)).
 
@@ -21,7 +24,7 @@ Simple Icons wurde ebenfalls geprüft. Seine Paketlizenz ist kein pauschaler Nac
 | Tool-ID | Status | Quelle | Asset / Entscheidung |
 |---|---|---|---|
 | `dotnet` | project-logo | .NET Brand, siehe oben | `dotnet.svg`; tatsächliches Projektlogo |
-| `7zip` | fallback | `public/registry-catalog.json` → 7-Zip-Website | Offizieller Logo-Link lieferte 404; kein anderer Kandidat mit passenden Nutzungsangaben übernommen |
+| `7zip` | project-logo | Bestehender lokaler Bestand, siehe oben | `7-Zip.png`; Herkunft/Nutzungsnachweis nicht dokumentiert |
 | `act` | fallback | `public/registry-catalog.json` → Website/Repository | Keine hinreichend belegte, lokal verwendbare Bildmarke übernommen; Initialen |
 | `asb` | fallback | `public/registry-catalog.json` → Website/Repository | Keine hinreichend belegte, lokal verwendbare Bildmarke übernommen; Initialen |
 | `acfs` | fallback | `public/registry-catalog.json` → Website/Repository | Keine hinreichend belegte, lokal verwendbare Bildmarke übernommen; Initialen |
@@ -80,7 +83,7 @@ Simple Icons wurde ebenfalls geprüft. Seine Paketlizenz ist kein pauschaler Nac
 | `giil` | fallback | `public/registry-catalog.json` → Website/Repository | Eigenes Projekt; keine belegte Bildmarke gefunden; Initialen |
 | `git` | project-logo | Git SCM, siehe oben | `git.svg`; Jason Long wird gemäß CC BY 3.0 genannt |
 | `git-lfs` | fallback | `public/registry-catalog.json` → Website/Repository | Keine hinreichend belegte, lokal verwendbare Bildmarke übernommen; Initialen |
-| `gh` | fallback | [GitHub CLI](https://cli.github.com/) und [GitHub Logo-Regeln](https://brand.github.com/foundations/logo) | Kein GitHub-Mark als stellvertretendes Projektsymbol; Initialen |
+| `gh` | project-logo | Bestehender lokaler Bestand, siehe oben | `GitHub.png`; Herkunft/Nutzungsnachweis nicht dokumentiert |
 | `go` | fallback | [Go Brand Guidelines](https://go.dev/brand) | Offizielles Logo mit Nähe-Einschränkung; in dieser Markenübersicht nicht verwendet; Initialen |
 | `gum` | fallback | `public/registry-catalog.json` → Website/Repository | Keine hinreichend belegte, lokal verwendbare Bildmarke übernommen; Initialen |
 | `jq` | fallback | `public/registry-catalog.json` → Website/Repository | Keine hinreichend belegte, lokal verwendbare Bildmarke übernommen; Initialen |
@@ -93,7 +96,8 @@ Simple Icons wurde ebenfalls geprüft. Seine Paketlizenz ist kein pauschaler Nac
 | `ollama` | fallback | `public/registry-catalog.json` → Website/Repository | Kein Icon mit für diese Darstellung belegten Nutzungsangaben übernommen; Initialen |
 | `oracle` | fallback | `public/registry-catalog.json` → Website/Repository | Kein Icon mit für diese Darstellung belegten Nutzungsangaben übernommen; Initialen |
 | `pandoc` | project-logo | Pandoc Logo, siehe oben | `pandoc.svg`; CC BY-SA 4.0, Quellenhinweis steht oben |
-| `powershell7` | fallback | `public/registry-catalog.json` → Website/Repository | Kein Icon mit für diese Darstellung belegten Nutzungsangaben übernommen; Initialen |
+| `powershell7` | project-logo | Bestehender lokaler Bestand, siehe oben | `PowerShell.png`; Herkunft/Nutzungsnachweis nicht dokumentiert |
+
 | `python3` | project-logo | Python.org, siehe oben | `python.svg`; ™ und Nichtzugehörigkeitshinweis im Footer |
 | `rch` | fallback | [remote_compilation_helper](https://github.com/Dicklesworthstone/remote_compilation_helper) | Repository ohne belegte Bildmarke/Nutzungsangaben; Initialen |
 | `ru` | fallback | `public/registry-catalog.json` → Website/Repository | Eigenes Projekt; keine belegte Bildmarke gefunden; Initialen |
@@ -114,9 +118,20 @@ Simple Icons wurde ebenfalls geprüft. Seine Paketlizenz ist kein pauschaler Nac
 
 `AppEntry.icon?: string` ist der einzige Legacy-Wert. Im aktuellen Katalog wurden keine `icon`-Werte und keine früheren Icon-URLs gefunden. `AppCard` und `AppRow` waren die einzigen Aufrufer des alten Favicons und sind derzeit nicht in `App` eingebunden. Der gemeinsame Renderer behält einfache Legacy-Texte und Emojis als bewussten Ersatz, verwirft URL-/Dateipfadwerte und erzeugt für unbekannte IDs zwei deterministische Initialen. Damit wird weder ein früherer Google-Favicon-Dienst noch ein GitHub-Avatar aufgerufen.
 
+## Nicht verwendete Bestandsdateien
+
+Diese Dateien sind bereits versioniert und bleiben erhalten. Das aktuelle
+Manifest referenziert sie nicht; der Validator behandelt sie ausdrücklich
+als dokumentierten Bestand, ohne sie als aktive Tool-Logos zu zählen.
+
+| Datei | Status |
+|---|---|
+| `public/tool-logos/Git.png` | Nicht im Manifest verwendet; unverändert erhalten |
+| `public/tool-logos/github.svg` | Nicht im Manifest verwendet; unverändert erhalten |
+
 ## Zählung
 
-- Projektlogos: 5 IDs (`dotnet`, `bun`, `git`, `pandoc`, `python3`)
+- Projektlogos: 8 IDs (`dotnet`, `7zip`, `bun`, `git`, `gh`, `pandoc`, `powershell7`, `python3`)
 - Familienlogos: 4 IDs (drei Docker-Produkte, `vercel-cli`)
-- Fallbacks: 80 IDs
-- Lokale Dateien: 8 SVGs
+- Fallbacks: 77 IDs
+- Lokale Dateien: 13 (9 SVGs, 4 PNGs); 11 referenziert, 2 ausdrücklich erhalten
