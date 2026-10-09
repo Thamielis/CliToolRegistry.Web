@@ -1,0 +1,42 @@
+{
+    "tool": "br",
+    "version": "0.7.4",
+    "contract_version": "br.robot_docs.v1",
+    "title": "br Agent Guide",
+    "line_count": 52,
+    "guide": "br Agent Guide\n\nPurpose:\n  br is a local-first issue tracker. It stores primary state in SQLite and\n  exports .beads/issues.jsonl for git-friendly handoff. Normal issue and sync\n  paths never run git. Only an explicit br vcs-status request runs bounded,\n  read-only Git probes.\n\nMachine-output defaults:\n  Use --json or --format json for scripts. Diagnostics and structured errors\n  go to stderr. For token-efficient structured output, use --format toon where\n  the command supports it.\n\nStart of session:\n  br capabilities --format json\n  br ready --json\n  br coordination status --json\n  br show <id> --json\n\nFinding work:\n  br ready --json is the single work-discovery entrypoint: it returns\n  unblocked, non-deferred, actionable issues. \"Ready\" defaults to status=open,\n  but projects can widen it via workflow.status_groups.ready in\n  .beads/policy.yaml (e.g. [open, rework]) so review-returned work resurfaces\n  without changing the command. Don't hand-roll status filters like\n  `br list -s open -s rework`; call `br ready --json` and let project policy\n  define readiness. Returned issues keep their real status (a rework item still\n  reports {\"status\":\"rework\"}).\n\nClaiming work:\n  br update <id> --claim --actor \"$AGENT_NAME\" --json\n  If Agent Mail is down, add a comment naming the intended file scope before\n  editing. Treat that comment as advisory, not a lock.\n\nCompleting work:\n  br close <id> --reason \"Completed: <specific proof>\" --json\n  br sync --flush-only\n  Stage code and .beads changes together outside br.\n\nDiscovery:\n  br schema commands --format json\n  br schema all --format json\n  br vcs-status --json\n  br robot-docs guide\n\nSafety:\n  Avoid bare bv in automated sessions; use bv --robot-* flags.\n  Use RUST_LOG=error for routine br runs to suppress dependency logs.\n  br sync does not commit, push, pull, or install hooks.\n  A database on an older schema is upgraded automatically (backup kept) only\n  when it holds nothing the JSONL lacks. Otherwise mutations refuse; run\n  br doctor migrate-schema heal --dry-run, then br doctor migrate-schema heal.\n",
+    "canonical_commands": [
+        {
+            "task": "discover capabilities",
+            "command": "br capabilities --format json"
+        },
+        {
+            "task": "find ready work",
+            "command": "br ready --json"
+        },
+        {
+            "task": "diagnose stale claims",
+            "command": "br coordination status --json"
+        },
+        {
+            "task": "show issue details",
+            "command": "br show <id> --json"
+        },
+        {
+            "task": "inspect JSON contracts",
+            "command": "br schema commands --format json"
+        },
+        {
+            "task": "explicitly inspect JSONL Git visibility",
+            "command": "br vcs-status --json"
+        },
+        {
+            "task": "review a required schema migration",
+            "command": "br doctor migrate-schema plan --json"
+        },
+        {
+            "task": "final JSONL export",
+            "command": "br sync --flush-only"
+        }
+    ]
+}

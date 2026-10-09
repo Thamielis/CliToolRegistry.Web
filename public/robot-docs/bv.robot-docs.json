@@ -1,0 +1,767 @@
+{
+    "commands": {
+        "robot-alerts": {
+            "flag": "--robot-alerts",
+            "description": "Stale issues, blocking cascades, priority mismatches.",
+            "key_fields": [
+                "alerts",
+                "severity",
+                "affected_issues"
+            ],
+            "params": [
+                "--severity info|warning|critical",
+                "--alert-type critical",
+                "--alert-label backend"
+            ],
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-blocker-chain": {
+            "flag": "--robot-blocker-chain ISSUE_ID",
+            "description": "Full blocker chain analysis for an issue.",
+            "key_fields": [
+                "result.target_id",
+                "result.is_blocked",
+                "result.root_blockers",
+                "result.chain",
+                "result.has_cycle"
+            ],
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-burndown": {
+            "flag": "--robot-burndown current",
+            "description": "Sprint burndown data.",
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": true,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-capabilities": {
+            "flag": "--robot-capabilities",
+            "description": "Machine-readable capability manifest: version, contract, commands, env vars, exit codes, and output formats.",
+            "key_fields": [
+                "tool",
+                "version",
+                "contract_version",
+                "commands",
+                "environment_variables",
+                "exit_codes"
+            ],
+            "needs_issues": false,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-capacity": {
+            "flag": "--robot-capacity",
+            "description": "Capacity simulation and completion projections.",
+            "params": [
+                "--agents 10",
+                "--capacity-label backend"
+            ],
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-causality": {
+            "flag": "--robot-causality ISSUE_ID",
+            "description": "Causal chain analysis for a bead.",
+            "key_fields": [
+                "chain.bead_id",
+                "chain.events",
+                "insights.summary",
+                "insights.critical_path",
+                "insights.recommendations"
+            ],
+            "needs_issues": true,
+            "needs_git": true,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-confirm-correlation": {
+            "flag": "--robot-confirm-correlation deadbeef:ISSUE_ID",
+            "description": "Record positive feedback for a commit-to-bead correlation.",
+            "params": [
+                "--correlation-by agent",
+                "--correlation-reason verified"
+            ],
+            "needs_issues": true,
+            "needs_git": true,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": true
+        },
+        "robot-correlation-stats": {
+            "flag": "--robot-correlation-stats",
+            "description": "Summary counts for saved correlation feedback.",
+            "key_fields": [
+                "total_feedback",
+                "confirmed",
+                "rejected",
+                "ignored",
+                "accuracy_rate"
+            ],
+            "needs_issues": false,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-diff": {
+            "flag": "--robot-diff",
+            "description": "Changes since a historical point (commit, branch, tag, or date).",
+            "params": [
+                "--diff-since HEAD~1"
+            ],
+            "needs_issues": true,
+            "needs_git": true,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-docs": {
+            "flag": "--robot-docs guide",
+            "description": "Machine-readable JSON documentation. Topics: guide, commands, examples, env, exit-codes, all.",
+            "needs_issues": false,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-drift": {
+            "flag": "--robot-drift",
+            "description": "Drift detection from saved baseline.",
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": true,
+            "mutates_state": false
+        },
+        "robot-explain-correlation": {
+            "flag": "--robot-explain-correlation deadbeef:ISSUE_ID",
+            "description": "Explain why a commit is linked to a bead.",
+            "key_fields": [
+                "commit",
+                "bead",
+                "score",
+                "reasons"
+            ],
+            "needs_issues": true,
+            "needs_git": true,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-file-beads": {
+            "flag": "--robot-file-beads README.md",
+            "description": "Beads that touched a specific file path.",
+            "key_fields": [
+                "file_path",
+                "total_beads",
+                "open_beads",
+                "closed_beads"
+            ],
+            "params": [
+                "--file-beads-limit 10"
+            ],
+            "needs_issues": true,
+            "needs_git": true,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-file-hotspots": {
+            "flag": "--robot-file-hotspots",
+            "description": "Files touched by the most beads.",
+            "key_fields": [
+                "hotspots",
+                "stats.total_files",
+                "stats.total_bead_links",
+                "stats.files_with_multiple_beads"
+            ],
+            "params": [
+                "--hotspots-limit 10"
+            ],
+            "needs_issues": true,
+            "needs_git": true,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-file-relations": {
+            "flag": "--robot-file-relations README.md",
+            "description": "Files that frequently co-change with a given file.",
+            "key_fields": [
+                "file_path",
+                "total_commits",
+                "threshold",
+                "related_files"
+            ],
+            "params": [
+                "--relations-threshold 0.0-1.0",
+                "--relations-limit 10"
+            ],
+            "needs_issues": true,
+            "needs_git": true,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-forecast": {
+            "flag": "--robot-forecast all",
+            "description": "ETA predictions for bead completion.",
+            "params": [
+                "--forecast-label backend",
+                "--forecast-sprint SPRINT_ID",
+                "--forecast-agents 10"
+            ],
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-graph": {
+            "flag": "--robot-graph",
+            "description": "Dependency graph export in JSON, DOT, or Mermaid format.",
+            "params": [
+                "--graph-format json|dot|mermaid",
+                "--graph-root ISSUE_ID",
+                "--graph-depth 10"
+            ],
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-help": {
+            "flag": "--robot-help",
+            "description": "Agent-focused command help. Use robot-docs guide for structured JSON documentation.",
+            "needs_issues": false,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-history": {
+            "flag": "--robot-history",
+            "description": "Bead-to-commit correlations from git history.",
+            "key_fields": [
+                "correlations",
+                "confidence",
+                "commit_sha",
+                "bead_id"
+            ],
+            "params": [
+                "--bead-history ISSUE_ID",
+                "--history-since \"30 days ago\"",
+                "--history-limit 10",
+                "--min-confidence 0.0-1.0"
+            ],
+            "needs_issues": true,
+            "needs_git": true,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-impact": {
+            "flag": "--robot-impact README.md",
+            "description": "Analyze bead impact for files that may be modified.",
+            "key_fields": [
+                "files",
+                "risk_level",
+                "risk_score",
+                "warnings",
+                "affected_beads"
+            ],
+            "needs_issues": true,
+            "needs_git": true,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-impact-network": {
+            "flag": "--robot-impact-network all",
+            "description": "Impact network graph (full or subnetwork for a bead).",
+            "key_fields": [
+                "network.nodes",
+                "network.edges",
+                "stats.total_nodes",
+                "top_clusters",
+                "top_connected"
+            ],
+            "params": [
+                "--network-depth 1-3"
+            ],
+            "needs_issues": true,
+            "needs_git": true,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-insights": {
+            "flag": "--robot-insights",
+            "description": "Deep graph analysis: PageRank, betweenness, HITS, eigenvector, k-core, cycle detection.",
+            "key_fields": [
+                "pagerank",
+                "betweenness",
+                "hits",
+                "eigenvector",
+                "k_core",
+                "cycles"
+            ],
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-label-attention": {
+            "flag": "--robot-label-attention",
+            "description": "Attention-ranked labels requiring focus.",
+            "params": [
+                "--attention-limit 10"
+            ],
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-label-flow": {
+            "flag": "--robot-label-flow",
+            "description": "Cross-label dependency flow analysis.",
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-label-health": {
+            "flag": "--robot-label-health",
+            "description": "Per-label health metrics: open/closed counts, velocity, staleness.",
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-metrics": {
+            "flag": "--robot-metrics",
+            "description": "Performance metrics: timing, cache hit rates, memory usage.",
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-next": {
+            "flag": "--robot-next",
+            "description": "Single top recommendation with claim/show commands.",
+            "key_fields": [
+                "id",
+                "title",
+                "score",
+                "reasons",
+                "unblocks",
+                "claim_command",
+                "show_command"
+            ],
+            "params": [
+                "--graph-root ISSUE_ID"
+            ],
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-orphans": {
+            "flag": "--robot-orphans",
+            "description": "Orphan commit candidates that should be linked to beads.",
+            "key_fields": [
+                "git_range",
+                "stats.candidate_count",
+                "candidates",
+                "candidates[].probable_beads",
+                "by_bead"
+            ],
+            "params": [
+                "--orphans-min-score 0-100",
+                "--label backend"
+            ],
+            "needs_issues": true,
+            "needs_git": true,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-plan": {
+            "flag": "--robot-plan",
+            "description": "Dependency-respecting execution plan with parallel tracks.",
+            "key_fields": [
+                "tracks",
+                "items",
+                "unblocks",
+                "summary"
+            ],
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-priority": {
+            "flag": "--robot-priority",
+            "description": "Priority misalignment detection: items whose graph importance differs from assigned priority.",
+            "key_fields": [
+                "misalignments",
+                "suggestions"
+            ],
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-recipes": {
+            "flag": "--robot-recipes",
+            "description": "Recipe names, descriptions, and usage hints for pre-filtering work.",
+            "key_fields": [
+                "recipes"
+            ],
+            "needs_issues": false,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-reject-correlation": {
+            "flag": "--robot-reject-correlation deadbeef:ISSUE_ID",
+            "description": "Record negative feedback for a commit-to-bead correlation.",
+            "params": [
+                "--correlation-by agent",
+                "--correlation-reason unrelated"
+            ],
+            "needs_issues": true,
+            "needs_git": true,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": true
+        },
+        "robot-related": {
+            "flag": "--robot-related ISSUE_ID",
+            "description": "Beads related to a specific bead ID.",
+            "key_fields": [
+                "target_bead_id",
+                "total_related",
+                "file_overlap",
+                "commit_overlap",
+                "dependency_cluster",
+                "concurrent"
+            ],
+            "params": [
+                "--related-min-relevance 0-100 or 0.0-1.0",
+                "--related-max-results 10",
+                "--related-include-closed"
+            ],
+            "needs_issues": true,
+            "needs_git": true,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-schema": {
+            "flag": "--robot-schema",
+            "description": "JSON Schema definitions for all robot command outputs.",
+            "key_fields": [
+                "schema_version",
+                "envelope",
+                "commands"
+            ],
+            "params": [
+                "--schema-command robot-triage"
+            ],
+            "needs_issues": false,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-search": {
+            "flag": "--robot-search",
+            "description": "Hashed keyword or graph-weighted hybrid search over issue text.",
+            "params": [
+                "--search \"login oauth\"",
+                "--search-limit 10",
+                "--search-min-score SCORE",
+                "--search-mode text|hybrid"
+            ],
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-sprint-list": {
+            "flag": "--robot-sprint-list",
+            "description": "List all sprints as JSON.",
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": true,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-sprint-show": {
+            "flag": "--robot-sprint-show SPRINT_ID",
+            "description": "Show details for a specific sprint.",
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": true,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-suggest": {
+            "flag": "--robot-suggest",
+            "description": "Smart suggestions: potential duplicates, missing dependencies, label assignments, cycle warnings.",
+            "key_fields": [
+                "suggestions",
+                "type",
+                "confidence"
+            ],
+            "params": [
+                "--suggest-type duplicate|dependency|label|cycle",
+                "--suggest-confidence 0.0-1.0",
+                "--suggest-bead ISSUE_ID"
+            ],
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-triage": {
+            "flag": "--robot-triage",
+            "description": "Unified triage: top picks, recommendations, quick wins, blockers, project health, velocity.",
+            "key_fields": [
+                "triage.quick_ref.top_picks",
+                "triage.recommendations",
+                "triage.quick_wins",
+                "triage.blockers_to_clear",
+                "triage.project_health"
+            ],
+            "params": [
+                "--graph-root ISSUE_ID"
+            ],
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-triage-by-label": {
+            "flag": "--robot-triage-by-label",
+            "description": "Triage grouped by label for area-focused agents.",
+            "key_fields": [
+                "triage.recommendations_by_label[].label",
+                "triage.recommendations_by_label[].top_pick",
+                "triage.recommendations_by_label[].claim_command"
+            ],
+            "params": [
+                "--graph-root ISSUE_ID"
+            ],
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        },
+        "robot-triage-by-track": {
+            "flag": "--robot-triage-by-track",
+            "description": "Triage grouped by independent parallel execution tracks.",
+            "key_fields": [
+                "triage.recommendations_by_track[].track_id",
+                "triage.recommendations_by_track[].top_pick",
+                "triage.recommendations_by_track[].claim_command"
+            ],
+            "params": [
+                "--graph-root ISSUE_ID"
+            ],
+            "needs_issues": true,
+            "needs_git": false,
+            "needs_sprint": false,
+            "needs_baseline": false,
+            "mutates_state": false
+        }
+    },
+    "environment_variables": {
+        "BEADS_DB": "Path to beads database file or .beads directory (overrides BEADS_DIR; overridden by --db flag)",
+        "BEADS_DIR": "Path to .beads directory (fallback when BEADS_DB and --db are not set)",
+        "BV_OUTPUT_FORMAT": "Default output format: json or toon (overridden by --format)",
+        "BV_PRETTY_JSON": "Set to 1 for indented JSON output",
+        "BV_ROBOT": "Set to 1 to force robot mode (clean stdout)",
+        "BV_SEARCH_MODE": "Search mode: text or hybrid",
+        "BV_SEARCH_PRESET": "Hybrid search preset name",
+        "TOON_DEFAULT_FORMAT": "Fallback format if BV_OUTPUT_FORMAT not set",
+        "TOON_INDENT": "TOON indentation level (0-16)",
+        "TOON_KEY_FOLDING": "TOON key folding mode",
+        "TOON_STATS": "Set to 1 to show JSON vs TOON token estimates on stderr"
+    },
+    "examples": [
+        {
+            "command": "bv robot-triage --json | jq '.triage.quick_ref.top_picks[:3]'",
+            "description": "Get top 3 picks for immediate work"
+        },
+        {
+            "command": "bv robot-next --json | jq -r '.claim_command'",
+            "description": "Inspect the claim command for the top recommendation"
+        },
+        {
+            "command": "bv robot-triage --json | jq '.triage.blockers_to_clear | map(.id)'",
+            "description": "Find high-impact blockers to clear"
+        },
+        {
+            "command": "bv robot-triage --json | jq '.triage.recommendations[] | select(.type == \"bug\")'",
+            "description": "Get bug-only recommendations"
+        },
+        {
+            "command": "bv robot-triage-by-track --json | jq '.triage.recommendations_by_track[].top_pick'",
+            "description": "Multi-agent: top pick per parallel track"
+        },
+        {
+            "command": "bv robot-file-beads README.md --json",
+            "description": "Find beads related to a specific file"
+        },
+        {
+            "command": "bv robot-search \"authentication\" --json",
+            "description": "Search for issues by keyword"
+        },
+        {
+            "command": "bv robot-graph --toon",
+            "description": "Get TOON output for a wide payload (measured ~7% smaller than JSON)"
+        },
+        {
+            "command": "BV_OUTPUT_FORMAT=toon bv robot-triage",
+            "description": "Use env for default format"
+        },
+        {
+            "command": "TOON_STATS=1 bv robot-triage --toon",
+            "description": "Compare JSON and TOON size for this payload (TOON can be larger)"
+        }
+    ],
+    "exit_codes": {
+        "0": "Success",
+        "1": "Error (general failure, drift critical)",
+        "2": "Invalid arguments or drift warning"
+    },
+    "generated_at": "2026-10-09T10:42:48Z",
+    "guide": {
+        "agent_intent_aliases": [
+            {
+                "agent_instinct": "bv --json",
+                "canonical": "bv --robot-triage --format json"
+            },
+            {
+                "agent_instinct": "bv robot-triage --json",
+                "canonical": "bv --robot-triage --format json"
+            },
+            {
+                "agent_instinct": "bv triage --json",
+                "canonical": "bv --robot-triage --format json"
+            },
+            {
+                "agent_instinct": "bv next --json",
+                "canonical": "bv --robot-next --format json"
+            },
+            {
+                "agent_instinct": "bv plan --json",
+                "canonical": "bv --robot-plan --format json"
+            },
+            {
+                "agent_instinct": "bv insights --json",
+                "canonical": "bv --robot-insights --format json"
+            },
+            {
+                "agent_instinct": "bv robot-capabilities --json",
+                "canonical": "bv --robot-capabilities --format json"
+            },
+            {
+                "agent_instinct": "bv capabilities --json",
+                "canonical": "bv --robot-capabilities --format json"
+            },
+            {
+                "agent_instinct": "bv robot-docs guide --json",
+                "canonical": "bv --robot-docs guide --format json"
+            },
+            {
+                "agent_instinct": "bv docs guide --json",
+                "canonical": "bv --robot-docs guide --format json"
+            },
+            {
+                "agent_instinct": "bv robot-schema triage --json",
+                "canonical": "bv --robot-schema --schema-command robot-triage --format json"
+            },
+            {
+                "agent_instinct": "bv schema triage --json",
+                "canonical": "bv --robot-schema --schema-command robot-triage --format json"
+            },
+            {
+                "agent_instinct": "bv robot-search login oauth --json --limit 5",
+                "canonical": "bv --search 'login oauth' --robot-search --format json --search-limit 5"
+            },
+            {
+                "agent_instinct": "bv search login oauth --json --limit 5",
+                "canonical": "bv --search 'login oauth' --robot-search --format json --search-limit 5"
+            },
+            {
+                "agent_instinct": "bv robot-graph mermaid --json",
+                "canonical": "bv --robot-graph --graph-format mermaid --format json"
+            },
+            {
+                "agent_instinct": "bv graph mermaid --json",
+                "canonical": "bv --robot-graph --graph-format mermaid --format json"
+            },
+            {
+                "agent_instinct": "bv robot-related bv-123 --json",
+                "canonical": "bv --robot-related bv-123 --format json"
+            },
+            {
+                "agent_instinct": "bv --name backend --json",
+                "canonical": "bv --label backend --robot-triage --format json"
+            }
+        ],
+        "data_source": ".beads/beads.jsonl, .beads/issues.jsonl, or BEADS_DB plus git history (correlations)",
+        "description": "bv (Beads Viewer) provides structural analysis of the beads issue tracker DAG. It is the primary interface for AI agents to understand project state, plan work, and discover high-impact tasks.",
+        "output_modes": {
+            "json": "Default structured output",
+            "toon": "Tabular notation; measured smaller than JSON only for wide payloads such as --robot-graph (~7%), and 9-15% larger for nested ones (--robot-triage, --robot-plan, --robot-insights, --robot-label-health). See tests/artifacts/perf/toon_vs_json.md and check --stats before adopting it."
+        },
+        "quickstart": [
+            "bv robot-triage --json           # Full triage with recommendations",
+            "bv robot-next --json             # Single top pick plus claim/show commands",
+            "bv robot-plan --json             # Dependency-respecting execution plan",
+            "bv robot-insights --json         # Deep graph analysis (PageRank, betweenness, etc.)",
+            "bv robot-triage-by-track --json  # Parallel work streams for multi-agent coordination",
+            "bv robot-capabilities --json     # Machine-readable command manifest",
+            "bv robot-schema --json           # JSON Schema definitions for all commands",
+            "bv triage --json                 # Short alias for robot-triage",
+            "bv capabilities --json           # Short alias for robot-capabilities"
+        ]
+    },
+    "output_format": "json",
+    "topic": "all",
+    "version": "v0.25.2"
+}
