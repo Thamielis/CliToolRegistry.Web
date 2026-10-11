@@ -1,0 +1,497 @@
+{
+  "schema_version": "1",
+  "ubs_version": "5.4.17",
+  "topic": "all",
+  "guide": {
+    "summary": "UBS scans JavaScript/TypeScript, Python, C/C++, Rust, Go, Java/Kotlin, Ruby, Swift, C# and Elixir for likely bugs and security issues. Run it on the files you just changed, read the machine-readable envelope, fix criticals, re-run until exit 0.",
+    "golden_rule": "ubs <changed-files> --format=json before every commit; exit 0 = safe, 1 = findings, 2 = environment/partial/refused, 3 = nothing scanned.",
+    "stdout_contract": "In --format=json|jsonl|sarif|toon mode stdout is exactly one machine-readable document (or one JSONL stream); every diagnostic goes to stderr.",
+    "workflow": [
+      "Scope the scan to changed files: ubs a.ts b.py --format=json (sub-second) rather than the whole tree.",
+      "Read totals.critical / totals.warning and status; status=partial means a module timed out, crashed, or reported itself partial (the Rust module when cargo could not run) and exit is 2 unless UBS_ALLOW_PARTIAL=1.",
+      "Findings live under scanners[].findings[] with severity, count, title, description and samples[{file,line,code}].",
+      "Suppress a confirmed false positive with a trailing `ubs:ignore` comment (or the line above); never delete the check.",
+      "Re-run the same command until exit 0, then commit."
+    ]
+  },
+  "commands": {
+    "subcommands": [
+      {
+        "name": "scan",
+        "usage": "ubs [options] [PATH ...]",
+        "description": "Default. Scans the project directory or the listed files/directories (union scan)."
+      },
+      {
+        "name": "doctor",
+        "usage": "ubs doctor [--fix] [--format=text|json] [--module-dir=DIR]",
+        "description": "Verify cached modules/helpers and the ast-grep toolchain; --fix re-downloads corrupted copies; --format=json emits structured checks."
+      },
+      {
+        "name": "sessions",
+        "usage": "ubs sessions [--entries N] [--raw]",
+        "description": "Show recent installer session summaries."
+      },
+      {
+        "name": "explain",
+        "usage": "ubs explain <rule-id> [--format=text|json]",
+        "description": "Explain a rule: message, remediation, fixture examples, confidence, category."
+      },
+      {
+        "name": "robot-docs",
+        "usage": "ubs robot-docs [guide|commands|examples|exit-codes|formats|env|all]",
+        "description": "This document (JSON on stdout)."
+      },
+      {
+        "name": "--schema",
+        "usage": "ubs --schema[=json|jsonl|sarif|toon|error|doctor|all]",
+        "description": "JSON Schema (draft 2020-12) for each output format."
+      }
+    ],
+    "flags": [
+      {
+        "name": "--format",
+        "args": "FMT",
+        "example": "--format=json",
+        "description": "Output format: text (default), json, jsonl, sarif, toon."
+      },
+      {
+        "name": "--output",
+        "args": "FILE",
+        "example": "--output=report.json",
+        "description": "Also write the report to FILE (alias: -o FILE, or a trailing positional file that does not exist yet); stdout still receives it."
+      },
+      {
+        "name": "--ci",
+        "args": null,
+        "example": "--ci",
+        "description": "CI mode: stable UTC timestamps; also disables the auto-update check."
+      },
+      {
+        "name": "--fail-on-warning",
+        "args": null,
+        "example": "--fail-on-warning",
+        "description": "Exit 1 when warnings exist, not only criticals."
+      },
+      {
+        "name": "--only",
+        "args": "CSV",
+        "example": "--only=js,python",
+        "description": "Restrict to these languages (js, python, c/cpp, rust, golang, java, kotlin/kt, ruby, swift, csharp/cs, elixir/ex, bash/sh)."
+      },
+      {
+        "name": "--exclude-langs",
+        "args": "CSV",
+        "example": "--exclude-langs=ruby",
+        "description": "Skip these languages."
+      },
+      {
+        "name": "--exclude",
+        "args": "GLOB[,..]",
+        "example": "--exclude=legacy,generated",
+        "description": "Skip paths (globs/dirs with .ubsignore semantics); forwarded to every module. A bare language name with no such path is rejected (use --exclude-langs)."
+      },
+      {
+        "name": "--include-ext",
+        "args": "CSV",
+        "example": "--include-ext=js,vue",
+        "description": "Extra file extensions forwarded to the language modules."
+      },
+      {
+        "name": "--rules",
+        "args": "DIR",
+        "example": "--rules=./rules",
+        "description": "Directory of custom ast-grep YAML rules (or an ast-grep project, whose sgconfig ruleDirs are loaded) that every language module runs. Repeatable; a rule id defined by two files refuses the scan (duplicate-rule-id)."
+      },
+      {
+        "name": "--skip",
+        "args": "CSV",
+        "example": "--skip=python.todo",
+        "description": "Skip categories by stable id (e.g. python.todo) or category number."
+      },
+      {
+        "name": "--skip-LANG",
+        "args": "CSV",
+        "example": "--skip-js=8",
+        "description": "Skip categories in one language (LANG = js|python|cpp|rust|golang|java|kotlin|ruby|swift|csharp|elixir|bash)."
+      },
+      {
+        "name": "--category",
+        "args": "CSV",
+        "example": "--category=resource-lifecycle",
+        "description": "Focus on a category pack (currently resource-lifecycle)."
+      },
+      {
+        "name": "--profile",
+        "args": "NAME",
+        "example": "--profile=strict",
+        "description": "Severity profile passed to the modules (strict|loose); strict also implies --fail-on-warning."
+      },
+      {
+        "name": "--files",
+        "args": "F1,F2",
+        "example": "--files=a.js,b.py",
+        "description": "Scan only the listed files (comma or space separated)."
+      },
+      {
+        "name": "--staged",
+        "args": null,
+        "example": "--staged",
+        "description": "Scan only files staged in the git index."
+      },
+      {
+        "name": "--diff",
+        "args": null,
+        "example": "--diff",
+        "description": "Scan only files modified in the working tree (alias --git-diff)."
+      },
+      {
+        "name": "--list-categories",
+        "args": null,
+        "example": "--list-categories",
+        "description": "Print each selected module's category numbers/names and exit 0."
+      },
+      {
+        "name": "--jobs",
+        "args": "N",
+        "example": "--jobs=4",
+        "description": "Parallelism hint passed to modules that support it."
+      },
+      {
+        "name": "--ignore-file",
+        "args": "PATH",
+        "example": "--ignore-file=.ubsignore.ci",
+        "description": "Extra ignore globs (default: PROJECT/.ubsignore when present)."
+      },
+      {
+        "name": "--skip-size-check",
+        "args": null,
+        "example": "--skip-size-check",
+        "description": "Skip the directory size guard (default limit 1000 MB after ignores)."
+      },
+      {
+        "name": "--skip-type-narrowing",
+        "args": null,
+        "example": "--skip-type-narrowing",
+        "description": "Skip the JS/Rust/Kotlin/Swift/C# type-narrowing helpers."
+      },
+      {
+        "name": "--no-cargo",
+        "args": null,
+        "example": "--no-cargo",
+        "description": "Rust static-only mode: skip every cargo phase (fmt/clippy, check/test --no-run, audit/deny/udeps/outdated). Skipped categories report a 'Not evaluated' finding and the Rust JSON carries meta.cargo_execution.status=skipped. Env equivalent: UBS_SKIP_RUST_BUILD=1."
+      },
+      {
+        "name": "--go-tools",
+        "args": null,
+        "example": "--go-tools",
+        "description": "Run optional read-only gofmt, go vet and govulncheck; fresh findings and coverage status reach all formats."
+      },
+      {
+        "name": "--test-pkgs",
+        "args": "PKGS",
+        "example": "--test-pkgs=./...",
+        "description": "Go package patterns per selected module, parsed as arguments without shell evaluation."
+      },
+      {
+        "name": "--go-timeout",
+        "args": "SECONDS",
+        "example": "--go-timeout=120",
+        "description": "Execution timeout for each optional Go analyzer invocation."
+      },
+      {
+        "name": "--module-dir",
+        "args": "DIR",
+        "example": "--module-dir=/tmp/ubs-modules",
+        "description": "Where modules and helpers are cached."
+      },
+      {
+        "name": "--update-modules",
+        "args": null,
+        "example": "--update-modules",
+        "description": "Re-download modules before scanning."
+      },
+      {
+        "name": "--comparison",
+        "args": "FILE",
+        "example": "--comparison=baseline.json",
+        "description": "Baseline JSON to annotate the shareable report with deltas (exit code still reflects current totals)."
+      },
+      {
+        "name": "--baseline",
+        "args": "FILE",
+        "example": "--baseline=baseline.json",
+        "description": "Baseline JSON file for comparison or diff mode (alias for --comparison)."
+      },
+      {
+        "name": "--save-baseline",
+        "args": "FILE",
+        "example": "--save-baseline=baseline.json",
+        "description": "Save the current scan findings and totals to FILE as a baseline."
+      },
+      {
+        "name": "--new-only",
+        "args": null,
+        "example": "--new-only",
+        "description": "Report only findings not present in the baseline (diff mode)."
+      },
+      {
+        "name": "--report-json",
+        "args": "FILE",
+        "example": "--report-json=summary.json",
+        "description": "Write the combined summary JSON to FILE."
+      },
+      {
+        "name": "--html-report",
+        "args": "FILE",
+        "example": "--html-report=report.html",
+        "description": "Write a shareable HTML report."
+      },
+      {
+        "name": "--beads-jsonl",
+        "args": "FILE",
+        "example": "--beads-jsonl=findings.jsonl",
+        "description": "Write findings as JSONL for Beads/strung."
+      },
+      {
+        "name": "--jsonl-summary-only",
+        "args": null,
+        "example": "--jsonl-summary-only",
+        "description": "JSONL: emit only scanner/totals lines, no per-finding lines."
+      },
+      {
+        "name": "--suggest-ignore",
+        "args": null,
+        "example": "--suggest-ignore",
+        "description": "Print large-directory ignore suggestions without modifying files."
+      },
+      {
+        "name": "--no-color",
+        "args": null,
+        "example": "--no-color",
+        "description": "Disable ANSI colors (same as NO_COLOR=1)."
+      },
+      {
+        "name": "--verbose",
+        "args": null,
+        "example": "-v",
+        "description": "More code samples per finding (alias -v)."
+      },
+      {
+        "name": "--quiet",
+        "args": null,
+        "example": "-q",
+        "description": "Less console output (alias -q)."
+      },
+      {
+        "name": "--no-auto-update",
+        "args": null,
+        "example": "--no-auto-update",
+        "description": "Disable the opt-in auto-update check."
+      },
+      {
+        "name": "--no-cache",
+        "args": null,
+        "example": "--no-cache",
+        "description": "Disable reading and writing the Merkle-keyed scan cache."
+      },
+      {
+        "name": "--cache-dir",
+        "args": "DIR",
+        "example": "--cache-dir=/tmp/cache",
+        "description": "Directory for scan cache (default: $XDG_CACHE_HOME/ubs or ~/.cache/ubs)."
+      },
+      {
+        "name": "--update",
+        "args": null,
+        "example": "--update",
+        "description": "Update the installed ubs from the latest verified release and exit."
+      },
+      {
+        "name": "--version",
+        "args": null,
+        "example": "--version",
+        "description": "Print the version and exit 0."
+      },
+      {
+        "name": "--help",
+        "args": null,
+        "example": "--help",
+        "description": "Human help text (alias -h)."
+      }
+    ]
+  },
+  "examples": [
+    {
+      "goal": "Scan two changed files, machine-readable",
+      "command": "ubs src/a.ts src/b.py --ci --format=json"
+    },
+    {
+      "goal": "Pre-commit: scan staged files",
+      "command": "ubs --staged --ci --format=json"
+    },
+    {
+      "goal": "CI gate on warnings",
+      "command": "ubs . --ci --fail-on-warning --format=json"
+    },
+    {
+      "goal": "SARIF for code scanning",
+      "command": "ubs . --ci --format=sarif > ubs.sarif"
+    },
+    {
+      "goal": "Skip a directory for this run",
+      "command": "ubs . --exclude=legacy,generated --format=json"
+    },
+    {
+      "goal": "Only Python and Go",
+      "command": "ubs . --only=python,golang --format=json"
+    },
+    {
+      "goal": "Accept a partial run (a module timed out)",
+      "command": "UBS_ALLOW_PARTIAL=1 ubs . --format=json"
+    },
+    {
+      "goal": "Explain a rule with remediation and fixture examples",
+      "command": "ubs explain py.security.open-redirect --format=json"
+    },
+    {
+      "goal": "Validate an output against its schema",
+      "command": "ubs --schema=json > ubs.schema.json"
+    }
+  ],
+  "exit_codes": [
+    {
+      "code": 0,
+      "meaning": "No critical findings (no warnings either with --fail-on-warning); every requested language was scanned."
+    },
+    {
+      "code": 1,
+      "meaning": "Critical findings, or warnings with --fail-on-warning."
+    },
+    {
+      "code": 2,
+      "meaning": "Invalid arguments, environment error (e.g. ast-grep missing, module failed verification), refused scan (directory too large, $HOME, /), or a partial run (module timeout/crash) unless UBS_ALLOW_PARTIAL=1. Machine formats still print an envelope on stdout."
+    },
+    {
+      "code": 3,
+      "meaning": "Nothing was scanned: no supported language detected. Not a pass; UBS_ALLOW_NO_SCAN=1 restores exit 0."
+    }
+  ],
+  "formats": {
+    "json": {
+      "description": "One object: project, timestamp, status (ok|partial), failed_modules[], scanners[] (per-language summary with findings[] and status ok|timeout|error), totals{critical,warning,info,files}. Environment errors and refusals print an error envelope instead; no supported language prints a result object with exit_code 3.",
+      "schema": "ubs --schema=json"
+    },
+    "jsonl": {
+      "description": "One JSON object per line: type=finding (per finding, with language), type=scanner (per language summary), type=totals (last line, carries status/failed_modules), or type=error (envelope).",
+      "schema": "ubs --schema=jsonl"
+    },
+    "sarif": {
+      "description": "SARIF 2.1.0; one run per module. Partial runs and errors set runs[].invocations[0].executionSuccessful=false with toolExecutionNotifications (descriptor ids ubs/module-timeout, ubs/module-error, ubs/<refusal-or-error-reason>).",
+      "schema": "ubs --schema=sarif"
+    },
+    "toon": {
+      "description": "The json document encoded with toon_rust's tru. Without a usable toon_rust encoder (toon or tru on PATH, TOON_TRU_BIN/TOON_BIN, or the tool cache filled by 'ubs doctor --fix'/install.sh) the run exits 2 with the error envelope (reason toon-encoder-missing) instead of printing JSON labelled as TOON.",
+      "schema": "ubs --schema=toon"
+    },
+    "text": {
+      "description": "Human report; Combined Summary at the end (Files/Critical/Warning/Info, Status: partial when applicable)."
+    }
+  },
+  "env": [
+    {
+      "name": "UBS_OUTPUT_FORMAT",
+      "value": "text|json|jsonl|sarif|toon",
+      "description": "Default output format (CLI --format wins)."
+    },
+    {
+      "name": "UBS_MODULE_TIMEOUT",
+      "value": "SECS",
+      "description": "Override automatic per-module timeout (3x estimated cost, minimum 300s); 0 disables."
+    },
+    {
+      "name": "UBS_ALLOW_PARTIAL",
+      "value": "1",
+      "description": "Exit on findings even when a module timed out or crashed (envelope still says partial)."
+    },
+    {
+      "name": "UBS_PROFILE",
+      "value": "1",
+      "description": "Add a profile block (total_ms, list_ms, fanout_ms, merge_ms, modules{lang: ms}) to json/toon output and a Profile line to the text summary."
+    },
+    {
+      "name": "UBS_ALLOW_NO_SCAN",
+      "value": "1",
+      "description": "Exit 0 instead of 3 when no supported language is detected."
+    },
+    {
+      "name": "UBS_MAX_DIR_SIZE_MB",
+      "value": "N",
+      "description": "Refuse to scan directories larger than N MB after ignores (default 1000; 0 disables). Measured over the listed files: binary/media/archive/data files and files above UBS_MAX_FILE_MB are not counted or copied."
+    },
+    {
+      "name": "UBS_MAX_FILE_MB",
+      "value": "N",
+      "description": "Leave files above N MB out of whole-project scans (default 8; 0 disables)."
+    },
+    {
+      "name": "UBS_PYTHON",
+      "value": "PATH",
+      "description": "Python >= 3.9 interpreter to expose as python3 for the run (a python/py -3 on PATH is used automatically when python3 is missing)."
+    },
+    {
+      "name": "UBS_SKIP_SIZE_CHECK",
+      "value": "1",
+      "description": "Skip the size guard."
+    },
+    {
+      "name": "UBS_REFUSE_HOME_ROOT",
+      "value": "0|1",
+      "description": "Refuse scanning $HOME or / (default 1)."
+    },
+    {
+      "name": "UBS_SKIP_TYPE_NARROWING",
+      "value": "1",
+      "description": "Skip the type-narrowing helpers."
+    },
+    {
+      "name": "UBS_ENABLE_AUTO_UPDATE",
+      "value": "1",
+      "description": "Opt in to the 24h auto-update check."
+    },
+    {
+      "name": "UBS_NO_AUTO_UPDATE",
+      "value": "1",
+      "description": "Force-disable auto-update."
+    },
+    {
+      "name": "UBS_RULES",
+      "value": "DIR[:DIR...]",
+      "description": "Custom rule directories (':'-separated, like PATH) used when no --rules is given; empty entries are ignored."
+    },
+    {
+      "name": "UBS_NO_CACHE",
+      "value": "1",
+      "description": "Disable scan caching (like --no-cache)."
+    },
+    {
+      "name": "UBS_CACHE_DIR",
+      "value": "PATH",
+      "description": "Override root directory for scan cache (like --cache-dir)."
+    },
+    {
+      "name": "CI",
+      "value": "true",
+      "description": "Disables the auto-update check like --ci."
+    },
+    {
+      "name": "NO_COLOR",
+      "value": "1",
+      "description": "Disable ANSI colors."
+    },
+    {
+      "name": "TOON_TRU_BIN",
+      "value": "PATH",
+      "description": "toon_rust encoder binary for --format=toon."
+    }
+  ]
+}

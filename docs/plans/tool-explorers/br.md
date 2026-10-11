@@ -1,6 +1,14 @@
 # br: Agentenleitfaden erforschen
 
-Quelle: `public/robot-docs/br.robot-docs.json`. Adresse: `#/explore/br/robot-docs`. Gemeinsamer Rahmen: [Seitenkonzept](../tool-explorers.md).
+Quellen: `public/robot-docs/br.robot-docs.json` und `br.capabilities.json`. Adressen: `?section=explore&exploreTool=br&dataset=robot-docs` und `dataset=capabilities`. Gemeinsamer Rahmen: [Seitenkonzept](../tool-explorers.md).
+
+## Ergänzung vom 2026-10-11: Fähigkeiten-Seite
+
+br besitzt jetzt zwei separate Datensatzseiten. Die Fähigkeiten-Seite enthält 46 Befehle mit `summary`, `operation`, `workspace`, `machine_output` und `examples`. Filter: Operation `read`/`write`/`mixed` (19/10/17 Einträge), Workspace `required`/`none`/`optional` (35/7/4), dokumentierte Ausgabeformate. `mixed` bleibt ausdrücklich „Gemischt“ und wird nicht als read-only behandelt.
+
+Das Befehlsblatt zeigt Originalbeispiele, ohne aus dem Namen Unterbefehle oder Argumente zu erfinden. Zusätzlich erreichbar: 5 Fähigkeiten, 2 Build-Merkmale, 5 globale Flags, 3 Ausgabeformate, 9 Exitcodes, 6 Umgebungsvariablen, 4 Sicherheitsgarantien und 5 empfohlene Einstiege. Leere `examples` bedeutet „Keine Beispiele dokumentiert“.
+
+Beide Dateien dokumentieren Version 0.7.4, besitzen aber unterschiedliche Verträge. Die Fähigkeiten-Seite verlinkt den Leitfaden als ergänzende Quelle. Gleichnamige Befehle werden nicht zusammengeführt. Die bestehende Leitfadenseite bleibt wie folgt entworfen; ihre Aussage über fehlende Argument-/Exitcode-Definitionen gilt nur für die Leitfadendatei.
 
 ## Analyse
 
@@ -44,4 +52,4 @@ Besucher sucht „ready“, erhält den Abschnitt „Arbeit finden“ und den ka
 
 ## Abnahme
 
-Alle 8 kanonischen Einträge und alle Leitfadenzeilen bleiben erreichbar. Suche nach „schema“ findet die passenden Quellen. Abschnitte werden nicht mit fehlenden Detailverträgen angereichert. Bei geändertem Überschriftenformat funktioniert die Volltextdarstellung weiterhin. Künftige br-Fähigkeiten-Dateien erhalten einen eigenen Datensatz neben diesem Reader.
+Alle 8 kanonischen Einträge und alle Leitfadenzeilen bleiben erreichbar. Suche nach „schema“ findet die passenden Quellen. Abschnitte werden nicht mit fehlenden Detailverträgen angereichert. Bei geändertem Überschriftenformat funktioniert die Volltextdarstellung weiterhin. Die Fähigkeiten-Seite zeigt alle 46 Befehle und die genannten Filtermengen. Ein Wechsel zwischen beiden Seiten bewahrt ihre getrennte Herkunft.

@@ -1,6 +1,14 @@
 # bv: Robot-Befehle erforschen
 
-Quelle: `public/robot-docs/bv.robot-docs.json`. Adresse: `#/explore/bv/robot-docs`. Gemeinsamer Rahmen: [Seitenkonzept](../tool-explorers.md).
+Quellen: `public/robot-docs/bv.robot-docs.json` und `bv.capabilities.json`. Adressen: `?section=explore&exploreTool=bv&dataset=robot-docs` und `dataset=capabilities`. Gemeinsamer Rahmen: [Seitenkonzept](../tool-explorers.md).
+
+## Ergänzung vom 2026-10-11: Fähigkeiten-Seite
+
+Der neue Vertrag `1.0.0` enthält die 41 Befehle als Array statt als Objekt. Der Snapshot entstand `2026-10-11T13:08:21Z`; der Leitfaden stammt vom 9. Oktober. Version v0.25.2 ist gleich. Alle gemeinsamen Befehlsfelder stimmen im aktuellen Vergleich überein.
+
+Zusätzlich pro Befehl: `name`, `accepted_invocations`, `preferred_invocation`. Die Detailansicht zeigt „Bevorzugter Aufruf dieser Quelle“, „Akzeptierte Aufrufe“ und separat vorhandene `agent_intent_aliases`. Diese Felder sind nicht synonym: etwa bevorzugt `robot-alerts` einen Beispielaufruf mit Severity, während die akzeptierte Liste auch den allgemeinen Robot-Flag-Aufruf enthält. Die UI ersetzt keines dieser Felder durch eine aus Namen abgeleitete Syntax.
+
+Neue Bereiche: 6 `docs_topics`, `default_robot_command`, `schema_command`, 2 Ausgabeformate und der `stream_contract` für stdout/stderr. Dokumentierte Themen heißen nicht, dass entsprechende Dateien bereitgestellt wurden. Umgebungsvariablen, Exitcodes und Voraussetzungen nutzen dieselben Ansichtskomponenten wie die Leitfadenseite, behalten jedoch Array-Pointer `/commands/<index>`.
 
 ## Analyse
 
@@ -42,6 +50,8 @@ Zusätzlich vorhanden: 18 `guide.agent_intent_aliases`, Guide/Quickstart, JSON-/
 **Konfiguration:** Namens-/Beschreibungssuche über `environment_variables`. Ohne dokumentierten Default zeigt die UI „Nicht dokumentiert“. Ausgabeformate JSON und TOON werden aus `guide.output_modes` erläutert. Die dortigen Größenangaben sind Aussagen dieses Snapshots und kein allgemeines Performanceversprechen.
 
 **Exitcodes:** Code und Bedeutung aus der Objektstruktur. Keine Retry-Automatik, da entsprechende strukturierte Felder fehlen.
+
+**Ausgabeformat:** Eigener Bereich `formats` zeigt `/output_format` dieser Leitfadenquelle und die dazugehörigen Originalhinweise. Keine Vereinigung mit `/output_formats` des separaten Capabilitydatensatzes. `key_fields` und `params` bleiben Presence-Felder; sie sind nur in 24 bzw. 22 der 41 Befehle vorhanden.
 
 Das charakteristische Element ist die Voraussetzungenmatrix: sie erklärt, warum etwa `robot-history` Git benötigt und `robot-next` nicht. Mutationskennzeichnung ist unmittelbar aus `mutates_state` abgeleitet und neben dem Kopieraufruf sichtbar.
 

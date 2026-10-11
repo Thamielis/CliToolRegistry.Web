@@ -1,6 +1,8 @@
 # cass: Fähigkeiten und Befehle erforschen
 
-Quelle: `public/robot-docs/cass.capabilities.json`. Adresse: `#/explore/cass/capabilities`. Gemeinsamer Rahmen: [Seitenkonzept](../tool-explorers.md).
+Quelle: `public/robot-docs/cass.capabilities.json`. Adresse: `?section=explore&exploreTool=cass&dataset=capabilities`. Gemeinsamer Rahmen: [Seitenkonzept](../tool-explorers.md).
+
+Analyse am 2026-10-11 erneut geprüft: die Quelle ist gegenüber dem ersten Entwurf unverändert. Weitere cass-Themendateien sind weiterhin nicht vorhanden. Die Integration übernimmt die neue Query-Navigation der Workbench.
 
 ## Analyse
 
@@ -62,7 +64,7 @@ Besucher öffnet „bounded-search“, kopiert den vorhandenen begrenzten Suchau
 
 Ein universeller Befehlsbaukasten wird zunächst nicht angeboten: Unterbefehle, bedingte Argumente und Shell-Regeln sind unvollständig. Die Erkundungsseite bietet zuverlässige Originalaufrufe, Parameterreferenz und Workflows. Ein späterer Builder benötigt zusätzliche dokumentierte Syntaxverträge und gezielte Prüfung.
 
-Weitere cass-Dateien für `commands`, `schemas`, `sources`, `doctor` oder `recipes` bekommen eigenständige Seiten unter dem cass-Einstieg. Sie können auf diese Fähigkeiten-Seite verweisen, behalten aber ihre Quellen und Versionen. Ein neues Thema wird erst bei vorhandener Datei angeboten.
+Weitere cass-Dateien für `commands`, `schemas`, `sources`, `doctor` oder `recipes` bekommen eigenständige Seiten, wenn valides JSON vorliegt und die Datei explizit registriert ist. Sie können auf die Fähigkeiten-Seite verweisen und behalten eigene Quellen/Versionen. Bloße Dateipräsenz genügt nicht; nichtparsebare Dateien bleiben ignoriert.
 
 ## Abnahme
 

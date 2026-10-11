@@ -1,0 +1,14 @@
+name: tool-explorers
+description: "JSON-only tool exploration pages; reviews execute exclusively through Oracle MCP"
+documents:
+  readme: "README.md"
+  spec: "docs/plans/tool-explorers-implementation.md"
+  implementation: "docs/plans/tool-explorers/contracts.md"
+oracle:
+  model: "gpt-5.6-sol"
+  thinking_time: high
+rounds:
+  output_dir: ".apr/rounds/tool-explorers"
+# apr run / apr robot run must not be used: they invoke Oracle CLI.
+# The root agent submits each round using mcp__oracle__consult and stores
+# the returned review here for apr show/diff/history/stats management.
