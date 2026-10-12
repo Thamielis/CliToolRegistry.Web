@@ -1,4 +1,5 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState, type MouseEvent } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from 'react'
+import './explorer.css'
 import {
   CATALOG_REPOSITORY_URL,
   CATALOG_SOURCE_URL,
@@ -15,18 +16,87 @@ import { ThemeToggle } from './components/ThemeToggle'
 import { ViewToggle, type ViewMode } from './components/ViewToggle'
 import { categoryLabel, platformLabel } from './i18n/catalogLabels'
 import type { CatalogSnapshot, CliTool, ToolPlatform } from './types/app'
-import { navigationUrl, parseNavigation, SECTIONS, type NavigationState, type Section } from './data/workbench'
+import {
+  applyNavigationPatch,
+  createNavigationTicket,
+  navigationUrl,
+  parseNavigation,
+  readWorkbenchHistoryData,
+  SECTIONS,
+  withWorkbenchHistoryData,
+  type NavigationState,
+  type Section,
+  type WorkbenchHistoryData,
+} from './data/workbench'
 import { CommandPalette } from './components/CommandPalette'
 import { sectionLabels as SECTION_LABELS } from './i18n/translations'
 import { WorkbenchOverview, WorkbenchGuide } from './components/WorkbenchOverview'
 import { ScreenBoundary } from './components/ScreenBoundary'
+import { createExplorerLoader, type ExplorerLoadError, type ExplorerLoader } from './data/loadExplorer'
+import type { ExplorerManifest } from './types/explorer'
+import { transitionExplorerNavigation, type ExplorerNavigationAction } from './data/workbench'
+import { explorerRegistry } from './data/explorerRegistry'
 
 const DependencyExplorer = lazy(() => import('./components/DependencyExplorer'))
 const CatalogLab = lazy(() => import('./components/CatalogLab'))
+const ToolExplorer = lazy(() => import('./components/ToolExplorer'))
 
 const PLATFORMS: ToolPlatform[] = ['windows', 'linux', 'wsl2', 'macos']
 const EMPTY_TOOLS: CatalogSnapshot['tools'] = []
 const VIEW_STORAGE_KEY = 'cli-tool-registry.view'
+
+type FocusTarget = 'heading' | 'entry' | 'trigger' | 'more' | null
+type HistoryMemory = Pick<WorkbenchHistoryData, 'scrollY' | 'focusKey'>
+type NavigationRuntime = {
+  cause: 'initial' | 'push' | 'replace' | 'pop'
+  historyId: string
+  ticket: string
+  focusTarget: FocusTarget
+  restorePoint: HistoryMemory | null
+  consumed: boolean
+}
+
+type ManifestState =
+  | { status: 'loading' }
+  | { status: 'ready'; manifest: ExplorerManifest }
+  | { status: 'error'; error: ExplorerLoadError }
+
+function newHistoryId(): string {
+  return typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+    ? crypto.randomUUID()
+    : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`
+}
+
+function currentFocusKey(section: Section): string | null {
+  const active = document.activeElement instanceof HTMLElement ? document.activeElement : null
+  if (!active) return null
+  const owner = active.closest<HTMLElement>('[data-history-focus-key]')
+  if (owner?.dataset.historyFocusKey) return owner.dataset.historyFocusKey
+  if (active.id === 'screen-heading') {
+    const key = `screen:${section}`
+    active.dataset.historyFocusKey = key
+    return key
+  }
+  if (active.id.startsWith('tool-details-heading-')) {
+    const key = `tool-details:${active.id.slice('tool-details-heading-'.length)}`
+    active.dataset.historyFocusKey = key
+    return key
+  }
+  return null
+}
+
+function locateFocusKey(key: string | null): HTMLElement | null {
+  if (!key) return null
+  return Array.from(document.querySelectorAll<HTMLElement>('[data-history-focus-key]'))
+    .find((element) => element.dataset.historyFocusKey === key) ?? null
+}
+
+function NavigationReadySignal({ ticket, onReady }: { ticket: string; onReady: (ticket: string) => void }) {
+  const callback = useRef(onReady)
+  callback.current = onReady
+  useLayoutEffect(() => callback.current(ticket), [ticket])
+  return null
+}
 
 function initialView(): ViewMode {
   try {
@@ -51,32 +121,167 @@ function App() {
   const navigationRef = useRef(navigation)
   const searchRef = useRef<HTMLInputElement>(null)
   const detailsTrigger = useRef<HTMLButtonElement | null>(null)
+  const [initialHistory] = useState<WorkbenchHistoryData>(() => readWorkbenchHistoryData(window.history.state) ?? {
+    historyId: newHistoryId(), scrollY: Math.max(0, window.scrollY), focusKey: null,
+  })
+  const historyIdRef = useRef(initialHistory.historyId)
+  const navigationSequenceRef = useRef(0)
+  const historyMemoryRef = useRef(new Map<string, HistoryMemory>([[initialHistory.historyId, {
+    scrollY: initialHistory.scrollY, focusKey: initialHistory.focusKey,
+  }]]))
+  const transitionRef = useRef<NavigationRuntime>({
+    cause: 'initial', historyId: initialHistory.historyId,
+    ticket: createNavigationTicket(initialHistory.historyId, 0), focusTarget: null, restorePoint: null, consumed: false,
+  })
+  const previousScrollRestoration = useRef<ScrollRestoration>('auto')
+  const captureTimer = useRef<number | undefined>(undefined)
+  const lastCanonicalizedUrl = useRef<string | null>(null)
+  const explorerLoader = useMemo<ExplorerLoader>(() => createExplorerLoader({ baseUrl: import.meta.env.BASE_URL }), [])
+  const [explorerManifest, setExplorerManifest] = useState<ManifestState>({ status: 'loading' })
+  const manifestRequestRef = useRef(0)
 
-  const updateNavigation = (patch: Partial<NavigationState>, push = false) => {
-    const next = { ...navigationRef.current, ...patch }
-    navigationRef.current = next
-    window.history[push ? 'pushState' : 'replaceState'](null, '', navigationUrl(next, window.location.href))
-    setNavigation(next)
+  const runManifestLoad = useCallback(async (refresh = false) => {
+    const requestId = ++manifestRequestRef.current
+    setExplorerManifest({ status: 'loading' })
+    const result = await explorerLoader.loadManifest({ refresh })
+    if (requestId !== manifestRequestRef.current) return
+    if (result.status === 'ready') setExplorerManifest({ status: 'ready', manifest: result.manifest })
+    else if (result.status === 'error') setExplorerManifest({ status: 'error', error: result.error })
+  }, [explorerLoader])
+
+  const retryExplorerManifest = useCallback(() => { void runManifestLoad(true) }, [runManifestLoad])
+
+  const captureHistoryMemory = (historyId = historyIdRef.current): HistoryMemory => {
+    const memory = {
+      scrollY: Number.isFinite(window.scrollY) ? Math.max(0, window.scrollY) : 0,
+      focusKey: currentFocusKey(navigationRef.current.section),
+    }
+    historyMemoryRef.current.set(historyId, memory)
+    return memory
   }
+
+  const persistCurrentHistoryMemory = (url = window.location.href) => {
+    const data: WorkbenchHistoryData = {
+      historyId: historyIdRef.current,
+      ...captureHistoryMemory(historyIdRef.current),
+    }
+    window.history.replaceState(withWorkbenchHistoryData(window.history.state, data), '', url)
+  }
+
+  const scheduleHistoryCapture = () => {
+    const scheduledForId = historyIdRef.current
+    if (captureTimer.current !== undefined) window.clearTimeout(captureTimer.current)
+    captureTimer.current = window.setTimeout(() => {
+      captureTimer.current = undefined
+      if (historyIdRef.current === scheduledForId) captureHistoryMemory(scheduledForId)
+    }, 80)
+  }
+
+  const commitNavigation = (next: NavigationState, cause: 'push' | 'replace', focusTarget: FocusTarget) => {
+    const committedNavigation = { ...next, needsReplace: false }
+    const url = navigationUrl(committedNavigation, window.location.href)
+    let targetHistoryId = historyIdRef.current
+
+    if (cause === 'push') {
+      const currentData: WorkbenchHistoryData = {
+        historyId: historyIdRef.current,
+        ...captureHistoryMemory(historyIdRef.current),
+      }
+      window.history.replaceState(withWorkbenchHistoryData(window.history.state, currentData), '', window.location.href)
+      targetHistoryId = newHistoryId()
+      historyIdRef.current = targetHistoryId
+      const targetData: WorkbenchHistoryData = { historyId: targetHistoryId, scrollY: 0, focusKey: null }
+      window.history.pushState(withWorkbenchHistoryData(window.history.state, targetData), '', url)
+      historyMemoryRef.current.set(targetHistoryId, { scrollY: 0, focusKey: null })
+    } else {
+      const currentData: WorkbenchHistoryData = {
+        historyId: historyIdRef.current,
+        ...captureHistoryMemory(historyIdRef.current),
+      }
+      window.history.replaceState(withWorkbenchHistoryData(window.history.state, currentData), '', url)
+    }
+
+    const ticket = createNavigationTicket(targetHistoryId, ++navigationSequenceRef.current)
+    transitionRef.current = {
+      cause, historyId: targetHistoryId, ticket,
+      focusTarget: focusTarget ?? (committedNavigation.section !== navigationRef.current.section && cause === 'push' ? 'heading' : null),
+      restorePoint: null,
+      consumed: false,
+    }
+    navigationRef.current = committedNavigation
+    setNavigation(committedNavigation)
+  }
+
+  const updateNavigation = (patch: Partial<NavigationState>, push = false, focusTarget: FocusTarget = null) => {
+    const previous = navigationRef.current
+    const next = applyNavigationPatch(previous, patch)
+    const requestedFocus = focusTarget ?? (push && next.section !== previous.section ? 'heading' : null)
+    commitNavigation(next, push ? 'push' : 'replace', requestedFocus)
+  }
+
+  const navigationReady = (ticket: string) => {
+    const runtime = transitionRef.current
+    if (runtime.ticket !== ticket || runtime.consumed) return
+
+    const heading = document.getElementById('screen-heading') as HTMLElement | null
+    if (heading) heading.dataset.historyFocusKey = `screen:${navigationRef.current.section}`
+    const detailsHeading = document.querySelector<HTMLElement>('.tool-details h2')
+    if (detailsHeading) detailsHeading.dataset.historyFocusKey = `tool-details:${selectedToolId ?? 'unknown'}`
+
+    if (runtime.cause === 'push') {
+      const target = runtime.focusTarget === 'entry'
+        ? document.querySelector<HTMLElement>('[data-navigation-entry-heading]') ?? detailsHeading
+        : runtime.focusTarget === 'heading' ? heading : null
+      if (target) {
+        target.focus({ preventScroll: true })
+        if (runtime.focusTarget === 'heading') window.scrollTo({ top: 0, behavior: 'instant' })
+        else target.scrollIntoView({ block: 'nearest' })
+      }
+    } else if (runtime.cause === 'pop') {
+      const point = runtime.restorePoint ?? historyMemoryRef.current.get(runtime.historyId) ?? { scrollY: 0, focusKey: null }
+      const target = locateFocusKey(point.focusKey) ?? document.getElementById('main-content') as HTMLElement | null ?? heading
+      target?.focus({ preventScroll: true })
+      window.scrollTo({ top: point.scrollY, behavior: 'instant' })
+    }
+
+    runtime.consumed = true
+  }
+
   const setQuery = (next: string) => updateNavigation({ query: next, count: 48, tool: null })
   const setCategory = (next: string) => updateNavigation({ category: next, count: 48, tool: null })
   const setPlatform = (next: ToolPlatform | 'all') => updateNavigation({ platform: next, count: 48, tool: null })
-  const navigate = (next: Section) => { updateNavigation({ section: next, tool: null }, true) }
-  const navHref = (next: Section) => navigationUrl({ ...navigation, section: next, tool: null }, window.location.href)
+  const navigate = (next: Section) => { updateNavigation({ section: next, tool: null }, true, 'heading') }
+  const navHref = (next: Section) => navigationUrl(applyNavigationPatch(navigation, { section: next, tool: null }), window.location.href)
   const navClick = (event: MouseEvent<HTMLAnchorElement>, next: Section) => {
     if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
     event.preventDefault()
     navigate(next)
   }
 
+  const explorerAction = (action: ExplorerNavigationAction) => {
+    const transition = transitionExplorerNavigation(navigationRef.current, action)
+    commitNavigation(transition.state, transition.cause, transition.focusTarget)
+  }
+
+  const patchExplorerNavigation = (patch: Partial<NavigationState>, cause: 'push' | 'replace' = 'replace') => {
+    const next = applyNavigationPatch(navigationRef.current, patch)
+    commitNavigation(next, cause, null)
+  }
+
   const closeDetails = () => {
     updateNavigation({ tool: null })
-    if (detailsTrigger.current?.isConnected) detailsTrigger.current.focus({ preventScroll: true })
+    const trigger = detailsTrigger.current?.isConnected
+      ? detailsTrigger.current
+      : locateFocusKey(selectedToolId ? `tool-trigger:${selectedToolId}` : null)
+    if (trigger) trigger.focus({ preventScroll: true })
     else document.getElementById('palette-trigger')?.focus({ preventScroll: true })
+    persistCurrentHistoryMemory()
   }
   const selectTool = (tool: CliTool, trigger: HTMLButtonElement) => {
     detailsTrigger.current = trigger
-    updateNavigation({ tool: selectedToolId === tool.id ? null : tool.id }, true)
+    trigger.dataset.historyFocusKey = `tool-trigger:${tool.id}`
+    const selecting = selectedToolId !== tool.id
+    updateNavigation({ tool: selecting ? tool.id : null }, true, selecting ? 'entry' : 'trigger')
   }
   const changeView = (next: ViewMode) => {
     updateNavigation({ view: next, tool: null })
@@ -85,12 +290,40 @@ function App() {
 
   const revealTool = (id: string, trigger?: HTMLButtonElement) => {
     detailsTrigger.current = trigger ?? document.getElementById('palette-trigger') as HTMLButtonElement
-    updateNavigation({ section: 'catalog', tool: id, query: id, category: 'all', platform: 'all', view: 'list', count: 48 }, true)
+    if (detailsTrigger.current) detailsTrigger.current.dataset.historyFocusKey = `tool-trigger:${id}`
+    updateNavigation({ section: 'catalog', tool: id, query: id, category: 'all', platform: 'all', view: 'list', count: 48 }, true, 'entry')
   }
 
   useEffect(() => {
+    const previous = window.history.scrollRestoration
+    previousScrollRestoration.current = previous
+    window.history.scrollRestoration = 'manual'
+    const existingData = readWorkbenchHistoryData(window.history.state)
+    const initialData = existingData ?? initialHistory
+    historyIdRef.current = initialData.historyId
+    historyMemoryRef.current.set(initialData.historyId, {
+      scrollY: initialData.scrollY, focusKey: initialData.focusKey,
+    })
+    if (!existingData) {
+      window.history.replaceState(withWorkbenchHistoryData(window.history.state, initialData), '', window.location.href)
+    }
+
     const onPop = () => {
+      const departedId = historyIdRef.current
+      captureHistoryMemory(departedId)
       const next = parseNavigation(window.location.search, initialView())
+      const saved = readWorkbenchHistoryData(window.history.state)
+      const historyId = saved?.historyId ?? newHistoryId()
+      const point = historyMemoryRef.current.get(historyId) ?? (saved
+        ? { scrollY: saved.scrollY, focusKey: saved.focusKey }
+        : { scrollY: Math.max(0, window.scrollY), focusKey: null })
+      historyIdRef.current = historyId
+      historyMemoryRef.current.set(historyId, point)
+      const ticket = createNavigationTicket(historyId, ++navigationSequenceRef.current)
+      transitionRef.current = {
+        cause: 'pop', historyId, ticket, focusTarget: null,
+        restorePoint: point, consumed: false,
+      }
       navigationRef.current = next
       setNavigation(next)
     }
@@ -100,20 +333,60 @@ function App() {
         setPaletteOpen((current) => !current)
       }
     }
+    const onScrollOrFocus = () => scheduleHistoryCapture()
     window.addEventListener('popstate', onPop)
     window.addEventListener('keydown', onKey)
-    return () => { window.removeEventListener('popstate', onPop); window.removeEventListener('keydown', onKey) }
-  }, [])
-
-  const previousSection = useRef(section)
-  useEffect(() => {
-    document.title = t(SECTION_LABELS[section]) + ' · CLI Tool Registry'
-    if (previousSection.current !== section) {
-      previousSection.current = section
-      document.getElementById('screen-heading')?.focus({ preventScroll: true })
-      window.scrollTo({ top: 0, behavior: 'instant' })
+    window.addEventListener('scroll', onScrollOrFocus, { passive: true })
+    window.addEventListener('focusin', onScrollOrFocus)
+    return () => {
+      window.removeEventListener('popstate', onPop)
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('scroll', onScrollOrFocus)
+      window.removeEventListener('focusin', onScrollOrFocus)
+      if (captureTimer.current !== undefined) window.clearTimeout(captureTimer.current)
+      window.history.scrollRestoration = previousScrollRestoration.current
     }
-  }, [section, t, snapshot])
+  }, [initialHistory])
+
+  useEffect(() => {
+    let screenTitle = t(SECTION_LABELS[section])
+    if (section === 'explore') {
+      const manifest = explorerManifest.status === 'ready' ? explorerManifest.manifest : null
+      const toolId = navigation.exploreTool
+      const datasets = manifest?.datasets.filter((dataset) => dataset.toolId === toolId) ?? []
+      if (toolId && datasets.length > 0) {
+        const toolName = catalog.snapshot?.tools.find((tool) => tool.id === toolId)?.name
+          ?? explorerRegistry.tools.find((tool) => tool.toolId === toolId)?.fallbackName
+          ?? toolId
+        const selectedDataset = datasets.find((dataset) => dataset.datasetId === navigation.dataset)
+        screenTitle = selectedDataset ? `${selectedDataset.title[locale]} · ${toolName}` : `${toolName} · ${t('navExplore')}`
+      } else {
+        screenTitle = t('exploreHeading')
+      }
+    }
+    document.title = screenTitle + ' · CLI Tool Registry'
+  }, [section, navigation.exploreTool, navigation.dataset, explorerManifest, catalog.snapshot, locale, t])
+
+  useEffect(() => {
+    if (section !== 'explore' || transitionRef.current.cause === 'pop' || !navigation.needsReplace || navigation.routeError) return
+    const rawUrl = window.location.pathname + window.location.search
+    if (lastCanonicalizedUrl.current === rawUrl) return
+    lastCanonicalizedUrl.current = rawUrl
+    const canonicalUrl = navigationUrl(navigationRef.current, window.location.href)
+    const saved = readWorkbenchHistoryData(window.history.state) ?? initialHistory
+    window.history.replaceState(withWorkbenchHistoryData(window.history.state, saved), '', canonicalUrl)
+    const next = { ...navigationRef.current, needsReplace: false }
+    navigationRef.current = next
+    setNavigation(next)
+  }, [initialHistory, navigation, section])
+
+  useEffect(() => {
+    void runManifestLoad(false)
+    return () => {
+      manifestRequestRef.current += 1
+      explorerLoader.cancelManifestLoad()
+    }
+  }, [explorerLoader, runManifestLoad])
 
   useEffect(() => {
     let mounted = true
@@ -140,6 +413,7 @@ function App() {
   }, [attempt])
 
   const tools = snapshot?.tools ?? EMPTY_TOOLS
+  const validatedExplorerManifest = explorerManifest.status === 'ready' ? explorerManifest.manifest : null
 
   const categoryOptions = useMemo(() => {
     const seen = new Map<string, string>()
@@ -207,7 +481,7 @@ function App() {
 
   return (
     <div className="registry-app" id="top">
-      <a className="skip-link" href="#main-content">{t(SECTION_LABELS[section])}</a>
+      <a className="skip-link" href="#main-content" data-history-focus-key="skip-link">{t(SECTION_LABELS[section])}</a>
       <header className="topbar">
         <a className="brand" href={navHref('overview')} onClick={(event) => navClick(event, 'overview')} aria-label={t('siteTitle')}>
           <span className="brand-mark" aria-hidden="true">
@@ -220,11 +494,13 @@ function App() {
 
         <nav className="top-nav" aria-label={locale === 'de' ? 'Hauptnavigation' : 'Main navigation'}>
           {SECTIONS.map((item) => <a key={item} className={section === item ? 'top-nav-active' : ''}
-            href={navHref(item)} aria-current={section === item ? 'page' : undefined} onClick={(event) => navClick(event, item)}>{t(SECTION_LABELS[item])}</a>)}
+            href={navHref(item)} data-history-focus-key={'nav:' + item}
+            aria-current={section === item ? 'page' : undefined} onClick={(event) => navClick(event, item)}>{t(SECTION_LABELS[item])}</a>)}
         </nav>
 
         <div className="topbar-actions">
-          <button className="palette-trigger" id="palette-trigger" aria-label={t('paletteLabel')} title={t('paletteLabel') + ' · Ctrl / ⌘ K'} onClick={() => setPaletteOpen(true)}><span aria-hidden="true">⌕</span><kbd>⌘ K</kbd></button>
+          <button className="palette-trigger" id="palette-trigger" data-history-focus-key="palette-trigger"
+            aria-label={t('paletteLabel')} title={t('paletteLabel') + ' · Ctrl / ⌘ K'} onClick={() => setPaletteOpen(true)}><span aria-hidden="true">⌕</span><kbd>⌘ K</kbd></button>
           <a className={'source-status status-' + sourceStatus} href={CATALOG_SOURCE_URL}>
             <span className="status-dot" />
             <span>
@@ -257,22 +533,37 @@ function App() {
         </div>
       </header>
 
-      <main className="page-shell" id="main-content" tabIndex={-1}>
+      <main className="page-shell" id="main-content" tabIndex={-1} data-history-focus-key="main-content">
         {loadError && snapshot && (
           <div className="notice notice-warning" role="status"><span>{t('cachedWarning')}</span><button type="button" onClick={refreshCatalog} disabled={isLoading}>{t('retry')}</button></div>
         )}
         {cacheWriteFailed && <p className="notice notice-warning" role="status">{t('cacheWriteWarning')}</p>}
-        {!snapshot ? <div className="empty-state" aria-busy={isLoading}>{isLoading ? <><span className="loading-indicator" /><p>{t('loadingTools')}</p></> :
+        {!snapshot && section !== 'explore' ? <div className="empty-state" aria-busy={isLoading}>{isLoading ? <><span className="loading-indicator" /><p>{t('loadingTools')}</p></> :
           <><h1 id="screen-heading" tabIndex={-1}>{t('loadErrorTitle')}</h1><p>{t('loadErrorHint')}</p><button className="workbench-button" onClick={refreshCatalog}>{t('retry')}</button></>}</div> : <>
-        {section === 'overview' && <WorkbenchOverview tools={tools} onNavigate={navigate} onTool={revealTool}
-          onCategory={(next) => updateNavigation({ section: 'catalog', category: next, query: '', platform: 'all', count: 48, tool: null }, true)} />}
-        {section === 'guide' && <WorkbenchGuide onNavigate={navigate} />}
-        {(section === 'dependencies' || section === 'lab') && <ScreenBoundary key={section} message={t('screenLoadError')} reloadLabel={t('reloadScreen')}>
+        {section === 'overview' && <>
+          <WorkbenchOverview tools={tools} onNavigate={navigate} onTool={revealTool}
+            onCategory={(next) => updateNavigation({ section: 'catalog', category: next, query: '', platform: 'all', count: 48, tool: null }, true, 'heading')} />
+          <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} />
+        </>}
+        {section === 'guide' && <>
+          <WorkbenchGuide onNavigate={navigate} />
+          <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} />
+        </>}
+        {(section === 'dependencies' || section === 'lab' && snapshot !== null) && <ScreenBoundary key={section} message={t('screenLoadError')} reloadLabel={t('reloadScreen')}>
           <Suspense fallback={<div className="empty-state" role="status"><span className="loading-indicator" /><p>{t('loadingTools')}</p></div>}>
-            {section === 'dependencies' ? <DependencyExplorer tools={tools} selectedId={selectedToolId} onFocusChange={() => updateNavigation({ tool: null })} onSelect={(id, trigger) => {
+            {section === 'dependencies' ? <>
+              <DependencyExplorer tools={tools} selectedId={selectedToolId} onFocusChange={() => updateNavigation({ tool: null })} onSelect={(id, trigger) => {
               detailsTrigger.current = trigger
-              updateNavigation({ tool: id }, true)
-            }} /> : <CatalogLab current={snapshot} baseline={baseline} onSetBaseline={() => setCatalog((current) => ({ ...current, baseline: current.snapshot }))} />}
+              trigger.dataset.historyFocusKey = `tool-trigger:${id}`
+              updateNavigation({ tool: id }, true, 'entry')
+              }} />
+              <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} />
+            </> : <>
+              {snapshot && <>
+                <CatalogLab current={snapshot} baseline={baseline} onSetBaseline={() => setCatalog((current) => ({ ...current, baseline: current.snapshot }))} />
+                <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} />
+              </>}
+            </>}
           </Suspense>
         </ScreenBoundary>}
         {section === 'catalog' && <>
@@ -304,6 +595,7 @@ function App() {
             <input
               id="tool-search"
               ref={searchRef}
+              data-history-focus-key="catalog-search"
               aria-label={t('searchLabel')}
               type="search"
               value={query}
@@ -373,21 +665,33 @@ function App() {
               tools={visibleTools}
               selectedToolId={selectedToolId}
               activePlatform={platform}
+              explorerManifest={validatedExplorerManifest}
+              onExplore={explorerAction}
               onSelect={selectTool}
               locale={locale}
             />
           ) : (
             <ToolCards tools={visibleTools} enhanced={view === 'enhanced'} activePlatform={platform}
-              selectedToolId={selectedToolId} onSelect={selectTool} onClose={closeDetails} />
+              selectedToolId={selectedToolId} explorerManifest={validatedExplorerManifest} onExplore={explorerAction}
+              onSelect={selectTool} onClose={closeDetails} />
           )}
           {filteredTools.length > 0 && <div className="load-more-region"><p role="status">{t('visibleCount').replace('{shown}', String(visibleTools.length)).replace('{total}', String(filteredTools.length))}</p>
-            {visibleTools.length < filteredTools.length && <button className="workbench-button" onClick={() => updateNavigation({ count: Math.min(count + 48, 10000) })}>{t('loadMore')} <span aria-hidden="true">↓</span></button>}</div>}
+            {visibleTools.length < filteredTools.length && <button className="workbench-button" data-history-focus-key="catalog-more" onClick={() => updateNavigation({ count: Math.min(count + 48, 10000) })}>{t('loadMore')} <span aria-hidden="true">↓</span></button>}</div>}
         </section>
+        <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} />
         </>}
+        {section === 'explore' && <ScreenBoundary message={t('screenLoadError')} reloadLabel={t('reloadScreen')}>
+          <Suspense fallback={<div className="empty-state" role="status"><span className="loading-indicator" /><p>{t('loadingTools')}</p></div>}>
+            <ToolExplorer navigation={navigation} manifestState={explorerManifest} loader={explorerLoader}
+              catalogTools={tools} locale={locale} navigationTicket={transitionRef.current.ticket}
+              navigationCause={transitionRef.current.cause} onReady={navigationReady} onAction={explorerAction}
+              onPatch={patchExplorerNavigation} onRetryManifest={retryExplorerManifest} />
+          </Suspense>
+        </ScreenBoundary>}
         {selectedTool && (section !== 'catalog' || view === 'list' || !visibleTools.some((tool) => tool.id === selectedToolId)) && (
-          <ToolDetails tool={selectedTool} onClose={closeDetails} />
+          <ToolDetails tool={selectedTool} onClose={closeDetails} manifest={validatedExplorerManifest} onExplore={explorerAction} />
         )}
-        {selectedToolId && !selectedTool && <p className="notice notice-warning" role="status">{t('unknownTool')}</p>}
+        {section === 'catalog' && selectedToolId && !selectedTool && <p className="notice notice-warning" role="status">{t('unknownTool')}</p>}
         </>}
       </main>
 
@@ -398,7 +702,8 @@ function App() {
         <a href="https://github.com/Dicklesworthstone/frankentui_website" target="_blank" rel="noreferrer">{t('referenceInspiration')}</a>
         <p className="footer-trademark-note">{t('pythonTrademark')}</p>
       </footer>
-      <CommandPalette open={paletteOpen} tools={tools} onClose={() => setPaletteOpen(false)} onNavigate={navigate} onTool={revealTool} />
+      <CommandPalette open={paletteOpen} tools={tools} explorerManifest={validatedExplorerManifest}
+        onClose={() => setPaletteOpen(false)} onNavigate={navigate} onTool={revealTool} onExplore={explorerAction} />
     </div>
   )
 }

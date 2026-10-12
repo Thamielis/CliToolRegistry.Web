@@ -73,7 +73,8 @@ export default function DependencyExplorer({ tools, selectedId, onSelect, onFocu
               return <g key={id} className={'graph-node ' + (id === focus.id ? 'focused' : '') + (!tool ? ' external' : '')} data-node={id}>
                 <circle cx={point.x} cy={point.y} r={id === focus.id ? 37 : 27} />
                 {tool ? <foreignObject x={point.x - 27} y={point.y - 27} width="54" height="54">
-                  <button className="graph-node-button" aria-label={tool.name + ', ' + t('details')} onClick={(event) => onSelect(id, event.currentTarget)}><span aria-hidden="true">&gt;_</span></button>
+                  <button className="graph-node-button" data-history-focus-key={'tool-trigger:' + id}
+                    aria-label={tool.name + ', ' + t('details')} onClick={(event) => onSelect(id, event.currentTarget)}><span aria-hidden="true">&gt;_</span></button>
                 </foreignObject> : <text x={point.x} y={point.y + 4} textAnchor="middle" className="graph-node-glyph">?</text>}
                 <text x={point.x} y={point.y + 54} textAnchor="middle">{id.length > 22 ? id.slice(0, 20) + '…' : id}</text>
               </g>
@@ -83,7 +84,8 @@ export default function DependencyExplorer({ tools, selectedId, onSelect, onFocu
         <footer className="graph-caption"><span>{t('graphCap')}</span><span>{related.length} {t('navDependencies')}</span></footer>
       </div>
       <aside className="workbench-panel graph-focus"><AppIcon app={focus} className="graph-focus-logo" /><span className="section-eyebrow">{t('graphChoose')}</span><h2>{focus.name}</h2><code>{focus.command}</code><p>{focus.description}</p>
-        <button className="workbench-button primary" onClick={(event) => onSelect(focus.id, event.currentTarget)}>{t('details')} <span aria-hidden="true">↗</span></button>
+        <button className="workbench-button primary" data-history-focus-key={'tool-trigger:' + focus.id}
+          onClick={(event) => onSelect(focus.id, event.currentTarget)}>{t('details')} <span aria-hidden="true">↗</span></button>
         {!related.length && <p>{t('graphEmpty')}</p>}
       </aside>
     </div>
@@ -91,7 +93,8 @@ export default function DependencyExplorer({ tools, selectedId, onSelect, onFocu
       {group.edges.length ? <ul>{group.edges.map((edge) => {
         const id = group.incoming ? edge.from : edge.to
         const tool = index.get(id)
-        return <li key={edge.from + edge.to + edge.kind}>{tool ? <button onClick={(event) => onSelect(id, event.currentTarget)}><span>{tool.name}</span><code>{id}</code><span aria-hidden="true">↗</span></button> :
+        return <li key={edge.from + edge.to + edge.kind}>{tool ? <button data-history-focus-key={'tool-trigger:' + id}
+          onClick={(event) => onSelect(id, event.currentTarget)}><span>{tool.name}</span><code>{id}</code><span aria-hidden="true">↗</span></button> :
           <span className="external-reference"><code>{id}</code><small>{t('graphExternal')}</small></span>}</li>
       })}</ul> : <p className="muted-value">{t('graphEmpty')}</p>}
     </section>)}</div>

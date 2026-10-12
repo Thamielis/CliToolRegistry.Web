@@ -1,10 +1,12 @@
-import { useEffect, useRef } from 'react'
+import type { MouseEvent as ReactMouseEvent } from 'react'
 import type { CliTool, ToolPlatform } from '../types/app'
 import { useLocale } from '../i18n/LocaleContext'
 import { categoryLabel, platformLabel, tierLabel } from '../i18n/catalogLabels'
 import { getPlatformCommand } from '../data/loadApps'
 import { CommandBlock } from './CommandBlock'
 import { AppIcon } from './AppIcon'
+import { navigationUrl, parseNavigation, transitionExplorerNavigation, type ExplorerNavigationAction } from '../data/workbench'
+import type { ExplorerManifest } from '../types/explorer'
 
 const PLATFORMS: ToolPlatform[] = ['windows', 'linux', 'wsl2', 'macos']
 
@@ -51,14 +53,49 @@ function CommandSection({
   )
 }
 
-export function ToolDetails({ tool, onClose }: { tool: CliTool; onClose: () => void }) {
+function currentExplorerHref(): string {
+  return typeof window === 'undefined' ? 'https://registry.invalid/' : window.location.href
+}
+
+function explorerToolHref(toolId: string, href = currentExplorerHref()): string {
+  const state = parseNavigation(new URL(href).search)
+  return navigationUrl(transitionExplorerNavigation(state, { type: 'tool', toolId }).state, href)
+}
+
+function getExplorerToolTarget(tool: Pick<CliTool, 'id' | 'name'>, manifest: ExplorerManifest | null) {
+  if (!manifest) return null
+  const datasetCount = manifest.datasets.reduce((count, dataset) => count + Number(dataset.toolId === tool.id), 0)
+  return datasetCount > 0 ? { toolId: tool.id, toolName: tool.name, datasetCount, href: explorerToolHref(tool.id) } : null
+}
+
+export function ExplorerToolLink({ tool, manifest, onExplore }: {
+  tool: Pick<CliTool, 'id' | 'name'>
+  manifest: ExplorerManifest | null
+  onExplore?: (action: ExplorerNavigationAction) => void
+}) {
+  const { t } = useLocale()
+  const target = getExplorerToolTarget(tool, manifest)
+  if (!target) return null
+
+  const handleClick = (event: ReactMouseEvent<HTMLAnchorElement>) => {
+    if (!onExplore || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+    event.preventDefault()
+    onExplore({ type: 'tool', toolId: target.toolId })
+  }
+
+  return <a className="tool-explorer-link" href={target.href} onClick={handleClick}>
+    {t('exploreToolLink').replace('{count}', String(target.datasetCount))}<span aria-hidden="true">↗</span>
+  </a>
+}
+
+export function ToolDetails({ tool, onClose, manifest = null, onExplore }: {
+  tool: CliTool
+  onClose: () => void
+  manifest?: ExplorerManifest | null
+  onExplore?: (action: ExplorerNavigationAction) => void
+}) {
   const { locale, t } = useLocale()
-  const headingRef = useRef<HTMLHeadingElement>(null)
   const headingId = 'tool-details-heading-' + tool.id
-  useEffect(() => {
-    headingRef.current?.focus({ preventScroll: true })
-    headingRef.current?.scrollIntoView({ block: 'nearest' })
-  }, [tool.id])
   const installCommands = commandEntries(tool.install, tool.platforms, t('allPlatforms'))
   const updateCommands = commandEntries(tool.update, tool.platforms, t('allPlatforms'))
 
@@ -70,7 +107,7 @@ export function ToolDetails({ tool, onClose }: { tool: CliTool; onClose: () => v
           <AppIcon app={tool} className="detail-logo" />
           <div className="detail-title-copy">
             <span className="detail-kicker">{t('details')}</span>
-            <h2 id={headingId} ref={headingRef} tabIndex={-1}>{tool.name}</h2>
+            <h2 id={headingId} data-history-focus-key={'tool-details:' + tool.id} tabIndex={-1}>{tool.name}</h2>
           </div>
         </div>
         <button type="button" className="quiet-button" onClick={onClose}>
@@ -165,6 +202,7 @@ export function ToolDetails({ tool, onClose }: { tool: CliTool; onClose: () => v
       )}
 
       <footer className="detail-links">
+        <ExplorerToolLink tool={tool} manifest={manifest} onExplore={onExplore} />
         {tool.website && (
           <a href={tool.website} target="_blank" rel="noreferrer">
             {t('openWebsite')}

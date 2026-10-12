@@ -4,23 +4,29 @@ import { useLocale } from '../i18n/LocaleContext'
 import { categoryLabel, platformLabel, tierLabel } from '../i18n/catalogLabels'
 import { getPlatformCommand } from '../data/loadApps'
 import { CommandBlock } from './CommandBlock'
-import { ToolDetails } from './ToolDetails'
+import { ExplorerToolLink, ToolDetails } from './ToolDetails'
 import { AppIcon } from './AppIcon'
+import type { ExplorerNavigationAction } from '../data/workbench'
+import type { ExplorerManifest } from '../types/explorer'
 
 interface ToolCardsProps {
   tools: CliTool[]
   enhanced: boolean
   activePlatform: ToolPlatform | 'all'
   selectedToolId: string | null
+  explorerManifest: ExplorerManifest | null
+  onExplore: (action: ExplorerNavigationAction) => void
   onSelect: (tool: CliTool, trigger: HTMLButtonElement) => void
   onClose: () => void
 }
 
-function ToolCard({ tool, enhanced, activePlatform, selected, onSelect, onClose }: {
+function ToolCard({ tool, enhanced, activePlatform, selected, explorerManifest, onExplore, onSelect, onClose }: {
   tool: CliTool
   enhanced: boolean
   activePlatform: ToolPlatform | 'all'
   selected: boolean
+  explorerManifest: ExplorerManifest | null
+  onExplore: ToolCardsProps['onExplore']
   onSelect: ToolCardsProps['onSelect']
   onClose: () => void
 }) {
@@ -78,6 +84,7 @@ function ToolCard({ tool, enhanced, activePlatform, selected, onSelect, onClose 
           <button
             type="button"
             className="card-details-button"
+            data-history-focus-key={'tool-trigger:' + tool.id}
             aria-expanded={selected}
             aria-controls={selected ? detailsId : undefined}
             aria-label={tool.name + ', ' + (selected ? t('closeDetails') : t('details'))}
@@ -86,22 +93,24 @@ function ToolCard({ tool, enhanced, activePlatform, selected, onSelect, onClose 
             {t(selected ? 'closeDetails' : 'details')} <span aria-hidden="true">{selected ? '−' : '↗'}</span>
           </button>
           <div className="tool-card-links">
+            <ExplorerToolLink tool={tool} manifest={explorerManifest} onExplore={onExplore} />
             {tool.website && <a href={tool.website} target="_blank" rel="noreferrer">{t('toolWebsite')} <span aria-hidden="true">↗</span></a>}
             {tool.repository && <a href={tool.repository} target="_blank" rel="noreferrer">{t('toolRepository')} <span aria-hidden="true">↗</span></a>}
           </div>
         </footer>
       </div>
-      {selected && <ToolDetails tool={tool} onClose={onClose} />}
+      {selected && <ToolDetails tool={tool} onClose={onClose} manifest={explorerManifest} onExplore={onExplore} />}
     </article>
   )
 }
 
-export function ToolCards({ tools, enhanced, activePlatform, selectedToolId, onSelect, onClose }: ToolCardsProps) {
+export function ToolCards({ tools, enhanced, activePlatform, selectedToolId, explorerManifest, onExplore, onSelect, onClose }: ToolCardsProps) {
   return (
     <div className={'tool-card-grid' + (enhanced ? ' tool-card-grid-enhanced' : '')}>
       {tools.map((tool) => (
         <ToolCard key={tool.id} tool={tool} enhanced={enhanced} activePlatform={activePlatform}
-          selected={tool.id === selectedToolId} onSelect={onSelect} onClose={onClose} />
+          selected={tool.id === selectedToolId} explorerManifest={explorerManifest} onExplore={onExplore}
+          onSelect={onSelect} onClose={onClose} />
       ))}
     </div>
   )

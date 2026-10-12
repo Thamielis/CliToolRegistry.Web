@@ -32,6 +32,7 @@ export function WorkbenchOverview({ tools, onNavigate, onCategory, onTool }: {
           <div className="hero-actions">
             <button className="workbench-button primary" onClick={() => onNavigate('catalog')}>{t('browseCatalog')} <span aria-hidden="true">↗</span></button>
             <button className="workbench-button" onClick={() => onNavigate('dependencies')}>{t('exploreGraph')} <span aria-hidden="true">→</span></button>
+            <button className="workbench-button" onClick={() => onNavigate('explore')}>{t('navExplore')} <span aria-hidden="true">↗</span></button>
           </div>
           <div className="hero-facts">
             {[[tools.length, t('catalogTools')], [categories.length, t('catalogCategories')], [platforms.size, t('catalogPlatforms')]].map(([count, label]) =>

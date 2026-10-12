@@ -18,6 +18,6 @@ export default defineConfig({
   webServer: {
     command: `node node_modules/vite/bin/vite.js ${preview ? 'preview' : ''} --host 127.0.0.1 --port ${port} --strictPort`,
     url: `http://127.0.0.1:${port}/CliToolRegistry.Web/`,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: !preview && !process.env.CI,
   },
 })

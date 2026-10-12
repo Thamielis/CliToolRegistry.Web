@@ -2,10 +2,14 @@ import type { Locale } from '../types/app'
 
 export const translations = {
   de: {
-    navOverview: 'Übersicht', navDependencies: 'Abhängigkeiten', navLab: 'Kataloglabor', navGuide: 'Anleitung',
+    navOverview: 'Übersicht', navDependencies: 'Abhängigkeiten', navLab: 'Kataloglabor', navGuide: 'Anleitung', navExplore: 'Erkunden',
+    exploreHeading: 'Werkzeuge erkunden', exploreIntro: 'Durchsuche versionierte Befehls- und Fähigkeitsreferenzen.',
+    exploreInvalidRoute: 'Dieser Erkundungslink ist ungültig.', exploreQueryTruncated: 'Die Dateisuche wurde auf 500 Zeichen gekürzt.',
     heroEyebrow: 'Entdecken. Verstehen. Loslegen.', heroHeading: 'Dein Terminal.\nDein Werkzeugkasten.',
     heroBody: 'Finde die richtigen CLI-Werkzeuge, erkunde ihre Verbindungen und hole dir den passenden Befehl. Ein Katalog, viele Möglichkeiten.',
     browseCatalog: 'Katalog entdecken', exploreGraph: 'Verbindungen erkunden',
+    exploreToolLink: 'JSON-Referenzen: {count}', paletteExplorerCount: '{count} JSON-Quellen',
+    paletteExplorerDataset: 'JSON-Quelle',
     previewLabel: 'Befehlsvorschau', previewHint: 'Vorschau aus dem Katalog. Befehle werden nur kopiert, nie ausgeführt.',
     previewTool: 'Werkzeug in der Vorschau', previewPlatform: 'Plattform in der Vorschau',
     catalogTools: 'Werkzeuge', catalogCategories: 'Kategorien', catalogPlatforms: 'Plattformen',
@@ -138,10 +142,14 @@ export const translations = {
     pythonTrademark: 'Python und das Python-Logo sind Marken der Python Software Foundation. Dieses Projekt ist nicht mit der PSF verbunden und wird von ihr nicht unterstützt.',
   },
   en: {
-    navOverview: 'Overview', navDependencies: 'Dependencies', navLab: 'Catalog lab', navGuide: 'Guide',
+    navOverview: 'Overview', navDependencies: 'Dependencies', navLab: 'Catalog lab', navGuide: 'Guide', navExplore: 'Explore',
+    exploreHeading: 'Explore tools', exploreIntro: 'Browse versioned command and capability references.',
+    exploreInvalidRoute: 'This explorer link is invalid.', exploreQueryTruncated: 'The file search was limited to 500 characters.',
     heroEyebrow: 'Discover. Understand. Get started.', heroHeading: 'Your terminal.\nYour toolkit.',
     heroBody: 'Find the right CLI tools, explore their connections, and get the command you need. One catalog, many possibilities.',
     browseCatalog: 'Explore the catalog', exploreGraph: 'Explore connections',
+    exploreToolLink: 'JSON references: {count}', paletteExplorerCount: '{count} JSON sources',
+    paletteExplorerDataset: 'JSON source',
     previewLabel: 'Command preview', previewHint: 'A preview of catalog data. Commands are copied, never executed.',
     previewTool: 'Preview tool', previewPlatform: 'Preview platform',
     catalogTools: 'Tools', catalogCategories: 'Categories', catalogPlatforms: 'Platforms',
@@ -278,5 +286,5 @@ export const translations = {
 export type TranslationKey = keyof (typeof translations)['de']
 
 export const sectionLabels = {
-  overview: 'navOverview', catalog: 'navCatalog', dependencies: 'navDependencies', lab: 'navLab', guide: 'navGuide',
+  overview: 'navOverview', catalog: 'navCatalog', dependencies: 'navDependencies', lab: 'navLab', guide: 'navGuide', explore: 'navExplore',
 } as const satisfies Record<string, TranslationKey>

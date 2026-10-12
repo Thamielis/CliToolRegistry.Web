@@ -1,0 +1,77 @@
+{
+  "schema": "cli-tool-explorer.registry.v1",
+  "tools": [
+    { "toolId": "br", "fallbackName": "Beads Rust" },
+    { "toolId": "bv", "fallbackName": "Beads Viewer" },
+    { "toolId": "cass", "fallbackName": "CASS" },
+    { "toolId": "ee", "fallbackName": "Eidetic Engine" },
+    { "toolId": "fmd", "fallbackName": "FrankenMarkdown" },
+    { "toolId": "ubs", "fallbackName": "Ultimate Bug Scanner" }
+  ],
+  "datasets": [
+    {
+      "toolId": "br",
+      "datasetId": "capabilities",
+      "filename": "br.capabilities.json",
+      "format": "json",
+      "adapter": "br-capabilities",
+      "title": { "de": "Fähigkeiten und Aufrufe", "en": "Capabilities and commands" }
+    },
+    {
+      "toolId": "br",
+      "datasetId": "robot-docs",
+      "filename": "br.robot-docs.json",
+      "format": "json",
+      "adapter": "br-guide",
+      "title": { "de": "Agentenleitfaden", "en": "Agent guide" }
+    },
+    {
+      "toolId": "bv",
+      "datasetId": "capabilities",
+      "filename": "bv.capabilities.json",
+      "format": "json",
+      "adapter": "bv-capabilities",
+      "title": { "de": "Aufruf- und Fähigkeitsvertrag", "en": "Command and capability contract" }
+    },
+    {
+      "toolId": "bv",
+      "datasetId": "robot-docs",
+      "filename": "bv.robot-docs.json",
+      "format": "json",
+      "adapter": "bv-docs",
+      "title": { "de": "Robot-Referenz", "en": "Robot reference" }
+    },
+    {
+      "toolId": "cass",
+      "datasetId": "capabilities",
+      "filename": "cass.capabilities.json",
+      "format": "json",
+      "adapter": "cass-capabilities",
+      "title": { "de": "Fähigkeiten und Befehle", "en": "Capabilities and commands" }
+    },
+    {
+      "toolId": "ee",
+      "datasetId": "capabilities",
+      "filename": "ee.capabilities.json",
+      "format": "json",
+      "adapter": "ee-capabilities",
+      "title": { "de": "Fähigkeits-Snapshot", "en": "Capability snapshot" }
+    },
+    {
+      "toolId": "fmd",
+      "datasetId": "capabilities",
+      "filename": "fmd.capabilities.json",
+      "format": "json",
+      "adapter": "fmd-capabilities",
+      "title": { "de": "Rendering-Referenz", "en": "Rendering reference" }
+    },
+    {
+      "toolId": "ubs",
+      "datasetId": "robot-docs",
+      "filename": "ubs.robot-docs.json",
+      "format": "json",
+      "adapter": "ubs-docs",
+      "title": { "de": "Scan-Referenz", "en": "Scan reference" }
+    }
+  ]
+}

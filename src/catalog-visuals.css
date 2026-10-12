@@ -197,6 +197,10 @@ body { background: var(--registry-canvas); }
 .tool-card-links { display: flex; flex-wrap: wrap; gap: 10px; }
 .tool-card-links a { display: inline-flex; align-items: center; gap: 4px; min-height: 40px; color: var(--registry-muted); font-size: 11px; text-decoration: none; }
 .tool-card-links a:hover { color: var(--registry-blue); text-decoration: underline; }
+.tool-explorer-link { display: inline-flex; align-items: center; gap: 5px; max-width: 100%; min-height: 40px; color: var(--registry-blue-dark); font-size: 11px; font-weight: 650; line-height: 1.45; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.tool-explorer-link:hover { color: var(--registry-blue); text-decoration-thickness: 2px; }
+.tool-explorer-link:focus-visible { border-radius: 3px; outline: 3px solid var(--registry-blue); outline-offset: 3px; }
+.tool-name-cell .tool-explorer-link { margin: 3px 0 0 36px; }
 .tool-card .tool-details { margin: 0 22px 22px; border-color: var(--registry-border-strong); background: var(--registry-code-bg); box-shadow: none; }
 .tool-details h2:focus { outline: 2px solid var(--registry-blue); outline-offset: 4px; }
 .tool-details .command-block code { overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; padding-top: 10px; padding-bottom: 10px; line-height: 1.6; }
@@ -448,6 +452,8 @@ button:disabled { opacity: .5; cursor: not-allowed; }
   .graph-edge, .graph-node circle, .graph-ring { stroke: CanvasText; }
   .graph-node text, .arrow-required, .arrow-recommended { fill: CanvasText; }
   .workbench-button, .feature-link, .category-launchers button, .icon-control, .palette-results button.active { border-color: ButtonText; }
+  .tool-explorer-link { color: LinkText; }
+  .tool-explorer-link:focus-visible { outline-color: Highlight; }
 }
 .skip-link { position: absolute; z-index: 10; left: 16px; top: -80px; padding: 12px 20px; background: var(--registry-surface); border: 1px solid var(--registry-blue); border-radius: 8px; color: var(--registry-ink); }
 .skip-link:focus { top: 12px; }
