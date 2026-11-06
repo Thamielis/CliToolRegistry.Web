@@ -1,14 +1,14 @@
 {
-  "loadedAt": "2026-10-09T13:25:05.888Z",
+  "loadedAt": "2026-11-06T17:12:12.612Z",
   "sourceRepository": "https://github.com/In-Pro-Org/CliToolRegistry",
   "sourceRef": "develop",
-  "fileCount": 8,
+  "fileCount": 12,
   "tools": [
     {
       "id": "dotnet",
       "name": ".NET SDK 10",
       "description": "Aktuelles .NET SDK für Build, Tooling und plattformübergreifende .NET-Entwicklung.",
-      "category": "runtime",
+      "category": "lang",
       "tier": "recommended",
       "command": "dotnet",
       "website": "https://dotnet.microsoft.com/",
@@ -78,19 +78,24 @@
       "provenance": [
         "Microsoft .NET install docs verified 2026-09-13."
       ],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "7zip",
       "name": "7Zip",
       "description": "Archivwerkzeug",
-      "category": "terminal",
+      "category": "filesystem",
       "tier": "recommended",
       "command": "7z",
       "website": "https://www.7-zip.org/",
       "repository": null,
-      "wingetId": "7Zip.7Zip",
+      "wingetId": "7zip.7zip",
+      "packageId": "7zip.7zip",
+      "packageSource": "winget",
+      "executableAliases": [
+        "7z"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -109,8 +114,8 @@
       "install": {
         "windows": {
           "winget": {
-            "id": "7Zip.7Zip",
-            "command": "winget install --id 7Zip.7Zip --exact --accept-package-agreements --accept-source-agreements"
+            "id": "7zip.7zip",
+            "command": "winget install --id 7zip.7zip --exact --accept-package-agreements --accept-source-agreements"
           }
         },
         "linux": {
@@ -118,7 +123,7 @@
         }
       },
       "update": {
-        "windows": "winget upgrade --id 7Zip.7Zip --exact --accept-package-agreements --accept-source-agreements",
+        "windows": "winget upgrade --id 7zip.7zip --exact --accept-package-agreements --accept-source-agreements",
         "linux": "sudo apt-get update && sudo apt-get install --only-upgrade -y p7zip-full"
       },
       "healthCheck": "7z",
@@ -133,20 +138,24 @@
         "archive"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "provenance": [
+        "Winget W-034; PackageIdentifier 7zip.7zip; Publisher Igor Pavlov; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/7/7zip/7zip/26.03/7zip.7zip.locale.en-US.yaml SHA-256 f3d3e89c49cafddf490f1de6a916109e8aea1e7b7ccc23194199414b05221725; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "filesystem.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/filesystem.yml"
     },
     {
       "id": "act",
       "name": "act",
       "description": "Run GitHub Actions locally",
-      "category": "ci",
+      "category": "tools",
       "tier": "optional",
       "command": "act",
       "website": "https://github.com/nektos/act",
       "repository": "https://github.com/nektos/act",
       "wingetId": "nektos.act",
+      "packageId": "nektos.act",
+      "packageSource": "winget",
       "platforms": [
         "windows",
         "linux",
@@ -185,22 +194,26 @@
       "robotMode": {
         "supported": false
       },
-      "completions": {},
+      "completions": {
+        "powershell": "act completion powershell"
+      },
       "skill": null,
       "tags": [
         "github-actions",
         "ci"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "workflow-infrastructure.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+      "provenance": [
+        "Winget W-005; PackageIdentifier nektos.act; Publisher cplee.org; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/n/nektos/act/0.2.89/nektos.act.locale.en-US.yaml SHA-256 f79ae4bca376d4aa2e5508358fccaabff547f711d886493d3b8eb26a1b5c4490; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "asb",
       "name": "Agent Settings Backup",
       "description": "Git-versioned agent settings backup",
-      "category": "agentic",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "asb",
       "website": "https://github.com/Dicklesworthstone/agent_settings_backup_script",
@@ -241,18 +254,19 @@
       "completions": {},
       "skill": null,
       "tags": [
-        "backup"
+        "backup",
+        "flywheel"
       ],
       "notes": [],
       "provenance": [],
-      "catalogFile": "agentic-utilities.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-utilities.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "acfs",
       "name": "Agentic Coding Flywheel Setup",
       "description": "Bootstrap and update the complete Dicklesworthstone agentic coding environment.",
-      "category": "agentic",
+      "category": "acfs",
       "tier": "recommended-agent",
       "command": "acfs",
       "website": "https://github.com/Dicklesworthstone/agentic_coding_flywheel_setup",
@@ -310,14 +324,14 @@
       "provenance": [
         "Dicklesworthstone Flywheel profile and ACFS documentation verified 2026-09-16."
       ],
-      "catalogFile": "agentic-flywheel.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+      "catalogFile": "acfs.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/acfs.yml"
     },
     {
       "id": "apr",
       "name": "APR",
       "description": "Agentic planning/review utility",
-      "category": "agentic",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "apr",
       "website": null,
@@ -365,23 +379,26 @@
       "skill": null,
       "tags": [
         "planning",
-        "review"
+        "review",
+        "flywheel"
       ],
       "notes": [],
       "provenance": [],
-      "catalogFile": "agentic-utilities.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-utilities.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "bat",
       "name": "bat",
       "description": "Moderner cat-Ersatz",
-      "category": "terminal",
+      "category": "filesystem",
       "tier": "recommended",
       "command": "bat",
       "website": "https://github.com/sharkdp/bat",
       "repository": "https://github.com/sharkdp/bat",
       "wingetId": "sharkdp.bat",
+      "packageId": "sharkdp.bat",
+      "packageSource": "winget",
       "platforms": [
         "windows",
         "linux",
@@ -427,20 +444,27 @@
       "notes": [
         "Ubuntu may expose the binary as batcat; Phase 3 handles PATH/post-install normalization."
       ],
-      "provenance": [],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "provenance": [
+        "Winget W-040; PackageIdentifier sharkdp.bat; Publisher David Peter; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/s/sharkdp/bat/0.26.1/sharkdp.bat.locale.en-US.yaml SHA-256 f6cd5aa6a8f283a65ee9736da0de4e7c2adf0d9a9122d8f55503ed4f0817a403; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "filesystem.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/filesystem.yml"
     },
     {
       "id": "beads",
       "name": "Beads",
       "description": "Git-backed issue/task tracker for agents",
-      "category": "workflow",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "bd",
-      "website": "https://github.com/steveyegge/beads",
-      "repository": "https://github.com/steveyegge/beads",
+      "website": "https://github.com/gastownhall/beads",
+      "repository": "https://github.com/gastownhall/beads",
       "wingetId": "GasTownHall.Beads",
+      "packageId": "GasTownHall.Beads",
+      "packageSource": "winget",
+      "executableAliases": [
+        "bd"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -484,22 +508,26 @@
         "command": "bd ready --json",
         "format": "json"
       },
-      "completions": {},
+      "completions": {
+        "powershell": "bd completion powershell"
+      },
       "skill": null,
       "tags": [
         "tasks",
         "agents"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "workflow-infrastructure.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+      "provenance": [
+        "Winget W-041; PackageIdentifier GasTownHall.Beads; Publisher Steve Yegge; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GasTownHall/Beads/1.3.1/GasTownHall.Beads.locale.en-US.yaml SHA-256 cf59b920732a19f4e031f46b8e3b2b5d532661c0fc901ee949f607cba884ef03; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "br",
       "name": "Beads Rust",
       "description": "Local-first issue tracker for Git repositories with dependency-aware planning and machine-readable output.",
-      "category": "agentic",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "br",
       "website": "https://github.com/Dicklesworthstone/beads_rust",
@@ -555,20 +583,21 @@
         "issues",
         "beads",
         "planning",
-        "dependencies"
+        "dependencies",
+        "flywheel"
       ],
       "notes": [],
       "provenance": [
         "Dicklesworthstone Flywheel profile and Beads Rust upstream guidance verified 2026-09-16."
       ],
-      "catalogFile": "agentic-flywheel.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "bv",
       "name": "Beads Viewer",
       "description": "Graph-aware Beads TUI with PageRank, critical-path analysis, dependency views, and robot-mode output.",
-      "category": "agentic",
+      "category": "stack",
       "tier": "recommended-agent",
       "command": "bv",
       "website": "https://github.com/Dicklesworthstone/beads_viewer",
@@ -630,7 +659,8 @@
         "beads",
         "visualization",
         "graph",
-        "triage"
+        "triage",
+        "flywheel"
       ],
       "notes": [
         "bv upgrade is the current self-update path for standalone installations."
@@ -638,19 +668,25 @@
       "provenance": [
         "Dicklesworthstone Flywheel profile and Beads Viewer upstream guidance verified 2026-09-16."
       ],
-      "catalogFile": "agentic-flywheel.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+      "catalogFile": "stack.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/stack.yml"
     },
     {
       "id": "bun",
       "name": "Bun",
       "description": "JavaScript/TypeScript runtime",
-      "category": "runtime",
+      "category": "lang",
       "tier": "recommended",
       "command": "bun",
       "website": "https://bun.sh/",
       "repository": null,
       "wingetId": "Oven-sh.Bun",
+      "packageId": "Oven-sh.Bun",
+      "packageSource": "winget",
+      "executableAliases": [
+        "bun",
+        "bunx"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -695,15 +731,17 @@
         "javascript"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "provenance": [
+        "Winget W-042; PackageIdentifier Oven-sh.Bun; Publisher Oven-sh; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/o/Oven-sh/Bun/1.4.2/Oven-sh.Bun.locale.en-US.yaml SHA-256 5936471583267c8d493d18e2320b645da31005327b77b65decf19544b936ba7b; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "caam",
       "name": "CAAM",
       "description": "Coding agent account manager",
-      "category": "agentic",
+      "category": "agents",
       "tier": "optional",
       "command": "caam",
       "website": null,
@@ -740,18 +778,19 @@
       "completions": {},
       "skill": null,
       "tags": [
-        "accounts"
+        "accounts",
+        "flywheel"
       ],
       "notes": [],
       "provenance": [],
-      "catalogFile": "agentic-utilities.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-utilities.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "casr",
       "name": "CASR",
       "description": "Agentic coding research utility",
-      "category": "agentic",
+      "category": "agents",
       "tier": "optional",
       "command": "casr",
       "website": null,
@@ -790,18 +829,19 @@
       "completions": {},
       "skill": null,
       "tags": [
-        "agentic"
+        "agentic",
+        "flywheel"
       ],
       "notes": [],
       "provenance": [],
-      "catalogFile": "agentic-utilities.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-utilities.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "cass",
       "name": "CASS",
       "description": "Unified search and indexing across local AI coding-agent session histories.",
-      "category": "agentic",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "cass",
       "website": "https://github.com/Dicklesworthstone/coding_agent_session_search",
@@ -869,7 +909,8 @@
         "sessions",
         "search",
         "history",
-        "agents"
+        "agents",
+        "flywheel"
       ],
       "notes": [
         "Upstream skill installer has no documented non-interactive single-skill selector; skill installation is intentionally not automated here."
@@ -877,14 +918,14 @@
       "provenance": [
         "Dicklesworthstone Flywheel profile and CASS command guidance verified 2026-09-16."
       ],
-      "catalogFile": "agentic-flywheel.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "cm",
       "name": "CASS Memory",
       "description": "Persistent cognitive memory and context layer built around coding-agent session history.",
-      "category": "agentic",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "cm",
       "website": "https://github.com/Dicklesworthstone/cass_memory_system",
@@ -946,20 +987,21 @@
       "tags": [
         "memory",
         "context",
-        "sessions"
+        "sessions",
+        "flywheel"
       ],
       "notes": [],
       "provenance": [
         "Dicklesworthstone Flywheel profile and CASS Memory upstream guidance verified 2026-09-16."
       ],
-      "catalogFile": "agentic-flywheel.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "claude-code",
       "name": "Claude Code",
       "description": "Anthropic coding-agent CLI.",
-      "category": "ai",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "claude",
       "website": "https://claude.com/product/claude-code",
@@ -1027,19 +1069,176 @@
       "provenance": [
         "Anthropic Claude Code native installation/update guidance verified 2026-09-16."
       ],
-      "catalogFile": "ai-agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/ai-agents.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+    },
+    {
+      "id": "pcr",
+      "name": "Claude Post-Compact Reminder",
+      "displayName": "Claude Post-Compact Reminder Hook",
+      "description": "A Claude Code hook that supplies a reminder after context compaction.",
+      "category": "agents",
+      "tier": "recommended-agent",
+      "productKind": "extension",
+      "packageId": "claude-post-compact-reminder",
+      "executableName": "claude-post-compact-reminder",
+      "hostToolId": "claude-code",
+      "useDefaultCliCommands": false,
+      "website": "https://github.com/Dicklesworthstone/post_compact_reminder",
+      "repository": "https://github.com/Dicklesworthstone/post_compact_reminder",
+      "platforms": [
+        "linux",
+        "wsl2"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone"
+        }
+      },
+      "install": {
+        "linux": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/post_compact_reminder/219d7843e8257c48546d11953b4fae37fa0028b2/install-post-compact-reminder.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '70c28ae1bebc8e6ab6123b81829e52f4a1349acccd140637482e9b7c8fe94763' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --yes"
+            ]
+          }
+        },
+        "wsl2": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/post_compact_reminder/219d7843e8257c48546d11953b4fae37fa0028b2/install-post-compact-reminder.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '70c28ae1bebc8e6ab6123b81829e52f4a1349acccd140637482e9b7c8fe94763' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --yes"
+            ]
+          }
+        }
+      },
+      "update": {
+        "linux": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/post_compact_reminder/219d7843e8257c48546d11953b4fae37fa0028b2/install-post-compact-reminder.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '70c28ae1bebc8e6ab6123b81829e52f4a1349acccd140637482e9b7c8fe94763' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --yes"
+            ]
+          }
+        },
+        "wsl2": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/post_compact_reminder/219d7843e8257c48546d11953b4fae37fa0028b2/install-post-compact-reminder.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '70c28ae1bebc8e6ab6123b81829e52f4a1349acccd140637482e9b7c8fe94763' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --yes"
+            ]
+          }
+        }
+      },
+      "healthCheck": {
+        "linux": {
+          "commandName": "/bin/bash",
+          "arguments": [
+            "-c",
+            "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/post_compact_reminder/219d7843e8257c48546d11953b4fae37fa0028b2/install-post-compact-reminder.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '70c28ae1bebc8e6ab6123b81829e52f4a1349acccd140637482e9b7c8fe94763' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --status --json"
+          ]
+        },
+        "wsl2": {
+          "commandName": "/bin/bash",
+          "arguments": [
+            "-c",
+            "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/post_compact_reminder/219d7843e8257c48546d11953b4fae37fa0028b2/install-post-compact-reminder.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '70c28ae1bebc8e6ab6123b81829e52f4a1349acccd140637482e9b7c8fe94763' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --status --json"
+          ]
+        }
+      },
+      "provenance": [
+        "Pinned upstream install-post-compact-reminder.sh at commit 219d7843e8257c48546d11953b4fae37fa0028b2; SHA256 70c28ae1bebc8e6ab6123b81829e52f4a1349acccd140637482e9b7c8fe94763; source https://raw.githubusercontent.com/Dicklesworthstone/post_compact_reminder/219d7843e8257c48546d11953b4fae37fa0028b2/install-post-compact-reminder.sh."
+      ],
+      "tags": [
+        "flywheel",
+        "agent",
+        "claude-code",
+        "hook"
+      ],
+      "notes": [
+        "Installation modifies the Claude Code hook only after explicit ShouldProcess approval."
+      ],
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+    },
+    {
+      "id": "codereview-cli",
+      "name": "Code Review CLI",
+      "description": "Automated pull-request review CLI",
+      "productKind": "cli",
+      "category": "tools",
+      "tier": "optional",
+      "command": "cr",
+      "website": "https://github.com/open-cli-collective/codereview-cli",
+      "repository": "https://github.com/open-cli-collective/codereview-cli",
+      "wingetId": "OpenCLICollective.codereview-cli",
+      "packageId": "OpenCLICollective.codereview-cli",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "OpenCLICollective.codereview-cli",
+            "command": "winget install --id OpenCLICollective.codereview-cli --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "OpenCLICollective.codereview-cli",
+            "command": "winget upgrade --id OpenCLICollective.codereview-cli --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "executableAliases": [
+        "cr"
+      ],
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "code-review",
+        "pull-request",
+        "github",
+        "cli",
+        "automation"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-056; PackageIdentifier OpenCLICollective.codereview-cli; Publisher Open CLI Collective; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/o/OpenCLICollective/codereview-cli/0.10.298/OpenCLICollective.codereview-cli.locale.en-US.yaml SHA-256 a0dabe886d2ebfde7d4d6f710cc90aed06e2dda132241159a1ea225d5c588cd5; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "codex-standalone",
       "name": "Codex CLI",
       "description": "OpenAI coding-agent CLI using the native standalone installer.",
-      "category": "ai",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "codex",
       "website": "https://developers.openai.com/codex/",
       "repository": "https://github.com/openai/codex",
-      "wingetId": null,
+      "wingetId": "OpenAI.Codex",
+      "packageId": "OpenAI.Codex",
+      "executableAliases": [
+        "codex"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -1109,16 +1308,73 @@
         "Authentication and account setup are intentionally outside installation orchestration."
       ],
       "provenance": [
-        "OpenAI Codex native standalone installation guidance verified 2026-09-16."
+        "OpenAI Codex native standalone installation guidance verified 2026-09-16.",
+        "Winget W-031; PackageIdentifier OpenAI.Codex; Publisher OpenAI, Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/o/OpenAI/Codex/0.160.0/OpenAI.Codex.locale.en-US.yaml SHA-256 f16086bd8ab6adcf9a9e7c0ac4c92d5402897726107ca1b9a0a9b1cb3dfb1f89; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
-      "catalogFile": "ai-agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/ai-agents.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+    },
+    {
+      "id": "github-copilot-cli",
+      "name": "Copilot CLI",
+      "description": "GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal.",
+      "productKind": "cli",
+      "category": "agents",
+      "tier": "optional",
+      "command": "copilot",
+      "website": "https://github.com/github/copilot-cli",
+      "repository": "https://github.com/github/copilot-cli",
+      "wingetId": "GitHub.Copilot",
+      "packageId": "GitHub.Copilot",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "GitHub.Copilot",
+            "command": "winget install --id GitHub.Copilot --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "GitHub.Copilot",
+            "command": "winget upgrade --id GitHub.Copilot --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "executableAliases": [
+        "copilot"
+      ],
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "cli",
+        "copilot",
+        "github"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-010; PackageIdentifier GitHub.Copilot; Publisher GitHub, Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GitHub/Copilot/v1.0.91/GitHub.Copilot.locale.en-US.yaml SHA-256 de87f289dd67fd884ab846dd7b87494dbe7304e2863b67ba28cfaead22dcce5d; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "curl",
       "name": "curl",
       "description": "HTTP-/Download-CLI; wird von vielen Standalone-Installern des Agentic-Stacks verwendet.",
-      "category": "foundation",
+      "category": "network",
       "tier": "required-linux",
       "command": "curl",
       "website": "https://curl.se/",
@@ -1164,19 +1420,81 @@
       ],
       "notes": [],
       "provenance": [],
-      "catalogFile": "foundation.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+      "catalogFile": "network.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/network.yml"
+    },
+    {
+      "id": "dbbrowser-sqlite",
+      "name": "DB Browser for SQLite",
+      "description": "A high quality, visual, open source tool to create, design, and edit database files compatible with SQLite.",
+      "productKind": "package",
+      "category": "db",
+      "tier": "optional",
+      "website": "https://sqlitebrowser.org/dl/",
+      "repository": null,
+      "wingetId": "DBBrowserForSQLite.DBBrowserForSQLite",
+      "packageId": "DBBrowserForSQLite.DBBrowserForSQLite",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "DBBrowserForSQLite.DBBrowserForSQLite",
+            "command": "winget install --id DBBrowserForSQLite.DBBrowserForSQLite --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "DBBrowserForSQLite.DBBrowserForSQLite",
+            "command": "winget upgrade --id DBBrowserForSQLite.DBBrowserForSQLite --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "useDefaultCliCommands": false,
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "c-plus-plus",
+        "cross-platform",
+        "database",
+        "database-browser",
+        "database-gui",
+        "sqlite",
+        "sqlitebrowser"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-032; PackageIdentifier DBBrowserForSQLite.DBBrowserForSQLite; Publisher DB Browser for SQLite Team; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/DBBrowserForSQLite/DBBrowserForSQLite/3.13.1/DBBrowserForSQLite.DBBrowserForSQLite.locale.en-US.yaml SHA-256 5b98e3185b00ebae0978205b3907b4ca62afcc940d7b32ad7f73255261cfda94; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "db.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/db.yml"
     },
     {
       "id": "delta",
       "name": "delta",
       "description": "Git diff pager",
-      "category": "terminal",
+      "category": "cli",
       "tier": "recommended",
       "command": "delta",
       "website": "https://github.com/dandavison/delta",
       "repository": "https://github.com/dandavison/delta",
       "wingetId": "dandavison.delta",
+      "packageId": "dandavison.delta",
+      "packageSource": "winget",
+      "executableAliases": [
+        "delta"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -1224,15 +1542,17 @@
         "diff"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "provenance": [
+        "Winget W-043; PackageIdentifier dandavison.delta; Publisher Dan Davison; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/dandavison/delta/0.19.2/dandavison.delta.locale.en-US.yaml SHA-256 50abe536190884e5c4c90359e55e1e4a9af4d0e89713d8cfc264d85f225e9678; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
     },
     {
       "id": "dcg",
       "name": "Destructive Command Guard",
       "description": "Command safety guard that blocks destructive shell and Git operations before execution.",
-      "category": "agentic",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "dcg",
       "website": "https://github.com/Dicklesworthstone/destructive_command_guard",
@@ -1292,25 +1612,92 @@
         "guard",
         "safety",
         "git",
-        "shell"
+        "shell",
+        "flywheel"
       ],
       "notes": [],
       "provenance": [
         "Dicklesworthstone Flywheel profile and DCG upstream installation guidance verified 2026-09-16."
       ],
-      "catalogFile": "agentic-flywheel.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+    },
+    {
+      "id": "dnspy",
+      "name": "dnSpy",
+      "description": "dnSpyEx is a unofficial continuation of the dnSpy project which is a debugger and .NET assembly editor.",
+      "productKind": "package",
+      "category": "tools",
+      "tier": "optional",
+      "website": "https://github.com/dnSpyEx/dnSpy",
+      "repository": "https://github.com/dnSpyEx/dnSpy",
+      "wingetId": "dnSpyEx.dnSpy",
+      "packageId": "dnSpyEx.dnSpy",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "dnSpyEx.dnSpy",
+            "command": "winget install --id dnSpyEx.dnSpy --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "dnSpyEx.dnSpy",
+            "command": "winget upgrade --id dnSpyEx.dnSpy --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "useDefaultCliCommands": false,
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        ".net",
+        "c#",
+        "csharp",
+        "debugger",
+        "decompiler",
+        "disassembler",
+        "dnspy",
+        "dnspyex",
+        "dotnet",
+        "vb",
+        "visualbasic"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-044; PackageIdentifier dnSpyEx.dnSpy; Publisher dnSpyEx; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/dnSpyEx/dnSpy/6.6.0/dnSpyEx.dnSpy.locale.en-US.yaml SHA-256 39635f8f78873405fab4a385bdee8802b2d7dc8d2695f024c8e881c4dc37007b; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "docker-buildx",
       "name": "Docker Buildx",
       "description": "Extended Docker build frontend",
-      "category": "containers",
+      "category": "tools",
       "tier": "optional",
       "command": "docker",
       "website": "https://docs.docker.com/buildx/",
       "repository": "https://github.com/docker/buildx",
       "wingetId": "Docker.Buildx",
+      "packageId": "Docker.Buildx",
+      "packageSource": "winget",
+      "invocationPrefix": [
+        "buildx"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -1357,20 +1744,28 @@
         "build"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "workflow-infrastructure.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+      "provenance": [
+        "Winget W-003; PackageIdentifier Docker.Buildx; Publisher Docker Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/Docker/Buildx/0.37.2/Docker.Buildx.locale.en-US.yaml SHA-256 b326684b98bca052d02c5bb3f5f3617ce8beadd4671c7b637bc0d34bf3a42edf; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "docker-cli",
       "name": "Docker CLI",
       "description": "Docker command line client",
-      "category": "containers",
+      "category": "cli",
       "tier": "optional",
       "command": "docker",
       "website": "https://docs.docker.com/",
       "repository": null,
       "wingetId": "Docker.DockerCLI",
+      "packageId": "Docker.DockerCLI",
+      "packageSource": "winget",
+      "executableAliases": [
+        "docker",
+        "dockerd"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -1414,20 +1809,25 @@
         "containers"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "workflow-infrastructure.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+      "provenance": [
+        "Winget W-002; PackageIdentifier Docker.DockerCLI; Publisher Docker Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/Docker/DockerCLI/29.8.2/Docker.DockerCLI.locale.en-US.yaml SHA-256 84a3081e75d52be6d5387d45698a0484d4dbbcee093521049267199b85570aa1; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
     },
     {
       "id": "docker-desktop",
       "name": "Docker Desktop",
       "description": "Desktop Docker environment",
-      "category": "containers",
+      "productKind": "package",
+      "useDefaultCliCommands": false,
+      "category": "tools",
       "tier": "optional-windows",
-      "command": "docker",
       "website": "https://www.docker.com/products/docker-desktop/",
       "repository": null,
       "wingetId": "Docker.DockerDesktop",
+      "packageId": "Docker.DockerDesktop",
+      "packageSource": "winget",
       "platforms": [
         "windows",
         "macos"
@@ -1454,9 +1854,6 @@
       "update": {
         "windows": "winget upgrade --id Docker.DockerDesktop --exact"
       },
-      "healthCheck": "docker info",
-      "versionCommand": "docker --version",
-      "capabilitiesCommand": "docker --help",
       "robotMode": {
         "supported": false
       },
@@ -1467,20 +1864,23 @@
         "desktop"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "workflow-infrastructure.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+      "provenance": [
+        "Winget W-001; PackageIdentifier Docker.DockerDesktop; Publisher Docker Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/Docker/DockerDesktop/4.93.0/Docker.DockerDesktop.locale.en-US.yaml SHA-256 ea947687e3394a92f70c418c5c78fda2cf020ecc9c88ccf3a7335b89eb529f8b; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "dolt",
       "name": "Dolt",
       "description": "SQL database with Git-like versioning",
-      "category": "database",
+      "category": "db",
       "tier": "recommended-agent",
       "command": "dolt",
       "website": "https://www.dolthub.com/",
       "repository": "https://github.com/dolthub/dolt",
-      "wingetId": null,
+      "wingetId": "DoltHub.Dolt",
+      "packageId": "DoltHub.Dolt",
       "platforms": [
         "linux",
         "wsl2",
@@ -1518,15 +1918,89 @@
         "versioning"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "workflow-infrastructure.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+      "provenance": [
+        "Winget W-045; PackageIdentifier DoltHub.Dolt; Publisher DoltHub; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/DoltHub/Dolt/2.4.0/DoltHub.Dolt.locale.en-US.yaml SHA-256 9fb739a76a1117a2401dca2dc89ad261ad3fe8c5d29caf122307d48cd98518b9; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "db.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/db.yml"
+    },
+    {
+      "id": "dsr",
+      "name": "Doodlestein Self Releaser",
+      "displayName": "Doodlestein Self Releaser",
+      "description": "A source-driven self-release utility for the Dicklesworthstone agentic toolchain.",
+      "category": "tools",
+      "tier": "recommended-agent",
+      "command": "dsr",
+      "website": "https://github.com/Dicklesworthstone/doodlestein_self_releaser",
+      "repository": "https://github.com/Dicklesworthstone/doodlestein_self_releaser",
+      "platforms": [
+        "linux",
+        "wsl2"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone"
+        }
+      },
+      "install": {
+        "linux": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/doodlestein_self_releaser/685fe9ddafb91f245773c7847dee27e49fac8559/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' 'aaf8cad08ff3f67b15871293be5718b1217080d1cc8ea2c7eea8d083b0147939' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --easy-mode"
+            ]
+          }
+        },
+        "wsl2": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/doodlestein_self_releaser/685fe9ddafb91f245773c7847dee27e49fac8559/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' 'aaf8cad08ff3f67b15871293be5718b1217080d1cc8ea2c7eea8d083b0147939' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --easy-mode"
+            ]
+          }
+        }
+      },
+      "update": {
+        "linux": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/doodlestein_self_releaser/685fe9ddafb91f245773c7847dee27e49fac8559/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' 'aaf8cad08ff3f67b15871293be5718b1217080d1cc8ea2c7eea8d083b0147939' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --easy-mode"
+            ]
+          }
+        },
+        "wsl2": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/doodlestein_self_releaser/685fe9ddafb91f245773c7847dee27e49fac8559/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' 'aaf8cad08ff3f67b15871293be5718b1217080d1cc8ea2c7eea8d083b0147939' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --easy-mode"
+            ]
+          }
+        }
+      },
+      "healthCheck": "dsr --version",
+      "provenance": [
+        "Pinned upstream install.sh at commit 685fe9ddafb91f245773c7847dee27e49fac8559; SHA256 aaf8cad08ff3f67b15871293be5718b1217080d1cc8ea2c7eea8d083b0147939; source https://raw.githubusercontent.com/Dicklesworthstone/doodlestein_self_releaser/685fe9ddafb91f245773c7847dee27e49fac8559/install.sh."
+      ],
+      "tags": [
+        "flywheel",
+        "self-release"
+      ],
+      "notes": [],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "ee",
       "name": "Eidetic Engine",
       "description": "Durable, local-first, explainable memory CLI for coding agents.",
-      "category": "ai",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "ee",
       "website": "https://github.com/Dicklesworthstone/eidetic_engine_cli",
@@ -1593,7 +2067,8 @@
         "dicklesworthstone",
         "coding-agent",
         "memory",
-        "local-first"
+        "local-first",
+        "flywheel"
       ],
       "notes": [
         "Binary and command identifier are ee; the upstream repository and Cargo package use different names.",
@@ -1604,14 +2079,14 @@
       "provenance": [
         "Eidetic Engine README and installation guide verified 2026-09-30; release v0.16.0."
       ],
-      "catalogFile": "agentic-flywheel.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "fdgr",
       "name": "Franken Drone Geometry Reconstruction",
       "description": "Semantic 3D reconstruction from owner-authorized drone video with traceable geometric evidence.",
-      "category": "frankensuite",
+      "category": "tools",
       "tier": "source-cli",
       "command": "fdgr",
       "website": "https://github.com/Dicklesworthstone/franken_drone_geometry_reconstruction",
@@ -1658,14 +2133,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_drone_geometry_reconstruction upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "fss",
       "name": "Franken Surveillance System",
       "description": "Local-first Rust sensor system for owner-authorized cameras and capture drones with evidence tracking in the data model.",
-      "category": "frankensuite",
+      "category": "tools",
       "tier": "source-cli",
       "command": "fss",
       "website": "https://github.com/Dicklesworthstone/franken_surveillance_system",
@@ -1711,14 +2186,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_surveillance_system upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "franken-code-browser",
       "name": "FrankenCodeBrowser",
       "description": "Spatial source-code browser for Apple Silicon with a Rust engine and native Metal application.",
-      "category": "frankensuite",
+      "category": "agents",
       "tier": "application",
       "command": "franken-code-browser",
       "website": "https://github.com/Dicklesworthstone/franken_code_browser",
@@ -1762,14 +2237,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_code_browser upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "frankenctl",
       "name": "FrankenEngine",
       "description": "Rust runtime for untrusted extensions with deterministic replay and cryptographic execution receipts.",
-      "category": "frankensuite",
+      "category": "stack",
       "tier": "recommended",
       "command": "frankenctl",
       "website": "https://github.com/Dicklesworthstone/franken_engine",
@@ -1837,14 +2312,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_engine upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "stack.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/stack.yml"
     },
     {
       "id": "frankenfs",
       "name": "FrankenFS",
       "description": "Rust ext4/btrfs filesystem implementation via FUSE with block-level MVCC and repair-oriented durability.",
-      "category": "frankensuite",
+      "category": "filesystem",
       "tier": "library",
       "command": "frankenfs",
       "website": "https://github.com/Dicklesworthstone/frankenfs",
@@ -1889,14 +2364,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenfs upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "filesystem.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/filesystem.yml"
     },
     {
       "id": "frankengit",
       "name": "FrankenGit",
       "description": "Git-compatible Rust forge for human and coding-agent workflows with verifiable recovery and an immutable decision stream.",
-      "category": "frankensuite",
+      "category": "tools",
       "tier": "source-cli",
       "command": "frankengit",
       "website": "https://github.com/Dicklesworthstone/frankengit",
@@ -1943,14 +2418,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankengit upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "fgdb",
       "name": "FrankenGraphDB",
       "description": "Rust property-graph database with MVCC, time travel, branches, incremental maintenance, and fountain-coded replication.",
-      "category": "frankensuite",
+      "category": "db",
       "tier": "recommended",
       "command": "fgdb",
       "website": "https://github.com/Dicklesworthstone/frankengraphdb",
@@ -2013,14 +2488,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankengraphdb upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "db.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/db.yml"
     },
     {
       "id": "frankenjax",
       "name": "FrankenJAX",
       "description": "Rust implementation of JAX-style transform semantics including jit, grad, vmap, and a JAXPR-like IR.",
-      "category": "frankensuite",
+      "category": "lang",
       "tier": "library",
       "command": "frankenjax",
       "website": "https://github.com/Dicklesworthstone/frankenjax",
@@ -2067,14 +2542,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenjax upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "fln",
       "name": "FrankenLean",
       "description": "Rust implementation of the Lean 4 toolchain including parser, elaborator, kernel, VM, olean handling, and C ABI.",
-      "category": "frankensuite",
+      "category": "tools",
       "tier": "source-cli",
       "command": "fln",
       "website": "https://github.com/Dicklesworthstone/franken_lean",
@@ -2121,14 +2596,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_lean upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "frankenlibc",
       "name": "FrankenLibC",
       "description": "Rust libc interposition layer using LD_PRELOAD to check memory operations in existing C programs.",
-      "category": "frankensuite",
+      "category": "lang",
       "tier": "library",
       "command": "frankenlibc",
       "website": "https://github.com/Dicklesworthstone/frankenlibc",
@@ -2173,14 +2648,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenlibc upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "fmn",
       "name": "FrankenManim",
       "description": "Deterministic Rust rewrite of Manim with native TeX handling and an analytic Bezier renderer.",
-      "category": "frankensuite",
+      "category": "tools",
       "tier": "recommended",
       "command": "fmn",
       "website": "https://github.com/Dicklesworthstone/franken_manim",
@@ -2241,14 +2716,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_manim upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "fmd",
       "name": "FrankenMarkdown",
       "description": "Zero-dependency Markdown-to-HTML and tagged-PDF engine with its own parser, typesetter, font subsetter, and PDF writer.",
-      "category": "frankensuite",
+      "category": "tools",
       "tier": "recommended",
       "command": "fmd",
       "website": "https://franken-markdown.com",
@@ -2316,14 +2791,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_markdown upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "frankenmermaid",
       "name": "FrankenMermaid",
       "description": "Mermaid-compatible diagram engine in Rust with deterministic layout and WASM support.",
-      "category": "frankensuite",
+      "category": "tools",
       "tier": "recommended",
       "command": "frankenmermaid",
       "website": "https://frankenmermaid.com",
@@ -2387,14 +2862,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenmermaid upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "franken-networkx",
       "name": "FrankenNetworkX",
       "description": "Rust graph library with NetworkX-compatible Python bindings and conformance tooling.",
-      "category": "frankensuite",
+      "category": "lang",
       "tier": "library",
       "command": "franken-networkx",
       "website": "https://github.com/Dicklesworthstone/franken_networkx",
@@ -2441,14 +2916,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_networkx upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "franken-node",
       "name": "FrankenNode",
       "description": "JavaScript/TypeScript runtime built on FrankenEngine with migration analysis and extension trust metadata.",
-      "category": "frankensuite",
+      "category": "lang",
       "tier": "recommended",
       "command": "franken-node",
       "website": "https://github.com/Dicklesworthstone/franken_node",
@@ -2515,14 +2990,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_node upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "franken-numpy",
       "name": "FrankenNumPy",
       "description": "Rust NumPy reimplementation with a multi-crate architecture and compatibility-focused numerical behavior.",
-      "category": "frankensuite",
+      "category": "lang",
       "tier": "library",
       "command": "franken-numpy",
       "website": "https://github.com/Dicklesworthstone/franken_numpy",
@@ -2569,14 +3044,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_numpy upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "focr",
       "name": "FrankenOCR",
       "description": "Pure-Rust CPU OCR using Baidu Unlimited-OCR models with custom int8 kernels and agent-oriented diagnostics.",
-      "category": "frankensuite",
+      "category": "tools",
       "tier": "recommended",
       "command": "focr",
       "website": "https://franken-ocr.com",
@@ -2645,14 +3120,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_ocr upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "fo-search",
       "name": "FrankenOverlap",
       "description": "Sparse-spectral textual overlap detection and approximate alignment toolkit.",
-      "category": "frankensuite",
+      "category": "agents",
       "tier": "source-cli",
       "command": "fo-search",
       "website": "https://github.com/Dicklesworthstone/franken_overlap",
@@ -2698,14 +3173,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_overlap upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "frankenpandas",
       "name": "FrankenPandas",
       "description": "Safe-Rust dataframe engine with pandas-style APIs, columnar storage, and differential conformance testing.",
-      "category": "frankensuite",
+      "category": "db",
       "tier": "library",
       "command": "frankenpandas",
       "website": "https://github.com/Dicklesworthstone/frankenpandas",
@@ -2752,14 +3227,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenpandas upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "db.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/db.yml"
     },
     {
       "id": "frankenredis",
       "name": "FrankenRedis",
       "description": "Redis-protocol implementation in Rust with deterministic behavior and replication-oriented design.",
-      "category": "frankensuite",
+      "category": "db",
       "tier": "source-cli",
       "command": "frankenredis",
       "website": "https://github.com/Dicklesworthstone/frankenredis",
@@ -2805,14 +3280,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenredis upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "db.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/db.yml"
     },
     {
       "id": "frankenscipy",
       "name": "FrankenSciPy",
       "description": "Rust SciPy reimplementation featuring a condition-aware solver portfolio and compatibility-oriented numerical modules.",
-      "category": "frankensuite",
+      "category": "lang",
       "tier": "library",
       "command": "frankenscipy",
       "website": "https://github.com/Dicklesworthstone/frankenscipy",
@@ -2859,14 +3334,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenscipy upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "fsfs",
       "name": "FrankenSearch",
       "description": "Hybrid search engine combining HNSW ANN, Tantivy full-text search, and cross-encoder reranking.",
-      "category": "frankensuite",
+      "category": "stack",
       "tier": "recommended",
       "command": "fsfs",
       "website": "https://github.com/Dicklesworthstone/frankensearch",
@@ -2928,14 +3403,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankensearch upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "stack.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/stack.yml"
     },
     {
       "id": "frankensim",
       "name": "FrankenSim",
       "description": "Rust simulation workspace covering geometry, numerics, meshing, solvers, optimization, and rendering.",
-      "category": "frankensuite",
+      "category": "lang",
       "tier": "source-cli",
       "command": "frankensim",
       "website": "https://frankensim.org",
@@ -2980,14 +3455,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankensim upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "franken-snowflake",
       "name": "FrankenSnowflake",
       "description": "Native Snowflake driver and agent-ergonomic CLI in Rust using the direct SQL API without ODBC/JDBC.",
-      "category": "frankensuite",
+      "category": "network",
       "tier": "recommended",
       "command": "franken-snowflake",
       "website": "https://github.com/Dicklesworthstone/franken_snowflake",
@@ -3055,14 +3530,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_snowflake upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "network.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/network.yml"
     },
     {
       "id": "fsqlite",
       "name": "FrankenSQLite",
       "description": "SQLite-compatible Rust database with page-level MVCC concurrent writers and RaptorQ durability components.",
-      "category": "frankensuite",
+      "category": "db",
       "tier": "recommended",
       "command": "fsqlite",
       "website": "https://frankensqlite.com",
@@ -3131,14 +3606,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankensqlite upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "db.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/db.yml"
     },
     {
       "id": "frankensympy",
       "name": "FrankenSymPy",
       "description": "Proof-carrying symbolic mathematics in Rust with a Python compatibility layer.",
-      "category": "frankensuite",
+      "category": "lang",
       "tier": "library",
       "command": "frankensympy",
       "website": "https://github.com/Dicklesworthstone/frankensympy",
@@ -3185,14 +3660,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankensympy upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "ft",
       "name": "FrankenTerm",
       "description": "WezTerm-derived terminal for AI-agent swarms with pane capture, state-machine detection, and JSON control APIs.",
-      "category": "frankensuite",
+      "category": "shell",
       "tier": "recommended",
       "command": "ft",
       "website": "https://github.com/Dicklesworthstone/frankenterm",
@@ -3253,14 +3728,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenterm upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "shell.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/shell.yml"
     },
     {
       "id": "frankentorch",
       "name": "FrankenTorch",
       "description": "Rust reimplementation of PyTorch concepts with deterministic autograd behavior and CPU kernels.",
-      "category": "frankensuite",
+      "category": "lang",
       "tier": "library",
       "command": "frankentorch",
       "website": "https://github.com/Dicklesworthstone/frankentorch",
@@ -3307,14 +3782,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankentorch upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "ftts",
       "name": "FrankenTTS",
       "description": "Pure-Rust Qwen3-TTS implementation for CPU speech synthesis and zero-shot voice cloning.",
-      "category": "frankensuite",
+      "category": "lang",
       "tier": "recommended",
       "command": "ftts",
       "website": "https://frankentts.com",
@@ -3384,14 +3859,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_tts upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "frankentui",
       "name": "FrankenTUI",
       "description": "Rust terminal UI rendering kernel spanning a multi-crate widget and runtime ecosystem.",
-      "category": "frankensuite",
+      "category": "shell",
       "tier": "library",
       "command": "ftui-demo-showcase",
       "website": "https://github.com/Dicklesworthstone/frankentui",
@@ -3438,14 +3913,14 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankentui upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "shell.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/shell.yml"
     },
     {
       "id": "franken_whisper",
       "name": "FrankenWhisper",
       "description": "Agent-first Rust speech-recognition orchestrator with ffmpeg normalization and FrankenSQLite-backed persistence.",
-      "category": "frankensuite",
+      "category": "lang",
       "tier": "recommended",
       "command": "franken_whisper",
       "website": "https://franken-whisper.com",
@@ -3509,19 +3984,21 @@
       "provenance": [
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_whisper upstream repository verified 2026-09-25."
       ],
-      "catalogFile": "frankensuite.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/frankensuite.yml"
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "fzf",
       "name": "fzf",
       "description": "Fuzzy finder",
-      "category": "terminal",
+      "category": "cli",
       "tier": "recommended",
       "command": "fzf",
       "website": "https://github.com/junegunn/fzf",
       "repository": "https://github.com/junegunn/fzf",
       "wingetId": "junegunn.fzf",
+      "packageId": "junegunn.fzf",
+      "packageSource": "winget",
       "platforms": [
         "windows",
         "linux",
@@ -3565,15 +4042,17 @@
         "search"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "provenance": [
+        "Winget W-047; PackageIdentifier junegunn.fzf; Publisher Junegunn Choi; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/junegunn/fzf/0.74.4/junegunn.fzf.locale.en-US.yaml SHA-256 235fbd57b6f8852c4ee1c31ddd15cf7bfcb3d48528cb3732839f120fc5dcc681; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
     },
     {
       "id": "giil",
       "name": "GIIL",
       "description": "Download full-resolution images from supported cloud share links for agent workflows.",
-      "category": "agentic",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "giil",
       "website": "https://github.com/Dicklesworthstone/giil",
@@ -3627,7 +4106,8 @@
         "images",
         "icloud",
         "dropbox",
-        "download"
+        "download",
+        "flywheel"
       ],
       "notes": [
         "GIIL exposes agent-friendly JSON/base64 output options for actual download operations."
@@ -3635,14 +4115,14 @@
       "provenance": [
         "Dicklesworthstone Flywheel profile and GIIL upstream guidance verified 2026-09-16."
       ],
-      "catalogFile": "agentic-flywheel.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "git",
       "name": "Git",
       "description": "Verteilte Versionsverwaltung; Grundlage für Repository-, Branch-, Worktree- und Agenten-Workflows.",
-      "category": "foundation",
+      "category": "tools",
       "tier": "required",
       "command": "git",
       "website": "https://git-scm.com/",
@@ -3662,9 +4142,7 @@
       },
       "dependencies": {
         "required": [],
-        "recommended": [
-          "git-lfs"
-        ]
+        "recommended": []
       },
       "install": {
         "windows": {
@@ -3699,19 +4177,24 @@
       "provenance": [
         "WingetIds.yml enthält Microsoft.Git; Git.Git ist als allgemeine Git-for-Windows-Variante bevorzugt."
       ],
-      "catalogFile": "foundation.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "git-lfs",
       "name": "Git LFS",
       "description": "Git large file support",
-      "category": "scm",
+      "category": "tools",
       "tier": "optional",
       "command": "git",
       "website": "https://git-lfs.com/",
       "repository": "https://github.com/git-lfs/git-lfs",
       "wingetId": "GitHub.GitLFS",
+      "packageId": "GitHub.GitLFS",
+      "packageSource": "winget",
+      "invocationPrefix": [
+        "lfs"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -3757,20 +4240,27 @@
         "git"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "provenance": [
+        "Winget W-012; PackageIdentifier GitHub.GitLFS; Publisher GitHub, Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GitHub/GitLFS/3.8.0/GitHub.GitLFS.locale.en-US.yaml SHA-256 642a663de62995adc600dd7c4797249f83b7f6617b2eef148f010629b69eaa6e; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "gh",
       "name": "GitHub CLI",
       "description": "Offizielle GitHub-CLI für Repositories, Issues, Pull Requests, Releases und Actions.",
-      "category": "foundation",
+      "category": "cli",
       "tier": "required",
       "command": "gh",
       "website": "https://cli.github.com/",
       "repository": "https://github.com/cli/cli",
       "wingetId": "GitHub.cli",
+      "packageId": "GitHub.cli",
+      "packageSource": "winget",
+      "executableAliases": [
+        "gh"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -3812,7 +4302,9 @@
         "command": null,
         "format": null
       },
-      "completions": {},
+      "completions": {
+        "powershell": "gh completion -s powershell"
+      },
       "skill": null,
       "tags": [
         "github",
@@ -3820,21 +4312,193 @@
       ],
       "notes": [],
       "provenance": [
-        "WingetIds.yml: GitHub CLI / GitHub.cli."
+        "WingetIds.yml: GitHub CLI / GitHub.cli.",
+        "Winget W-008; PackageIdentifier GitHub.cli; Publisher GitHub, Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GitHub/cli/2.102.0/GitHub.cli.locale.en-US.yaml SHA-256 35eb28d094622777e8ade11eda8abeb713cd3952ca8105e03ba020e8eb9fab84; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
-      "catalogFile": "foundation.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+      "catalogFile": "cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
+    },
+    {
+      "id": "github-copilot-app",
+      "name": "GitHub Copilot",
+      "description": "The GitHub Copilot app is a desktop application for agent-driven development that brings parallel workstreams, GitHub integration, and PR lifecycle management into one place.",
+      "productKind": "package",
+      "category": "agents",
+      "tier": "optional",
+      "website": "https://github.com/features/preview/github-app",
+      "repository": null,
+      "wingetId": "GitHub.CopilotApp",
+      "packageId": "GitHub.CopilotApp",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "GitHub.CopilotApp",
+            "command": "winget install --id GitHub.CopilotApp --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "GitHub.CopilotApp",
+            "command": "winget upgrade --id GitHub.CopilotApp --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "useDefaultCliCommands": false,
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "github",
+        "copilot",
+        "desktop"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-009; PackageIdentifier GitHub.CopilotApp; Publisher GitHub Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GitHub/CopilotApp/1.1.26/GitHub.CopilotApp.locale.en-US.yaml SHA-256 08f28d4de55f848d044fef076daf8f55f3629295be34947db81e52a9ad78601e; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+    },
+    {
+      "id": "github-desktop",
+      "name": "GitHub Desktop",
+      "description": "Focus on what matters instead of fighting with Git.",
+      "productKind": "package",
+      "category": "tools",
+      "tier": "optional",
+      "website": "https://github.com/apps/desktop",
+      "repository": null,
+      "wingetId": "GitHub.GitHubDesktop",
+      "packageId": "GitHub.GitHubDesktop",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "GitHub.GitHubDesktop",
+            "command": "winget install --id GitHub.GitHubDesktop --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "GitHub.GitHubDesktop",
+            "command": "winget upgrade --id GitHub.GitHubDesktop --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "useDefaultCliCommands": false,
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "git",
+        "github"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-011; PackageIdentifier GitHub.GitHubDesktop; Publisher GitHub, Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GitHub/GitHubDesktop/3.6.6/GitHub.GitHubDesktop.locale.en-US.yaml SHA-256 17def33a33d21fb35b2a8c089715d53000781a51631f00761e807b7f314ac973; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+    },
+    {
+      "id": "gitversion",
+      "name": "GitTools GitVersion",
+      "description": "Versioning when using Git, solved.",
+      "productKind": "cli",
+      "category": "tools",
+      "tier": "optional",
+      "command": "gitversion",
+      "website": "https://github.com/GitTools/GitVersion",
+      "repository": "https://github.com/GitTools/GitVersion",
+      "wingetId": "GitTools.GitVersion",
+      "packageId": "GitTools.GitVersion",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "GitTools.GitVersion",
+            "command": "winget install --id GitTools.GitVersion --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "GitTools.GitVersion",
+            "command": "winget upgrade --id GitTools.GitVersion --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "executableAliases": [
+        "gitversion"
+      ],
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "git",
+        "gitflow",
+        "gitflowversion",
+        "githubflow",
+        "gitversion",
+        "semver",
+        "versioning"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-006; PackageIdentifier GitTools.GitVersion; Publisher GitTools; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GitTools/GitVersion/6.8.2/GitTools.GitVersion.locale.en-US.yaml SHA-256 d5ca4f43d0059b4055e019b14faf52de2c3b9115e242ea18f03b7d95a26e2440; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "go",
       "name": "Go",
       "description": "Go toolchain",
-      "category": "runtime",
+      "category": "lang",
       "tier": "optional",
       "command": "go",
       "website": "https://go.dev/",
       "repository": null,
       "wingetId": "GoLang.Go",
+      "packageId": "GoLang.Go",
+      "packageSource": "winget",
+      "executableAliases": [
+        "go",
+        "gofmt"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -3877,9 +4541,11 @@
         "golang"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "provenance": [
+        "Winget W-048; PackageIdentifier GoLang.Go; Publisher https://go.dev; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GoLang/Go/1.27.0/GoLang.Go.locale.en-US.yaml SHA-256 0a5321a9429a4fc37f35de984efa53cfe567cdd4640e03600b121a96e9b742cc; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "gum",
@@ -3953,19 +4619,254 @@
       "provenance": [
         "Charmbracelet Gum README installation instructions verified 2026-09-13."
       ],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "catalogFile": "cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
+    },
+    {
+      "id": "vfs-for-git",
+      "name": "GVFS",
+      "description": "Virtual File System for Git - a tool to scale Git for monorepo scenarios.",
+      "productKind": "package",
+      "category": "tools",
+      "tier": "optional",
+      "website": "https://aka.ms/vfs-for-git",
+      "repository": null,
+      "wingetId": "Microsoft.VFSforGit",
+      "packageId": "Microsoft.VFSforGit",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Microsoft.VFSforGit",
+            "command": "winget install --id Microsoft.VFSforGit --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "Microsoft.VFSforGit",
+            "command": "winget upgrade --id Microsoft.VFSforGit --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "useDefaultCliCommands": false,
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "gvfs",
+        "vfs-for-git",
+        "vfsforgit"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-014; PackageIdentifier Microsoft.VFSforGit; Publisher Microsoft Corporation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/Microsoft/VFSforGit/2.0.26259.1/Microsoft.VFSforGit.locale.en-US.yaml SHA-256 ef45744d67a74424d02d803476baafcb41c778942f9eb7d113f0ef03f4017fd0; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+    },
+    {
+      "id": "intelligent-terminal",
+      "name": "Intelligent Terminal",
+      "description": "Intelligent Terminal is an experimental terminal with native agent integration, forked from Windows Terminal.",
+      "productKind": "package",
+      "category": "shell",
+      "tier": "optional",
+      "website": "https://github.com/microsoft/intelligent-terminal",
+      "repository": "https://github.com/microsoft/intelligent-terminal",
+      "wingetId": "Microsoft.IntelligentTerminal",
+      "packageId": "Microsoft.IntelligentTerminal",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Microsoft.IntelligentTerminal",
+            "command": "winget install --id Microsoft.IntelligentTerminal --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "Microsoft.IntelligentTerminal",
+            "command": "winget upgrade --id Microsoft.IntelligentTerminal --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "useDefaultCliCommands": false,
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "ai",
+        "agent",
+        "cli",
+        "cmd",
+        "command-line",
+        "command-prompt",
+        "console",
+        "copilot",
+        "developer-tools",
+        "powershell",
+        "ps",
+        "shell",
+        "terminal",
+        "utilities",
+        "wsl"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-023; PackageIdentifier Microsoft.IntelligentTerminal; Publisher Microsoft Corporation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/Microsoft/IntelligentTerminal/0.2.2572.0/Microsoft.IntelligentTerminal.locale.en-US.yaml SHA-256 87fb212940085826b166e919dba15bd1d056ba08e0a95136bef839228bdd4497; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "shell.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/shell.yml"
+    },
+    {
+      "id": "irfanview",
+      "name": "IrfanView",
+      "description": "Fast and compact image viewer and converter",
+      "productKind": "package",
+      "category": "tools",
+      "tier": "optional",
+      "website": "https://www.irfanview.com/",
+      "repository": null,
+      "wingetId": "IrfanSkiljan.IrfanView",
+      "packageId": "IrfanSkiljan.IrfanView",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "IrfanSkiljan.IrfanView",
+            "command": "winget install --id IrfanSkiljan.IrfanView --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "IrfanSkiljan.IrfanView",
+            "command": "winget upgrade --id IrfanSkiljan.IrfanView --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "useDefaultCliCommands": false,
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "image",
+        "photo",
+        "picture",
+        "reader",
+        "viewer"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-035; PackageIdentifier IrfanSkiljan.IrfanView; Publisher Irfan Skiljan; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/i/IrfanSkiljan/IrfanView/4.75/IrfanSkiljan.IrfanView.locale.en-US.yaml SHA-256 9c7029fa9da666ba6ed7de5b6fc690c07fa3b5dedfa2587cbe8d3ff371d9282f; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+    },
+    {
+      "id": "irfanview-plugins",
+      "name": "IrfanView PlugIns",
+      "description": "Additional plugins for IrfanView, an image viewer, editor, organiser and converter program",
+      "productKind": "extension",
+      "category": "tools",
+      "tier": "optional",
+      "website": "https://www.irfanview.com/",
+      "repository": null,
+      "wingetId": "IrfanSkiljan.IrfanView.PlugIns",
+      "packageId": "IrfanSkiljan.IrfanView.PlugIns",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "IrfanSkiljan.IrfanView.PlugIns",
+            "command": "winget install --id IrfanSkiljan.IrfanView.PlugIns --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "IrfanSkiljan.IrfanView.PlugIns",
+            "command": "winget upgrade --id IrfanSkiljan.IrfanView.PlugIns --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "useDefaultCliCommands": false,
+      "hostToolId": "irfanview",
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "graphic",
+        "image",
+        "photo",
+        "plugin",
+        "plugins",
+        "viewer"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-036; PackageIdentifier IrfanSkiljan.IrfanView.PlugIns; Publisher Irfan Skiljan; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/i/IrfanSkiljan/IrfanView/PlugIns/4.75/IrfanSkiljan.IrfanView.PlugIns.locale.en-US.yaml SHA-256 7b97db566f071ccb1f47bd0be4dfd7275dd440028ef350daac8c13264b5156a2; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "jq",
       "name": "jq",
       "description": "JSON processor",
-      "category": "terminal",
+      "category": "cli",
       "tier": "recommended",
       "command": "jq",
       "website": "https://jqlang.org/",
       "repository": null,
       "wingetId": "jqlang.jq",
+      "packageId": "jqlang.jq",
+      "packageSource": "winget",
+      "executableAliases": [
+        "jq"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -4011,20 +4912,77 @@
         "json"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "provenance": [
+        "Winget W-049; PackageIdentifier jqlang.jq; Publisher jqlang; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/jqlang/jq/1.8.2/jqlang.jq.locale.en-US.yaml SHA-256 16303d102f1b3c6833fe7b7c54e8efc01ddef96d0c4cdae9dfcfde6b18df2db3; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
+    },
+    {
+      "id": "lazydocker",
+      "name": "Lazydocker",
+      "description": "Terminal UI for both docker and docker-compose",
+      "productKind": "cli",
+      "category": "tools",
+      "tier": "optional",
+      "command": "lazydocker",
+      "website": "https://github.com/jesseduffield/lazydocker",
+      "repository": "https://github.com/jesseduffield/lazydocker",
+      "wingetId": "JesseDuffield.Lazydocker",
+      "packageId": "JesseDuffield.Lazydocker",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "JesseDuffield.Lazydocker",
+            "command": "winget install --id JesseDuffield.Lazydocker --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "JesseDuffield.Lazydocker",
+            "command": "winget upgrade --id JesseDuffield.Lazydocker --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "container",
+        "docker",
+        "docker-compose"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-004; PackageIdentifier JesseDuffield.Lazydocker; Publisher JesseDuffield; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/JesseDuffield/Lazydocker/0.25.2/JesseDuffield.Lazydocker.locale.en-US.yaml SHA-256 5b4d4549acb17ed85de2114197a1ce2bcab1c4f9ffccc79e10417bd03bdfd16c; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "less",
       "name": "less",
       "description": "Terminal pager",
-      "category": "terminal",
+      "category": "cli",
       "tier": "optional",
       "command": "less",
       "website": "https://www.greenwoodsoftware.com/less/",
       "repository": null,
       "wingetId": "jftuga.less",
+      "packageId": "jftuga.less",
+      "packageSource": "winget",
       "platforms": [
         "windows",
         "linux",
@@ -4068,15 +5026,17 @@
         "pager"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "provenance": [
+        "Winget W-050; PackageIdentifier jftuga.less; Publisher John Taylor; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/jftuga/less/710/jftuga.less.locale.en-US.yaml SHA-256 d251f021db70ab06aa2cdaa3921c038123197c09f6a76503a16deaf8c591b2bb; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
     },
     {
       "id": "mcp-agent-mail",
       "name": "MCP Agent Mail",
       "description": "Asynchronous coordination layer for coding agents with messaging, searchable threads, and advisory file leases.",
-      "category": "agentic",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "am",
       "website": "https://mcpagentmail.com/",
@@ -4136,7 +5096,8 @@
         "coordination",
         "mcp",
         "mail",
-        "file-leases"
+        "file-leases",
+        "flywheel"
       ],
       "notes": [
         "The official Flywheel profile currently links the mcp_agent_mail repository; newer ACFS internals may also use the Rust rewrite."
@@ -4144,14 +5105,171 @@
       "provenance": [
         "Dicklesworthstone Flywheel profile and MCP Agent Mail upstream guidance verified 2026-09-16."
       ],
-      "catalogFile": "agentic-flywheel.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+    },
+    {
+      "id": "mdbook",
+      "name": "mdBook",
+      "description": "Create book from markdown files. Like Gitbook but implemented in Rust.",
+      "productKind": "cli",
+      "category": "tools",
+      "tier": "optional",
+      "command": "mdbook",
+      "website": "https://github.com/rust-lang/mdBook",
+      "repository": "https://github.com/rust-lang/mdBook",
+      "wingetId": "Rustlang.mdBook",
+      "packageId": "Rustlang.mdBook",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Rustlang.mdBook",
+            "command": "winget install --id Rustlang.mdBook --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "Rustlang.mdBook",
+            "command": "winget upgrade --id Rustlang.mdBook --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "markdown",
+        "book",
+        "documentation"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-024; PackageIdentifier Rustlang.mdBook; Publisher The Rust Programming Language; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/r/Rustlang/mdBook/0.5.4/Rustlang.mdBook.locale.en-US.yaml SHA-256 f1f11f72b4b77420e641c78e939dfe06d6e0f743b5c700fcd79e06e00e735846; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+    },
+    {
+      "id": "mdbook-mermaid",
+      "name": "mdbook-mermaid",
+      "description": "A preprocessor for mdbook to add mermaid support",
+      "productKind": "cli",
+      "category": "tools",
+      "tier": "optional",
+      "command": "mdbook-mermaid",
+      "website": "https://github.com/badboy/mdbook-mermaid",
+      "repository": "https://github.com/badboy/mdbook-mermaid",
+      "wingetId": "badboy.mdbook-mermaid",
+      "packageId": "badboy.mdbook-mermaid",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "badboy.mdbook-mermaid",
+            "command": "winget install --id badboy.mdbook-mermaid --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "badboy.mdbook-mermaid",
+            "command": "winget upgrade --id badboy.mdbook-mermaid --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "mdbook-plugins"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-025; PackageIdentifier badboy.mdbook-mermaid; Publisher Jan-Erik Rediger; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/b/badboy/mdbook-mermaid/0.17.1/badboy.mdbook-mermaid.locale.en-US.yaml SHA-256 a560138ed51cf0adb84aad1088a13003ab2a0a77e92f42091caab1496bf75a69; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+    },
+    {
+      "id": "mdbook-toc",
+      "name": "mdbook-toc",
+      "description": "A preprocessor for mdbook to add inline Table of Contents support.",
+      "productKind": "cli",
+      "category": "tools",
+      "tier": "optional",
+      "command": "mdbook-toc",
+      "website": "https://github.com/badboy/mdbook-toc",
+      "repository": "https://github.com/badboy/mdbook-toc",
+      "wingetId": "badboy.mdbook-toc",
+      "packageId": "badboy.mdbook-toc",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "badboy.mdbook-toc",
+            "command": "winget install --id badboy.mdbook-toc --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "badboy.mdbook-toc",
+            "command": "winget upgrade --id badboy.mdbook-toc --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "mdbook",
+        "markdown",
+        "table-of-contents"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-026; PackageIdentifier badboy.mdbook-toc; Publisher Jan-Erik Rediger; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/b/badboy/mdbook-toc/0.15.4/badboy.mdbook-toc.locale.en-US.yaml SHA-256 ec3e74207e40d3b163bfc3c545eb034bb66408281182517eace88a1f98499506; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "ms",
       "name": "Meta Skill",
       "description": "Skill management platform with CASS mining, discovery, and MCP-oriented workflows.",
-      "category": "agentic",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "ms",
       "website": "https://github.com/Dicklesworthstone/meta_skill",
@@ -4203,19 +5321,14 @@
         "command": "ms list --robot",
         "format": "json"
       },
-      "completions": {
-        "bash": "ms setup --completions --bash",
-        "elvish": "ms setup --completions --elvish",
-        "fish": "ms setup --completions --fish",
-        "powershell": "ms setup --completions --powershell",
-        "zsh": "ms setup --completions --zsh"
-      },
+      "completions": {},
       "skill": null,
       "tags": [
         "skills",
         "mcp",
         "discovery",
-        "memory"
+        "memory",
+        "flywheel"
       ],
       "notes": [
         "The verified installer is used for updates rather than relying on the in-place updater."
@@ -4223,19 +5336,77 @@
       "provenance": [
         "Dicklesworthstone Flywheel profile and Meta Skill upstream guidance verified 2026-09-16."
       ],
-      "catalogFile": "agentic-flywheel.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+    },
+    {
+      "id": "vscode-insiders",
+      "name": "Microsoft Visual Studio Code Insiders",
+      "description": "Microsoft Visual Studio Code is a code editor redefined and optimized for building and debugging modern web and cloud applications. Microsoft Visual Studio Code is free and available on your favorite platform - Linux, macOS, and Windows.",
+      "productKind": "package",
+      "category": "tools",
+      "tier": "optional",
+      "website": "https://code.visualstudio.com",
+      "repository": null,
+      "wingetId": "Microsoft.VisualStudioCode.Insiders",
+      "packageId": "Microsoft.VisualStudioCode.Insiders",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Microsoft.VisualStudioCode.Insiders",
+            "command": "winget install --id Microsoft.VisualStudioCode.Insiders --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "Microsoft.VisualStudioCode.Insiders",
+            "command": "winget upgrade --id Microsoft.VisualStudioCode.Insiders --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "useDefaultCliCommands": false,
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "developer-tools",
+        "editor"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-019; PackageIdentifier Microsoft.VisualStudioCode.Insiders; Publisher Microsoft Corporation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/Microsoft/VisualStudioCode/Insiders/1.127.0/Microsoft.VisualStudioCode.Insiders.locale.en-US.yaml SHA-256 88a5c91b62f811676785adf672f5f7a361a1d738f84b4b95b041490dac3d27fc; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "mise",
       "name": "mise-en-place",
       "description": "Runtime and tool version manager",
-      "category": "runtime",
+      "category": "lang",
       "tier": "recommended",
       "command": "mise",
-      "website": "https://mise.jdx.dev/",
+      "website": "https://mise.en.dev/",
       "repository": "https://github.com/jdx/mise",
       "wingetId": "jdx.mise",
+      "packageId": "jdx.mise",
+      "packageSource": "winget",
+      "executableAliases": [
+        "mise",
+        "mise-shim"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -4273,26 +5444,38 @@
       "robotMode": {
         "supported": false
       },
-      "completions": {},
+      "completions": {
+        "powershell": "mise completion powershell"
+      },
       "skill": null,
       "tags": [
         "toolchain"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "provenance": [
+        "Winget W-054; PackageIdentifier jdx.mise; Publisher jdx; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/jdx/mise/2026.9.18/jdx.mise.locale.en-US.yaml SHA-256 34f51846be76403fd7fc83af3b15059e4f2ca2e8e517cdab6cf6de8f144ea813; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "nodejs-lts",
       "name": "Node.js LTS",
       "description": "JavaScript-Laufzeit inklusive npm; Voraussetzung für npm-basierte CLIs.",
-      "category": "foundation",
+      "category": "lang",
       "tier": "required-for-npm-tools",
       "command": "node",
       "website": "https://nodejs.org/",
       "repository": null,
       "wingetId": "OpenJS.NodeJS.LTS",
+      "packageId": "OpenJS.NodeJS.LTS",
+      "packageSource": "winget",
+      "executableAliases": [
+        "corepack",
+        "node",
+        "npm",
+        "npx"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -4343,16 +5526,17 @@
       ],
       "notes": [],
       "provenance": [
-        "WingetIds.yml: Node.js (LTS) / OpenJS.NodeJS.LTS."
+        "WingetIds.yml: Node.js (LTS) / OpenJS.NodeJS.LTS.",
+        "Winget W-039; PackageIdentifier OpenJS.NodeJS.LTS; Publisher Node.js Foundation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/o/OpenJS/NodeJS/LTS/24.19.0/OpenJS.NodeJS.LTS.locale.en-US.yaml SHA-256 248fa897dcc3a9f164004e0f344c4e8768a097e0c417154e6b21068d8c4141c4; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
-      "catalogFile": "foundation.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "ntm",
       "name": "NTM",
       "description": "Multi-agent tmux orchestration with dashboards and machine-readable robot commands.",
-      "category": "agentic",
+      "category": "shell",
       "tier": "recommended-agent",
       "command": "ntm",
       "website": "https://github.com/Dicklesworthstone/ntm",
@@ -4417,7 +5601,8 @@
         "tmux",
         "orchestration",
         "agents",
-        "dashboard"
+        "dashboard",
+        "flywheel"
       ],
       "notes": [
         "Upstream skill installer has no documented non-interactive single-skill selector; skill installation is intentionally not automated here."
@@ -4425,14 +5610,80 @@
       "provenance": [
         "Dicklesworthstone Flywheel profile and NTM robot-mode guidance verified 2026-09-16."
       ],
-      "catalogFile": "agentic-flywheel.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+      "catalogFile": "shell.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/shell.yml"
+    },
+    {
+      "id": "obsidian",
+      "name": "Obsidian",
+      "description": "Obsidian is the private and flexible writing app that adapts to the way you think.",
+      "productKind": "package",
+      "category": "tools",
+      "tier": "optional",
+      "website": "https://obsidian.md/",
+      "repository": null,
+      "wingetId": "Obsidian.Obsidian",
+      "packageId": "Obsidian.Obsidian",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Obsidian.Obsidian",
+            "command": "winget install --id Obsidian.Obsidian --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "Obsidian.Obsidian",
+            "command": "winget upgrade --id Obsidian.Obsidian --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "useDefaultCliCommands": false,
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "backlink",
+        "bi-directional-link",
+        "block",
+        "docs",
+        "document",
+        "editor",
+        "graph",
+        "knowledge",
+        "knowledge-base",
+        "markdown",
+        "mind-map",
+        "mindmap",
+        "notes",
+        "outliner",
+        "pkm",
+        "reference"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-027; PackageIdentifier Obsidian.Obsidian; Publisher Obsidian; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/o/Obsidian/Obsidian/1.13.7/Obsidian.Obsidian.locale.en-US.yaml SHA-256 bb991303fcc8ad305c3656c48894ce2b1f6821b02adba362f0c8a1c2152f2872; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "ollama",
       "name": "Ollama",
       "description": "Local model runtime and CLI.",
-      "category": "ai",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "ollama",
       "website": "https://ollama.com/",
@@ -4499,14 +5750,14 @@
       "provenance": [
         "Ollama installation/update guidance verified 2026-09-16."
       ],
-      "catalogFile": "ai-agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/ai-agents.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "oracle",
       "name": "Oracle",
       "description": "AI review/oracle CLI used by APR",
-      "category": "agentic",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "oracle",
       "website": "https://askoracle.sh",
@@ -4549,23 +5800,26 @@
       "skill": null,
       "tags": [
         "review",
-        "ai"
+        "ai",
+        "flywheel"
       ],
       "notes": [],
       "provenance": [],
-      "catalogFile": "agentic-utilities.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-utilities.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "pandoc",
       "name": "Pandoc",
       "description": "Universal document converter",
-      "category": "documentation",
+      "category": "tools",
       "tier": "optional",
       "command": "pandoc",
       "website": "https://pandoc.org/",
       "repository": "https://github.com/jgm/pandoc",
       "wingetId": "JohnMacFarlane.Pandoc",
+      "packageId": "JohnMacFarlane.Pandoc",
+      "packageSource": "winget",
       "platforms": [
         "windows",
         "linux",
@@ -4609,15 +5863,169 @@
         "docs"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "workflow-infrastructure.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+      "provenance": [
+        "Winget W-028; PackageIdentifier JohnMacFarlane.Pandoc; Publisher John MacFarlane; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/JohnMacFarlane/Pandoc/3.12/JohnMacFarlane.Pandoc.locale.en-US.yaml SHA-256 662cee806fd6ff3b79f20747e9ff1c2b0709429dffbdf4553afcf7e422da2b89; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+    },
+    {
+      "id": "pi",
+      "name": "Pi Agent Rust",
+      "displayName": "Pi Agent Rust",
+      "description": "A Rust-based coding agent distributed by the Dicklesworthstone toolchain.",
+      "category": "agents",
+      "tier": "recommended-agent",
+      "command": "pi",
+      "website": "https://github.com/Dicklesworthstone/pi_agent_rust",
+      "repository": "https://github.com/Dicklesworthstone/pi_agent_rust",
+      "platforms": [
+        "linux",
+        "wsl2"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone"
+        }
+      },
+      "install": {
+        "linux": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/pi_agent_rust/6a8cf2a20c49a069b335483ebc0fc73d6adb59e2/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '4ddea5bce9c0a9168d62fee76c05cb61e9c8c911d9fdcbe65aafac485e002bd1' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --yes --easy-mode --no-completions --no-agent-skills"
+            ]
+          }
+        },
+        "wsl2": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/pi_agent_rust/6a8cf2a20c49a069b335483ebc0fc73d6adb59e2/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '4ddea5bce9c0a9168d62fee76c05cb61e9c8c911d9fdcbe65aafac485e002bd1' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --yes --easy-mode --no-completions --no-agent-skills"
+            ]
+          }
+        }
+      },
+      "update": {
+        "linux": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/pi_agent_rust/6a8cf2a20c49a069b335483ebc0fc73d6adb59e2/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '4ddea5bce9c0a9168d62fee76c05cb61e9c8c911d9fdcbe65aafac485e002bd1' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --yes --easy-mode --no-completions --no-agent-skills"
+            ]
+          }
+        },
+        "wsl2": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/pi_agent_rust/6a8cf2a20c49a069b335483ebc0fc73d6adb59e2/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '4ddea5bce9c0a9168d62fee76c05cb61e9c8c911d9fdcbe65aafac485e002bd1' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --yes --easy-mode --no-completions --no-agent-skills"
+            ]
+          }
+        }
+      },
+      "healthCheck": "pi --version",
+      "provenance": [
+        "Pinned upstream install.sh at commit 6a8cf2a20c49a069b335483ebc0fc73d6adb59e2; SHA256 4ddea5bce9c0a9168d62fee76c05cb61e9c8c911d9fdcbe65aafac485e002bd1; source https://raw.githubusercontent.com/Dicklesworthstone/pi_agent_rust/6a8cf2a20c49a069b335483ebc0fc73d6adb59e2/install.sh."
+      ],
+      "tags": [
+        "flywheel",
+        "agent",
+        "pi"
+      ],
+      "notes": [
+        "Installer keeps completion and agent-skill installation disabled by default."
+      ],
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+    },
+    {
+      "id": "pfr",
+      "name": "Power Failure Resumer",
+      "displayName": "Power Failure Resumer",
+      "description": "A command-line helper for resuming work after an unexpected power failure.",
+      "category": "agents",
+      "tier": "recommended-agent",
+      "command": "pfr",
+      "website": "https://github.com/Dicklesworthstone/power_failure_resumer",
+      "repository": "https://github.com/Dicklesworthstone/power_failure_resumer",
+      "platforms": [
+        "linux",
+        "wsl2"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone"
+        }
+      },
+      "useDefaultCliCommands": false,
+      "install": {
+        "linux": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/power_failure_resumer/37a6f89b415bc4cde7606a5c5014be0234a53674/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '980b56861828b01a1fc8db2ec2e9b7068b8efa0184ceef6433b84dec8ff6a8c9' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --easy-mode"
+            ]
+          }
+        },
+        "wsl2": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/power_failure_resumer/37a6f89b415bc4cde7606a5c5014be0234a53674/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '980b56861828b01a1fc8db2ec2e9b7068b8efa0184ceef6433b84dec8ff6a8c9' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --easy-mode"
+            ]
+          }
+        }
+      },
+      "update": {
+        "linux": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/power_failure_resumer/37a6f89b415bc4cde7606a5c5014be0234a53674/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '980b56861828b01a1fc8db2ec2e9b7068b8efa0184ceef6433b84dec8ff6a8c9' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --easy-mode"
+            ]
+          }
+        },
+        "wsl2": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/power_failure_resumer/37a6f89b415bc4cde7606a5c5014be0234a53674/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '980b56861828b01a1fc8db2ec2e9b7068b8efa0184ceef6433b84dec8ff6a8c9' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --easy-mode"
+            ]
+          }
+        }
+      },
+      "healthCheck": "pfr --doctor",
+      "capabilitiesCommand": "pfr --help",
+      "provenance": [
+        "Pinned upstream install.sh at commit 37a6f89b415bc4cde7606a5c5014be0234a53674; SHA256 980b56861828b01a1fc8db2ec2e9b7068b8efa0184ceef6433b84dec8ff6a8c9; source https://raw.githubusercontent.com/Dicklesworthstone/power_failure_resumer/37a6f89b415bc4cde7606a5c5014be0234a53674/install.sh."
+      ],
+      "tags": [
+        "flywheel",
+        "agent",
+        "recovery"
+      ],
+      "notes": [
+        "Version is unknown because the pinned executable has no verified version option."
+      ],
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "powershell7",
       "name": "PowerShell 7",
       "description": "Plattformübergreifende PowerShell-Laufzeit für Automatisierung, Setup-Skripte und Windows-Administration.",
-      "category": "foundation",
+      "category": "shell",
       "tier": "required-windows",
       "command": "pwsh",
       "website": "https://github.com/PowerShell/PowerShell",
@@ -4685,14 +6093,145 @@
       "provenance": [
         "Microsoft PowerShell installation docs verified 2026-09-13."
       ],
-      "catalogFile": "foundation.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+      "catalogFile": "shell.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/shell.yml"
+    },
+    {
+      "id": "pt",
+      "name": "Process Triage",
+      "displayName": "Process Triage",
+      "description": "A command-line process and system triage utility from the Dicklesworthstone toolchain.",
+      "category": "tools",
+      "tier": "recommended-agent",
+      "command": "pt",
+      "website": "https://github.com/Dicklesworthstone/process_triage",
+      "repository": "https://github.com/Dicklesworthstone/process_triage",
+      "platforms": [
+        "linux",
+        "wsl2"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone"
+        }
+      },
+      "install": {
+        "linux": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/process_triage/d06fa71638e14c5698c47bcb409ae893e2386532/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '1fed5ea13dbc9718a4b04a645cb9e43c2ce941f4c4ac07754db599fd76cba432' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --easy-mode"
+            ]
+          }
+        },
+        "wsl2": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/process_triage/d06fa71638e14c5698c47bcb409ae893e2386532/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '1fed5ea13dbc9718a4b04a645cb9e43c2ce941f4c4ac07754db599fd76cba432' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --easy-mode"
+            ]
+          }
+        }
+      },
+      "update": {
+        "linux": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/process_triage/d06fa71638e14c5698c47bcb409ae893e2386532/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '1fed5ea13dbc9718a4b04a645cb9e43c2ce941f4c4ac07754db599fd76cba432' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --easy-mode"
+            ]
+          }
+        },
+        "wsl2": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/process_triage/d06fa71638e14c5698c47bcb409ae893e2386532/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' '1fed5ea13dbc9718a4b04a645cb9e43c2ce941f4c4ac07754db599fd76cba432' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\" --easy-mode"
+            ]
+          }
+        }
+      },
+      "healthCheck": "pt --version",
+      "provenance": [
+        "Pinned upstream install.sh at commit d06fa71638e14c5698c47bcb409ae893e2386532; SHA256 1fed5ea13dbc9718a4b04a645cb9e43c2ce941f4c4ac07754db599fd76cba432; source https://raw.githubusercontent.com/Dicklesworthstone/process_triage/d06fa71638e14c5698c47bcb409ae893e2386532/install.sh."
+      ],
+      "tags": [
+        "flywheel",
+        "process-triage"
+      ],
+      "notes": [],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+    },
+    {
+      "id": "putty",
+      "name": "PuTTY",
+      "description": "A free implementation of SSH and Telnet for Windows and Unix platforms, along with an xterm terminal emulator.",
+      "productKind": "package",
+      "category": "network",
+      "tier": "optional",
+      "website": "https://www.chiark.greenend.org.uk/~sgtatham/putty/",
+      "repository": null,
+      "wingetId": "PuTTY.PuTTY",
+      "packageId": "PuTTY.PuTTY",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "PuTTY.PuTTY",
+            "command": "winget install --id PuTTY.PuTTY --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "PuTTY.PuTTY",
+            "command": "winget upgrade --id PuTTY.PuTTY --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "useDefaultCliCommands": false,
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "puttygen",
+        "plink",
+        "psftp",
+        "ssh",
+        "telnet",
+        "tty",
+        "xterm",
+        "supdup",
+        "rlogin"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-038; PackageIdentifier PuTTY.PuTTY; Publisher Simon Tatham; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/p/PuTTY/PuTTY/0.85.0.0/PuTTY.PuTTY.locale.en-US.yaml SHA-256 d836f99e084f869727a46bc7f6581336881f6732453d118481e4713a280bb086; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "network.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/network.yml"
     },
     {
       "id": "python3",
       "name": "Python 3",
       "description": "Python runtime",
-      "category": "runtime",
+      "category": "lang",
       "tier": "recommended-agent",
       "command": "python3",
       "website": "https://www.python.org/",
@@ -4736,14 +6275,14 @@
       ],
       "notes": [],
       "provenance": [],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "rch",
       "name": "RCH",
       "description": "Remote compilation/helper utility",
-      "category": "agentic",
+      "category": "stack",
       "tier": "optional",
       "command": "rch",
       "website": null,
@@ -4780,18 +6319,19 @@
       "completions": {},
       "skill": null,
       "tags": [
-        "agentic"
+        "agentic",
+        "flywheel"
       ],
       "notes": [],
       "provenance": [],
-      "catalogFile": "agentic-utilities.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-utilities.yml"
+      "catalogFile": "stack.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/stack.yml"
     },
     {
       "id": "ru",
       "name": "Repo Updater",
       "description": "Repository synchronization utility for keeping large collections of Git repositories current.",
-      "category": "agentic",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "ru",
       "website": "https://github.com/Dicklesworthstone/repo_updater",
@@ -4852,25 +6392,100 @@
       "tags": [
         "repositories",
         "sync",
-        "git"
+        "git",
+        "flywheel"
       ],
       "notes": [],
       "provenance": [
         "Dicklesworthstone Flywheel profile and Repo Updater upstream guidance verified 2026-09-16."
       ],
-      "catalogFile": "agentic-flywheel.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+    },
+    {
+      "id": "reportgenerator",
+      "name": "ReportGenerator",
+      "description": "Converts coverage reports generated by coverlet, OpenCover, dotCover, Visual Studio, NCover, Cobertura, JaCoCo, Clover, gcov, or lcov into human readable reports in various formats.",
+      "productKind": "cli",
+      "category": "tools",
+      "tier": "optional",
+      "command": "reportgenerator",
+      "website": "https://github.com/danielpalme/ReportGenerator",
+      "repository": "https://github.com/danielpalme/ReportGenerator",
+      "wingetId": "DanielPalme.ReportGenerator",
+      "packageId": "DanielPalme.ReportGenerator",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "DanielPalme.ReportGenerator",
+            "command": "winget install --id DanielPalme.ReportGenerator --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "DanielPalme.ReportGenerator",
+            "command": "winget upgrade --id DanielPalme.ReportGenerator --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "executableAliases": [
+        "reportgenerator"
+      ],
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "clover",
+        "cobertura",
+        "coverage-report-converter",
+        "coveragereportconverter",
+        "coverlet",
+        "daniel-palme",
+        "dotcover",
+        "gcov",
+        "jacoco",
+        "lcov",
+        "ncover",
+        "opencover",
+        "report-generator",
+        "requirescmd",
+        "visual-studio",
+        "visualstudio"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-007; PackageIdentifier DanielPalme.ReportGenerator; Publisher Daniel Palme; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/DanielPalme/ReportGenerator/5.5.4/DanielPalme.ReportGenerator.locale.en-US.yaml SHA-256 32bc5d5567a9ef1dea5eaa689165f0c2e40ceafe8ed9fc59a5415fc011243739; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "ripgrep",
       "name": "ripgrep",
       "description": "Schnelle rekursive Suche",
-      "category": "terminal",
+      "category": "filesystem",
       "tier": "recommended",
       "command": "rg",
       "website": "https://github.com/BurntSushi/ripgrep",
       "repository": "https://github.com/BurntSushi/ripgrep",
       "wingetId": "BurntSushi.ripgrep.MSVC",
+      "packageId": "BurntSushi.ripgrep.MSVC",
+      "packageSource": "winget",
+      "executableAliases": [
+        "rg"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -4914,15 +6529,17 @@
         "search"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "provenance": [
+        "Winget W-053; PackageIdentifier BurntSushi.ripgrep.MSVC; Publisher BurntSushi; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/b/BurntSushi/ripgrep/MSVC/15.2.0/BurntSushi.ripgrep.MSVC.locale.en-US.yaml SHA-256 118454462ec66dc5f9450d7c04f25d0afc75553dd684b5f9ddb8677d1f0bd73b; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "filesystem.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/filesystem.yml"
     },
     {
       "id": "scoop",
       "name": "Scoop",
       "description": "Windows-Kommandozeilen-Paketmanager; offizieller Windows-Kanal für mehrere Agentic-Tools.",
-      "category": "foundation",
+      "category": "base",
       "tier": "optional-windows",
       "command": "scoop",
       "website": "https://scoop.sh/",
@@ -4966,19 +6583,23 @@
       ],
       "notes": [],
       "provenance": [],
-      "catalogFile": "foundation.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+      "catalogFile": "base.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/base.yml"
     },
     {
       "id": "sed",
       "name": "sed",
       "description": "Stream editor",
-      "category": "terminal",
+      "category": "filesystem",
       "tier": "optional",
       "command": "sed",
       "website": "https://www.gnu.org/software/sed/",
       "repository": null,
-      "wingetId": null,
+      "wingetId": "mbuilov.sed",
+      "packageId": "mbuilov.sed",
+      "executableAliases": [
+        "sed"
+      ],
       "platforms": [
         "linux",
         "wsl2",
@@ -5013,15 +6634,17 @@
         "text"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "provenance": [
+        "Winget W-051; PackageIdentifier mbuilov.sed; Publisher Michael M. Builov; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/mbuilov/sed/4.9/mbuilov.sed.locale.en-US.yaml SHA-256 4f23cc78b5f00d92799e92a806a8ebd3621b130f756204b9e34ccae9ead2571a; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "filesystem.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/filesystem.yml"
     },
     {
       "id": "slb",
       "name": "SLB",
       "description": "Two-person-rule approval gate for potentially dangerous agent commands.",
-      "category": "agentic",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "slb",
       "website": "https://github.com/Dicklesworthstone/slb",
@@ -5083,20 +6706,21 @@
       "tags": [
         "approval",
         "safety",
-        "coordination"
+        "coordination",
+        "flywheel"
       ],
       "notes": [],
       "provenance": [
         "Dicklesworthstone Flywheel profile and SLB upstream guidance verified 2026-09-16."
       ],
-      "catalogFile": "agentic-flywheel.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "source2prompt",
       "name": "Source2Prompt",
       "description": "Repository source-to-prompt utility",
-      "category": "agentic",
+      "category": "agents",
       "tier": "optional",
       "command": "s2p",
       "website": null,
@@ -5139,18 +6763,97 @@
       "skill": null,
       "tags": [
         "prompt",
-        "source"
+        "source",
+        "flywheel"
       ],
       "notes": [],
       "provenance": [],
-      "catalogFile": "agentic-utilities.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-utilities.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+    },
+    {
+      "id": "sbh",
+      "name": "Storage Ballast Helper",
+      "displayName": "Storage Ballast Helper",
+      "description": "A storage inspection and cleanup utility with bounded, evidence-oriented commands.",
+      "category": "filesystem",
+      "tier": "recommended-agent",
+      "command": "sbh",
+      "website": "https://github.com/Dicklesworthstone/storage_ballast_helper",
+      "repository": "https://github.com/Dicklesworthstone/storage_ballast_helper",
+      "platforms": [
+        "linux",
+        "wsl2"
+      ],
+      "packageManager": {
+        "preferred": {
+          "linux": "standalone",
+          "wsl2": "standalone"
+        }
+      },
+      "useDefaultCliCommands": false,
+      "install": {
+        "linux": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/storage_ballast_helper/042541e45d4de937f4dfe3c27c1f000cd1dec159/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' 'daf8d8f07b70d0ff2886beb221e6a7eab48cd6de5b2db49339e408a5fcc0ae78' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\""
+            ]
+          }
+        },
+        "wsl2": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/storage_ballast_helper/042541e45d4de937f4dfe3c27c1f000cd1dec159/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' 'daf8d8f07b70d0ff2886beb221e6a7eab48cd6de5b2db49339e408a5fcc0ae78' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\""
+            ]
+          }
+        }
+      },
+      "update": {
+        "linux": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/storage_ballast_helper/042541e45d4de937f4dfe3c27c1f000cd1dec159/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' 'daf8d8f07b70d0ff2886beb221e6a7eab48cd6de5b2db49339e408a5fcc0ae78' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\""
+            ]
+          }
+        },
+        "wsl2": {
+          "standalone": {
+            "commandName": "/bin/bash",
+            "arguments": [
+              "-c",
+              "set -eu\ninstaller_path=\"$(mktemp)\"\ntrap 'rm -f \"$installer_path\"' EXIT\ncurl --fail --location --silent --show-error 'https://raw.githubusercontent.com/Dicklesworthstone/storage_ballast_helper/042541e45d4de937f4dfe3c27c1f000cd1dec159/install.sh' --output \"$installer_path\"\nprintf '%s  %s\\n' 'daf8d8f07b70d0ff2886beb221e6a7eab48cd6de5b2db49339e408a5fcc0ae78' \"$installer_path\" | sha256sum --check --status\n/bin/bash \"$installer_path\""
+            ]
+          }
+        }
+      },
+      "versionCommand": "sbh version",
+      "healthCheck": "sbh version",
+      "capabilitiesCommand": "sbh --help",
+      "provenance": [
+        "Pinned upstream install.sh at commit 042541e45d4de937f4dfe3c27c1f000cd1dec159; SHA256 daf8d8f07b70d0ff2886beb221e6a7eab48cd6de5b2db49339e408a5fcc0ae78; source https://raw.githubusercontent.com/Dicklesworthstone/storage_ballast_helper/042541e45d4de937f4dfe3c27c1f000cd1dec159/install.sh."
+      ],
+      "tags": [
+        "flywheel",
+        "filesystem",
+        "storage"
+      ],
+      "notes": [
+        "Uses the verified `version` subcommand; no `--version` default is inferred."
+      ],
+      "catalogFile": "filesystem.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/filesystem.yml"
     },
     {
       "id": "ubs",
       "name": "Ultimate Bug Scanner",
       "description": "Pattern-based multi-language bug scanner designed for fast pre-commit quality checks.",
-      "category": "agentic",
+      "category": "stack",
       "tier": "recommended-agent",
       "command": "ubs",
       "website": "https://github.com/Dicklesworthstone/ultimate_bug_scanner",
@@ -5207,7 +6910,8 @@
         "quality",
         "scanner",
         "bugs",
-        "pre-commit"
+        "pre-commit",
+        "flywheel"
       ],
       "notes": [
         "Native Windows PowerShell installation is not advertised here; use WSL2 for the supported Windows-host workflow."
@@ -5215,19 +6919,144 @@
       "provenance": [
         "Dicklesworthstone Flywheel profile and UBS upstream guidance verified 2026-09-16."
       ],
-      "catalogFile": "agentic-flywheel.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+      "catalogFile": "stack.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/stack.yml"
+    },
+    {
+      "id": "unigetui",
+      "name": "UniGetUI",
+      "description": "The Graphical Interface for your package managers.",
+      "productKind": "package",
+      "category": "tools",
+      "tier": "optional",
+      "website": "https://devolutions.net/unigetui/",
+      "repository": null,
+      "wingetId": "Devolutions.UniGetUI",
+      "packageId": "Devolutions.UniGetUI",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Devolutions.UniGetUI",
+            "command": "winget install --id Devolutions.UniGetUI --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "Devolutions.UniGetUI",
+            "command": "winget upgrade --id Devolutions.UniGetUI --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "useDefaultCliCommands": false,
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "chocolatey",
+        "dotnet-tool",
+        "microsoft-store",
+        "npm",
+        "pip",
+        "powershell-gallery",
+        "scoop",
+        "uniget-ui",
+        "winget",
+        "winget-ui",
+        "wingetui"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-037; PackageIdentifier Devolutions.UniGetUI; Publisher Devolutions Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/Devolutions/UniGetUI/2026.3.0/Devolutions.UniGetUI.locale.en-US.yaml SHA-256 8efe6ebdbc56086b83de8933b109395741ab57206dc80f2367daf622ea2f0cdd; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+    },
+    {
+      "id": "usage",
+      "name": "usage",
+      "description": "A specification for CLIs",
+      "productKind": "cli",
+      "category": "cli",
+      "tier": "optional",
+      "command": "usage",
+      "website": "https://usage.jdx.dev/",
+      "repository": "https://github.com/jdx/usage",
+      "wingetId": "jdx.usage",
+      "packageId": "jdx.usage",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "jdx.usage",
+            "command": "winget install --id jdx.usage --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "jdx.usage",
+            "command": "winget upgrade --id jdx.usage --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "executableAliases": [
+        "usage"
+      ],
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {
+        "powershell": "usage generate completion powershell usage --usage-cmd \"usage __usage_spec__\""
+      },
+      "tags": [
+        "cli",
+        "spec"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-046; PackageIdentifier jdx.usage; Publisher jdx; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/jdx/usage/6.11.1/jdx.usage.locale.en-US.yaml SHA-256 61115a9f430fa012888729d9b0316cc13cabe5905ac3fca432f0ebd01c2637c7; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "cli.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
     },
     {
       "id": "uv",
       "name": "uv",
       "description": "Python package/tool manager",
-      "category": "runtime",
+      "category": "lang",
       "tier": "recommended",
       "command": "uv",
       "website": "https://docs.astral.sh/uv/",
       "repository": "https://github.com/astral-sh/uv",
       "wingetId": "astral-sh.uv",
+      "packageId": "astral-sh.uv",
+      "packageSource": "winget",
+      "executableAliases": [
+        "uv",
+        "uvw",
+        "uvx"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -5265,21 +7094,25 @@
       "robotMode": {
         "supported": false
       },
-      "completions": {},
+      "completions": {
+        "powershell": "uv generate-shell-completion powershell"
+      },
       "skill": null,
       "tags": [
         "python"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "recommended-cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/recommended-cli.yml"
+      "provenance": [
+        "Winget W-052; PackageIdentifier astral-sh.uv; Publisher Astral Software Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/a/astral-sh/uv/0.12.21/astral-sh.uv.locale.en-US.yaml SHA-256 2c7a6cba4d0ba2963764f47e6231754f6a355b0bc2da7f4bfb87c89d11d3b95c; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "vercel-cli",
       "name": "Vercel CLI",
       "description": "CLI für Vercel-Projekte, Deployments und Umgebungen.",
-      "category": "deployment",
+      "category": "cloud",
       "tier": "optional",
       "command": "vercel",
       "website": "https://vercel.com/docs/cli",
@@ -5326,19 +7159,77 @@
       ],
       "notes": [],
       "provenance": [],
-      "catalogFile": "deployment.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/deployment.yml"
+      "catalogFile": "cloud.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cloud.yml"
+    },
+    {
+      "id": "visualstudio-buildtools",
+      "name": "Visual Studio BuildTools 2026",
+      "description": "These Build Tools allow you to build Visual Studio projects from a command-line interface.",
+      "productKind": "package",
+      "category": "lang",
+      "tier": "optional",
+      "website": "https://visualstudio.microsoft.com/",
+      "repository": null,
+      "wingetId": "Microsoft.VisualStudio.BuildTools",
+      "packageId": "Microsoft.VisualStudio.BuildTools",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Microsoft.VisualStudio.BuildTools",
+            "command": "winget install --id Microsoft.VisualStudio.BuildTools --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "Microsoft.VisualStudio.BuildTools",
+            "command": "winget upgrade --id Microsoft.VisualStudio.BuildTools --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "useDefaultCliCommands": false,
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "c#",
+        "c++",
+        "vs"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-015; PackageIdentifier Microsoft.VisualStudio.BuildTools; Publisher Microsoft Corporation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/Microsoft/VisualStudio/BuildTools/18.10.2/Microsoft.VisualStudio.BuildTools.locale.en-US.yaml SHA-256 ee72799ee1cadd8d2ae6b7a9c95832197f17577b844b4dc0a78cccd8d0bcc850; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "vscode-cli",
       "name": "Visual Studio Code CLI",
       "description": "VS Code command-line launcher",
-      "category": "development",
+      "category": "tools",
       "tier": "optional",
       "command": "code",
       "website": "https://code.visualstudio.com/",
       "repository": null,
       "wingetId": "Microsoft.VisualStudioCode",
+      "packageId": "Microsoft.VisualStudioCode",
+      "packageSource": "winget",
+      "executableAliases": [
+        "code"
+      ],
       "platforms": [
         "windows",
         "linux",
@@ -5377,15 +7268,192 @@
         "editor"
       ],
       "notes": [],
-      "provenance": [],
-      "catalogFile": "workflow-infrastructure.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/workflow-infrastructure.yml"
+      "provenance": [
+        "Winget W-017; PackageIdentifier Microsoft.VisualStudioCode; Publisher Microsoft Corporation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/Microsoft/VisualStudioCode/1.140.0/Microsoft.VisualStudioCode.locale.en-US.yaml SHA-256 ecb4c1553547556107e7634c9542375f7a1dacc405f5f17b75ac1c5eabc6cdc3; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+    },
+    {
+      "id": "visualstudio-cmdpal",
+      "name": "Visual Studio Extension for Command Palette",
+      "description": "Open Visual Studio recents in Command Palette",
+      "productKind": "package",
+      "category": "tools",
+      "tier": "optional",
+      "website": "https://github.com/davidegiacometti/CmdPal-Extensions",
+      "repository": "https://github.com/davidegiacometti/CmdPal-Extensions",
+      "wingetId": "davidegiacometti.VisualStudioForCmdPal",
+      "packageId": "davidegiacometti.VisualStudioForCmdPal",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "davidegiacometti.VisualStudioForCmdPal",
+            "command": "winget install --id davidegiacometti.VisualStudioForCmdPal --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "davidegiacometti.VisualStudioForCmdPal",
+            "command": "winget upgrade --id davidegiacometti.VisualStudioForCmdPal --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "useDefaultCliCommands": false,
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "windows-commandpalette-extension"
+      ],
+      "notes": [
+        "Requires the external Visual Studio Command Palette host; no CliToolRegistry host dependency is inferred."
+      ],
+      "provenance": [
+        "Winget W-016; PackageIdentifier davidegiacometti.VisualStudioForCmdPal; Publisher davidegiacometti; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/davidegiacometti/VisualStudioForCmdPal/0.1.0/davidegiacometti.VisualStudioForCmdPal.locale.en-US.yaml SHA-256 9d65765ae57879be2646feb6d9de914c6fb140dfab4a64fd50cedb7ae1d468ff; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+    },
+    {
+      "id": "wget",
+      "name": "Wget",
+      "description": "Wget is a command line utility for retrieving files using HTTP, HTTPS, FTP and FTPS.",
+      "productKind": "cli",
+      "category": "network",
+      "tier": "optional",
+      "command": "wget",
+      "website": "https://eternallybored.org/misc/wget/",
+      "repository": null,
+      "wingetId": "JernejSimoncic.Wget",
+      "packageId": "JernejSimoncic.Wget",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "JernejSimoncic.Wget",
+            "command": "winget install --id JernejSimoncic.Wget --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "JernejSimoncic.Wget",
+            "command": "winget upgrade --id JernejSimoncic.Wget --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "executableAliases": [
+        "wget"
+      ],
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "cross-platform",
+        "downloader",
+        "open-source"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-055; PackageIdentifier JernejSimoncic.Wget; Publisher Jernej Simoncic; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/JernejSimoncic/Wget/1.21.4/JernejSimoncic.Wget.locale.en-US.yaml SHA-256 ab9eb574778beab687fc9d90a13dc5928a41b6076d215c5bf320f1cd782d86d5; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "network.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/network.yml"
+    },
+    {
+      "id": "winapp",
+      "name": "Windows App Development CLI",
+      "description": "CLI for Windows app development, including package identity, packaging, managing appxmanifest.xml, test certificates, Windows (App) SDK projections, and more. For use with any app framework targeting Windows",
+      "productKind": "cli",
+      "category": "tools",
+      "tier": "optional",
+      "command": "winapp",
+      "website": "https://github.com/microsoft/WinAppCli",
+      "repository": "https://github.com/microsoft/WinAppCli",
+      "wingetId": "Microsoft.WinAppCli",
+      "packageId": "Microsoft.WinAppCli",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Microsoft.WinAppCli",
+            "command": "winget install --id Microsoft.WinAppCli --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "Microsoft.WinAppCli",
+            "command": "winget upgrade --id Microsoft.WinAppCli --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "executableAliases": [
+        "winapp",
+        "winapparm64"
+      ],
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "cli",
+        "electron",
+        "identity",
+        "msix",
+        "winappsdk",
+        "windev",
+        "windows",
+        "windows-development",
+        "windows-sdk",
+        "windows-app-sdk",
+        "appxmanifest",
+        "dotnet"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-022; PackageIdentifier Microsoft.WinAppCli; Publisher Microsoft Corporation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/Microsoft/WinAppCli/0.7.0/Microsoft.WinAppCli.locale.en-US.yaml SHA-256 cad71e950273e8d1ec3669b0c7c355fcb00fb2009d34d07100a45caf5e86f028; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "tools.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "winget",
       "name": "Windows Package Manager",
       "description": "Windows-Paketmanager für reproduzierbare CLI- und Desktop-Installationen über Paket-IDs.",
-      "category": "foundation",
+      "category": "base",
       "tier": "required-windows",
       "command": "winget",
       "website": "https://learn.microsoft.com/windows/package-manager/winget/",
@@ -5430,14 +7498,67 @@
       "provenance": [
         "Registry-Erweiterung; keine WingetIds.yml-Zeile erforderlich."
       ],
-      "catalogFile": "foundation.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+      "catalogFile": "base.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/base.yml"
+    },
+    {
+      "id": "windows-sdk-28000",
+      "name": "Windows Software Development Kit - Windows 10.0.28000.1721",
+      "description": "The Windows SDK (10.0.28000) for Windows 11 contains the latest platform headers, libraries, WinRT metadata, and build tools required to develop Windows applications.",
+      "productKind": "package",
+      "category": "lang",
+      "tier": "optional",
+      "website": "https://learn.microsoft.com/en-us/windows/apps/windows-sdk/downloads#windows-11",
+      "repository": null,
+      "wingetId": "Microsoft.WindowsSDK.10.0.28000",
+      "packageId": "Microsoft.WindowsSDK.10.0.28000",
+      "packageSource": "winget",
+      "platforms": [
+        "windows"
+      ],
+      "packageManager": {
+        "preferred": {
+          "windows": "winget"
+        }
+      },
+      "install": {
+        "windows": {
+          "winget": {
+            "id": "Microsoft.WindowsSDK.10.0.28000",
+            "command": "winget install --id Microsoft.WindowsSDK.10.0.28000 --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "update": {
+        "windows": {
+          "winget": {
+            "id": "Microsoft.WindowsSDK.10.0.28000",
+            "command": "winget upgrade --id Microsoft.WindowsSDK.10.0.28000 --exact --accept-package-agreements --accept-source-agreements"
+          }
+        }
+      },
+      "useDefaultCliCommands": false,
+      "robotMode": {
+        "supported": false
+      },
+      "completions": {},
+      "tags": [
+        "windows-sdk",
+        "sdk",
+        "development"
+      ],
+      "notes": [],
+      "provenance": [
+        "Winget W-021; PackageIdentifier Microsoft.WindowsSDK.10.0.28000; Publisher Microsoft Corporation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/Microsoft/WindowsSDK/10/0/28000/10.0.28000.2526/Microsoft.WindowsSDK.10.0.28000.locale.en-US.yaml SHA-256 2633d7aa58b4c0ad543b98d38ade3e538a25f1a9757c1e390837409ee5407e92; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
+      ],
+      "catalogFile": "lang.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "wsl2",
       "name": "Windows Subsystem for Linux 2",
       "description": "Linux-Umgebung unter Windows; für ACFS und Linux-first Agent-Tooling wird Ubuntu unter WSL2 empfohlen.",
-      "category": "foundation",
+      "category": "base",
       "tier": "required-acfs-on-windows",
       "command": "wsl",
       "website": "https://learn.microsoft.com/windows/wsl/",
@@ -5480,14 +7601,14 @@
       ],
       "notes": [],
       "provenance": [],
-      "catalogFile": "foundation.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/foundation.yml"
+      "catalogFile": "base.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/base.yml"
     },
     {
       "id": "xf",
       "name": "XF",
       "description": "High-performance local search over X/Twitter archive data.",
-      "category": "agentic",
+      "category": "agents",
       "tier": "recommended-agent",
       "command": "xf",
       "website": "https://github.com/Dicklesworthstone/xf",
@@ -5547,14 +7668,15 @@
         "search",
         "archive",
         "twitter",
-        "x"
+        "x",
+        "flywheel"
       ],
       "notes": [],
       "provenance": [
         "Dicklesworthstone Flywheel profile and XF upstream guidance verified 2026-09-16."
       ],
-      "catalogFile": "agentic-flywheel.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agentic-flywheel.yml"
+      "catalogFile": "agents.yml",
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
     }
   ]
 }

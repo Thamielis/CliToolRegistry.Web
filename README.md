@@ -18,9 +18,9 @@ Die Website lädt den erzeugten Katalog beim Start und beim manuellen Neuladen
 und hält den letzten erfolgreichen Stand im Browsercache. Der Export ist Teil
 der veröffentlichten Website und damit für deren Besucher sichtbar.
 
-Der GitHub-Pages-Workflow prüft alle sechs Stunden auf einen neuen Stand in
-CliToolRegistry. Dafür muss im Web-Repository das Secret
-`CLI_TOOL_REGISTRY_READ_TOKEN` mit lesendem Zugriff auf das private
+Der GitHub-Pages-Workflow synchronisiert alle sechs Stunden den aktuellen Stand
+aus dem `develop`-Branch von CliToolRegistry. Dafür muss im Web-Repository das
+Secret `CLI_TOOL_REGISTRY_READ_TOKEN` mit lesendem Zugriff auf das private
 CliToolRegistry-Repository hinterlegt sein. Ohne dieses Secret verwendet der
 Workflow den zuletzt gespeicherten Export; lokal aktualisiert `npm run sync:catalog`
 den Export aus dem benachbarten Repository.

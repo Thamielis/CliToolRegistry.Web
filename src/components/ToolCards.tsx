@@ -60,7 +60,7 @@ function ToolCard({ tool, enhanced, activePlatform, selected, explorerManifest, 
         {enhanced && (
           <div className="tool-card-commands">
             <div className="card-command-heading"><span>{t('commandColumn')}</span><code>{tool.id}</code></div>
-            <CommandBlock command={tool.command} />
+            {tool.command ? <CommandBlock command={tool.command} /> : <p className="muted-value">{t('commandNotListed')}</p>}
             <div className="card-command-heading">
               <span>{t('installColumn')}</span>
               {activePlatform === 'all' && tool.platforms.length > 0 ? (

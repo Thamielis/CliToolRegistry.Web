@@ -1,5 +1,5 @@
 import type { MouseEvent as ReactMouseEvent } from 'react'
-import type { CliTool, ToolPlatform } from '../types/app'
+import type { CliTool, ToolCheck, ToolPlatform } from '../types/app'
 import { useLocale } from '../i18n/LocaleContext'
 import { categoryLabel, platformLabel, tierLabel } from '../i18n/catalogLabels'
 import { getPlatformCommand } from '../data/loadApps'
@@ -42,13 +42,15 @@ function CommandSection({
   command,
 }: {
   label: string
-  command: string | null
+  command: ToolCheck | null
 }) {
   if (!command) return null
   return (
     <div className="detail-command">
       <span>{label}</span>
-      <CommandBlock command={command} />
+      {typeof command === 'string'
+        ? <CommandBlock command={command} />
+        : <pre className="detail-structured-command">{JSON.stringify(command, null, 2)}</pre>}
     </div>
   )
 }

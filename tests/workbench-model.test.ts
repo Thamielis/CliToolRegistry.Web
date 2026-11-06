@@ -20,6 +20,22 @@ const tool = (id: string, changes: Partial<CliTool> = {}): CliTool => ({ id, nam
   category: 'terminal', tier: 'optional', platforms: ['linux'], catalogFile: 'tools.yml', catalogUrl: 'https://example.com/tools.yml', ...changes })
 const snapshot = (tools: CliTool[]): CatalogSnapshot => ({ tools, fileCount: 1, loadedAt: '2026-10-09T00:00:00Z' })
 
+test('catalog snapshots accept tools without a declared primary command', () => {
+  const explicitNull = tool('null-command', { command: null })
+  const missing = tool('missing-command')
+  delete missing.command
+  assert.equal(isCatalogSnapshot(snapshot([explicitNull, missing])), true)
+  assert.equal(isCatalogSnapshot(snapshot([tool('invalid-command', { command: 42 as unknown as string })])), false)
+})
+
+test('catalog snapshots accept structured health checks and reject unsupported values', () => {
+  const structured = tool('structured-check', {
+    healthCheck: { linux: { commandName: '/bin/bash', arguments: ['-c', 'check'] } },
+  })
+  assert.equal(isCatalogSnapshot(snapshot([structured])), true)
+  assert.equal(isCatalogSnapshot(snapshot([tool('invalid-check', { healthCheck: 42 as unknown as string })])), false)
+})
+
 test('URL state round-trips, preserves unrelated parameters and bounds malformed input', () => {
   const state = parseNavigation('?section=dependencies&tool=git&q=a%26b&category=terminal&platform=linux&sort=category&view=list&count=96')
   const url = navigationUrl(state, 'https://example.com/CliToolRegistry.Web/?campaign=docs#old')

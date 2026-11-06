@@ -65,7 +65,7 @@ export function ToolTable({
                   <ExplorerToolLink tool={tool} manifest={explorerManifest} onExplore={onExplore} />
                 </td>
                 <td data-label={t('commandColumn')}>
-                  <CommandBlock command={tool.command} compact />
+                  {tool.command ? <CommandBlock command={tool.command} compact /> : <span className="muted-value">{t('commandNotListed')}</span>}
                 </td>
                 <td data-label={t('categoryColumn')}>
                   <span className={'category-label category-' + tool.category.replaceAll(/[^a-z0-9-]/gi, '-')}>

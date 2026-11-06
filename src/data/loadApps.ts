@@ -25,8 +25,9 @@ export function isCatalogSnapshot(value: unknown): value is CatalogSnapshot {
     try { return ['http:', 'https:'].includes(new URL(link).protocol) } catch { return false }
   }
   return value.tools.every((tool) => {
-    if (!isRecord(tool) || !['id', 'name', 'description', 'category', 'tier', 'command', 'catalogFile', 'catalogUrl']
+    if (!isRecord(tool) || !['id', 'name', 'description', 'category', 'tier', 'catalogFile', 'catalogUrl']
       .every((key) => typeof tool[key] === 'string') || !tool.id || ids.has(tool.id as string) ||
+      (tool.command !== undefined && tool.command !== null && typeof tool.command !== 'string') ||
       !Array.isArray(tool.platforms) || !tool.platforms.every((p) => ['windows', 'linux', 'wsl2', 'macos'].includes(p)) ||
       !strings(tool.tags) || !strings(tool.notes) || !safeLink(tool.website) || !safeLink(tool.repository) ||
       !safeLink(tool.catalogUrl)) return false
@@ -36,7 +37,7 @@ export function isCatalogSnapshot(value: unknown): value is CatalogSnapshot {
       if (tool[key] != null && !isRecord(tool[key])) return false
     }
     for (const key of ['healthCheck', 'versionCommand', 'capabilitiesCommand']) {
-      if (tool[key] != null && typeof tool[key] !== 'string') return false
+      if (tool[key] != null && typeof tool[key] !== 'string' && !isRecord(tool[key])) return false
     }
     ids.add(tool.id as string)
     return true

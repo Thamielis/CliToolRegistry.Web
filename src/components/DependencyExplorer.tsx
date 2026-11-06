@@ -83,7 +83,7 @@ export default function DependencyExplorer({ tools, selectedId, onSelect, onFocu
         </div>
         <footer className="graph-caption"><span>{t('graphCap')}</span><span>{related.length} {t('navDependencies')}</span></footer>
       </div>
-      <aside className="workbench-panel graph-focus"><AppIcon app={focus} className="graph-focus-logo" /><span className="section-eyebrow">{t('graphChoose')}</span><h2>{focus.name}</h2><code>{focus.command}</code><p>{focus.description}</p>
+      <aside className="workbench-panel graph-focus"><AppIcon app={focus} className="graph-focus-logo" /><span className="section-eyebrow">{t('graphChoose')}</span><h2>{focus.name}</h2>{focus.command ? <code>{focus.command}</code> : <span className="muted-value">{t('commandNotListed')}</span>}<p>{focus.description}</p>
         <button className="workbench-button primary" data-history-focus-key={'dependency-focus:' + focus.id}
           onClick={(event) => onSelect(focus.id, event.currentTarget)}>{t('details')} <span aria-hidden="true">↗</span></button>
         {!related.length && <p>{t('graphEmpty')}</p>}
