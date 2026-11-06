@@ -100,7 +100,6 @@ Simple Icons wurde ebenfalls geprüft. Seine Paketlizenz ist kein pauschaler Nac
 | `oracle` | fallback | `public/registry-catalog.json` → Website/Repository | Kein Icon mit für diese Darstellung belegten Nutzungsangaben übernommen; Initialen |
 | `pandoc` | project-logo | Pandoc Logo, siehe oben | `pandoc.svg`; CC BY-SA 4.0, Quellenhinweis steht oben |
 | `powershell7` | project-logo | Bestehender lokaler Bestand, siehe oben | `PowerShell.png`; Herkunft/Nutzungsnachweis nicht dokumentiert |
-
 | `python3` | project-logo | Python.org, siehe oben | `python.svg`; ™ und Nichtzugehörigkeitshinweis im Footer |
 | `rch` | fallback | [remote_compilation_helper](https://github.com/Dicklesworthstone/remote_compilation_helper) | Repository ohne belegte Bildmarke/Nutzungsangaben; Initialen |
 | `ru` | fallback | `public/registry-catalog.json` → Website/Repository | Eigenes Projekt; keine belegte Bildmarke gefunden; Initialen |
