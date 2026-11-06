@@ -172,6 +172,21 @@ test('invalid UTF-8 and malformed JSON are ignored and never produce public entr
   })
 })
 
+test('source read failures abort manifest generation instead of becoming ignored JSON', async () => {
+  await withDirectory(async (directory) => {
+    await addJson(directory, 'sample.json', { readable: true })
+    const readFailure = Object.assign(new Error('permission denied'), { code: 'EACCES' })
+    await assert.rejects(
+      buildExplorerManifest({
+        registry: fixtureRegistry(),
+        sourceDirectory: directory,
+        readSourceFile: async () => { throw readFailure },
+      }),
+      (error: unknown) => error === readFailure,
+    )
+  })
+})
+
 test('missing registered files and valid unregistered JSON fail generation', async () => {
   await withDirectory(async (directory) => {
     await addJson(directory, 'extra.json', { visible: false })
@@ -262,6 +277,16 @@ test('generic reader supports scalar roots, bounded result pages, and subtrees',
   assert.equal(subtree.totalEntries, 2)
   assert.equal(subtree.hasMore, true)
   assert.equal(projectGenericJson(source, 'sample.json', { rootPointer: '/missing' }).totalEntries, 0)
+})
+
+test('generic reader makes empty object and array roots addressable', () => {
+  for (const [source, text] of [[{}, '{}'], [[], '[]']] as const) {
+    const projection = projectGenericJson(source, 'empty.json')
+    assert.equal(projection.totalEntries, 1)
+    assert.equal(projection.entries[0].origin.pointer, '')
+    assert.equal(projection.entries[0].id, 'ptr:')
+    assert.ok(projection.entries[0].searchText.includes(text))
+  }
 })
 
 test('generic traversal handles deep input iteratively and keeps long pointers in provenance', () => {

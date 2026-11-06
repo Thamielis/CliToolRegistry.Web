@@ -108,7 +108,7 @@ test('manifest bindings are checked against the registry before any source reque
   assert.equal(calls.length, 1)
 })
 
-test('a refreshed manifest snapshot cannot reuse an old ViewModel provenance value', async () => {
+test('a refreshed manifest snapshot updates cached provenance and date diagnostics', async () => {
   const sourceBytes = await readFile(join(sourceDirectory, brEntry.filename))
   let currentManifest = manifestFixture
   let sourceRequests = 0
@@ -122,16 +122,29 @@ test('a refreshed manifest snapshot cannot reuse an old ViewModel provenance val
   const initial = await instance.loadDataset(brRef)
   assert.equal(initial.status, 'ready')
 
-  const updatedSnapshot = {
+  const invalidSnapshot = {
     ...brEntry.snapshot,
     version: { state: 'value' as const, value: 'refreshed-snapshot', pointer: '/version' },
+    generatedAt: { state: 'value' as const, value: 'not-a-date', pointer: '/generated_at' },
   }
-  currentManifest = manifestWithEntry({ snapshot: updatedSnapshot })
+  currentManifest = manifestWithEntry({ snapshot: invalidSnapshot })
   await instance.loadManifest({ refresh: true })
-  const refreshed = await instance.loadDataset(brRef)
+  const invalidRefresh = await instance.loadDataset(brRef)
 
-  assert.equal(refreshed.status, 'ready')
-  assert.deepEqual(refreshed.status === 'ready' && refreshed.dataset.snapshot.version, updatedSnapshot.version)
+  assert.equal(invalidRefresh.status, 'ready')
+  assert.deepEqual(invalidRefresh.status === 'ready' && invalidRefresh.dataset.snapshot.version, invalidSnapshot.version)
+  assert.ok(invalidRefresh.status === 'ready' && invalidRefresh.dataset.diagnostics.some(({ code }) => code === 'InvalidSnapshotDate'))
+
+  const validSnapshot = {
+    ...invalidSnapshot,
+    generatedAt: { state: 'value' as const, value: '2026-10-01T00:00:00Z', pointer: '/generated_at' },
+  }
+  currentManifest = manifestWithEntry({ snapshot: validSnapshot })
+  await instance.loadManifest({ refresh: true })
+  const validRefresh = await instance.loadDataset(brRef)
+  assert.equal(validRefresh.status, 'ready')
+  assert.deepEqual(validRefresh.status === 'ready' && validRefresh.dataset.snapshot.generatedAt, validSnapshot.generatedAt)
+  assert.equal(validRefresh.status === 'ready' && validRefresh.dataset.diagnostics.some(({ code }) => code === 'InvalidSnapshotDate'), false)
   assert.equal(sourceRequests, 1)
 })
 

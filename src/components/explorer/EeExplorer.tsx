@@ -296,7 +296,7 @@ function EeDetails({ props, copy }: { props: DatasetViewProps; copy: Copy }) {
   return <aside className="explorer-details" aria-label={selectedEntry?.title ?? manifestEntry.filename}>
     <header className="explorer-details-header"><div>
       <span className="section-eyebrow">{selectedEntry ? copy.pointer : copy.file}</span>
-      <h2 tabIndex={-1} data-navigation-entry-heading data-history-focus-key={selectedEntry ? `explorer-entry:${selectedEntry.id}` : 'explorer-source'}>
+      <h2 tabIndex={-1} data-navigation-entry-heading data-history-focus-key={selectedEntry ? `explorer-detail:${selectedEntry.id}` : 'explorer-source-heading'}>
         {selectedEntry?.title ?? labels.rawPreview}
       </h2>
     </div>

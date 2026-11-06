@@ -22,6 +22,7 @@ export type DatasetViewProps = {
   entries: ExplorerEntry[]
   matchingCount: number
   selectedEntry: ExplorerEntry | null
+  toolDatasets: ManifestEntry[]
   locale: Locale
   labels: Record<ExplorerLabelKey, string>
   onAction: (action: ExplorerNavigationAction) => void
@@ -75,17 +76,18 @@ function JsonTree({
   const children: [string, JsonValue][] = Array.isArray(value)
     ? value.map((item, index) => [String(index), item])
     : isRecord(value) ? Object.entries(value) : []
+  if (budget.remaining <= 0) return <span className="explorer-json-scalar" aria-label={labels.treeLimited}>…</span>
+  budget.remaining -= 1
   if (children.length === 0) {
     return <code className="explorer-json-scalar">{highlighted(valueText(value), query, locale)}</code>
   }
-  if (budget.remaining <= 0) return <span className="explorer-json-scalar" aria-label={labels.treeLimited}>…</span>
   if (depth >= 6) {
-    return <button type="button" className="quiet-button explorer-subtree-button" onClick={() => onOpenSubtree(pointer)}>
+    return <button type="button" className="quiet-button explorer-subtree-button"
+      data-history-focus-key={`explorer-entry:ptr:${pointer}`} onClick={() => onOpenSubtree(pointer)}>
       {labels.openSubtree} <code>{pointer || '/'}</code>
     </button>
   }
-  budget.remaining -= 1
-  const shownChildren = children.slice(0, Math.max(1, budget.remaining))
+  const shownChildren = children.slice(0, budget.remaining)
   return <details className="explorer-json-node" open={depth < 2}>
     <summary><code>{Array.isArray(value) ? `[${children.length}]` : `{${children.length}}`}</code></summary>
     <ul>
@@ -106,7 +108,7 @@ export function ExplorerDetails({ props }: { props: DatasetViewProps }) {
   const { labels, locale, manifestEntry, sourceValue, sourceBytes, selectedEntry, navigation, onAction } = props
   const pointer = selectedEntry?.detail.kind === 'generic' ? selectedEntry.detail.rootPointer : ''
   const resolved = pointer ? resolveJsonPointer(sourceValue, pointer) : { state: 'value' as const, value: sourceValue }
-  const previewValue = resolved.state === 'value' ? resolved.value : sourceValue
+  const previewValue = resolved.state === 'value' ? resolved.value : resolved.state === 'null' ? null : sourceValue
   const previewText = JSON.stringify(previewValue, null, 2) ?? 'null'
   const limitedPreview = previewText.length > 20_000
   const metadata = manifestEntry.snapshot
@@ -120,7 +122,7 @@ export function ExplorerDetails({ props }: { props: DatasetViewProps }) {
     <header className="explorer-details-header">
       <div>
         <span className="section-eyebrow">{labels.filename}</span>
-        <h2 data-navigation-entry-heading tabIndex={-1} data-history-focus-key={selectedEntry ? `explorer-entry:${selectedEntry.id}` : 'explorer-source'}>
+        <h2 data-navigation-entry-heading tabIndex={-1} data-history-focus-key={selectedEntry ? `explorer-detail:${selectedEntry.id}` : 'explorer-source-heading'}>
           {selectedEntry?.title ?? labels.rawPreview}
         </h2>
       </div>

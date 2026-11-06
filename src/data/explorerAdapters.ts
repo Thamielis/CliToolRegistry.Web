@@ -183,7 +183,7 @@ export function projectGenericJson(
 
   while (stack.length > 0) {
     const current = stack.pop()!
-    if (Array.isArray(current.value)) {
+    if (Array.isArray(current.value) && current.value.length > 0) {
       for (let index = current.value.length - 1; index >= 0; index -= 1) {
         const segment = String(index)
         const depth = current.depth + 1
@@ -201,20 +201,22 @@ export function projectGenericJson(
     }
     if (isJsonObject(current.value)) {
       const keys = Object.keys(current.value)
-      for (let index = keys.length - 1; index >= 0; index -= 1) {
-        const segment = keys[index]
-        const depth = current.depth + 1
-        const targetPrefix = current.targetPrefix && current.depth < targetSegments.length &&
-          segment === targetSegments[current.depth]
-        stack.push({
-          value: current.value[segment],
-          path: { parent: current.path, segment },
-          depth,
-          targetPrefix,
-          insideTarget: current.insideTarget || targetPrefix && depth === targetSegments.length,
-        })
+      if (keys.length > 0) {
+        for (let index = keys.length - 1; index >= 0; index -= 1) {
+          const segment = keys[index]
+          const depth = current.depth + 1
+          const targetPrefix = current.targetPrefix && current.depth < targetSegments.length &&
+            segment === targetSegments[current.depth]
+          stack.push({
+            value: current.value[segment],
+            path: { parent: current.path, segment },
+            depth,
+            targetPrefix,
+            insideTarget: current.insideTarget || targetPrefix && depth === targetSegments.length,
+          })
+        }
+        continue
       }
-      continue
     }
 
     const ordinal = sourceOrdinal
@@ -232,7 +234,9 @@ export function projectGenericJson(
       id: entryId,
       sectionId,
       title: current.path?.segment ?? '$',
-      searchText: `${pointer} ${scalarText(current.value)}`.trim(),
+      searchText: `${pointer} ${typeof current.value === 'object' && current.value !== null
+        ? JSON.stringify(current.value)
+        : scalarText(current.value)}`.trim(),
       origin: { filename, pointer },
       detail: { kind: 'generic', rootPointer: pointer },
     })
@@ -540,7 +544,7 @@ function sourceStringPresence(source: UnknownRecord, key: string): Presence<stri
   return presenceFromObject<string>(source as JsonObject, key)
 }
 
-function snapshotDateDiagnostic(snapshot: SnapshotMeta): AdapterDiagnostic[] {
+export function snapshotDateDiagnostic(snapshot: SnapshotMeta): AdapterDiagnostic[] {
   if (snapshot.generatedAt.state !== 'value' || Number.isFinite(Date.parse(snapshot.generatedAt.value))) return []
   return [localizedDiagnostic('InvalidSnapshotDate', snapshot.generatedAt.pointer, {
     de: 'Der Zeitstempel ist im Snapshot als Rohwert erhalten, lässt sich aber nicht als Datum lesen.',
@@ -868,6 +872,19 @@ function addExampleEntry(
   })
 }
 
+function rawEntryId(pointer: string, ordinal: number): string {
+  if (pointer.length + 4 <= 2048 && !hasUnpairedSurrogate(pointer)) return `raw:${pointer}`
+  if (hasUnpairedSurrogate(pointer)) {
+    let codeUnits = ''
+    for (let index = 0; index < pointer.length; index += 1) {
+      codeUnits += pointer.charCodeAt(index).toString(16).padStart(4, '0')
+    }
+    const encoded = `raw:u16:${codeUnits}`
+    if (encoded.length <= 2048) return encoded
+  }
+  return `raw:node:${ordinal}`
+}
+
 function addGenericExtras(builder: AdapterBuilder, source: JsonValue, knownKeys: string[], parentPointer = ''): void {
   // Every specialized source gets a complete raw-search section, even when it
   // has no unknown top-level fields. Fachansichten keep their own entries and
@@ -877,9 +894,10 @@ function addGenericExtras(builder: AdapterBuilder, source: JsonValue, knownKeys:
     section = ensureSection(builder, 'json')
     const projection = projectGenericJson(builder.source, builder.filename)
     for (const [index, entry] of projection.entries.entries()) {
-      entry.id = entry.origin.pointer.length + 4 > 2048
-        ? `raw:node:${index}`
-        : `raw:${entry.origin.pointer}`
+      let id = rawEntryId(entry.origin.pointer, index)
+      let collision = index
+      while (builder.usedIds.has(id)) id = rawEntryId(entry.origin.pointer, projection.entries.length + ++collision)
+      entry.id = id
       section.entryIds.push(entry.id)
       builder.usedIds.add(entry.id)
       builder.entries.push(entry)
@@ -894,8 +912,9 @@ function addGenericExtras(builder: AdapterBuilder, source: JsonValue, knownKeys:
       const pointer = pointerAt(parentPointer, key)
       const projectionAtPointer = projectGenericJson(builder.source, builder.filename, { rootPointer: pointer })
       if (projectionAtPointer.totalEntries !== 0) continue
-      const id = `raw:${pointer}`
-      if (builder.usedIds.has(id)) continue
+      let id = rawEntryId(pointer, builder.entries.length)
+      let collision = builder.entries.length
+      while (builder.usedIds.has(id)) id = rawEntryId(pointer, ++collision)
       section.entryIds.push(id)
       builder.usedIds.add(id)
       builder.entries.push({

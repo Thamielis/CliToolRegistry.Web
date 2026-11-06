@@ -232,7 +232,7 @@ function BrBvEntryDetails({ props, copy }: { props: DatasetViewProps; copy: Copy
   const { selectedEntry, manifestEntry, sourceValue, sourceBytes, locale, labels, onAction } = props
   const detail = selectedEntry?.detail
   const pointerValue = selectedEntry ? resolveJsonPointer(sourceValue, selectedEntry.origin.pointer) : null
-  const rawValue = pointerValue?.state === 'value' ? pointerValue.value : sourceValue
+  const rawValue = pointerValue?.state === 'value' ? pointerValue.value : pointerValue?.state === 'null' ? null : sourceValue
   const rawText = JSON.stringify(rawValue, null, 2) ?? 'null'
   const sourcedMeta = [
     manifestEntry.snapshot.version.state === 'value' ? [labels.version, manifestEntry.snapshot.version.value] : null,
@@ -311,7 +311,7 @@ function BrBvEntryDetails({ props, copy }: { props: DatasetViewProps; copy: Copy
     <header className="explorer-details-header"><div>
       <span className="section-eyebrow">{selectedEntry ? copy.sourcePointer : labels.filename}</span>
       <h2 tabIndex={-1} data-navigation-entry-heading
-        data-history-focus-key={selectedEntry ? `explorer-entry:${selectedEntry.id}` : 'explorer-source'}>
+        data-history-focus-key={selectedEntry ? `explorer-detail:${selectedEntry.id}` : 'explorer-source-heading'}>
         {selectedEntry?.title ?? labels.rawPreview}
       </h2>
     </div>
@@ -352,11 +352,12 @@ export function BrBvExplorer(props: DatasetViewProps) {
   const count = copy.count.replace('{shown}', String(entries.length)).replace('{total}', String(matchingCount))
   const isBr = manifestEntry.toolId === 'br'
   const currentDatasetId = manifestEntry.datasetId
-  const relatedLinks = isBr
-    ? [datasetLink(props, 'robot-docs', copy.brGuide, currentDatasetId === 'robot-docs'),
-      datasetLink(props, 'capabilities', copy.brCapabilities, currentDatasetId === 'capabilities')]
-    : [datasetLink(props, 'robot-docs', copy.bvGuide, currentDatasetId === 'robot-docs'),
-      datasetLink(props, 'capabilities', copy.bvCapabilities, currentDatasetId === 'capabilities')]
+  const publishedDatasetIds = new Set(props.toolDatasets.map(({ datasetId }) => datasetId))
+  const relatedLinks = (isBr
+    ? [{ id: 'robot-docs', title: copy.brGuide }, { id: 'capabilities', title: copy.brCapabilities }]
+    : [{ id: 'robot-docs', title: copy.bvGuide }, { id: 'capabilities', title: copy.bvCapabilities }])
+    .filter(({ id }) => publishedDatasetIds.has(id))
+    .map(({ id, title }) => datasetLink(props, id, title, currentDatasetId === id))
 
   return <>
     <nav aria-label={copy.relatedSources} className="explorer-section-tabs">{relatedLinks}</nav>

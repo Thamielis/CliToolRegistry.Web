@@ -69,6 +69,7 @@ export async function buildExplorerManifest({
   registry,
   sourceDirectory: inputDirectory,
   readDirectory = (directory) => readdir(directory, { withFileTypes: true }),
+  readSourceFile = (path) => readFile(path),
 }) {
   const diagnostics = validateExplorerRegistry(registry)
   if (diagnostics.length > 0) return { manifest: null, diagnostics: sortDiagnostics([...diagnostics]) }
@@ -92,10 +93,9 @@ export async function buildExplorerManifest({
     }
     presentNames.add(entry.name)
 
-    let bytes
+    const bytes = await readSourceFile(resolve(inputDirectory, entry.name))
     let parsed
     try {
-      bytes = await readFile(resolve(inputDirectory, entry.name))
       const text = new TextDecoder('utf-8', { fatal: true }).decode(bytes)
       parsed = JSON.parse(text)
     } catch (error) {

@@ -7,7 +7,7 @@ import type {
   ManifestEntry,
 } from '../types/explorer'
 import rawRegistry from './explorerRegistry.json' with { type: 'json' }
-import { adaptExplorerDataset } from './explorerAdapters.ts'
+import { adaptExplorerDataset, snapshotDateDiagnostic } from './explorerAdapters.ts'
 import { isSafeExplorerFilename, validateExplorerRegistry } from './explorerRegistryValidation.mjs'
 
 const registryDiagnostics = validateExplorerRegistry(rawRegistry)
@@ -351,7 +351,14 @@ export class ExplorerLoader {
       const cachedRaw = this.rawCache.get(rawCacheIdentity(entry))
       if (cachedModel && cachedRaw) {
         if (!this.isCurrentDatasetRequest(requestId, manifestEpoch)) return { status: 'stale', ...identity }
-        const dataset = { ...cachedModel, snapshot: entry.snapshot }
+        const dataset = {
+          ...cachedModel,
+          snapshot: entry.snapshot,
+          diagnostics: [
+            ...cachedModel.diagnostics.filter(({ code }) => code !== 'InvalidSnapshotDate'),
+            ...snapshotDateDiagnostic(entry.snapshot),
+          ],
+        }
         this.viewModelCache.set(viewKey, dataset)
         return {
           status: 'ready', ...identity, manifestEntry: entry,

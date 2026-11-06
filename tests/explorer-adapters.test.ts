@@ -4,7 +4,7 @@ import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { test } from 'node:test'
 import { adaptExplorerDataset, resolveJsonPointer } from '../src/data/explorerAdapters.ts'
-import type { ExplorerDataset, ExplorerEntry, ExplorerManifest, ManifestEntry } from '../src/types/explorer.ts'
+import type { ExplorerDataset, ExplorerEntry, ExplorerManifest, JsonValue, ManifestEntry } from '../src/types/explorer.ts'
 
 const projectRoot = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const manifest = JSON.parse(await readFile(join(projectRoot, 'public/robot-docs.manifest.json'), 'utf8')) as ExplorerManifest
@@ -21,6 +21,17 @@ function dataset(toolId: string, datasetId: string): ManifestEntry {
 
 function entriesIn(datasetValue: ExplorerDataset, sectionId: string): ExplorerEntry[] {
   return datasetValue.entries.filter((entry) => entry.sectionId === sectionId)
+}
+
+function assertStructuredEntriesMatchSource(datasetValue: ExplorerDataset, source: JsonValue, sectionId: string) {
+  const entries = entriesIn(datasetValue, sectionId)
+  assert.ok(entries.length > 0, `${sectionId} has specialized entries`)
+  for (const entry of entries) {
+    const item = detail(entry, 'structured')
+    const resolved = resolveJsonPointer(source, entry.origin.pointer)
+    assert.equal(resolved.state, 'value', `${sectionId} pointer ${entry.origin.pointer} resolves to a value`)
+    assert.deepEqual(item.sourceValue, resolved.value, `${sectionId} preserves the source value at ${entry.origin.pointer}`)
+  }
 }
 
 function detail<T extends ExplorerEntry['detail']['kind']>(entry: ExplorerEntry, kind: T): Extract<ExplorerEntry['detail'], { kind: T }> {
@@ -65,18 +76,35 @@ test('all eight real JSON sources use their declared specialized adapter', async
   assert.ok(brCapabilities)
   assert.equal(entriesIn(brCapabilities, 'commands').length, 46)
   assert.equal(entriesIn(brCapabilities, 'features').length, 5)
+  const brCapabilitiesSource = adapted.find(({ manifestEntry }) => manifestEntry.adapter === 'br-capabilities')?.source
+  assert.ok(brCapabilitiesSource)
+  assertStructuredEntriesMatchSource(brCapabilities, brCapabilitiesSource as JsonValue, 'formats')
+  const brEntrypoints = entriesIn(brCapabilities, 'entrypoints')
+  assert.ok(brEntrypoints.length > 0)
+  for (const entry of brEntrypoints) {
+    const value = resolveJsonPointer(brCapabilitiesSource as JsonValue, entry.origin.pointer)
+    assert.equal(value.state, 'value')
+    assert.deepEqual(detail(entry, 'example').commands, [value.value])
+  }
 
   const bvDocs = adapted.find(({ manifestEntry }) => manifestEntry.adapter === 'bv-docs')?.dataset
   assert.ok(bvDocs)
   assert.equal(entriesIn(bvDocs, 'commands').length, 41)
   assert.equal(entriesIn(bvDocs, 'aliases').length, 18)
   assert.equal(entriesIn(bvDocs, 'examples').length, 10)
+  const bvDocsSource = adapted.find(({ manifestEntry }) => manifestEntry.adapter === 'bv-docs')?.source
+  assert.ok(bvDocsSource)
+  assertStructuredEntriesMatchSource(bvDocs, bvDocsSource as JsonValue, 'formats')
 
   const bvCapabilities = adapted.find(({ manifestEntry }) => manifestEntry.adapter === 'bv-capabilities')?.dataset
   assert.ok(bvCapabilities)
   assert.equal(entriesIn(bvCapabilities, 'commands').length, 41)
   assert.equal(entriesIn(bvCapabilities, 'aliases').length, 18)
   assert.ok(entriesIn(bvCapabilities, 'commands').every(({ origin }) => origin.pointer.startsWith('/commands/')))
+  const bvCapabilitiesSource = adapted.find(({ manifestEntry }) => manifestEntry.adapter === 'bv-capabilities')?.source
+  assert.ok(bvCapabilitiesSource)
+  assertStructuredEntriesMatchSource(bvCapabilities, bvCapabilitiesSource as JsonValue, 'topics')
+  assertStructuredEntriesMatchSource(bvCapabilities, bvCapabilitiesSource as JsonValue, 'formats')
 
   const cass = adapted.find(({ manifestEntry }) => manifestEntry.adapter === 'cass-capabilities')?.dataset
   assert.ok(cass)
@@ -103,6 +131,19 @@ test('all eight real JSON sources use their declared specialized adapter', async
   assert.ok(ubs)
   assert.equal(entriesIn(ubs, 'commands').length, 6)
   assert.equal(entriesIn(ubs, 'flags').length, 45)
+})
+
+test('specialized raw entry IDs encode lone surrogate keys safely and retain the raw namespace', async () => {
+  const entry = dataset('br', 'capabilities')
+  const source = JSON.parse(await readFile(join(projectRoot, 'public/robot-docs', entry.filename), 'utf8')) as Record<string, unknown>
+  source['\ud800'] = 'owner-added'
+  const adapted = adaptExplorerDataset(entry, source as never)
+  const rawEntry = entriesIn(adapted, 'json').find(({ origin }) => origin.pointer === '/\ud800')
+
+  assert.ok(rawEntry)
+  assert.match(rawEntry.id, /^raw:u16:/)
+  assert.equal(new URLSearchParams({ entry: rawEntry.id }).get('entry'), rawEntry.id)
+  assert.ok(entriesIn(adapted, 'commands').some(({ id }) => id.startsWith('cmd:')))
 })
 
 test('unknown contracts and malformed required fields fall back to searchable generic JSON', async () => {

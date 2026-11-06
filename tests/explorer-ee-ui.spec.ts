@@ -102,9 +102,25 @@ test('EE pagination stays in the URL and a new search returns to the first page'
   await page.getByRole('button', { name: 'Weitere Pfade laden' }).click()
   await expect(page).toHaveURL(/docCount=96/)
   await expect(page.locator('.explorer-reader-heading [role=status]')).toContainText('96 von 557 Pfaden')
+  await expect(page.locator('.explorer-entry-button')).toHaveCount(96)
 
   await page.getByRole('searchbox', { name: 'Dateiinhalte durchsuchen' }).fill('backup keys export')
   await expect(page.locator('.explorer-reader-heading [role=status]')).toContainText('1 von 1 Pfaden')
   const url = new URL(page.url())
   expect(Number(url.searchParams.get('docCount') ?? 48)).toBe(48)
+})
+
+test('command-only availability filters do not hide environment entries', async ({ page }) => {
+  await page.goto('./?section=explore&exploreTool=ee&dataset=capabilities&docSection=env&available=yes')
+  await expect(page.locator('.explorer-entry-button').first()).toBeVisible()
+  await expect(page).not.toHaveURL(/available=yes/)
+})
+
+test('final EE page moves focus to its last entry when the load-more control disappears', async ({ page }) => {
+  await page.goto('./?section=explore&exploreTool=ee&dataset=capabilities&docSection=commands&docCount=540')
+  await expect(page.locator('.explorer-entry-button')).toHaveCount(540)
+  await page.getByRole('button', { name: 'Weitere Pfade laden' }).click()
+  await expect(page.locator('.explorer-entry-button')).toHaveCount(557)
+  await expect(page.getByRole('button', { name: 'Weitere Pfade laden' })).toHaveCount(0)
+  await expect(page.locator('.explorer-entry-button').last()).toBeFocused()
 })

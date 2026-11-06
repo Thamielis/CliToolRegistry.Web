@@ -125,10 +125,69 @@ test('dataset retry recovers a temporary transport failure without using chunk r
   await expect(page.locator('.explorer-load-error')).toHaveAttribute('data-error-kind', 'transport')
   const failedAttempts = attempts
   expect(failedAttempts).toBeGreaterThanOrEqual(1)
+  const documentId = await page.evaluate(() => {
+    const id = crypto.randomUUID()
+    document.documentElement.dataset.testDocumentId = id
+    return id
+  })
   recover = true
   await page.getByRole('button', { name: 'Datensatz erneut laden' }).click()
   await expect(page.locator('.explorer-dataset-layout')).toBeVisible()
   expect(attempts).toBeGreaterThan(failedAttempts)
+  await expect.poll(() => page.evaluate(() => document.documentElement.dataset.testDocumentId)).toBe(documentId)
+})
+
+test('back to tool page clears the dataset without triggering the single-dataset redirect again', async ({ page }) => {
+  await page.goto('./?section=explore&exploreTool=fmd&dataset=capabilities')
+  await page.getByRole('button', { name: 'Zur Werkzeugseite' }).click()
+  await expect(page).toHaveURL(/exploreTool=fmd/)
+  await expect(page).not.toHaveURL(/dataset=/)
+  await expect(page.locator('.explorer-tool-heading h2')).toHaveText('FrankenMarkdown')
+  await expect(page.locator('.explorer-source-list')).toBeVisible()
+})
+
+test('generic JSON subtree pointers resolve in the JSON section of a specialized dataset', async ({ page }) => {
+  await page.goto('./?section=explore&exploreTool=br&dataset=capabilities&docSection=json&entry=ptr%3A%2Ftool')
+  await expect(page.locator('.explorer-details')).toContainText('br.capabilities.json')
+  await expect(page.locator('.explorer-entry-origin')).toContainText('/tool')
+  await expect(page.locator('.explorer-raw-preview').last()).toContainText('"br"')
+})
+
+test('JSON previews count scalar leaves against the shared 500-node budget', async ({ page }) => {
+  const manifest = copyManifest()
+  const source = JSON.parse(readFileSync(new URL('../public/robot-docs/fmd.capabilities.json', import.meta.url), 'utf8')) as Record<string, unknown>
+  source.large_values = Array.from({ length: 1000 }, (_, index) => index)
+  const sourceBytes = Buffer.from(JSON.stringify(source))
+  const entry = manifest.datasets.find((dataset) => dataset.toolId === 'fmd' && dataset.datasetId === 'capabilities')!
+  entry.bytes = sourceBytes.byteLength
+  entry.sha256 = createHash('sha256').update(sourceBytes).digest('hex')
+  await page.route('**/robot-docs.manifest.json*', (route) => route.fulfill({ json: manifest }))
+  await page.route(/\/robot-docs\/fmd\.capabilities\.json(?:\?.*)?$/, (route) => route.fulfill({
+    status: 200, headers: { 'content-type': 'application/json' }, body: sourceBytes,
+  }))
+
+  await page.goto('./?section=explore&exploreTool=fmd&dataset=capabilities&docSection=json&entry=ptr%3A%2Flarge_values')
+  await expect(page.locator('.explorer-tree-limit')).toBeVisible()
+  const visibleScalars = await page.locator('.explorer-json-scalar').count()
+  expect(visibleScalars).toBeGreaterThan(0)
+  expect(visibleScalars).toBeLessThanOrEqual(499)
+})
+
+test('a selected null leaf is previewed as null instead of the whole source', async ({ page }) => {
+  const manifest = copyManifest()
+  const source = JSON.parse(readFileSync(new URL('../public/robot-docs/fmd.capabilities.json', import.meta.url), 'utf8')) as Record<string, unknown>
+  source.null_leaf = null
+  const sourceBytes = Buffer.from(JSON.stringify(source))
+  const entry = manifest.datasets.find((dataset) => dataset.toolId === 'fmd' && dataset.datasetId === 'capabilities')!
+  entry.bytes = sourceBytes.byteLength
+  entry.sha256 = createHash('sha256').update(sourceBytes).digest('hex')
+  await page.route('**/robot-docs.manifest.json*', (route) => route.fulfill({ json: manifest }))
+  await page.route(/\/robot-docs\/fmd\.capabilities\.json(?:\?.*)?$/, (route) => route.fulfill({
+    status: 200, headers: { 'content-type': 'application/json' }, body: sourceBytes,
+  }))
+
+  await page.goto('./?section=explore&exploreTool=fmd&dataset=capabilities&docSection=json&entry=ptr%3A%2Fnull_leaf')
+  await expect(page.locator('.explorer-details .explorer-raw-preview').first()).toHaveText('null')
 })
 
 test('a CDN digest conflict blocks source rendering until a refreshed manifest matches the bytes', async ({ page }) => {

@@ -63,6 +63,7 @@ export type ExplorerNavigationAction =
   | { type: 'section'; sectionId: string }
   | { type: 'entry'; entryId: string }
   | { type: 'close-entry' }
+  | { type: 'back-to-tool' }
   | { type: 'search'; value: string }
   | { type: 'filters'; value: ExplorerFilters }
   | { type: 'more'; docCount: number }
@@ -71,6 +72,7 @@ export type NavigationTransition = {
   state: NavigationState
   cause: 'push' | 'replace'
   focusTarget: 'heading' | 'entry' | 'trigger' | 'more' | null
+  focusKey?: string | null
 }
 
 export type WorkbenchHistoryData = {
@@ -336,7 +338,20 @@ export function transitionExplorerNavigation(state: NavigationState, action: Exp
     return { state: applyNavigationPatch(state, { entry: action.entryId }), cause: 'push', focusTarget: 'entry' }
   }
   if (action.type === 'close-entry') {
-    return { state: applyNavigationPatch(state, { entry: null }), cause: 'replace', focusTarget: 'trigger' }
+    return {
+      state: applyNavigationPatch(state, { entry: null }),
+      cause: 'replace',
+      focusTarget: 'trigger',
+      focusKey: state.entry ? `explorer-entry:${state.entry}` : null,
+    }
+  }
+  if (action.type === 'back-to-tool') {
+    return {
+      state: applyNavigationPatch(state, { dataset: null, docSection: null, entry: null }),
+      cause: 'replace',
+      focusTarget: 'heading',
+      focusKey: state.exploreTool ? `explorer-tool-heading:${state.exploreTool}` : null,
+    }
   }
   if (action.type === 'search') {
     const docQ = normalizedDocQuery(action.value)
@@ -358,6 +373,7 @@ export function transitionExplorerNavigation(state: NavigationState, action: Exp
         : DEFAULT_DOC_COUNT,
     }),
     cause: 'replace', focusTarget: 'more',
+    focusKey: 'explorer-more',
   }
 }
 

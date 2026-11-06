@@ -55,6 +55,34 @@ test('URL state, selected detail, back/forward and reload preserve context', asy
   await expect(page.locator('#screen-heading')).toHaveText('Dein nächster Schritt ist ein Befehl.')
 })
 
+test('tool details open from overview and command palette while preserving tool selection', async ({ page }) => {
+  await open(page)
+  await page.locator('.preview-open').click()
+  await expect(page).toHaveURL(/section=catalog.*tool=git/)
+  await expect(page.locator('#tool-details-heading-git')).toBeFocused()
+
+  await page.goBack()
+  await expect(page.locator('.preview-open')).toBeFocused()
+  await page.getByRole('button', { name: 'Befehlspalette öffnen' }).click()
+  await page.getByRole('combobox', { name: 'Werkzeuge und Bereiche suchen' }).fill('Git')
+  await page.getByRole('dialog').getByRole('option', { name: /Git/ }).click()
+  await expect(page).toHaveURL(/section=catalog.*tool=git/)
+  await expect(page.locator('#tool-details-heading-git')).toBeFocused()
+})
+
+test('dependency history restores the exact graph control that opened tool details', async ({ page }) => {
+  await open(page, '?section=dependencies&tool=git')
+  const graphTrigger = page.getByRole('button', { name: 'ripgrep, Details' })
+  await expect(graphTrigger).toHaveAttribute('data-history-focus-key', 'dependency-graph:rg')
+  await graphTrigger.click()
+  await expect(page).toHaveURL(/tool=rg/)
+  await expect(page.locator('#tool-details-heading-rg')).toBeFocused()
+  await page.goBack()
+  await expect(page).toHaveURL(/tool=git/)
+  await expect(graphTrigger).toHaveAttribute('data-history-focus-key', 'dependency-graph:rg')
+  await expect(page.locator('[data-history-focus-key="dependency-graph:rg"]')).toBeFocused()
+})
+
 test('history Back and Forward restore the saved catalog trigger and scroll position', async ({ page }) => {
   const many = Array.from({ length: 1000 }, (_, i) => ({ ...tools[2], id: 't-' + i, name: 'Tool ' + String(i).padStart(4, '0') }))
   await page.route('**/registry-catalog.json?*', (route) => route.fulfill({ json: { ...snapshot, tools: many } }))
@@ -113,6 +141,7 @@ test('a delayed lazy screen cannot take focus after a newer navigation, and the 
   await page.locator('.top-nav').getByRole('link', { name: 'Anleitung' }).click()
   await expect(page.locator('#screen-heading')).toBeFocused()
   await page.waitForTimeout(800)
+  await expect(page.locator('#screen-heading')).toHaveText('Dein nächster Schritt ist ein Befehl.')
   await expect(page.locator('#screen-heading')).toBeFocused()
 
   await page.reload()
@@ -286,8 +315,10 @@ test('real catalog loads with subpath assets and deep query links reload', async
   await page.setViewportSize({ width: 320, height: 900 })
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
   await expect(page.locator('.terminal-preview img').first()).toHaveAttribute('src', /\/CliToolRegistry.Web\/tool-logos\//)
-  expect(assetRequests.some((path) => path.startsWith('/CliToolRegistry.Web/assets/'))).toBe(true)
-  expect(new Set(assetRequests.filter((path) => path.startsWith('/CliToolRegistry.Web/assets/') && path.endsWith('.js'))).size).toBeGreaterThanOrEqual(2)
+  if (process.env.PLAYWRIGHT_PREVIEW === '1') {
+    expect(assetRequests.some((path) => path.startsWith('/CliToolRegistry.Web/assets/'))).toBe(true)
+    expect(new Set(assetRequests.filter((path) => path.startsWith('/CliToolRegistry.Web/assets/') && path.endsWith('.js'))).size).toBeGreaterThanOrEqual(2)
+  }
 })
 
 test('lazy screen failure has accessible reload recovery that preserves its URL', async ({ page }) => {

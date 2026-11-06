@@ -52,6 +52,7 @@ type NavigationRuntime = {
   historyId: string
   ticket: string
   focusTarget: FocusTarget
+  focusKey: string | null
   restorePoint: HistoryMemory | null
   consumed: boolean
 }
@@ -131,7 +132,7 @@ function App() {
   }]]))
   const transitionRef = useRef<NavigationRuntime>({
     cause: 'initial', historyId: initialHistory.historyId,
-    ticket: createNavigationTicket(initialHistory.historyId, 0), focusTarget: null, restorePoint: null, consumed: false,
+    ticket: createNavigationTicket(initialHistory.historyId, 0), focusTarget: null, focusKey: null, restorePoint: null, consumed: false,
   })
   const previousScrollRestoration = useRef<ScrollRestoration>('auto')
   const captureTimer = useRef<number | undefined>(undefined)
@@ -177,7 +178,7 @@ function App() {
     }, 80)
   }
 
-  const commitNavigation = (next: NavigationState, cause: 'push' | 'replace', focusTarget: FocusTarget) => {
+  const commitNavigation = (next: NavigationState, cause: 'push' | 'replace', focusTarget: FocusTarget, focusKey: string | null = null) => {
     const committedNavigation = { ...next, needsReplace: false }
     const url = navigationUrl(committedNavigation, window.location.href)
     let targetHistoryId = historyIdRef.current
@@ -205,6 +206,7 @@ function App() {
     transitionRef.current = {
       cause, historyId: targetHistoryId, ticket,
       focusTarget: focusTarget ?? (committedNavigation.section !== navigationRef.current.section && cause === 'push' ? 'heading' : null),
+      focusKey,
       restorePoint: null,
       consumed: false,
     }
@@ -229,7 +231,7 @@ function App() {
     if (detailsHeading) detailsHeading.dataset.historyFocusKey = `tool-details:${selectedToolId ?? 'unknown'}`
 
     if (runtime.cause === 'push') {
-      const target = runtime.focusTarget === 'entry'
+      const target = runtime.focusKey ? locateFocusKey(runtime.focusKey) : runtime.focusTarget === 'entry'
         ? document.querySelector<HTMLElement>('[data-navigation-entry-heading]') ?? detailsHeading
         : runtime.focusTarget === 'heading' ? heading : null
       if (target) {
@@ -242,6 +244,29 @@ function App() {
       const target = locateFocusKey(point.focusKey) ?? document.getElementById('main-content') as HTMLElement | null ?? heading
       target?.focus({ preventScroll: true })
       window.scrollTo({ top: point.scrollY, behavior: 'instant' })
+    } else if (runtime.cause === 'replace' && runtime.focusTarget) {
+      const focusableEntries = Array.from(document.querySelectorAll<HTMLElement>('[data-history-focus-key]'))
+        .filter((element) => /^(explorer-entry:|tool-trigger:)/.test(element.dataset.historyFocusKey ?? ''))
+      const lastEntry = focusableEntries.at(-1) ?? null
+      const target = runtime.focusTarget === 'trigger'
+        ? locateFocusKey(runtime.focusKey)
+        : runtime.focusTarget === 'more'
+          ? locateFocusKey(runtime.focusKey) ?? locateFocusKey('catalog-more') ?? lastEntry ?? heading
+          : runtime.focusTarget === 'heading'
+            ? locateFocusKey(runtime.focusKey) ?? heading
+            : null
+      if (target) {
+        if (runtime.focusTarget === 'more' && target === lastEntry) {
+          let ancestor = target.parentElement
+          while (ancestor) {
+            if (ancestor instanceof HTMLDetailsElement) ancestor.open = true
+            ancestor = ancestor.parentElement
+          }
+        }
+        target.focus({ preventScroll: true })
+        if (runtime.focusTarget === 'heading') window.scrollTo({ top: 0, behavior: 'instant' })
+        else target.scrollIntoView({ block: 'nearest' })
+      }
     }
 
     runtime.consumed = true
@@ -260,7 +285,7 @@ function App() {
 
   const explorerAction = (action: ExplorerNavigationAction) => {
     const transition = transitionExplorerNavigation(navigationRef.current, action)
-    commitNavigation(transition.state, transition.cause, transition.focusTarget)
+    commitNavigation(transition.state, transition.cause, transition.focusTarget, transition.focusKey ?? null)
   }
 
   const patchExplorerNavigation = (patch: Partial<NavigationState>, cause: 'push' | 'replace' = 'replace') => {
@@ -279,7 +304,8 @@ function App() {
   }
   const selectTool = (tool: CliTool, trigger: HTMLButtonElement) => {
     detailsTrigger.current = trigger
-    trigger.dataset.historyFocusKey = `tool-trigger:${tool.id}`
+    if (!trigger.dataset.historyFocusKey) trigger.dataset.historyFocusKey = `tool-trigger:${tool.id}`
+    trigger.focus({ preventScroll: true })
     const selecting = selectedToolId !== tool.id
     updateNavigation({ tool: selecting ? tool.id : null }, true, selecting ? 'entry' : 'trigger')
   }
@@ -290,8 +316,15 @@ function App() {
 
   const revealTool = (id: string, trigger?: HTMLButtonElement) => {
     detailsTrigger.current = trigger ?? document.getElementById('palette-trigger') as HTMLButtonElement
-    if (detailsTrigger.current) detailsTrigger.current.dataset.historyFocusKey = `tool-trigger:${id}`
-    updateNavigation({ section: 'catalog', tool: id, query: id, category: 'all', platform: 'all', view: 'list', count: 48 }, true, 'entry')
+    if (detailsTrigger.current && !detailsTrigger.current.dataset.historyFocusKey) {
+      detailsTrigger.current.dataset.historyFocusKey = `tool-trigger:${id}`
+    }
+    if (!trigger) detailsTrigger.current?.focus({ preventScroll: true })
+    const next = applyNavigationPatch(navigationRef.current, {
+      section: 'catalog', query: id, category: 'all', platform: 'all', view: 'list', count: 48,
+    })
+    next.tool = id
+    commitNavigation(next, 'push', 'entry')
   }
 
   useEffect(() => {
@@ -322,7 +355,7 @@ function App() {
       const ticket = createNavigationTicket(historyId, ++navigationSequenceRef.current)
       transitionRef.current = {
         cause: 'pop', historyId, ticket, focusTarget: null,
-        restorePoint: point, consumed: false,
+        restorePoint: point, focusKey: null, consumed: false,
       }
       navigationRef.current = next
       setNavigation(next)
@@ -539,7 +572,8 @@ function App() {
         )}
         {cacheWriteFailed && <p className="notice notice-warning" role="status">{t('cacheWriteWarning')}</p>}
         {!snapshot && section !== 'explore' ? <div className="empty-state" aria-busy={isLoading}>{isLoading ? <><span className="loading-indicator" /><p>{t('loadingTools')}</p></> :
-          <><h1 id="screen-heading" tabIndex={-1}>{t('loadErrorTitle')}</h1><p>{t('loadErrorHint')}</p><button className="workbench-button" onClick={refreshCatalog}>{t('retry')}</button></>}</div> : <>
+          <><h1 id="screen-heading" tabIndex={-1}>{t('loadErrorTitle')}</h1><p>{t('loadErrorHint')}</p><button className="workbench-button" onClick={refreshCatalog}>{t('retry')}</button>
+            <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} /></>}</div> : <>
         {section === 'overview' && <>
           <WorkbenchOverview tools={tools} onNavigate={navigate} onTool={revealTool}
             onCategory={(next) => updateNavigation({ section: 'catalog', category: next, query: '', platform: 'all', count: 48, tool: null }, true, 'heading')} />
@@ -554,7 +588,8 @@ function App() {
             {section === 'dependencies' ? <>
               <DependencyExplorer tools={tools} selectedId={selectedToolId} onFocusChange={() => updateNavigation({ tool: null })} onSelect={(id, trigger) => {
               detailsTrigger.current = trigger
-              trigger.dataset.historyFocusKey = `tool-trigger:${id}`
+              if (!trigger.dataset.historyFocusKey) trigger.dataset.historyFocusKey = `tool-trigger:${id}`
+              trigger.focus({ preventScroll: true })
               updateNavigation({ tool: id }, true, 'entry')
               }} />
               <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} />
@@ -676,7 +711,7 @@ function App() {
               onSelect={selectTool} onClose={closeDetails} />
           )}
           {filteredTools.length > 0 && <div className="load-more-region"><p role="status">{t('visibleCount').replace('{shown}', String(visibleTools.length)).replace('{total}', String(filteredTools.length))}</p>
-            {visibleTools.length < filteredTools.length && <button className="workbench-button" data-history-focus-key="catalog-more" onClick={() => updateNavigation({ count: Math.min(count + 48, 10000) })}>{t('loadMore')} <span aria-hidden="true">↓</span></button>}</div>}
+          {visibleTools.length < filteredTools.length && <button className="workbench-button" data-history-focus-key="catalog-more" onClick={() => updateNavigation({ count: Math.min(count + 48, 10000) }, false, 'more')}>{t('loadMore')} <span aria-hidden="true">↓</span></button>}</div>}
         </section>
         <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} />
         </>}

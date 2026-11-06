@@ -64,8 +64,8 @@ test('ubs exposes all documented entry counts without a scan action', async ({ p
   for (const [section, expected] of counts) {
     await page.goto(`./?section=explore&exploreTool=ubs&dataset=robot-docs&docSection=${section}`)
     await expect(page.locator('.explorer-reader-heading [role=status]')).toContainText(expected)
+    await expect(page.getByRole('button', { name: /Scan starten|Start scan/i })).toHaveCount(0)
   }
-  await expect(page.getByRole('button', { name: /Scan starten|Start scan/i })).toHaveCount(0)
 })
 
 test('ubs usage and examples remain exact source strings', async ({ page }) => {
@@ -76,6 +76,13 @@ test('ubs usage and examples remain exact source strings', async ({ page }) => {
   await page.goto('./?section=explore&exploreTool=ubs&dataset=robot-docs&docSection=examples&docQ=two%20changed%20files')
   await page.getByRole('button', { name: 'Scan two changed files, machine-readable, Eintrag öffnen' }).click()
   await expect(page.locator('.explorer-details .command-block code').first()).toHaveText('ubs src/a.ts src/b.py --ci --format=json')
+})
+
+test('FMD exit-code entries do not display UBS-only scan semantics', async ({ page }) => {
+  await page.goto('./?section=explore&exploreTool=fmd&dataset=capabilities&docSection=exit-codes')
+  await page.locator('.explorer-entry-button').first().click()
+  await expect(page.locator('.explorer-details')).not.toContainText('UBS_ALLOW_PARTIAL')
+  await expect(page.locator('.explorer-details')).not.toContainText('Exitcode 3 bedeutet')
 })
 
 test('ubs null flag arguments stay null and never gain a value parameter', async ({ page }) => {

@@ -117,7 +117,11 @@ function DetailsList({ rows }: { rows: { label: string; value: ReactNode }[] }) 
   </dl>
 }
 
-function EntryFields({ entry, copy }: { entry: ExplorerEntry; copy: Copy }): ReactNode {
+function EntryFields({ entry, copy, adapter }: {
+  entry: ExplorerEntry
+  copy: Copy
+  adapter: DatasetViewProps['manifestEntry']['adapter']
+}): ReactNode {
   if (entry.detail.kind === 'example') {
     return <>
       {entry.detail.description.state === 'value' && <DetailsList rows={[{ label: copy.description, value: entry.detail.description.value }]} />}
@@ -152,7 +156,7 @@ function EntryFields({ entry, copy }: { entry: ExplorerEntry; copy: Copy }): Rea
       <h3>{copy.invocations}</h3>
       {entry.detail.copyCommands.map((command, index) => <CommandBlock key={`${entry.id}:${index}`} command={command} />)}
     </section>}
-    {entry.sectionId === 'exit-codes' && <p className="notice notice-warning">{copy.exitSemantics}</p>}
+    {adapter === 'ubs-docs' && entry.sectionId === 'exit-codes' && <p className="notice notice-warning">{copy.exitSemantics}</p>}
   </>
 }
 
@@ -173,7 +177,7 @@ function DetailsPanel({ props, copy }: { props: DatasetViewProps; copy: Copy }) 
   return <aside className="explorer-details" aria-label={selectedEntry?.title ?? manifestEntry.filename}>
     <header className="explorer-details-header"><div>
       <span className="section-eyebrow">{selectedEntry ? copy.sourcePointer : copy.file}</span>
-      <h2 tabIndex={-1} data-navigation-entry-heading data-history-focus-key={selectedEntry ? `explorer-entry:${selectedEntry.id}` : 'explorer-source'}>
+      <h2 tabIndex={-1} data-navigation-entry-heading data-history-focus-key={selectedEntry ? `explorer-detail:${selectedEntry.id}` : 'explorer-source-heading'}>
         {selectedEntry?.title ?? labels.rawPreview}
       </h2>
     </div>
@@ -186,7 +190,7 @@ function DetailsPanel({ props, copy }: { props: DatasetViewProps; copy: Copy }) 
         document, urls: URL, schedule: (callback) => globalThis.setTimeout(callback, 0),
       })}>{copy.download}</button>
     </div>
-    {selectedEntry ? <EntryFields entry={selectedEntry} copy={copy} /> : <p>{copy.choose}</p>}
+    {selectedEntry ? <EntryFields entry={selectedEntry} copy={copy} adapter={manifestEntry.adapter} /> : <p>{copy.choose}</p>}
     <section className="explorer-json-preview">
       <h3>{selectedEntry ? copy.sourceJson : copy.rawPreview}</h3>
       {rawText.length > 20_000 && <p className="notice notice-warning">{copy.limited}</p>}

@@ -210,7 +210,7 @@ function CassDetails({ props, copy, selectedCommand, selectedArgument }: {
   const commandDetail = parentCommand?.detail.kind === 'cass-command' ? parentCommand.detail : null
   const argumentDetail = selectedArgument?.detail.kind === 'cass-argument' ? selectedArgument.detail : null
   const pointed = shownEntry ? resolveJsonPointer(sourceValue, shownEntry.origin.pointer) : null
-  const rawValue = pointed?.state === 'value' ? pointed.value : sourceValue
+  const rawValue = pointed?.state === 'value' ? pointed.value : pointed?.state === 'null' ? null : sourceValue
   const rawText = jsonText(rawValue)
   const metadata = manifestEntry.snapshot
   const snapshotRows = [
@@ -276,7 +276,7 @@ function CassDetails({ props, copy, selectedCommand, selectedArgument }: {
     <header className="explorer-details-header"><div>
       <span className="section-eyebrow">{shownEntry ? copy.pointer : labels.filename}</span>
       <h2 tabIndex={-1} data-navigation-entry-heading
-        data-history-focus-key={shownEntry ? `explorer-entry:${shownEntry.id}` : 'explorer-source'}>
+        data-history-focus-key={shownEntry ? `explorer-detail:${shownEntry.id}` : 'explorer-source-heading'}>
         {shownEntry?.title ?? labels.rawPreview}
       </h2>
     </div>
@@ -354,6 +354,9 @@ function CassExplorerView(props: DatasetViewProps, copy: Copy) {
               {visible.map((entry) => <EntryButton key={entry.id} entry={entry} selected={selectedEntry?.id === entry.id}
                 props={props} copy={copy} badges={entry.detail.kind === 'cass-argument' ? argumentBadges(entry.detail, copy) : []} />)}
             </ol>}
+        {!isCommandSection && props.entries.length < props.matchingCount && <button type="button" className="workbench-button explorer-more"
+          data-history-focus-key="explorer-more"
+          onClick={() => props.onAction({ type: 'more', docCount: Math.min(navigation.docCount + 48, 10_000) })}>{copy.more}</button>}
       </section>
       <CassDetails props={props} copy={copy} selectedCommand={selectedCommand} selectedArgument={selectedArgument} />
     </div>}

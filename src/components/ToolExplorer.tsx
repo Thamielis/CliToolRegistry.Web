@@ -43,7 +43,6 @@ type ToolRecord = { toolId: string; fallbackName: string }
 type FilterKey = keyof ExplorerFilters
 type FilterControl = { key: Exclude<FilterKey, 'needs'>; label: ExplorerLabelKey; values: string[] }
 const EMPTY_DATASETS: ManifestEntry[] = []
-const EMPTY_ENTRIES: ExplorerEntry[] = []
 
 const registry = registrySource as ExplorerRegistry
 const registryTools = new Map(registry.tools.map((item: ToolRecord) => [item.toolId, item.fallbackName]))
@@ -290,6 +289,7 @@ export default function ToolExplorer({
   const catalogToolsById = useMemo(() => new Map(catalogTools.map((tool) => [tool.id, tool])), [catalogTools])
   const searchRef = useRef<HTMLInputElement>(null)
   const canonicalizedUrlRef = useRef<string | null>(null)
+  const skipSingleDatasetRedirect = useRef(false)
 
   const manifest = manifestState.status === 'ready' ? manifestState.manifest : null
   const datasetsByTool = useMemo(() => {
@@ -346,18 +346,11 @@ export default function ToolExplorer({
   const readyDataset = datasetState.status === 'ready' && datasetState.key === datasetKey ? datasetState.result : null
   const datasetLoading = Boolean(manifestEntry && (!readyDataset && (datasetState.status === 'loading' || datasetState.key !== datasetKey)))
 
-  const allEntries = readyDataset?.dataset.entries ?? EMPTY_ENTRIES
-  const resolvedFilters = useMemo(() => readyDataset
-    ? resolveFilters(navigation, allEntries)
-    : { filters: null, diagnostics: [] as FilterDiagnostic[], controls: [] as FilterControl[], hasNeeds: false },
-  [readyDataset, navigation, allEntries])
-  const activeDiagnostics = resolvedFilters.diagnostics
-
   const selectedEntry = useMemo(() => {
     if (!readyDataset || !navigation.entry) return null
     const exact = readyDataset.dataset.entries.find((entry) => entry.id === navigation.entry)
     if (exact) return exact
-    if (navigation.entry.startsWith('ptr:') && (readyDataset.manifestEntry.adapter === 'generic-json' ||
+    if (navigation.entry.startsWith('ptr:') && (navigation.docSection === 'json' || readyDataset.manifestEntry.adapter === 'generic-json' ||
       readyDataset.dataset.entries.every((item) => item.detail.kind === 'generic'))) {
       const pointer = navigation.entry.slice(4)
       const value = resolveJsonPointer(readyDataset.sourceValue, pointer)
@@ -374,8 +367,22 @@ export default function ToolExplorer({
     : navigation.entry && readyDataset && (!selectedEntry || !entryBelongs) ? 'unknown-entry'
       : null
 
-  const sectionIds = new Set(section?.entryIds ?? [])
-  const sourceEntries = readyDataset ? readyDataset.dataset.entries.filter((entry) => sectionIds.has(entry.id)) : []
+  const sourceEntries = useMemo(() => {
+    if (!readyDataset) return []
+    const sectionIds = new Set(section?.entryIds ?? [])
+    return readyDataset.dataset.entries.filter((entry) => sectionIds.has(entry.id))
+  }, [readyDataset, section])
+  const filterEntries = useMemo(() => {
+    if (!readyDataset || sourceEntries.length === 0) return sourceEntries
+    const parentIds = new Set(sourceEntries.map(({ id }) => id))
+    return readyDataset.dataset.entries.filter((entry) =>
+      parentIds.has(entry.id) || entry.parentEntryId !== undefined && parentIds.has(entry.parentEntryId))
+  }, [readyDataset, sourceEntries])
+  const resolvedFilters = useMemo(() => readyDataset
+    ? resolveFilters(navigation, filterEntries)
+    : { filters: null, diagnostics: [] as FilterDiagnostic[], controls: [] as FilterControl[], hasNeeds: false },
+  [readyDataset, navigation, filterEntries])
+  const activeDiagnostics = resolvedFilters.diagnostics
   const filteredEntries = sourceEntries.filter((entry) => {
     const q = navigation.docQ.trim().toLocaleLowerCase(locale === 'de' ? 'de-DE' : 'en-US')
     const text = `${entry.title} ${entry.searchText} ${entry.origin.pointer}`.toLocaleLowerCase(locale === 'de' ? 'de-DE' : 'en-US')
@@ -388,6 +395,10 @@ export default function ToolExplorer({
   const activeRouteError = routeDataError ?? routeErrorCode
 
   useEffect(() => {
+    if (skipSingleDatasetRedirect.current && resolutionKind === 'tool' && !navigation.dataset) {
+      skipSingleDatasetRedirect.current = false
+      return
+    }
     if (resolutionKind !== 'tool' || toolDatasets.length !== 1 || navigation.dataset || navigation.routeError || navigationCause === 'pop') return
     if (manifestState.status === 'ready' && manifestState.manifest.datasets.length) {
       const sourceUrl = window.location.pathname + window.location.search
@@ -471,13 +482,13 @@ export default function ToolExplorer({
     }}>← {labels.backToIndex}</a>
     <header className="explorer-tool-heading">
       {toolId && <AppIcon app={{ id: toolId, name: toolName ?? toolId, icon: undefined }} className="explorer-tool-icon" />}
-      <div><span className="section-eyebrow">{toolId}</span><h2>{toolName}</h2></div>
+      <div><span className="section-eyebrow">{toolId}</span><h2 tabIndex={-1} data-history-focus-key={`explorer-tool-heading:${toolId}`}>{toolName}</h2></div>
       <span className="explorer-tool-count">{labels.sourceCount.replace('{count}', String(toolDatasets.length))}</span>
     </header>
     {toolDatasets.length === 0 ? <div className="empty-state"><p>{labels.noSources}</p></div> : <ul className="explorer-source-list">
       {toolDatasets.map((source) => {
         const action: ExplorerNavigationAction = { type: 'dataset', ref: { toolId: source.toolId, datasetId: source.datasetId } }
-        return <li key={source.datasetId}><a href={hrefForAction(action)} onClick={(event) => actOnClick(event, action)}>
+        return <li key={source.datasetId}><a data-history-focus-key={`explorer-dataset:${source.datasetId}`} href={hrefForAction(action)} onClick={(event) => actOnClick(event, action)}>
           <span><strong>{source.title[locale]}</strong><code>{source.datasetId}</code></span>
           <span className="explorer-source-file"><code>{source.filename}</code><span aria-hidden="true">↗</span></span>
         </a></li>
@@ -511,6 +522,7 @@ export default function ToolExplorer({
       entries: visibleEntries,
       matchingCount: filteredEntries.length,
       selectedEntry,
+      toolDatasets,
       locale,
       labels,
       onAction,
@@ -531,9 +543,10 @@ export default function ToolExplorer({
               href={hrefForAction(action)} onClick={(event) => actOnClick(event, action)}>{item.label[locale]}</a>
           })}
         </nav>
-        <button className="quiet-button" type="button" onClick={() => onAction({
-          type: 'dataset', ref: { toolId: manifestEntry.toolId, datasetId: manifestEntry.datasetId },
-        })}>{labels.backToTool}</button>
+        <button className="quiet-button" type="button" onClick={() => {
+          skipSingleDatasetRedirect.current = true
+          onAction({ type: 'back-to-tool' })
+        }}>{labels.backToTool}</button>
       </div>
       <section className="explorer-filter-toolbar" aria-label={labels.filterLabel}>
         <label className="search-field" htmlFor="explorer-search">

@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs'
+import { createHash } from 'node:crypto'
 import { test, expect } from '@playwright/test'
 
 test('br capabilities shows mixed operations, applies exact machine output filters, and labels missing examples', async ({ page }) => {
@@ -7,9 +9,11 @@ test('br capabilities shows mixed operations, applies exact machine output filte
   await expect(auditRow).toBeVisible()
   await expect(auditRow).toContainText('Gemischt')
   await expect(auditRow).toContainText('Erforderlich')
+  const configRow = page.getByRole('row').filter({ has: page.getByRole('button', { name: /^config,/ }) })
+  await expect(configRow).toBeVisible()
   await page.getByRole('region', { name: 'Filter' }).getByLabel('Maschinenausgabe').selectOption('toon')
   await expect(auditRow).toBeVisible()
-  await expect(page.getByRole('row').filter({ hasText: 'agents' })).toHaveCount(0)
+  await expect(configRow).toHaveCount(0)
 
   await page.getByRole('button', { name: 'audit, Eintrag öffnen' }).click()
   await expect(page.locator('.explorer-details')).toContainText('Für diesen Befehl sind im Snapshot keine Beispiele dokumentiert.')
@@ -32,6 +36,45 @@ test('br guide keeps original section text and line provenance, and source links
   await expect(page).toHaveURL(/dataset=capabilities/)
   await expect(page.locator('.explorer-provenance')).toContainText('br.capabilities.json')
   expect(new URL(page.url()).searchParams.has('entry')).toBe(false)
+})
+
+test('related BR dataset links only use datasets published in the validated manifest', async ({ page }) => {
+  const manifest = JSON.parse(readFileSync(new URL('../public/robot-docs.manifest.json', import.meta.url), 'utf8')) as {
+    datasets: { toolId: string; datasetId: string }[]
+  }
+  manifest.datasets = manifest.datasets.filter((entry) => !(entry.toolId === 'br' && entry.datasetId === 'capabilities'))
+  await page.route('**/robot-docs.manifest.json*', (route) => route.fulfill({ json: manifest }))
+  await page.goto('./?section=explore&exploreTool=br&dataset=robot-docs')
+
+  const relatedLinks = page.getByRole('navigation', { name: 'Weitere Quellen dieses Werkzeugs' }).locator('a')
+  await expect(relatedLinks).toHaveCount(1)
+  await expect(relatedLinks.first()).toHaveAttribute('aria-current', 'page')
+})
+
+test('closing an Explorer entry restores focus to its matching list control', async ({ page }) => {
+  await page.goto('./?section=explore&exploreTool=br&dataset=capabilities&docSection=commands')
+  await page.getByRole('button', { name: 'audit, Eintrag öffnen' }).click()
+  await page.getByRole('button', { name: 'Eintrag schließen' }).click()
+  await expect(page.locator('[data-history-focus-key="explorer-entry:cmd:audit"]')).toBeFocused()
+})
+
+test('a selected null leaf in BR raw JSON previews null', async ({ page }) => {
+  const manifest = JSON.parse(readFileSync(new URL('../public/robot-docs.manifest.json', import.meta.url), 'utf8')) as {
+    datasets: { toolId: string; datasetId: string; filename: string; bytes: number; sha256: string; [key: string]: unknown }[]
+  }
+  const source = JSON.parse(readFileSync(new URL('../public/robot-docs/br.capabilities.json', import.meta.url), 'utf8')) as Record<string, unknown>
+  source.null_leaf = null
+  const sourceBytes = Buffer.from(JSON.stringify(source))
+  const entry = manifest.datasets.find((dataset) => dataset.toolId === 'br' && dataset.datasetId === 'capabilities')!
+  entry.bytes = sourceBytes.byteLength
+  entry.sha256 = createHash('sha256').update(sourceBytes).digest('hex')
+  await page.route('**/robot-docs.manifest.json*', (route) => route.fulfill({ json: manifest }))
+  await page.route(/\/robot-docs\/br\.capabilities\.json(?:\?.*)?$/, (route) => route.fulfill({
+    status: 200, headers: { 'content-type': 'application/json' }, body: sourceBytes,
+  }))
+
+  await page.goto('./?section=explore&exploreTool=br&dataset=capabilities&docSection=json&entry=raw%3A%2Fnull_leaf')
+  await expect(page.locator('.explorer-details .explorer-raw-preview').first()).toHaveText('null')
 })
 
 test('br canonical commands copy the exact source command', async ({ page }) => {

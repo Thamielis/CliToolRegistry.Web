@@ -1,4 +1,34 @@
+import { createHash } from 'node:crypto'
+import { readFileSync } from 'node:fs'
 import { test, expect } from '@playwright/test'
+
+test('Cass paginates non-command sections and focuses the final visible entry', async ({ page }) => {
+  await page.goto('./?section=explore&exploreTool=cass&dataset=capabilities&docSection=env&docCount=48')
+  await expect(page.locator('.explorer-entry-button')).toHaveCount(48)
+  await page.getByRole('button', { name: 'Weitere Einträge laden' }).click()
+  await expect(page.locator('.explorer-entry-button')).toHaveCount(67)
+  await expect(page.getByRole('button', { name: 'Weitere Einträge laden' })).toHaveCount(0)
+  await expect(page.locator('.explorer-entry-button').last()).toBeFocused()
+})
+
+test('a selected null leaf in Cass raw JSON previews null', async ({ page }) => {
+  const manifest = JSON.parse(readFileSync(new URL('../public/robot-docs.manifest.json', import.meta.url), 'utf8')) as {
+    datasets: { toolId: string; datasetId: string; filename: string; bytes: number; sha256: string; [key: string]: unknown }[]
+  }
+  const source = JSON.parse(readFileSync(new URL('../public/robot-docs/cass.capabilities.json', import.meta.url), 'utf8')) as Record<string, unknown>
+  source.null_leaf = null
+  const sourceBytes = Buffer.from(JSON.stringify(source))
+  const entry = manifest.datasets.find((dataset) => dataset.toolId === 'cass' && dataset.datasetId === 'capabilities')!
+  entry.bytes = sourceBytes.byteLength
+  entry.sha256 = createHash('sha256').update(sourceBytes).digest('hex')
+  await page.route('**/robot-docs.manifest.json*', (route) => route.fulfill({ json: manifest }))
+  await page.route(/\/robot-docs\/cass\.capabilities\.json(?:\?.*)?$/, (route) => route.fulfill({
+    status: 200, headers: { 'content-type': 'application/json' }, body: sourceBytes,
+  }))
+
+  await page.goto('./?section=explore&exploreTool=cass&dataset=capabilities&docSection=json&entry=raw%3A%2Fnull_leaf')
+  await expect(page.locator('.explorer-details .explorer-raw-preview').first()).toHaveText('null')
+})
 
 test('Cass keeps 47 commands visible while argument type and required filters apply to their child entries', async ({ page }) => {
   await page.goto('./?section=explore&exploreTool=cass&dataset=capabilities&docSection=commands&argType=flag&argRequired=no')
