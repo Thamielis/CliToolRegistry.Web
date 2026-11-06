@@ -32,6 +32,7 @@ export function WorkbenchOverview({ tools, onNavigate, onCategory, onTool }: {
           <div className="hero-actions">
             <button className="workbench-button primary" onClick={() => onNavigate('catalog')}>{t('browseCatalog')} <span aria-hidden="true">↗</span></button>
             <button className="workbench-button" onClick={() => onNavigate('dependencies')}>{t('exploreGraph')} <span aria-hidden="true">→</span></button>
+            <button className="workbench-button" onClick={() => onNavigate('explore')}>{t('navExplore')} <span aria-hidden="true">↗</span></button>
           </div>
           <div className="hero-facts">
             {[[tools.length, t('catalogTools')], [categories.length, t('catalogCategories')], [platforms.size, t('catalogPlatforms')]].map(([count, label]) =>
@@ -56,7 +57,7 @@ export function WorkbenchOverview({ tools, onNavigate, onCategory, onTool }: {
                   {tool.platforms.map((item) => <option key={item} value={item}>{platformLabel(item)}</option>)}
                 </select></label>}</div>
                 {install ? <CommandBlock command={install} /> : <p className="muted-value">{t('installNotListed')}</p>}
-                <button className="preview-open" onClick={(event) => onTool(tool.id, event.currentTarget)}>{tool.name} · {t('details')} <span aria-hidden="true">↗</span></button>
+                <button className="preview-open" data-history-focus-key={`overview-tool:${tool.id}`} onClick={(event) => onTool(tool.id, event.currentTarget)}>{tool.name} · {t('details')} <span aria-hidden="true">↗</span></button>
               </> : <p>{t('noTools')}</p>}
             </div>
             <footer className="terminal-footer"><span className="status-dot" aria-hidden="true" />{t('previewHint')}</footer>

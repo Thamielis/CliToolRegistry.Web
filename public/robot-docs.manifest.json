@@ -1,0 +1,231 @@
+{
+  "schema": "cli-tool-explorer.manifest.v1",
+  "datasets": [
+    {
+      "toolId": "br",
+      "datasetId": "capabilities",
+      "filename": "br.capabilities.json",
+      "format": "json",
+      "adapter": "br-capabilities",
+      "title": {
+        "de": "Fähigkeiten und Aufrufe",
+        "en": "Capabilities and commands"
+      },
+      "bytes": 13479,
+      "sha256": "44dbee891b46d52ea55b2eb5b1bd31ef6a72aefac5307e780890ad43759d73f6",
+      "snapshot": {
+        "version": {
+          "state": "value",
+          "value": "0.7.4",
+          "pointer": "/version"
+        },
+        "contract": {
+          "state": "value",
+          "value": "br.capabilities.v1",
+          "pointer": "/contract_version"
+        },
+        "generatedAt": {
+          "state": "missing"
+        }
+      }
+    },
+    {
+      "toolId": "br",
+      "datasetId": "robot-docs",
+      "filename": "br.robot-docs.json",
+      "format": "json",
+      "adapter": "br-guide",
+      "title": {
+        "de": "Agentenleitfaden",
+        "en": "Agent guide"
+      },
+      "bytes": 3291,
+      "sha256": "98140e2820bb7cc78ea55553aa395e4e0bb2809fc2cb95ba40037429ef1dd3d4",
+      "snapshot": {
+        "version": {
+          "state": "value",
+          "value": "0.7.4",
+          "pointer": "/version"
+        },
+        "contract": {
+          "state": "value",
+          "value": "br.robot_docs.v1",
+          "pointer": "/contract_version"
+        },
+        "generatedAt": {
+          "state": "missing"
+        }
+      }
+    },
+    {
+      "toolId": "bv",
+      "datasetId": "capabilities",
+      "filename": "bv.capabilities.json",
+      "format": "json",
+      "adapter": "bv-capabilities",
+      "title": {
+        "de": "Aufruf- und Fähigkeitsvertrag",
+        "en": "Command and capability contract"
+      },
+      "bytes": 22994,
+      "sha256": "19267596b2fa29c81b146a55fad8c38f8dc06fd065eab4ca2102e642054fb547",
+      "snapshot": {
+        "version": {
+          "state": "value",
+          "value": "v0.25.2",
+          "pointer": "/version"
+        },
+        "contract": {
+          "state": "value",
+          "value": "1.0.0",
+          "pointer": "/contract_version"
+        },
+        "generatedAt": {
+          "state": "value",
+          "value": "2026-10-11T13:08:21Z",
+          "pointer": "/generated_at"
+        }
+      }
+    },
+    {
+      "toolId": "bv",
+      "datasetId": "robot-docs",
+      "filename": "bv.robot-docs.json",
+      "format": "json",
+      "adapter": "bv-docs",
+      "title": {
+        "de": "Robot-Referenz",
+        "en": "Robot reference"
+      },
+      "bytes": 28764,
+      "sha256": "bce50d3ae9dd32ccb027b3d3f1d3c190bb3557ca8b756817e23a2b8fba32ceaa",
+      "snapshot": {
+        "version": {
+          "state": "value",
+          "value": "v0.25.2",
+          "pointer": "/version"
+        },
+        "contract": {
+          "state": "missing"
+        },
+        "generatedAt": {
+          "state": "value",
+          "value": "2026-10-09T10:42:48Z",
+          "pointer": "/generated_at"
+        }
+      }
+    },
+    {
+      "toolId": "cass",
+      "datasetId": "capabilities",
+      "filename": "cass.capabilities.json",
+      "format": "json",
+      "adapter": "cass-capabilities",
+      "title": {
+        "de": "Fähigkeiten und Befehle",
+        "en": "Capabilities and commands"
+      },
+      "bytes": 143228,
+      "sha256": "e7a7b3c06e0e622960c627b75b45825275955980e3409efd65fb49bc11f23d83",
+      "snapshot": {
+        "version": {
+          "state": "value",
+          "value": "0.10.0",
+          "pointer": "/version"
+        },
+        "contract": {
+          "state": "value",
+          "value": "1",
+          "pointer": "/contract_version"
+        },
+        "generatedAt": {
+          "state": "missing"
+        }
+      }
+    },
+    {
+      "toolId": "ee",
+      "datasetId": "capabilities",
+      "filename": "ee.capabilities.json",
+      "format": "json",
+      "adapter": "ee-capabilities",
+      "title": {
+        "de": "Fähigkeits-Snapshot",
+        "en": "Capability snapshot"
+      },
+      "bytes": 53934,
+      "sha256": "6b38105422fba89fec9bb59ca22fc4622a52859b141124072b6c2951fecaaae8",
+      "snapshot": {
+        "version": {
+          "state": "value",
+          "value": "0.17.0",
+          "pointer": "/data/version"
+        },
+        "contract": {
+          "state": "value",
+          "value": "ee.response.v2",
+          "pointer": "/schema"
+        },
+        "generatedAt": {
+          "state": "missing"
+        }
+      }
+    },
+    {
+      "toolId": "fmd",
+      "datasetId": "capabilities",
+      "filename": "fmd.capabilities.json",
+      "format": "json",
+      "adapter": "fmd-capabilities",
+      "title": {
+        "de": "Rendering-Referenz",
+        "en": "Rendering reference"
+      },
+      "bytes": 6215,
+      "sha256": "b7e4a6839eb291bf254ed0d8bc50b88847a868ee3e62f7c3a1dcd82b70858916",
+      "snapshot": {
+        "version": {
+          "state": "value",
+          "value": "0.5.0",
+          "pointer": "/version"
+        },
+        "contract": {
+          "state": "value",
+          "value": "0.1.0",
+          "pointer": "/contract_version"
+        },
+        "generatedAt": {
+          "state": "missing"
+        }
+      }
+    },
+    {
+      "toolId": "ubs",
+      "datasetId": "robot-docs",
+      "filename": "ubs.robot-docs.json",
+      "format": "json",
+      "adapter": "ubs-docs",
+      "title": {
+        "de": "Scan-Referenz",
+        "en": "Scan reference"
+      },
+      "bytes": 18406,
+      "sha256": "0e01001f44bac02a2b504dc808a2a7d32ff38755345bb5e75d718fe1acc6f342",
+      "snapshot": {
+        "version": {
+          "state": "value",
+          "value": "5.4.17",
+          "pointer": "/ubs_version"
+        },
+        "contract": {
+          "state": "value",
+          "value": "1",
+          "pointer": "/schema_version"
+        },
+        "generatedAt": {
+          "state": "missing"
+        }
+      }
+    }
+  ]
+}

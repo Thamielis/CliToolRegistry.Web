@@ -1,6 +1,6 @@
 # Tool-Logo-Quellen und Nutzungsentscheidung
 
-Stand: 2026-10-09. Grundlage ist der aktuelle `public/registry-catalog.json`-Stand mit 89 IDs. Die Matrix enthält jede ID genau einmal. Für die Felder `website` und `repository` ist der jeweilige Katalogeintrag die kanonische Quelle. Ein Fallback bedeutet: Es wird keine Bildmarke aus dem Manifest verwendet; die Oberfläche zeigt deterministische Initialen. Die Tabelle unterscheidet belegte Quellen von bereits vorhandenen Dateien ohne dokumentierte Herkunft.
+Stand: 2026-11-06. Grundlage ist der aktuelle `public/registry-catalog.json`-Stand mit 89 IDs. Die Matrix enthält jede ID genau einmal. Für die Felder `website` und `repository` ist der jeweilige Katalogeintrag die kanonische Quelle. Ein Fallback bedeutet: Es wird keine Bildmarke aus dem Manifest verwendet; die Oberfläche zeigt deterministische Initialen. Die Tabelle unterscheidet extern belegte Quellen von Assets, die der Projektinhaber selbst erstellt oder bereitgestellt hat.
 
 ## Geprüfte Assets
 
@@ -16,6 +16,9 @@ Stand: 2026-10-09. Grundlage ist der aktuelle `public/registry-catalog.json`-Sta
 | `public/tool-logos/7-Zip.png` | `7zip` | Bereits im Ausgangscheckout vorhandenes PNG; das Manifest verwendet diese Datei. | Im Umbau unverändert erhalten. Downloadquelle und Nutzungsnachweis sind im Bestand nicht dokumentiert; keine neue Lizenzprüfung behauptet. |
 | `public/tool-logos/GitHub.png` | `gh` | Bereits im Ausgangscheckout vorhandenes PNG; das Manifest verwendet diese Datei. | Im Umbau unverändert erhalten. Downloadquelle und Nutzungsnachweis sind im Bestand nicht dokumentiert; keine neue Lizenzprüfung behauptet. |
 | `public/tool-logos/PowerShell.png` | `powershell7` | Bereits im Ausgangscheckout vorhandenes PNG; das Manifest verwendet diese Datei. | Im Umbau unverändert erhalten. Downloadquelle und Nutzungsnachweis sind im Bestand nicht dokumentiert; keine neue Lizenzprüfung behauptet. |
+| `public/tool-logos/Docker_Alt.png` | `docker-desktop` | Vom Projektinhaber selbst erstellt und bereitgestellt. | Eigenes Projektasset; im Manifest für Docker Desktop verwendet und unverändert erhalten. |
+| `public/tool-logos/Microsoft_Visual_Studio_Code_Alt_2.png` | `vscode-cli` | Vom Projektinhaber selbst erstellt und bereitgestellt. | Eigenes Projektasset; im Manifest für VS Code CLI verwendet und unverändert erhalten. |
+| `public/tool-logos/Terminal.png` | — | Vom Projektinhaber selbst erstellt und bereitgestellt. | Eigenes, derzeit keinem Tool-ID-Eintrag zugeordnetes Asset; erhalten und nicht ohne ausdrückliche Anweisung entfernen oder ersetzen. |
 
 Simple Icons wurde ebenfalls geprüft. Seine Paketlizenz ist kein pauschaler Nachweis für einzelne Markenlogos; einzelne Icons ohne konkrete Lizenz-/Nutzungsangabe wurden daher nicht übernommen. GitHub, Go und Node.js erhielten keine pauschalen Domain- oder Technologie-Logos: Die jeweilige offizielle Markenregel schränkt die hier nötige Darstellung ein ([GitHub](https://brand.github.com/foundations/logo), [Go](https://go.dev/brand), [Node.js/OpenJS](https://nodejs.org/static/documents/trademark-policy.pdf)).
 
@@ -45,7 +48,7 @@ Simple Icons wurde ebenfalls geprüft. Seine Paketlizenz ist kein pauschaler Nac
 | `dcg` | fallback | `public/registry-catalog.json` → Website/Repository | Keine hinreichend belegte, lokal verwendbare Bildmarke übernommen; Initialen |
 | `docker-buildx` | family-logo | Docker Media Resources, siehe oben | `docker.svg`; gemeinsame Produktfamilie |
 | `docker-cli` | family-logo | Docker Media Resources, siehe oben | `docker.svg`; gemeinsame Produktfamilie |
-| `docker-desktop` | family-logo | Docker Media Resources, siehe oben | `docker.svg`; gemeinsame Produktfamilie |
+| `docker-desktop` | project-logo | Projektinhaber, siehe oben | `Docker_Alt.png`; selbst erstelltes Logo |
 | `dolt` | fallback | `public/registry-catalog.json` → Website/Repository | Keine hinreichend belegte, lokal verwendbare Bildmarke übernommen; Initialen |
 | `ee` | fallback | `public/registry-catalog.json` → Website/Repository | Keine hinreichend belegte, lokal verwendbare Bildmarke übernommen; Initialen |
 | `fdgr` | fallback | `public/registry-catalog.json` → Website/Repository | Eigenes Projekt; keine belegte Bildmarke gefunden; Initialen |
@@ -97,7 +100,6 @@ Simple Icons wurde ebenfalls geprüft. Seine Paketlizenz ist kein pauschaler Nac
 | `oracle` | fallback | `public/registry-catalog.json` → Website/Repository | Kein Icon mit für diese Darstellung belegten Nutzungsangaben übernommen; Initialen |
 | `pandoc` | project-logo | Pandoc Logo, siehe oben | `pandoc.svg`; CC BY-SA 4.0, Quellenhinweis steht oben |
 | `powershell7` | project-logo | Bestehender lokaler Bestand, siehe oben | `PowerShell.png`; Herkunft/Nutzungsnachweis nicht dokumentiert |
-
 | `python3` | project-logo | Python.org, siehe oben | `python.svg`; ™ und Nichtzugehörigkeitshinweis im Footer |
 | `rch` | fallback | [remote_compilation_helper](https://github.com/Dicklesworthstone/remote_compilation_helper) | Repository ohne belegte Bildmarke/Nutzungsangaben; Initialen |
 | `ru` | fallback | `public/registry-catalog.json` → Website/Repository | Eigenes Projekt; keine belegte Bildmarke gefunden; Initialen |
@@ -109,7 +111,7 @@ Simple Icons wurde ebenfalls geprüft. Seine Paketlizenz ist kein pauschaler Nac
 | `ubs` | fallback | `public/registry-catalog.json` → Website/Repository | Eigenes Projekt; keine belegte Bildmarke gefunden; Initialen |
 | `uv` | fallback | `public/registry-catalog.json` → Website/Repository | Kein Icon mit für diese Darstellung belegten Nutzungsangaben übernommen; Initialen |
 | `vercel-cli` | family-logo | Vercel Brand Guidelines, siehe oben | `vercel-dark.svg` und `vercel-light.svg`; themeabhängige offizielle Varianten |
-| `vscode-cli` | fallback | `public/registry-catalog.json` → Website/Repository | Kein Icon mit für diese Darstellung belegten Nutzungsangaben übernommen; Initialen |
+| `vscode-cli` | project-logo | Projektinhaber, siehe oben | `Microsoft_Visual_Studio_Code_Alt_2.png`; selbst erstelltes Logo |
 | `winget` | fallback | `public/registry-catalog.json` → Website/Repository | Keine hinreichend belegte, lokal verwendbare Bildmarke übernommen; Initialen |
 | `wsl2` | fallback | `public/registry-catalog.json` → Website/Repository | Keine hinreichend belegte, lokal verwendbare Bildmarke übernommen; Initialen |
 | `xf` | fallback | `public/registry-catalog.json` → Website/Repository | Eigenes Projekt; keine belegte Bildmarke gefunden; Initialen |
@@ -128,10 +130,11 @@ als dokumentierten Bestand, ohne sie als aktive Tool-Logos zu zählen.
 |---|---|
 | `public/tool-logos/Git.png` | Nicht im Manifest verwendet; unverändert erhalten |
 | `public/tool-logos/github.svg` | Nicht im Manifest verwendet; unverändert erhalten |
+| `public/tool-logos/Terminal.png` | Selbst erstelltes Asset; nicht im Manifest verwendet und unverändert erhalten |
 
 ## Zählung
 
-- Projektlogos: 8 IDs (`dotnet`, `7zip`, `bun`, `git`, `gh`, `pandoc`, `powershell7`, `python3`)
-- Familienlogos: 4 IDs (drei Docker-Produkte, `vercel-cli`)
-- Fallbacks: 77 IDs
-- Lokale Dateien: 13 (9 SVGs, 4 PNGs); 11 referenziert, 2 ausdrücklich erhalten
+- Projektlogos: 10 IDs (`dotnet`, `7zip`, `bun`, `git`, `gh`, `pandoc`, `powershell7`, `python3`, `docker-desktop`, `vscode-cli`)
+- Familienlogos: 3 IDs (`docker-buildx`, `docker-cli`, `vercel-cli`)
+- Fallbacks: 76 IDs
+- Lokale Dateien: 16 (9 SVGs, 7 PNGs); 13 referenziert, 3 ausdrücklich erhalten

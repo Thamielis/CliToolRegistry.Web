@@ -4,17 +4,24 @@ import { categoryLabel, platformLabel } from '../i18n/catalogLabels'
 import { getInstallCommand } from '../data/loadApps'
 import { CommandBlock } from './CommandBlock'
 import { AppIcon } from './AppIcon'
+import { ExplorerToolLink } from './ToolDetails'
+import type { ExplorerNavigationAction } from '../data/workbench'
+import type { ExplorerManifest } from '../types/explorer'
 
 export function ToolTable({
   tools,
   selectedToolId,
   activePlatform,
+  explorerManifest,
+  onExplore,
   onSelect,
   locale,
 }: {
   tools: CliTool[]
   selectedToolId: string | null
   activePlatform: ToolPlatform | 'all'
+  explorerManifest: ExplorerManifest | null
+  onExplore: (action: ExplorerNavigationAction) => void
   onSelect: (tool: CliTool, trigger: HTMLButtonElement) => void
   locale: Locale
 }) {
@@ -43,6 +50,7 @@ export function ToolTable({
                   <button
                     type="button"
                     className="tool-name-button"
+                    data-history-focus-key={'tool-trigger:' + tool.id}
                     onClick={(event) => onSelect(tool, event.currentTarget)}
                     aria-expanded={selected}
                     aria-controls={selected ? 'tool-details-' + tool.id : undefined}
@@ -54,6 +62,7 @@ export function ToolTable({
                     </span>
                     <span className="tool-description">{tool.description}</span>
                   </button>
+                  <ExplorerToolLink tool={tool} manifest={explorerManifest} onExplore={onExplore} />
                 </td>
                 <td data-label={t('commandColumn')}>
                   <CommandBlock command={tool.command} compact />

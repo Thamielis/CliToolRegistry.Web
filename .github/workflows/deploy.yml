@@ -36,11 +36,17 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npm run typecheck && npm run lint && npm run test:model && npm run validate:logos
+      - run: npx playwright install --with-deps chromium
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run test:model
+      - run: npm run validate:logos
+      - run: npm run validate:explorers
       - run: npm run build
         env:
           CLI_TOOL_REGISTRY_PATH: ${{ github.workspace }}/registry-source
           CLI_TOOL_REGISTRY_REF: main
+      - run: npm run test:production
       - uses: actions/upload-pages-artifact@v5.0.0
         with:
           path: dist
