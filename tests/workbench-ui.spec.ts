@@ -19,6 +19,16 @@ async function open(page: Page, query = '') {
   await expect(page.locator('#screen-heading')).toBeVisible()
 }
 
+test('catalog entries without a primary command still load and show an explicit label', async ({ page }) => {
+  await page.route('**/registry-catalog.json?*', (route) => route.fulfill({ json: {
+    ...snapshot,
+    tools: [{ ...tools[0], command: null }],
+  } }))
+  await page.goto('./?section=catalog&view=enhanced')
+  await expect(page.locator('.tool-card')).toHaveCount(1)
+  await expect(page.getByText('Kein Befehl angegeben', { exact: true })).toBeVisible()
+})
+
 test('overview terminal uses real commands and category launchers enter filtered catalog', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
   await open(page)
@@ -315,6 +325,8 @@ test('real catalog loads with subpath assets and deep query links reload', async
   await page.setViewportSize({ width: 320, height: 900 })
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
   await expect(page.locator('.terminal-preview img').first()).toHaveAttribute('src', /\/CliToolRegistry.Web\/tool-logos\//)
+  await page.goto('./?section=catalog&view=list&tool=pcr')
+  await expect(page.locator('.detail-structured-command')).toContainText('commandName')
   if (process.env.PLAYWRIGHT_PREVIEW === '1') {
     expect(assetRequests.some((path) => path.startsWith('/CliToolRegistry.Web/assets/'))).toBe(true)
     expect(new Set(assetRequests.filter((path) => path.startsWith('/CliToolRegistry.Web/assets/') && path.endsWith('.js'))).size).toBeGreaterThanOrEqual(2)

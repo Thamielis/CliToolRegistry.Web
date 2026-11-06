@@ -1,6 +1,6 @@
 # Tool-Logo-Quellen und Nutzungsentscheidung
 
-Stand: 2026-11-06. Grundlage ist der aktuelle `public/registry-catalog.json`-Stand mit 89 IDs. Die Matrix enthält jede ID genau einmal. Für die Felder `website` und `repository` ist der jeweilige Katalogeintrag die kanonische Quelle. Ein Fallback bedeutet: Es wird keine Bildmarke aus dem Manifest verwendet; die Oberfläche zeigt deterministische Initialen. Die Tabelle unterscheidet extern belegte Quellen von Assets, die der Projektinhaber selbst erstellt oder bereitgestellt hat.
+Stand: 2026-11-06. Grundlage ist der aktuelle `develop`-Stand des Registry-Katalogs mit 121 IDs. Die Matrix enthält jede ID genau einmal. Für die Felder `website` und `repository` ist der jeweilige Katalogeintrag die kanonische Quelle. Ein Fallback bedeutet: Es wird keine Bildmarke aus dem Manifest verwendet; die Oberfläche zeigt deterministische Initialen. Die Tabelle unterscheidet extern belegte Quellen von Assets, die der Projektinhaber selbst erstellt oder bereitgestellt hat.
 
 ## Geprüfte Assets
 
@@ -115,6 +115,38 @@ Simple Icons wurde ebenfalls geprüft. Seine Paketlizenz ist kein pauschaler Nac
 | `winget` | fallback | `public/registry-catalog.json` → Website/Repository | Keine hinreichend belegte, lokal verwendbare Bildmarke übernommen; Initialen |
 | `wsl2` | fallback | `public/registry-catalog.json` → Website/Repository | Keine hinreichend belegte, lokal verwendbare Bildmarke übernommen; Initialen |
 | `xf` | fallback | `public/registry-catalog.json` → Website/Repository | Eigenes Projekt; keine belegte Bildmarke gefunden; Initialen |
+| `pcr` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `codereview-cli` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `github-copilot-cli` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `dbbrowser-sqlite` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `dnspy` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `dsr` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `github-copilot-app` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `github-desktop` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `gitversion` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `vfs-for-git` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `intelligent-terminal` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `irfanview` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `irfanview-plugins` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `lazydocker` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `mdbook` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `mdbook-mermaid` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `mdbook-toc` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `vscode-insiders` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `obsidian` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `pi` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `pfr` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `pt` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `putty` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `reportgenerator` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `sbh` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `unigetui` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `usage` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `visualstudio-buildtools` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `visualstudio-cmdpal` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `wget` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `winapp` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
+| `windows-sdk-28000` | fallback | `public/registry-catalog.json` → Website/Repository | Keine dokumentierte Bildmarke übernommen; deterministische Initialen bis eine geeignete Quelle dokumentiert ist |
 
 ## Legacy-Icons
 
@@ -136,5 +168,5 @@ als dokumentierten Bestand, ohne sie als aktive Tool-Logos zu zählen.
 
 - Projektlogos: 10 IDs (`dotnet`, `7zip`, `bun`, `git`, `gh`, `pandoc`, `powershell7`, `python3`, `docker-desktop`, `vscode-cli`)
 - Familienlogos: 3 IDs (`docker-buildx`, `docker-cli`, `vercel-cli`)
-- Fallbacks: 76 IDs
+- Fallbacks: 108 IDs
 - Lokale Dateien: 16 (9 SVGs, 7 PNGs); 13 referenziert, 3 ausdrücklich erhalten

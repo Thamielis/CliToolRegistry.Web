@@ -66,8 +66,8 @@ export function CommandPalette({ open, tools, explorerManifest, onClose, onNavig
     const explorerMatches = explorerTargets.filter((target) => {
       return [target.label, target.hint, target.toolId, target.id].join(' ').toLocaleLowerCase(locale).includes(q)
     })
-    const matches = tools.filter((tool) => [tool.name, tool.command, tool.id, ...(tool.tags ?? [])].join(' ').toLocaleLowerCase(locale).includes(q))
-      .map((tool) => ({ id: tool.id, kind: 'tool' as const, label: tool.name, hint: tool.command, toolId: tool.id }))
+    const matches = tools.filter((tool) => [tool.name, tool.command ?? '', tool.id, ...(tool.tags ?? [])].join(' ').toLocaleLowerCase(locale).includes(q))
+      .map((tool) => ({ id: tool.id, kind: 'tool' as const, label: tool.name, hint: tool.command || t('commandNotListed'), toolId: tool.id }))
     return [...sections, ...explorerMatches, ...matches].slice(0, 20)
   }, [query, tools, explorerManifest, locale, t])
   const index = results.length ? Math.min(active, results.length - 1) : -1

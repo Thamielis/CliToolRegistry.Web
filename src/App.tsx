@@ -467,7 +467,7 @@ function App() {
         tool.name,
         tool.id,
         tool.description,
-        tool.command,
+        tool.command ?? '',
         tool.category,
         categoryLabel(tool.category, locale),
         tool.tier,

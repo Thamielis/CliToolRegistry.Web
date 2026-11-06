@@ -52,7 +52,7 @@ export function WorkbenchOverview({ tools, onNavigate, onCategory, onTool }: {
                 <div className="preview-identity"><AppIcon app={tool} /><div><strong>{tool.name}</strong><span>{categoryLabel(tool.category, locale)}</span></div><code>{tool.id}</code></div>
                 <p className="preview-description">{tool.description}</p>
                 <div className="terminal-command-label"><span>{t('commandColumn')}</span><span aria-hidden="true">$</span></div>
-                <CommandBlock command={tool.command} />
+                {tool.command ? <CommandBlock command={tool.command} /> : <p className="muted-value">{t('commandNotListed')}</p>}
                 <div className="terminal-command-label"><span>{t('installColumn')}</span>{platform && <label><span className="sr-only">{t('previewPlatform')}</span><select value={platform} onChange={(event) => setChosenPlatform(event.target.value as ToolPlatform)}>
                   {tool.platforms.map((item) => <option key={item} value={item}>{platformLabel(item)}</option>)}
                 </select></label>}</div>

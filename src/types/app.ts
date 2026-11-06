@@ -19,6 +19,7 @@ export interface AppEntry {
 }
 
 export type ToolPlatform = 'windows' | 'linux' | 'wsl2' | 'macos'
+export type ToolCheck = string | Record<string, unknown>
 
 export interface CliTool {
   id: string
@@ -26,7 +27,7 @@ export interface CliTool {
   description: string
   category: string
   tier: string
-  command: string
+  command?: string | null
   platforms: ToolPlatform[]
   website?: string
   repository?: string
@@ -37,9 +38,9 @@ export interface CliTool {
     recommended?: string[]
   }
   tags?: string[]
-  healthCheck?: string
-  versionCommand?: string
-  capabilitiesCommand?: string
+  healthCheck?: ToolCheck
+  versionCommand?: ToolCheck
+  capabilitiesCommand?: ToolCheck
   robotMode?: {
     supported?: boolean
     command?: string | null

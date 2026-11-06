@@ -900,6 +900,21 @@ select:focus-visible {
   white-space: nowrap;
 }
 
+.detail-structured-command {
+  max-height: 320px;
+  min-width: 0;
+  overflow: auto;
+  margin: 0;
+  border: 1px solid var(--registry-border);
+  border-radius: 5px;
+  padding: 9px;
+  color: var(--registry-code-ink);
+  background: var(--registry-code-bg);
+  font: 10px/1.6 var(--registry-mono);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 .dependency-group + .dependency-group {
   margin-top: 11px;
 }
