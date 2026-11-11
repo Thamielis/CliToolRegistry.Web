@@ -38,10 +38,15 @@ umgesetzte Funktionsmuster der
 Die [Feature-Zuordnung](docs/frankentui-feature-map.md) dokumentiert die Adaption.
 Quellcode, Bildmaterial und WASM-Komponenten der Referenz werden nicht übernommen.
 
+- **Übersicht:** Einstieg mit einer Vorschau echter Katalogbefehle. Die Vorschau
+  führt nichts aus.
 - **Katalog:** Suche, Plattform-/Kategoriefilter, Sortierung, Karten, Karten+
-  und Tabelle; zunächst 48 Treffer mit „Weitere Werkzeuge laden“.
+  und Tabelle; zunächst 48 Treffer mit „Weitere Werkzeuge laden“. Die Zahl der
+  Treffer und die angezeigte Menge stehen direkt bei den Ergebnissen.
 - **Abhängigkeiten:** Graph und vollständige Listen erforderlicher/empfohlener
   Abhängigkeiten sowie abhängiger Werkzeuge. Fehlende IDs sind externe Referenzen.
+- **JSON-Referenzen:** Versionierte Befehls- und Fähigkeitsdaten durchsuchen.
+  Dieser Bereich zeigt JSON-Strukturen; Werkzeugabhängigkeiten gehören zum Graphen.
 - **Kataloglabor:** Tatsächliche Datenstände vergleichen, Änderungen als
   Vorher-/Nachher-JSON prüfen und Katalog/Vergleich herunterladen. Ohne
   Vergleichsbasis gibt es einen ausdrücklichen Hinweis; eine Commit-Historie
@@ -55,10 +60,15 @@ Suche, Filter, Darstellung, Bereich und Werkzeugdetails sind im URL-Zustand
 teilbar; Zurück/Vorwärts stellt den Kontext wieder her. Die Website bleibt eine
 statische React/Vite-Anwendung unter `/CliToolRegistry.Web/`.
 
-Karten+ zeigt kopierbare Befehle und eine Installationsplattform pro Werkzeug.
-Ein globaler Plattformfilter bestimmt auch die angezeigten Installationsbefehle.
+Karten+ zeigt kopierbare Befehle und die passende Installationsplattform.
+Installationshinweise und strukturierte Rezepte bleiben als solche gekennzeichnet;
+nur ein bestimmter Befehl wird als kopierbare Installation angeboten. Ein globaler
+Plattformfilter bestimmt den angezeigten Befehl. In der Tabelle steht dessen
+Plattform direkt daneben.
 Details öffnen direkt an der Karte; Escape oder „Details schließen“ führt den
 Tastaturfokus zum auslösenden Schalter zurück. Die Seite führt keine Befehle aus.
+
+Die Fußzeile trennt den Link zum Katalogrepository vom Quellcode dieser Website.
 
 Design und Interaktionsregeln sind in [DESIGN.md](DESIGN.md) und
 [UX-CONTRACT.md](UX-CONTRACT.md) dokumentiert.

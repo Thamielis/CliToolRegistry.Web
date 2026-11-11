@@ -2,8 +2,9 @@ import type { MouseEvent as ReactMouseEvent } from 'react'
 import type { CliTool, ToolCheck, ToolPlatform } from '../types/app'
 import { useLocale } from '../i18n/LocaleContext'
 import { categoryLabel, platformLabel, tierLabel } from '../i18n/catalogLabels'
-import { getPlatformCommand } from '../data/loadApps'
+import { getInstallEntries, getPlatformCommand } from '../data/loadApps'
 import { CommandBlock } from './CommandBlock'
+import { InstallBlock } from './InstallBlock'
 import { AppIcon } from './AppIcon'
 import { navigationUrl, parseNavigation, transitionExplorerNavigation, type ExplorerNavigationAction } from '../data/workbench'
 import type { ExplorerManifest } from '../types/explorer'
@@ -98,7 +99,7 @@ export function ToolDetails({ tool, onClose, manifest = null, onExplore }: {
 }) {
   const { locale, t } = useLocale()
   const headingId = 'tool-details-heading-' + tool.id
-  const installCommands = commandEntries(tool.install, tool.platforms, t('allPlatforms'))
+  const installEntries = getInstallEntries(tool)
   const updateCommands = commandEntries(tool.update, tool.platforms, t('allPlatforms'))
 
   return (
@@ -139,9 +140,12 @@ export function ToolDetails({ tool, onClose, manifest = null, onExplore }: {
       <div className="detail-grid">
         <section className="detail-section">
           <h3>{t('installCommands')}</h3>
-          {installCommands.length ? (
-            installCommands.map(({ key, label, command }) => (
-              <CommandSection key={key} label={label} command={command} />
+          {installEntries.length ? (
+            installEntries.map(({ platform, action }) => (
+              <div className="detail-command" key={platform}>
+                <span>{platform === 'all' ? t('allPlatforms') : platformLabel(platform)}</span>
+                <InstallBlock action={action} />
+              </div>
             ))
           ) : (
             <p className="muted-value">{t('installNotListed')}</p>

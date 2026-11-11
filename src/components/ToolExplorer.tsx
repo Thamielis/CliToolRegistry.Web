@@ -596,7 +596,7 @@ export default function ToolExplorer({
   return <section className="tool-explorer">
     <header className="screen-intro">
       <span className="section-eyebrow">{labels.toolSources}</span>
-      <h1 id="screen-heading" tabIndex={-1}>{labels.indexDescription && (locale === 'de' ? 'Werkzeuge erkunden' : 'Explore tools')}</h1>
+      <h1 id="screen-heading" tabIndex={-1}>{labels.indexDescription && labels.heading}</h1>
       <p>{labels.indexDescription}</p>
     </header>
     {navigation.docQTruncated && <p className="notice notice-warning" role="status">

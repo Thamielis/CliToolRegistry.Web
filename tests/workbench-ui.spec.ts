@@ -29,6 +29,35 @@ test('catalog entries without a primary command still load and show an explicit 
   await expect(page.getByText('Kein Befehl angegeben', { exact: true })).toBeVisible()
 })
 
+test('install recipes and ACFS notes stay separate from copyable commands across cards and table', async ({ page }) => {
+  const recipe = {
+    ...tools[0], id: 'recipe', name: 'Recipe Tool', platforms: ['linux'],
+    install: { linux: { standalone: { commandName: '/bin/bash', arguments: ['-c', 'printf hello'] } } },
+  }
+  const note = {
+    ...tools[0], id: 'acfs-note', name: 'ACFS Tool', platforms: ['linux'],
+    install: { linux: { standalone: 'echo "Install acfs-tool through ACFS"' } },
+  }
+  await page.route('**/registry-catalog.json?*', (route) => route.fulfill({ json: { ...snapshot, tools: [recipe, note] } }))
+  await page.goto('./?section=catalog&view=enhanced&platform=linux')
+  await expect(page.locator('.tool-card')).toHaveCount(2)
+  const recipeCard = page.getByRole('article', { name: 'Recipe Tool' })
+  await expect(recipeCard.locator('.install-recipe')).toContainText('/bin/bash')
+  await expect(recipeCard.locator('.install-recipe')).toContainText('printf hello')
+  await expect(recipeCard.locator('.install-recipe .command-block')).toHaveCount(0)
+  const noteCard = page.getByRole('article', { name: 'ACFS Tool' })
+  await expect(noteCard.locator('.install-note')).toContainText('Install acfs-tool through ACFS')
+  await expect(noteCard.locator('.install-note .command-block')).toHaveCount(0)
+
+  await page.getByRole('button', { name: 'Tabelle', exact: true }).click()
+  const recipeRow = page.locator('.tool-table tbody tr').filter({ hasText: 'Recipe Tool' })
+  const noteRow = page.locator('.tool-table tbody tr').filter({ hasText: 'ACFS Tool' })
+  await expect(recipeRow.locator('.install-platform-label')).toHaveText('Linux')
+  await expect(recipeRow.locator('.install-recipe-summary')).toBeVisible()
+  await expect(noteRow.locator('.install-platform-label')).toHaveText('Linux')
+  await expect(noteRow.locator('.install-note')).toContainText('Install acfs-tool through ACFS')
+})
+
 test('overview terminal uses real commands and category launchers enter filtered catalog', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
   await open(page)
@@ -126,7 +155,7 @@ test('section history preserves explorer-owned state and native modified clicks 
   const historyId = await page.evaluate(() => history.state.cliToolRegistryWorkbenchV1.historyId as string)
   await page.getByRole('link', { name: 'Katalog', exact: true }).click()
   await page.goBack()
-  await expect(page.locator('#screen-heading')).toHaveText('Werkzeuge erkunden')
+  await expect(page.locator('#screen-heading')).toHaveText('JSON-Referenzen erkunden')
   await expect(page).toHaveURL(/exploreTool=br/)
   await expect(page).toHaveURL(/campaign=docs/)
   expect(await page.evaluate(() => history.state.cliToolRegistryWorkbenchV1.historyId as string)).toBe(historyId)
@@ -134,10 +163,10 @@ test('section history preserves explorer-owned state and native modified clicks 
   await page.getByRole('link', { name: 'Katalog', exact: true }).click()
   await expect(page).toHaveURL(/section=catalog/)
   const popupPromise = context.waitForEvent('page')
-  await page.locator('.top-nav').getByRole('link', { name: 'Erkunden', exact: true }).click({ modifiers: ['Control'] })
+  await page.locator('.top-nav').getByRole('link', { name: 'JSON-Referenzen', exact: true }).click({ modifiers: ['Control'] })
   const popup = await popupPromise
   await expect(popup).toHaveURL(/section=explore/)
-  await expect(popup.locator('#screen-heading')).toHaveText('Werkzeuge erkunden')
+  await expect(popup.locator('#screen-heading')).toHaveText('JSON-Referenzen erkunden')
   await expect(page).not.toHaveURL(/section=explore/)
 })
 
@@ -286,7 +315,7 @@ for (const theme of ['Dunkel', 'Hell']) {
     await page.getByRole('button', { name: theme, exact: true }).click()
     await page.getByRole('button', { name: 'Sprache', exact: true }).click()
     await page.getByRole('button', { name: 'English', exact: true }).click()
-    for (const name of ['Overview', 'Catalog', 'Dependencies', 'Catalog lab', 'Guide', 'Explore']) {
+    for (const name of ['Overview', 'Catalog', 'Dependencies', 'Catalog lab', 'Guide', 'JSON references']) {
       await page.locator('.top-nav').getByRole('link', { name, exact: true }).click()
       await expect(page.locator('#screen-heading')).toBeVisible()
       expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([])

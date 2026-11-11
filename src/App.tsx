@@ -3,10 +3,8 @@ import './explorer.css'
 import {
   CATALOG_REPOSITORY_URL,
   CATALOG_SOURCE_URL,
-  loadToolCatalog,
-  readCatalogCache,
-  writeCatalogCache,
 } from './data/loadApps'
+import { useCatalogData } from './hooks/useCatalogData'
 import { useLocale } from './i18n/LocaleContext'
 import { LocaleSwitcher } from './components/LocaleSwitcher'
 import { ToolTable } from './components/ToolTable'
@@ -44,6 +42,7 @@ const ToolExplorer = lazy(() => import('./components/ToolExplorer'))
 const PLATFORMS: ToolPlatform[] = ['windows', 'linux', 'wsl2', 'macos']
 const EMPTY_TOOLS: CatalogSnapshot['tools'] = []
 const VIEW_STORAGE_KEY = 'cli-tool-registry.view'
+const WEBSITE_REPOSITORY_URL = 'https://github.com/Thamielis/CliToolRegistry.Web'
 
 type FocusTarget = 'heading' | 'entry' | 'trigger' | 'more' | null
 type HistoryMemory = Pick<WorkbenchHistoryData, 'scrollY' | 'focusKey'>
@@ -110,12 +109,7 @@ function initialView(): ViewMode {
 
 function App() {
   const { locale, t } = useLocale()
-  const [catalog, setCatalog] = useState(() => { const cached = readCatalogCache(); return { snapshot: cached, baseline: cached } })
-  const { snapshot, baseline } = catalog
-  const [cacheWriteFailed, setCacheWriteFailed] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-  const [loadError, setLoadError] = useState<string | null>(null)
-  const [attempt, setAttempt] = useState(0)
+  const { snapshot, baseline, cacheWriteFailed, isLoading, loadError, refresh, setBaseline } = useCatalogData()
   const [navigation, setNavigation] = useState(() => parseNavigation(window.location.search, initialView()))
   const { query, platform, category, view, tool: selectedToolId, section, sort, count } = navigation
   const [paletteOpen, setPaletteOpen] = useState(false)
@@ -388,7 +382,7 @@ function App() {
       const toolId = navigation.exploreTool
       const datasets = manifest?.datasets.filter((dataset) => dataset.toolId === toolId) ?? []
       if (toolId && datasets.length > 0) {
-        const toolName = catalog.snapshot?.tools.find((tool) => tool.id === toolId)?.name
+        const toolName = snapshot?.tools.find((tool) => tool.id === toolId)?.name
           ?? explorerRegistry.tools.find((tool) => tool.toolId === toolId)?.fallbackName
           ?? toolId
         const selectedDataset = datasets.find((dataset) => dataset.datasetId === navigation.dataset)
@@ -398,7 +392,7 @@ function App() {
       }
     }
     document.title = screenTitle + ' · CLI Tool Registry'
-  }, [section, navigation.exploreTool, navigation.dataset, explorerManifest, catalog.snapshot, locale, t])
+  }, [section, navigation.exploreTool, navigation.dataset, explorerManifest, snapshot, locale, t])
 
   useEffect(() => {
     if (section !== 'explore' || transitionRef.current.cause === 'pop' || !navigation.needsReplace || navigation.routeError) return
@@ -420,30 +414,6 @@ function App() {
       explorerLoader.cancelManifestLoad()
     }
   }, [explorerLoader, runManifestLoad])
-
-  useEffect(() => {
-    let mounted = true
-    setIsLoading(true)
-
-    loadToolCatalog()
-      .then((nextSnapshot) => {
-        if (!mounted) return
-        setCacheWriteFailed(!writeCatalogCache(nextSnapshot))
-        setCatalog((current) => ({ snapshot: nextSnapshot, baseline: current.snapshot ?? current.baseline }))
-        setLoadError(null)
-      })
-      .catch((error: unknown) => {
-        if (!mounted) return
-        setLoadError(error instanceof Error ? error.message : String(error))
-      })
-      .finally(() => {
-        if (mounted) setIsLoading(false)
-      })
-
-    return () => {
-      mounted = false
-    }
-  }, [attempt])
 
   const tools = snapshot?.tools ?? EMPTY_TOOLS
   const validatedExplorerManifest = explorerManifest.status === 'ready' ? explorerManifest.manifest : null
@@ -498,14 +468,12 @@ function App() {
         timeStyle: 'short',
       }).format(new Date(snapshot.loadedAt))
     : t('notUpdated')
-  const countLabel = t('toolCount')
-    .replace('{shown}', String(filteredTools.length))
-    .replace('{total}', String(tools.length))
+  const countLabel = t('visibleCount')
+    .replace('{shown}', String(visibleTools.length))
+    .replace('{total}', String(filteredTools.length))
 
   const refreshCatalog = () => {
-    if (isLoading) return
-    setLoadError(null)
-    setAttempt((current) => current + 1)
+    refresh()
   }
 
   const resetFilters = () => {
@@ -595,7 +563,7 @@ function App() {
               <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} />
             </> : <>
               {snapshot && <>
-                <CatalogLab current={snapshot} baseline={baseline} onSetBaseline={() => setCatalog((current) => ({ ...current, baseline: current.snapshot }))} />
+                <CatalogLab current={snapshot} baseline={baseline} onSetBaseline={setBaseline} />
                 <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} />
               </>}
             </>}
@@ -608,17 +576,18 @@ function App() {
             <h1 id="screen-heading" tabIndex={-1}>{t('catalogHeading')}</h1>
             <p>{t('catalogSubtitle')}</p>
           </div>
-          <div className="catalog-source-summary">
+          <a className="catalog-source-summary" href={CATALOG_REPOSITORY_URL} target="_blank" rel="noreferrer">
             <span className="source-summary-mark" aria-hidden="true">↗</span>
             <div>
-              <strong>In-Pro-Org/CliToolRegistry</strong>
+              <strong>{t('footerCatalogSource')}</strong>
+              <span>In-Pro-Org/CliToolRegistry</span>
               <span>
                 {snapshot
                   ? t('sourceBranch').replace('{branch}', snapshot.sourceRef ?? 'main')
                   : t('sourceLoading')}
               </span>
             </div>
-          </div>
+          </a>
         </section>
 
         <section className="filter-toolbar" id="filters" aria-label={t('searchLabel')}>
@@ -710,7 +679,7 @@ function App() {
               selectedToolId={selectedToolId} explorerManifest={validatedExplorerManifest} onExplore={explorerAction}
               onSelect={selectTool} onClose={closeDetails} />
           )}
-          {filteredTools.length > 0 && <div className="load-more-region"><p role="status">{t('visibleCount').replace('{shown}', String(visibleTools.length)).replace('{total}', String(filteredTools.length))}</p>
+          {filteredTools.length > 0 && <div className="load-more-region"><p>{countLabel}</p>
           {visibleTools.length < filteredTools.length && <button className="workbench-button" data-history-focus-key="catalog-more" onClick={() => updateNavigation({ count: Math.min(count + 48, 10000) }, false, 'more')}>{t('loadMore')} <span aria-hidden="true">↓</span></button>}</div>}
         </section>
         <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} />
@@ -733,7 +702,8 @@ function App() {
       <footer className="site-footer">
         <p>{t('footerCopyright').replace('{year}', String(new Date().getFullYear()))}</p>
         <span>{t('catalogFiles').replace('{count}', String(snapshot?.fileCount ?? 0))}</span>
-        <a href={CATALOG_REPOSITORY_URL} target="_blank" rel="noreferrer">{t('footerSource')}</a>
+        <a href={CATALOG_REPOSITORY_URL} target="_blank" rel="noreferrer">{t('footerCatalogSource')}</a>
+        <a href={WEBSITE_REPOSITORY_URL} target="_blank" rel="noreferrer">{t('footerSource')}</a>
         <a href="https://github.com/Dicklesworthstone/frankentui_website" target="_blank" rel="noreferrer">{t('referenceInspiration')}</a>
         <p className="footer-trademark-note">{t('pythonTrademark')}</p>
       </footer>

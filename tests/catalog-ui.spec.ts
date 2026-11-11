@@ -67,6 +67,8 @@ test('all views share filters, no-results recovery, and a clear action that retu
   await expect(page.locator('.tool-card-commands')).toHaveCount(0)
   await page.getByRole('button', { name: 'Tabelle', exact: true }).click()
   await expect(page.locator('.tool-table tbody tr')).toHaveCount(1)
+  await expect(page.locator('.results-heading [role="status"]')).toHaveText('1 Treffer · 1 angezeigt')
+  await expect(page.locator('.load-more-region > p')).toHaveText('1 Treffer · 1 angezeigt')
   await expect(search).toHaveValue('scm')
   await search.fill('no-such-tool')
   await expect(page.getByText('Keine Werkzeuge passen zu diesen Filtern.')).toBeVisible()
@@ -77,6 +79,14 @@ test('all views share filters, no-results recovery, and a clear action that retu
   await page.locator('.filter-toolbar select').last().selectOption('windows')
   await expect(page.locator('.tool-card')).toHaveCount(1)
   await expect(page.locator('.tool-card code').filter({ hasText: 'winget install' })).toBeVisible()
+})
+
+test('table labels the install platform and keeps catalog and website sources distinct', async ({ page }) => {
+  await openCatalog(page)
+  await page.getByRole('button', { name: 'Tabelle', exact: true }).click()
+  await expect(page.locator('.tool-table tbody tr').first().locator('.install-platform-label')).toHaveText('Windows')
+  await expect(page.locator('.site-footer').getByRole('link', { name: 'Katalogquelle' })).toHaveAttribute('href', 'https://github.com/In-Pro-Org/CliToolRegistry')
+  await expect(page.locator('.site-footer').getByRole('link', { name: 'Quellcode der Website' })).toHaveAttribute('href', 'https://github.com/Thamielis/CliToolRegistry.Web')
 })
 
 test('platform choice changes commands and never borrows an unsupported OS command', async ({ page }) => {
@@ -206,7 +216,8 @@ test('mobile reflow, reduced motion, forced colors, and desktop screenshot of re
     }
     for (const view of ['Karten', 'Karten+', 'Tabelle']) {
       await page.getByRole('button', { name: view, exact: true }).click()
-      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
+        `${width}px viewport should not overflow in ${view} view`).toBe(true)
     }
   }
   await page.setViewportSize({ width: 390, height: 844 })

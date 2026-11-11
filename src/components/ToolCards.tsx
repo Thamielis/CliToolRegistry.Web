@@ -2,8 +2,9 @@ import { useState } from 'react'
 import type { CliTool, ToolPlatform } from '../types/app'
 import { useLocale } from '../i18n/LocaleContext'
 import { categoryLabel, platformLabel, tierLabel } from '../i18n/catalogLabels'
-import { getPlatformCommand } from '../data/loadApps'
+import { getPlatformInstallAction } from '../data/loadApps'
 import { CommandBlock } from './CommandBlock'
+import { InstallBlock } from './InstallBlock'
 import { ExplorerToolLink, ToolDetails } from './ToolDetails'
 import { AppIcon } from './AppIcon'
 import type { ExplorerNavigationAction } from '../data/workbench'
@@ -33,7 +34,7 @@ function ToolCard({ tool, enhanced, activePlatform, selected, explorerManifest, 
   const { locale, t } = useLocale()
   const [installPlatform, setInstallPlatform] = useState<ToolPlatform>(tool.platforms[0] ?? 'windows')
   const platform = activePlatform === 'all' ? installPlatform : activePlatform
-  const installCommand = getPlatformCommand(tool.install, platform)
+  const installAction = getPlatformInstallAction(tool.install, platform)
   const headingId = 'tool-card-heading-' + tool.id
   const detailsId = 'tool-details-' + tool.id
 
@@ -74,7 +75,7 @@ function ToolCard({ tool, enhanced, activePlatform, selected, explorerManifest, 
                 </select>
               ) : tool.platforms.length > 0 ? <span>{platformLabel(platform)}</span> : null}
             </div>
-            {installCommand ? <CommandBlock command={installCommand} /> : <p className="card-install-missing">{t('installNotListed')}</p>}
+            {installAction ? <InstallBlock action={installAction} /> : <p className="card-install-missing">{t('installNotListed')}</p>}
             {tool.robotMode?.supported && (
               <span className="automation-badge"><span aria-hidden="true">↳</span> {t('robotMode')}: {t('robotSupported')}</span>
             )}

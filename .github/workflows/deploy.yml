@@ -18,7 +18,11 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    container:
+      # Keep aligned with @playwright/test in package.json.
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --ipc=host --init
     env:
       HAS_REGISTRY_READ_TOKEN: ${{ secrets.CLI_TOOL_REGISTRY_READ_TOKEN != '' }}
     steps:
@@ -36,7 +40,6 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run test:model
@@ -48,6 +51,7 @@ jobs:
       # build syncs the develop catalog; validate its full logo ID inventory afterward.
       - run: npm run validate:logos
       - run: npm run test:production
+      - run: npm run test:logos
       - uses: actions/upload-pages-artifact@v5.0.0
         with:
           path: dist
@@ -63,5 +67,5 @@ jobs:
       - id: deployment
         uses: actions/deploy-pages@v5.0.1
         with:
-          # Pages remained in updating_pages past the action's default 10-minute timeout.
-          timeout: 1200000
+          # GitHub Pages enforces a ten-minute deployment timeout.
+          timeout: 600000

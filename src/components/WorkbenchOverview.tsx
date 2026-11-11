@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import type { CliTool, ToolPlatform } from '../types/app'
 import type { Section } from '../data/workbench'
-import { getPlatformCommand } from '../data/loadApps'
+import { getPlatformInstallAction } from '../data/loadApps'
 import { useLocale } from '../i18n/LocaleContext'
 import { categoryLabel, platformLabel } from '../i18n/catalogLabels'
 import { CommandBlock } from './CommandBlock'
+import { InstallBlock } from './InstallBlock'
 import { AppIcon } from './AppIcon'
 
 export function WorkbenchOverview({ tools, onNavigate, onCategory, onTool }: {
@@ -18,7 +19,7 @@ export function WorkbenchOverview({ tools, onNavigate, onCategory, onTool }: {
   const [chosenPlatform, setChosenPlatform] = useState<ToolPlatform>('linux')
   const tool = tools.find((item) => item.id === toolId) ?? tools[0]
   const platform = tool?.platforms.includes(chosenPlatform) ? chosenPlatform : tool?.platforms[0]
-  const install = tool && platform ? getPlatformCommand(tool.install, platform) : null
+  const install = tool && platform ? getPlatformInstallAction(tool.install, platform) : null
   const categories = [...new Set(tools.map((item) => item.category))]
     .sort((a, b) => categoryLabel(a, locale).localeCompare(categoryLabel(b, locale), locale))
   const platforms = new Set(tools.flatMap((item) => item.platforms))
@@ -32,7 +33,7 @@ export function WorkbenchOverview({ tools, onNavigate, onCategory, onTool }: {
           <div className="hero-actions">
             <button className="workbench-button primary" onClick={() => onNavigate('catalog')}>{t('browseCatalog')} <span aria-hidden="true">↗</span></button>
             <button className="workbench-button" onClick={() => onNavigate('dependencies')}>{t('exploreGraph')} <span aria-hidden="true">→</span></button>
-            <button className="workbench-button" onClick={() => onNavigate('explore')}>{t('navExplore')} <span aria-hidden="true">↗</span></button>
+            <button className="workbench-button" onClick={() => onNavigate('explore')}>{t('exploreJson')} <span aria-hidden="true">↗</span></button>
           </div>
           <div className="hero-facts">
             {[[tools.length, t('catalogTools')], [categories.length, t('catalogCategories')], [platforms.size, t('catalogPlatforms')]].map(([count, label]) =>
@@ -56,7 +57,7 @@ export function WorkbenchOverview({ tools, onNavigate, onCategory, onTool }: {
                 <div className="terminal-command-label"><span>{t('installColumn')}</span>{platform && <label><span className="sr-only">{t('previewPlatform')}</span><select value={platform} onChange={(event) => setChosenPlatform(event.target.value as ToolPlatform)}>
                   {tool.platforms.map((item) => <option key={item} value={item}>{platformLabel(item)}</option>)}
                 </select></label>}</div>
-                {install ? <CommandBlock command={install} /> : <p className="muted-value">{t('installNotListed')}</p>}
+                {install ? <InstallBlock action={install} compact={install.kind === 'recipe'} /> : <p className="muted-value">{t('installNotListed')}</p>}
                 <button className="preview-open" data-history-focus-key={`overview-tool:${tool.id}`} onClick={(event) => onTool(tool.id, event.currentTarget)}>{tool.name} · {t('details')} <span aria-hidden="true">↗</span></button>
               </> : <p>{t('noTools')}</p>}
             </div>
@@ -93,14 +94,14 @@ export function WorkbenchGuide({ onNavigate }: { onNavigate: (section: Section) 
   return <section className="guide-screen">
     <header className="screen-intro"><span className="section-eyebrow">{t('navGuide')}</span><h1 id="screen-heading" tabIndex={-1}>{t('guideHeading')}</h1><p>{t('guideBody')}</p></header>
     <div className="guide-grid">{([
-      ['guideChooseTitle', 'guideChooseBody', 'catalog', '>_'],
-      ['guideInstallTitle', 'guideInstallBody', 'catalog', '$'],
+      ['guideOverviewTitle', 'guideOverviewBody', 'overview', '⌂'],
+      ['guideCatalogTitle', 'guideCatalogBody', 'catalog', '>_'],
       ['guideDependenciesTitle', 'guideDependenciesBody', 'dependencies', '↗↘'],
-      ['guideRobotTitle', 'guideRobotBody', 'catalog', '{ }'],
+      ['guideExplorerTitle', 'guideExplorerBody', 'explore', '{ }'],
       ['guideDataTitle', 'guideDataBody', 'lab', '− +'],
       ['guideShortcutsTitle', 'guideShortcutsBody', 'catalog', '⌘ K'],
     ] as const).map(([title, body, section, icon]) => <article className="workbench-panel guide-card" key={title}>
-      <span className="feature-icon" aria-hidden="true">{icon}</span><h2>{t(title)}</h2><p>{t(body)}</p><button className="workbench-button" onClick={() => onNavigate(section)}>{t(section === 'dependencies' ? 'navDependencies' : section === 'lab' ? 'navLab' : 'navCatalog')} <span aria-hidden="true">↗</span></button>
+      <span className="feature-icon" aria-hidden="true">{icon}</span><h2>{t(title)}</h2><p>{t(body)}</p><button className="workbench-button" onClick={() => onNavigate(section)}>{t(section === 'dependencies' ? 'navDependencies' : section === 'lab' ? 'navLab' : section === 'explore' ? 'navExplore' : section === 'overview' ? 'navOverview' : 'navCatalog')} <span aria-hidden="true">↗</span></button>
     </article>)}</div>
   </section>
 }

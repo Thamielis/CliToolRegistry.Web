@@ -1,8 +1,9 @@
 import type { CliTool, Locale, ToolPlatform } from '../types/app'
 import { useLocale } from '../i18n/LocaleContext'
 import { categoryLabel, platformLabel } from '../i18n/catalogLabels'
-import { getInstallCommand } from '../data/loadApps'
+import { getInstallAction } from '../data/loadApps'
 import { CommandBlock } from './CommandBlock'
+import { InstallBlock } from './InstallBlock'
 import { AppIcon } from './AppIcon'
 import { ExplorerToolLink } from './ToolDetails'
 import type { ExplorerNavigationAction } from '../data/workbench'
@@ -42,7 +43,7 @@ export function ToolTable({
         <tbody>
           {tools.map((tool) => {
             const selected = selectedToolId === tool.id
-            const installCommand = getInstallCommand(tool, activePlatform)
+            const install = getInstallAction(tool, activePlatform)
 
             return (
               <tr key={tool.id} className={selected ? 'tool-row selected' : 'tool-row'}>
@@ -80,8 +81,13 @@ export function ToolTable({
                   </ul>
                 </td>
                 <td data-label={t('installColumn')}>
-                  {installCommand ? (
-                    <CommandBlock command={installCommand} compact />
+                  {install ? (
+                    <>
+                      <span className="install-platform-label">
+                        {install.platform === 'all' ? t('allPlatforms') : platformLabel(install.platform)}
+                      </span>
+                      <InstallBlock action={install.action} compact />
+                    </>
                   ) : (
                     <span className="muted-value">{t('installNotListed')}</span>
                   )}

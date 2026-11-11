@@ -2,7 +2,7 @@ import type { Locale } from '../types/app'
 
 export const explorerLabels = {
   de: {
-    heading: 'Werkzeuge erkunden',
+    heading: 'JSON-Referenzen erkunden',
     queryTruncated: 'Die Dateisuche wurde auf 500 Zeichen gekürzt.',
     indexDescription: 'Versionierte Befehls- und Fähigkeitsreferenzen aus den veröffentlichten JSON-Snapshots.',
     manifestLoading: 'Erkundungsquellen werden geladen …',
@@ -69,7 +69,7 @@ export const explorerLabels = {
     no: 'Nein',
   },
   en: {
-    heading: 'Explore tools',
+    heading: 'Explore JSON references',
     queryTruncated: 'The file search was limited to 500 characters.',
     indexDescription: 'Versioned command and capability references from the published JSON snapshots.',
     manifestLoading: 'Loading explorer sources …',
