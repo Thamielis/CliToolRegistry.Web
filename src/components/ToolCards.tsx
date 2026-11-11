@@ -60,7 +60,7 @@ function ToolCard({ tool, enhanced, activePlatform, selected, explorerManifest, 
         )}
         {enhanced && (
           <div className="tool-card-commands">
-            <div className="card-command-heading"><span>{t('commandColumn')}</span><code>{tool.id}</code></div>
+            <div className="card-command-heading"><span>{t('commandColumn')}</span></div>
             {tool.command ? <CommandBlock command={tool.command} /> : <p className="muted-value">{t('commandNotListed')}</p>}
             <div className="card-command-heading">
               <span>{t('installColumn')}</span>
@@ -76,7 +76,7 @@ function ToolCard({ tool, enhanced, activePlatform, selected, explorerManifest, 
               ) : tool.platforms.length > 0 ? <span>{platformLabel(platform)}</span> : null}
             </div>
             {installAction ? <InstallBlock action={installAction} /> : <p className="card-install-missing">{t('installNotListed')}</p>}
-            {tool.robotMode?.supported && (
+            {tool.robotMode?.supported === true && (
               <span className="automation-badge"><span aria-hidden="true">↳</span> {t('robotMode')}: {t('robotSupported')}</span>
             )}
           </div>
@@ -100,7 +100,7 @@ function ToolCard({ tool, enhanced, activePlatform, selected, explorerManifest, 
           </div>
         </footer>
       </div>
-      {selected && <ToolDetails tool={tool} onClose={onClose} manifest={explorerManifest} onExplore={onExplore} />}
+      {selected && <ToolDetails tool={tool} onClose={onClose} manifest={explorerManifest} onExplore={onExplore} showDescription={false} />}
     </article>
   )
 }

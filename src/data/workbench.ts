@@ -1,8 +1,10 @@
 import type { CatalogSnapshot, CliTool, ToolPlatform } from '../types/app'
 import type { DatasetRef, ManifestEntry } from '../types/explorer'
 
-export const SECTIONS = ['overview', 'catalog', 'dependencies', 'lab', 'guide', 'explore'] as const
+export const SECTIONS = ['overview', 'catalog', 'dependencies', 'lab', 'workspace', 'profiles', 'guide', 'explore'] as const
 export type Section = typeof SECTIONS[number]
+export const PRIMARY_SECTIONS = ['catalog', 'workspace', 'profiles', 'guide'] as const
+export type PrimarySection = typeof PRIMARY_SECTIONS[number]
 export type CatalogView = 'card' | 'enhanced' | 'list'
 
 export type ExplorerFilters = {
@@ -143,7 +145,8 @@ export function parseNavigation(search: string, preferredView: CatalogView = 'en
   const platform = params.get('platform')
   const view = params.get('view')
   const count = Number(params.get('count') ?? 48)
-  const resolvedSection: Section = SECTIONS.includes(section as Section) ? section as Section : params.get('tool') ? 'catalog' : 'overview'
+  const requestedSection: Section | null = SECTIONS.includes(section as Section) ? section as Section : null
+  const resolvedSection: Section = requestedSection === 'overview' ? 'catalog' : requestedSection ?? (params.get('tool') ? 'catalog' : 'catalog')
   const exploreEnabled = resolvedSection === 'explore'
   let routeError: NavigationState['routeError'] = null
   const boundedId = (key: string, limit: number): string | null => {

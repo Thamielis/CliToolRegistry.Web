@@ -118,10 +118,10 @@ export function ExplorerDetails({ props }: { props: DatasetViewProps }) {
     metadata.generatedAt.state === 'value' ? [labels.generatedAt, metadata.generatedAt.value] : null,
   ].filter((value): value is [string, string] => value !== null)
 
-  return <aside className="explorer-details" aria-label={selectedEntry?.title ?? manifestEntry.filename}>
+  return <aside className="explorer-details" aria-label={selectedEntry?.title ?? labels.rawPreview}>
     <header className="explorer-details-header">
       <div>
-        <span className="section-eyebrow">{labels.filename}</span>
+        <span className="section-eyebrow">{labels.toolSources}</span>
         <h2 data-navigation-entry-heading tabIndex={-1} data-history-focus-key={selectedEntry ? `explorer-detail:${selectedEntry.id}` : 'explorer-source-heading'}>
           {selectedEntry?.title ?? labels.rawPreview}
         </h2>
@@ -131,32 +131,27 @@ export function ExplorerDetails({ props }: { props: DatasetViewProps }) {
       </button>}
     </header>
 
-    {selectedEntry && <p className="explorer-entry-origin"><code>{selectedEntry.origin.filename}{selectedEntry.origin.pointer || '/'}</code></p>}
-
-    <dl className="explorer-provenance">
-      <div><dt>{labels.filename}</dt><dd><code>{manifestEntry.filename}</code></dd></div>
-      <div><dt>{labels.digest}</dt><dd><code>{manifestEntry.sha256}</code></dd></div>
-      <div><dt>{labels.bytes}</dt><dd>{manifestEntry.bytes.toLocaleString(locale === 'de' ? 'de-DE' : 'en-US')}</dd></div>
-      {sourced.map(([label, value]) => <div key={label}><dt>{label}</dt><dd><code>{value}</code></dd></div>)}
-    </dl>
-
-    <div className="explorer-detail-actions">
-      <button type="button" className="workbench-button" onClick={() => downloadOriginalJson(sourceBytes, manifestEntry.filename, {
-        document,
-        urls: URL,
-        schedule: (callback) => globalThis.setTimeout(callback, 0),
-      })}>{labels.downloadOriginal}</button>
-    </div>
-
-    <section className="explorer-json-preview" aria-label={labels.rawPreview}>
-      <h3>{selectedEntry?.detail.kind === 'generic' ? labels.jsonRoot : labels.rawPreview}</h3>
-      {(selectedEntry?.detail.kind === 'generic' || props.manifestEntry.adapter === 'generic-json' ||
-        props.dataset.entries.every((entry) => entry.detail.kind === 'generic')) && <JsonTree value={previewValue} pointer={pointer} depth={0} query={navigation.docQ}
-        locale={locale} labels={labels} budget={{ remaining: 500 }}
-        onOpenSubtree={(rootPointer) => onAction({ type: 'entry', entryId: `ptr:${rootPointer}` })} />}
-      {limitedPreview && <p className="notice notice-warning">{labels.previewLimited}</p>}
-      <pre className="explorer-raw-preview">{previewText.slice(0, 20_000)}</pre>
-    </section>
+    <details className="explorer-source-details"><summary>{labels.sourceDetails}</summary>
+      {selectedEntry && <p className="explorer-entry-origin"><code>{selectedEntry.origin.filename}{selectedEntry.origin.pointer || '/'}</code></p>}
+      <dl className="explorer-provenance">
+        <div><dt>{labels.filename}</dt><dd><code>{manifestEntry.filename}</code></dd></div>
+        <div><dt>{labels.digest}</dt><dd><code>{manifestEntry.sha256}</code></dd></div>
+        <div><dt>{labels.bytes}</dt><dd>{manifestEntry.bytes.toLocaleString(locale === 'de' ? 'de-DE' : 'en-US')}</dd></div>
+        {sourced.map(([label, value]) => <div key={label}><dt>{label}</dt><dd><code>{value}</code></dd></div>)}
+      </dl>
+      <div className="explorer-detail-actions"><button type="button" className="workbench-button" onClick={() => downloadOriginalJson(sourceBytes, manifestEntry.filename, {
+        document, urls: URL, schedule: (callback) => globalThis.setTimeout(callback, 0),
+      })}>{labels.downloadOriginal}</button></div>
+      <section className="explorer-json-preview" aria-label={labels.rawPreview}>
+        <h3>{selectedEntry?.detail.kind === 'generic' ? labels.jsonRoot : labels.rawPreview}</h3>
+        {(selectedEntry?.detail.kind === 'generic' || props.manifestEntry.adapter === 'generic-json' ||
+          props.dataset.entries.every((entry) => entry.detail.kind === 'generic')) && <JsonTree value={previewValue} pointer={pointer} depth={0} query={navigation.docQ}
+          locale={locale} labels={labels} budget={{ remaining: 500 }}
+          onOpenSubtree={(rootPointer) => onAction({ type: 'entry', entryId: `ptr:${rootPointer}` })} />}
+        {limitedPreview && <p className="notice notice-warning">{labels.previewLimited}</p>}
+        <pre className="explorer-raw-preview">{previewText.slice(0, 20_000)}</pre>
+      </section>
+    </details>
   </aside>
 }
 
@@ -188,8 +183,7 @@ export function GenericDatasetView({ props }: { props: DatasetViewProps }) {
                 data-history-focus-key={`explorer-entry:${entry.id}`}
                 onClick={() => onAction({ type: 'entry', entryId: entry.id })}>
                 <span className="explorer-entry-title">{highlighted(entry.title, navigation.docQ, locale)}</span>
-                <code>{highlighted(entry.origin.pointer || '/', navigation.docQ, locale)}</code>
-                <span className="explorer-entry-summary">{highlighted(entry.searchText, navigation.docQ, locale)}</span>
+                <span className="explorer-entry-summary">{highlighted(entry.searchText.replace(entry.origin.pointer, '').trim(), navigation.docQ, locale)}</span>
               </button>
             </li>)}
           </ol>}

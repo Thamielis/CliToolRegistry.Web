@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/tool-catalog.schema.json",
+  "title": "CliToolRegistry Tool Catalog",
+  "description": "Version 2.3 catalog envelope containing tool definitions.",
+  "type": "object",
+  "required": [
+    "category",
+    "tools"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "2.3"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "acfs",
+        "agents",
+        "base",
+        "cli",
+        "cloud",
+        "db",
+        "filesystem",
+        "lang",
+        "network",
+        "agenticFlywheel",
+        "agenticUtilities",
+        "aiAgents",
+        "deployment",
+        "foundation",
+        "frankenSuite",
+        "recommendedCli",
+        "shell",
+        "stack",
+        "tools",
+        "users",
+        "workflowAndInfrastructure"
+      ]
+    },
+    "tools": {
+      "type": "array",
+      "items": {
+        "$ref": "./tool-definition.schema.json"
+      }
+    }
+  }
+}

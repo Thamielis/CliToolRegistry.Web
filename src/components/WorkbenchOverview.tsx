@@ -94,14 +94,16 @@ export function WorkbenchGuide({ onNavigate }: { onNavigate: (section: Section) 
   return <section className="guide-screen">
     <header className="screen-intro"><span className="section-eyebrow">{t('navGuide')}</span><h1 id="screen-heading" tabIndex={-1}>{t('guideHeading')}</h1><p>{t('guideBody')}</p></header>
     <div className="guide-grid">{([
-      ['guideOverviewTitle', 'guideOverviewBody', 'overview', '⌂'],
+      ['guideOverviewTitle', 'guideOverviewBody', 'catalog', '⌂'],
       ['guideCatalogTitle', 'guideCatalogBody', 'catalog', '>_'],
       ['guideDependenciesTitle', 'guideDependenciesBody', 'dependencies', '↗↘'],
       ['guideExplorerTitle', 'guideExplorerBody', 'explore', '{ }'],
+      ['guideWorkspaceTitle', 'guideWorkspaceBody', 'workspace', '＋'],
+      ['guideProfilesTitle', 'guideProfilesBody', 'profiles', '≋'],
       ['guideDataTitle', 'guideDataBody', 'lab', '− +'],
       ['guideShortcutsTitle', 'guideShortcutsBody', 'catalog', '⌘ K'],
     ] as const).map(([title, body, section, icon]) => <article className="workbench-panel guide-card" key={title}>
-      <span className="feature-icon" aria-hidden="true">{icon}</span><h2>{t(title)}</h2><p>{t(body)}</p><button className="workbench-button" onClick={() => onNavigate(section)}>{t(section === 'dependencies' ? 'navDependencies' : section === 'lab' ? 'navLab' : section === 'explore' ? 'navExplore' : section === 'overview' ? 'navOverview' : 'navCatalog')} <span aria-hidden="true">↗</span></button>
+      <span className="feature-icon" aria-hidden="true">{icon}</span><h2>{t(title)}</h2><p>{t(body)}</p><button className="workbench-button" onClick={() => onNavigate(section)}>{t(section === 'dependencies' ? 'navDependencies' : section === 'lab' ? 'navLab' : section === 'explore' ? 'navExplore' : section === 'workspace' ? 'navWorkspace' : section === 'profiles' ? 'navProfiles' : 'navCatalog')} <span aria-hidden="true">↗</span></button>
     </article>)}</div>
   </section>
 }

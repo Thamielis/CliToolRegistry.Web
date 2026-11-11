@@ -13,7 +13,7 @@ export interface InstallEntry {
 export const CATALOG_DIRECTORY = 'src/CliToolRegistry/Data/Tools'
 export const CATALOG_REPOSITORY_URL = 'https://github.com/In-Pro-Org/CliToolRegistry'
 export const CATALOG_SOURCE_URL = CATALOG_REPOSITORY_URL
-const CACHE_KEY = 'cli-tool-registry.catalog.v2'
+const CACHE_KEY = 'cli-tool-registry.catalog.v3'
 
 let activeRequest: Promise<CatalogSnapshot> | null = null
 
@@ -25,7 +25,9 @@ export function isCatalogSnapshot(value: unknown): value is CatalogSnapshot {
   if (!isRecord(value) || !Array.isArray(value.tools) || typeof value.loadedAt !== 'string' ||
     !Number.isFinite(Date.parse(value.loadedAt)) || typeof value.fileCount !== 'number' ||
     !Number.isSafeInteger(value.fileCount) || value.fileCount < 0) return false
-  if (['sourceRef', 'sourceRepository'].some((key) => value[key] != null && typeof value[key] !== 'string')) return false
+  if (typeof value.sourceRepository !== 'string' || typeof value.sourceRef !== 'string' ||
+    typeof value.sourceRevision !== 'string' || !/^[0-9a-f]{40}$/i.test(value.sourceRevision) ||
+    typeof value.sourceCommitDate !== 'string' || !Number.isFinite(Date.parse(value.sourceCommitDate))) return false
   const ids = new Set<string>()
   const strings = (items: unknown) => items === undefined ||
     Array.isArray(items) && items.every((item) => typeof item === 'string')
@@ -35,8 +37,9 @@ export function isCatalogSnapshot(value: unknown): value is CatalogSnapshot {
     try { return ['http:', 'https:'].includes(new URL(link).protocol) } catch { return false }
   }
   return value.tools.every((tool) => {
-    if (!isRecord(tool) || !['id', 'name', 'description', 'category', 'tier', 'catalogFile', 'catalogUrl']
-      .every((key) => typeof tool[key] === 'string') || !tool.id || ids.has(tool.id as string) ||
+    if (!isRecord(tool) || !['id', 'name', 'description', 'category', 'catalogFile', 'catalogUrl']
+      .every((key) => typeof tool[key] === 'string' && tool[key] !== '') || !tool.id || ids.has(tool.id as string) ||
+      (tool.tier !== undefined && typeof tool.tier !== 'string') ||
       (tool.command !== undefined && tool.command !== null && typeof tool.command !== 'string') ||
       !Array.isArray(tool.platforms) || !tool.platforms.every((p) => ['windows', 'linux', 'wsl2', 'macos'].includes(p)) ||
       !strings(tool.tags) || !strings(tool.notes) || !safeLink(tool.website) || !safeLink(tool.repository) ||
@@ -159,7 +162,7 @@ export function resolveInstallAction(value: unknown, method?: string): InstallAc
 }
 
 export function getPlatformInstallAction(
-  commands: Record<string, unknown> | undefined,
+  commands: Record<string, unknown> | null | undefined,
   platform: ToolPlatform,
 ): InstallAction | null {
   if (!commands) return null
@@ -203,7 +206,7 @@ export function getInstallAction(tool: CliTool, platform: ToolPlatform | 'all'):
 }
 
 export function getPlatformCommand(
-  commands: Record<string, unknown> | undefined,
+  commands: Record<string, unknown> | null | undefined,
   platform: ToolPlatform,
 ): string | null {
   const action = getPlatformInstallAction(commands, platform)

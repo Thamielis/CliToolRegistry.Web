@@ -2,7 +2,6 @@ import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRe
 import './explorer.css'
 import {
   CATALOG_REPOSITORY_URL,
-  CATALOG_SOURCE_URL,
 } from './data/loadApps'
 import { useCatalogData } from './hooks/useCatalogData'
 import { useLocale } from './i18n/LocaleContext'
@@ -19,8 +18,8 @@ import {
   createNavigationTicket,
   navigationUrl,
   parseNavigation,
+  PRIMARY_SECTIONS,
   readWorkbenchHistoryData,
-  SECTIONS,
   withWorkbenchHistoryData,
   type NavigationState,
   type Section,
@@ -28,7 +27,7 @@ import {
 } from './data/workbench'
 import { CommandPalette } from './components/CommandPalette'
 import { sectionLabels as SECTION_LABELS } from './i18n/translations'
-import { WorkbenchOverview, WorkbenchGuide } from './components/WorkbenchOverview'
+import { WorkbenchGuide } from './components/WorkbenchOverview'
 import { ScreenBoundary } from './components/ScreenBoundary'
 import { createExplorerLoader, type ExplorerLoadError, type ExplorerLoader } from './data/loadExplorer'
 import type { ExplorerManifest } from './types/explorer'
@@ -38,6 +37,8 @@ import { explorerRegistry } from './data/explorerRegistry'
 const DependencyExplorer = lazy(() => import('./components/DependencyExplorer'))
 const CatalogLab = lazy(() => import('./components/CatalogLab'))
 const ToolExplorer = lazy(() => import('./components/ToolExplorer'))
+const Workspace = lazy(() => import('./components/Workspace').then(({ Workspace: Component }) => ({ default: Component })))
+const Profiles = lazy(() => import('./components/Profiles').then(({ Profiles: Component }) => ({ default: Component })))
 
 const PLATFORMS: ToolPlatform[] = ['windows', 'linux', 'wsl2', 'macos']
 const EMPTY_TOOLS: CatalogSnapshot['tools'] = []
@@ -101,7 +102,7 @@ function NavigationReadySignal({ ticket, onReady }: { ticket: string; onReady: (
 function initialView(): ViewMode {
   try {
     const saved = localStorage.getItem(VIEW_STORAGE_KEY)
-    return saved === 'card' || saved === 'list' || saved === 'enhanced' ? saved : 'enhanced'
+    return saved === 'card' || saved === 'list' || saved === 'enhanced' ? saved : 'card'
   } catch {
     return 'enhanced'
   }
@@ -110,6 +111,8 @@ function initialView(): ViewMode {
 function App() {
   const { locale, t } = useLocale()
   const { snapshot, baseline, cacheWriteFailed, isLoading, loadError, refresh, setBaseline } = useCatalogData()
+  const canonicalTools = snapshot?.tools ?? EMPTY_TOOLS
+  const [tools, setTools] = useState<CliTool[]>(canonicalTools)
   const [navigation, setNavigation] = useState(() => parseNavigation(window.location.search, initialView()))
   const { query, platform, category, view, tool: selectedToolId, section, sort, count } = navigation
   const [paletteOpen, setPaletteOpen] = useState(false)
@@ -134,6 +137,26 @@ function App() {
   const explorerLoader = useMemo<ExplorerLoader>(() => createExplorerLoader({ baseUrl: import.meta.env.BASE_URL }), [])
   const [explorerManifest, setExplorerManifest] = useState<ManifestState>({ status: 'loading' })
   const manifestRequestRef = useRef(0)
+
+  useEffect(() => {
+    let active = true
+    const refreshWorkspace = async () => {
+      try {
+        const workspaceModule = await import('./data/workspace')
+        if (!active) return
+        const workspace = workspaceModule.loadWorkspace(canonicalTools)
+        setTools(workspaceModule.combineWorkspaceTools(canonicalTools, workspace.state.tools))
+      } catch {
+        if (active) setTools(canonicalTools)
+      }
+    }
+    void refreshWorkspace()
+    window.addEventListener('cli-tool-registry:workspace-updated', refreshWorkspace)
+    return () => {
+      active = false
+      window.removeEventListener('cli-tool-registry:workspace-updated', refreshWorkspace)
+    }
+  }, [canonicalTools])
 
   const runManifestLoad = useCallback(async (refresh = false) => {
     const requestId = ++manifestRequestRef.current
@@ -382,7 +405,7 @@ function App() {
       const toolId = navigation.exploreTool
       const datasets = manifest?.datasets.filter((dataset) => dataset.toolId === toolId) ?? []
       if (toolId && datasets.length > 0) {
-        const toolName = snapshot?.tools.find((tool) => tool.id === toolId)?.name
+        const toolName = tools.find((tool) => tool.id === toolId)?.name
           ?? explorerRegistry.tools.find((tool) => tool.toolId === toolId)?.fallbackName
           ?? toolId
         const selectedDataset = datasets.find((dataset) => dataset.datasetId === navigation.dataset)
@@ -392,7 +415,7 @@ function App() {
       }
     }
     document.title = screenTitle + ' · CLI Tool Registry'
-  }, [section, navigation.exploreTool, navigation.dataset, explorerManifest, snapshot, locale, t])
+  }, [section, navigation.exploreTool, navigation.dataset, explorerManifest, tools, locale, t])
 
   useEffect(() => {
     if (section !== 'explore' || transitionRef.current.cause === 'pop' || !navigation.needsReplace || navigation.routeError) return
@@ -415,7 +438,6 @@ function App() {
     }
   }, [explorerLoader, runManifestLoad])
 
-  const tools = snapshot?.tools ?? EMPTY_TOOLS
   const validatedExplorerManifest = explorerManifest.status === 'ready' ? explorerManifest.manifest : null
 
   const categoryOptions = useMemo(() => {
@@ -453,21 +475,6 @@ function App() {
   const visibleTools = filteredTools.slice(0, count)
 
   const selectedTool = tools.find((tool) => tool.id === selectedToolId) ?? null
-  const sourceStatus = isLoading
-    ? 'loading'
-    : loadError
-      ? snapshot
-        ? 'cached'
-        : 'error'
-      : snapshot
-        ? 'live'
-        : 'error'
-  const updatedAt = snapshot
-    ? new Intl.DateTimeFormat(locale === 'de' ? 'de-DE' : 'en-US', {
-        dateStyle: 'medium',
-        timeStyle: 'short',
-      }).format(new Date(snapshot.loadedAt))
-    : t('notUpdated')
   const countLabel = t('visibleCount')
     .replace('{shown}', String(visibleTools.length))
     .replace('{total}', String(filteredTools.length))
@@ -484,7 +491,7 @@ function App() {
     <div className="registry-app" id="top">
       <a className="skip-link" href="#main-content" data-history-focus-key="skip-link">{t(SECTION_LABELS[section])}</a>
       <header className="topbar">
-        <a className="brand" href={navHref('overview')} onClick={(event) => navClick(event, 'overview')} aria-label={t('siteTitle')}>
+        <a className="brand" href={navHref('catalog')} onClick={(event) => navClick(event, 'catalog')} aria-label={t('siteTitle')}>
           <span className="brand-mark" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <path d="m8 7 5 5-5 5M14 17h4" />
@@ -494,41 +501,20 @@ function App() {
         </a>
 
         <nav className="top-nav" aria-label={locale === 'de' ? 'Hauptnavigation' : 'Main navigation'}>
-          {SECTIONS.map((item) => <a key={item} className={section === item ? 'top-nav-active' : ''}
+          {PRIMARY_SECTIONS.map((item) => <a key={item} className={section === item ? 'top-nav-active' : ''}
             href={navHref(item)} data-history-focus-key={'nav:' + item}
             aria-current={section === item ? 'page' : undefined} onClick={(event) => navClick(event, item)}>{t(SECTION_LABELS[item])}</a>)}
         </nav>
 
         <div className="topbar-actions">
-          <button className="palette-trigger" id="palette-trigger" data-history-focus-key="palette-trigger"
-            aria-label={t('paletteLabel')} title={t('paletteLabel') + ' · Ctrl / ⌘ K'} onClick={() => setPaletteOpen(true)}><span aria-hidden="true">⌕</span><kbd>⌘ K</kbd></button>
-          <a className={'source-status status-' + sourceStatus} href={CATALOG_SOURCE_URL}>
-            <span className="status-dot" />
-            <span>
-              {t(
-                sourceStatus === 'live'
-                  ? 'sourceLive'
-                  : sourceStatus === 'cached'
-                    ? 'sourceCached'
-                    : sourceStatus === 'error'
-                      ? 'sourceError'
-                      : 'sourceLoading',
-              )}
-            </span>
-          </a>
-          <span className="updated-label">{t('lastUpdated').replace('{time}', updatedAt)}</span>
-          <button
-            type="button"
-            className="refresh-button header-icon-button"
-            onClick={refreshCatalog}
-            disabled={isLoading}
-            aria-label={t(isLoading ? 'refreshing' : 'refresh')}
-            title={t(isLoading ? 'refreshing' : 'refresh')}
-          >
+          <button type="button" className="refresh-button header-icon-button" onClick={refreshCatalog} disabled={isLoading}
+            aria-label={t(isLoading ? 'refreshing' : 'refresh')} title={t(isLoading ? 'refreshing' : 'refresh')}>
             <svg viewBox="0 0 20 20" aria-hidden="true" className={isLoading ? 'spin' : ''}>
               <path d="M16.2 7.3A6.5 6.5 0 0 0 5 4.7L3.4 6.3M3.8 3.8v2.7h2.7M3.8 12.7A6.5 6.5 0 0 0 15 15.3l1.6-1.6m-.4 2.5v-2.7h-2.7" />
             </svg>
           </button>
+          <button className="palette-trigger" id="palette-trigger" data-history-focus-key="palette-trigger"
+            aria-label={t('paletteLabel')} title={t('paletteLabel') + ' · Ctrl / ⌘ K'} onClick={() => setPaletteOpen(true)}><span aria-hidden="true">⌕</span><kbd>⌘ K</kbd></button>
           <LocaleSwitcher />
           <ThemeToggle />
         </div>
@@ -539,16 +525,27 @@ function App() {
           <div className="notice notice-warning" role="status"><span>{t('cachedWarning')}</span><button type="button" onClick={refreshCatalog} disabled={isLoading}>{t('retry')}</button></div>
         )}
         {cacheWriteFailed && <p className="notice notice-warning" role="status">{t('cacheWriteWarning')}</p>}
-        {!snapshot && section !== 'explore' ? <div className="empty-state" aria-busy={isLoading}>{isLoading ? <><span className="loading-indicator" /><p>{t('loadingTools')}</p></> :
+        {!snapshot && !['explore', 'workspace', 'profiles'].includes(section) ? <div className="empty-state" aria-busy={isLoading}>{isLoading ? <><span className="loading-indicator" /><p>{t('loadingTools')}</p></> :
           <><h1 id="screen-heading" tabIndex={-1}>{t('loadErrorTitle')}</h1><p>{t('loadErrorHint')}</p><button className="workbench-button" onClick={refreshCatalog}>{t('retry')}</button>
             <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} /></>}</div> : <>
-        {section === 'overview' && <>
-          <WorkbenchOverview tools={tools} onNavigate={navigate} onTool={revealTool}
-            onCategory={(next) => updateNavigation({ section: 'catalog', category: next, query: '', platform: 'all', count: 48, tool: null }, true, 'heading')} />
-          <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} />
-        </>}
         {section === 'guide' && <>
           <WorkbenchGuide onNavigate={navigate} />
+          <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} />
+        </>}
+        {section === 'workspace' && <>
+          <ScreenBoundary message={t('screenLoadError')} reloadLabel={t('reloadScreen')}>
+            <Suspense fallback={<div className="empty-state" role="status"><span className="loading-indicator" /><p>{t('loadingTools')}</p></div>}>
+              <Workspace catalogTools={canonicalTools} locale={locale} />
+            </Suspense>
+          </ScreenBoundary>
+          <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} />
+        </>}
+        {section === 'profiles' && <>
+          <ScreenBoundary message={t('screenLoadError')} reloadLabel={t('reloadScreen')}>
+            <Suspense fallback={<div className="empty-state" role="status"><span className="loading-indicator" /><p>{t('loadingTools')}</p></div>}>
+              <Profiles catalogTools={canonicalTools} locale={locale} />
+            </Suspense>
+          </ScreenBoundary>
           <NavigationReadySignal ticket={transitionRef.current.ticket} onReady={navigationReady} />
         </>}
         {(section === 'dependencies' || section === 'lab' && snapshot !== null) && <ScreenBoundary key={section} message={t('screenLoadError')} reloadLabel={t('reloadScreen')}>
@@ -576,18 +573,6 @@ function App() {
             <h1 id="screen-heading" tabIndex={-1}>{t('catalogHeading')}</h1>
             <p>{t('catalogSubtitle')}</p>
           </div>
-          <a className="catalog-source-summary" href={CATALOG_REPOSITORY_URL} target="_blank" rel="noreferrer">
-            <span className="source-summary-mark" aria-hidden="true">↗</span>
-            <div>
-              <strong>{t('footerCatalogSource')}</strong>
-              <span>In-Pro-Org/CliToolRegistry</span>
-              <span>
-                {snapshot
-                  ? t('sourceBranch').replace('{branch}', snapshot.sourceRef ?? 'main')
-                  : t('sourceLoading')}
-              </span>
-            </div>
-          </a>
         </section>
 
         <section className="filter-toolbar" id="filters" aria-label={t('searchLabel')}>
@@ -649,16 +634,9 @@ function App() {
             <div className="results-controls">
               <label className="sort-select"><span>{t('sortLabel')}</span><select value={sort} onChange={(event) => updateNavigation({ sort: event.target.value as NavigationState['sort'], count: 48, tool: null })}>
                 <option value="name">{t('sortName')}</option><option value="category">{t('sortCategory')}</option></select></label>
-            {snapshot && (
-              <span className="catalog-file-count">
-                {t('catalogFiles').replace('{count}', String(snapshot.fileCount))}
-              </span>
-            )}
               <ViewToggle mode={view} onChange={changeView} />
             </div>
           </div>
-          <p className="view-description">{t(view === 'enhanced' ? 'enhancedHint' : view === 'card' ? 'cardHint' : 'tableHint')}</p>
-
           {filteredTools.length === 0 ? (
             <div className="empty-state">
               <p>{tools.length === 0 ? t('noTools') : t('noMatches')}</p>
@@ -693,7 +671,7 @@ function App() {
           </Suspense>
         </ScreenBoundary>}
         {selectedTool && (section !== 'catalog' || view === 'list' || !visibleTools.some((tool) => tool.id === selectedToolId)) && (
-          <ToolDetails tool={selectedTool} onClose={closeDetails} manifest={validatedExplorerManifest} onExplore={explorerAction} />
+          <ToolDetails tool={selectedTool} onClose={closeDetails} manifest={validatedExplorerManifest} onExplore={explorerAction} showDescription={false} />
         )}
         {section === 'catalog' && selectedToolId && !selectedTool && <p className="notice notice-warning" role="status">{t('unknownTool')}</p>}
         </>}
@@ -701,10 +679,8 @@ function App() {
 
       <footer className="site-footer">
         <p>{t('footerCopyright').replace('{year}', String(new Date().getFullYear()))}</p>
-        <span>{t('catalogFiles').replace('{count}', String(snapshot?.fileCount ?? 0))}</span>
         <a href={CATALOG_REPOSITORY_URL} target="_blank" rel="noreferrer">{t('footerCatalogSource')}</a>
         <a href={WEBSITE_REPOSITORY_URL} target="_blank" rel="noreferrer">{t('footerSource')}</a>
-        <a href="https://github.com/Dicklesworthstone/frankentui_website" target="_blank" rel="noreferrer">{t('referenceInspiration')}</a>
         <p className="footer-trademark-note">{t('pythonTrademark')}</p>
       </footer>
       <CommandPalette open={paletteOpen} tools={tools} explorerManifest={validatedExplorerManifest}

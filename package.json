@@ -8,6 +8,7 @@
     "dev": "vite",
     "prebuild": "npm run sync:catalog && npm run sync:explorers",
     "build": "tsc -b && npm run validate:explorers && vite build",
+    "pretypecheck": "npm run sync:catalog",
     "lint": "oxlint",
     "typecheck": "tsc -b",
     "test:explorers": "node --test tests/explorer-model.test.ts tests/explorer-adapters.test.ts tests/explorer-loader.test.ts",
@@ -22,6 +23,8 @@
     "validate:logos": "node scripts/validate-tool-logos.mjs"
   },
   "dependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },

@@ -2,7 +2,7 @@ import type { Locale } from '../types/app'
 
 export const translations = {
   de: {
-    navOverview: 'Übersicht', navDependencies: 'Abhängigkeiten', navLab: 'Kataloglabor', navGuide: 'Anleitung', navExplore: 'JSON-Referenzen',
+    navOverview: 'Übersicht', navDependencies: 'Abhängigkeiten', navLab: 'Kataloglabor', navWorkspace: 'Arbeitsbereich', navProfiles: 'Profile', navGuide: 'Anleitung', navExplore: 'Daten erkunden',
     exploreHeading: 'JSON-Referenzen erkunden', exploreIntro: 'Durchsuche versionierte Befehls- und Fähigkeitsdaten als JSON. Abhängigkeiten findest du im Graphen.',
     exploreInvalidRoute: 'Dieser Erkundungslink ist ungültig.', exploreQueryTruncated: 'Die Dateisuche wurde auf 500 Zeichen gekürzt.',
     heroEyebrow: 'Entdecken. Verstehen. Loslegen.', heroHeading: 'Dein Terminal.\nDein Werkzeugkasten.',
@@ -44,6 +44,8 @@ export const translations = {
     guideCatalogTitle: 'Werkzeuge finden und vergleichen', guideCatalogBody: 'Suche nach Namen, Befehl, Kategorie oder Tag. Wähle eine Plattform und prüfe den Installationsbefehl oder das getrennt dargestellte Installationsrezept.',
     guideDependenciesTitle: 'Abhängigkeiten verstehen', guideDependenciesBody: 'Erforderliche Abhängigkeiten gehören zum Werkzeug. Empfehlungen ergänzen den Workflow. Externe Referenzen sind im Katalog nicht als eigenes Werkzeug erfasst.',
     guideExplorerTitle: 'JSON-Referenzen erkunden', guideExplorerBody: 'Durchsuche versionierte Befehls- und Fähigkeitsdaten. Dieser Bereich zeigt JSON-Strukturen; Werkzeugabhängigkeiten findest du im Graphen.',
+    guideWorkspaceTitle: 'Werkzeuge ergänzen', guideWorkspaceBody: 'Erstelle lokale Werkzeuge, korrigiere Katalogeinträge und sichere deine Änderungen als Registry-Datei.',
+    guideProfilesTitle: 'Eigene Profile zusammenstellen', guideProfilesBody: 'Kombiniere Registry-Werkzeuge und lokale Ergänzungen. Die Vorschau löst Vererbung auf, ohne Befehle auszuführen.',
     guideDataTitle: 'Datenstand prüfen', guideDataBody: 'Aktualisieren lädt den veröffentlichten Katalog. Bei Verbindungsproblemen bleibt der letzte erfolgreiche Stand nutzbar. Im Kataloglabor kannst du diese Stände vergleichen und als JSON herunterladen.',
     guideShortcutsTitle: 'Mit der Tastatur arbeiten', guideShortcutsBody: 'Ctrl oder Cmd + K öffnet die Befehlspalette. Escape schließt Palette oder Werkzeugdetails. Tab führt zu allen Aktionen; der Fokus bleibt sichtbar.',
     screenLoadError: 'Dieser Bereich konnte nicht geladen werden.', reloadScreen: 'Seite neu laden', referenceInspiration: 'Inspiriert von FrankenTUI Website',
@@ -94,6 +96,7 @@ export const translations = {
     openWebsite: 'Website öffnen',
     openRepository: 'Quellrepository öffnen',
     openCatalogSource: 'Katalogdatei ansehen',
+    toolContentLink: 'Hilfe und Daten', sourceDetails: 'Quellinformationen', sourceFileLink: 'Quelldatei öffnen',
     details: 'Details',
     closeDetails: 'Details schließen',
     installCommands: 'Installationsbefehle',
@@ -145,7 +148,7 @@ export const translations = {
     pythonTrademark: 'Python und das Python-Logo sind Marken der Python Software Foundation. Dieses Projekt ist nicht mit der PSF verbunden und wird von ihr nicht unterstützt.',
   },
   en: {
-    navOverview: 'Overview', navDependencies: 'Dependencies', navLab: 'Catalog lab', navGuide: 'Guide', navExplore: 'JSON references',
+    navOverview: 'Overview', navDependencies: 'Dependencies', navLab: 'Catalog lab', navWorkspace: 'Workspace', navProfiles: 'Profiles', navGuide: 'Guide', navExplore: 'Explore data',
     exploreHeading: 'Explore JSON references', exploreIntro: 'Browse versioned command and capability data as JSON. Tool dependencies are in the graph.',
     exploreInvalidRoute: 'This explorer link is invalid.', exploreQueryTruncated: 'The file search was limited to 500 characters.',
     heroEyebrow: 'Discover. Understand. Get started.', heroHeading: 'Your terminal.\nYour toolkit.',
@@ -187,6 +190,8 @@ export const translations = {
     guideCatalogTitle: 'Find and compare tools', guideCatalogBody: 'Search names, commands, categories, or tags. Choose a platform and review the install command or a separately labeled install recipe.',
     guideDependenciesTitle: 'Understand dependencies', guideDependenciesBody: 'Required dependencies belong with the tool. Recommendations extend your workflow. External references have no separate entry in this catalog.',
     guideExplorerTitle: 'Explore JSON references', guideExplorerBody: 'Browse versioned command and capability data. This section shows JSON structures; tool dependencies are in the graph.',
+    guideWorkspaceTitle: 'Extend tool entries', guideWorkspaceBody: 'Create local tools, correct catalog entries, and download your changes as registry files.',
+    guideProfilesTitle: 'Assemble your profiles', guideProfilesBody: 'Combine registry tools and local additions. The preview resolves inheritance without running commands.',
     guideDataTitle: 'Check your snapshot', guideDataBody: 'Refresh loads the published catalog. If the connection fails, the last successful snapshot stays usable. Compare these snapshots in the lab and download them as JSON.',
     guideShortcutsTitle: 'Use your keyboard', guideShortcutsBody: 'Ctrl or Cmd + K opens the command palette. Escape closes the palette or tool details. Tab reaches every action with a visible focus indicator.',
     screenLoadError: 'This section could not be loaded.', reloadScreen: 'Reload page', referenceInspiration: 'Inspired by FrankenTUI Website',
@@ -237,6 +242,7 @@ export const translations = {
     openWebsite: 'Open website',
     openRepository: 'Open source repository',
     openCatalogSource: 'View catalog file',
+    toolContentLink: 'Help and data', sourceDetails: 'Source information', sourceFileLink: 'Open source file',
     details: 'Details',
     closeDetails: 'Close details',
     installCommands: 'Install commands',
@@ -292,5 +298,5 @@ export const translations = {
 export type TranslationKey = keyof (typeof translations)['de']
 
 export const sectionLabels = {
-  overview: 'navOverview', catalog: 'navCatalog', dependencies: 'navDependencies', lab: 'navLab', guide: 'navGuide', explore: 'navExplore',
+  overview: 'navOverview', catalog: 'navCatalog', dependencies: 'navDependencies', lab: 'navLab', workspace: 'navWorkspace', profiles: 'navProfiles', guide: 'navGuide', explore: 'navExplore',
 } as const satisfies Record<string, TranslationKey>

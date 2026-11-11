@@ -1,0 +1,234 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CliToolRegistry completion command and index bindings 1.1",
+  "$comment": "Pre-publication command binding remains 1.0. Published indexes accept schema 1.0 GeneratedScript records and schema 1.1 GeneratedScript or NativeProtocol records. The PSD1 writer/reader additionally enforces byte, AST, key-count, path and executable limits.",
+  "type": "object",
+  "required": [
+    "CommandName",
+    "OwnerToolId",
+    "AllowedAliases",
+    "ProviderGeneration"
+  ],
+  "properties": {
+    "CommandName": {
+      "$ref": "#/$defs/command"
+    },
+    "OwnerToolId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "AllowedAliases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/command"
+      },
+      "uniqueItems": true
+    },
+    "ProviderGeneration": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/generation"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "x-indexLimits": {
+    "commandBindings": 40,
+    "hashtableKeys": 500,
+    "astNodes": 5000,
+    "indexBytes": 1048576,
+    "providerBytes": 8388608
+  },
+  "$defs": {
+    "command": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^\\s\\u0000-\\u001f\\u007f;|&<>`$(){}]+$"
+    },
+    "generation": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![/\\\\])(?![A-Za-z]:)(?!.*(?:^|[/\\\\])\\.\\.(?:[/\\\\]|$)).+$"
+    },
+    "publishedBinding": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/generatedScriptBinding"
+        },
+        {
+          "$ref": "#/$defs/nativeProtocolBinding"
+        }
+      ]
+    },
+    "generatedScriptBinding": {
+      "type": "object",
+      "required": [
+        "ToolId",
+        "ProviderKind",
+        "GenerationId",
+        "CompletionFile",
+        "CompletionFileHash",
+        "MetadataFile",
+        "Fingerprint",
+        "ActivationContract",
+        "SourceCommandNames",
+        "SourceCommandName",
+        "CacheStateAtPublish"
+      ],
+      "properties": {
+        "ToolId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ProviderKind": {
+          "const": "GeneratedScript"
+        },
+        "GenerationId": {
+          "$ref": "#/$defs/generation"
+        },
+        "CompletionFile": {
+          "$ref": "#/$defs/relativePath"
+        },
+        "CompletionFileHash": {
+          "$ref": "#/$defs/hash"
+        },
+        "MetadataFile": {
+          "$ref": "#/$defs/relativePath"
+        },
+        "Fingerprint": {
+          "$ref": "#/$defs/hash"
+        },
+        "ActivationContract": {
+          "const": "CapturedNativeRegistrationV1"
+        },
+        "SourceCommandNames": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/command"
+          }
+        },
+        "SourceCommandName": {
+          "$ref": "#/$defs/command"
+        },
+        "CacheStateAtPublish": {
+          "enum": [
+            "Current",
+            "Unknown"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "nativeProtocolBinding": {
+      "type": "object",
+      "required": [
+        "ToolId",
+        "ProviderKind",
+        "GenerationId",
+        "ProviderName",
+        "ExecutablePath",
+        "Fingerprint",
+        "ActivationContract",
+        "SourceCommandNames",
+        "CacheStateAtPublish"
+      ],
+      "properties": {
+        "ToolId": {
+          "const": "dotnet"
+        },
+        "ProviderKind": {
+          "const": "NativeProtocol"
+        },
+        "GenerationId": {
+          "$ref": "#/$defs/generation"
+        },
+        "ProviderName": {
+          "const": "dotnet"
+        },
+        "ExecutablePath": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?:[A-Za-z]:[\\\\/]|/).+"
+        },
+        "Fingerprint": {
+          "$ref": "#/$defs/hash"
+        },
+        "ActivationContract": {
+          "const": "NativeProtocolV1"
+        },
+        "SourceCommandNames": {
+          "const": [
+            "dotnet"
+          ]
+        },
+        "CacheStateAtPublish": {
+          "const": "Unknown"
+        }
+      },
+      "additionalProperties": false
+    },
+    "index": {
+      "type": "object",
+      "required": [
+        "SchemaVersion",
+        "Revision",
+        "Commands"
+      ],
+      "properties": {
+        "SchemaVersion": {
+          "enum": [
+            "1.0",
+            "1.1"
+          ]
+        },
+        "Revision": {
+          "$ref": "#/$defs/generation"
+        },
+        "Commands": {
+          "type": "object",
+          "maxProperties": 40,
+          "propertyNames": {
+            "$ref": "#/$defs/command"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/publishedBinding"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "SchemaVersion": {
+                "const": "1.0"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "Commands": {
+                "additionalProperties": {
+                  "$ref": "#/$defs/generatedScriptBinding"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

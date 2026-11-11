@@ -14,7 +14,8 @@
 .explorer-back-link:hover { text-decoration: underline; }
 .explorer-tool-heading { display: flex; align-items: center; gap: 16px; padding: 18px; border: 1px solid var(--registry-border); border-radius: var(--registry-card-radius); background: var(--registry-surface); }
 .explorer-tool-heading > div { min-width: 0; }
-.explorer-tool-heading h2 { margin: 2px 0 0; font-size: clamp(20px, 3vw, 28px); overflow-wrap: anywhere; }
+.explorer-tool-heading h1, .explorer-tool-heading h2 { margin: 2px 0 0; color: var(--registry-ink); font-size: clamp(20px, 3vw, 28px); overflow-wrap: anywhere; }
+.explorer-context h1 { margin: 0; color: var(--registry-ink); font-size: 14px; font-weight: 650; }
 .explorer-tool-heading > .explorer-tool-count { margin-left: auto; }
 .explorer-source-list { display: grid; gap: 10px; padding: 0; margin: 0; list-style: none; }
 .explorer-source-list li { min-width: 0; }

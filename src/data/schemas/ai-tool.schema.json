@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/ai-tool.schema.json",
+  "title": "CliToolRegistry AI Tool Definition Compatibility Schema",
+  "description": "Compatibility entry point for a single tool definition. Catalog imports use tool-catalog.schema.json.",
+  "$ref": "../tool-definition.schema.json"
+}

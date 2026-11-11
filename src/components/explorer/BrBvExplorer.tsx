@@ -218,9 +218,7 @@ function EntryList({ props, copy }: { props: DatasetViewProps; copy: Copy }) {
         data-history-focus-key={`explorer-entry:${entry.id}`} aria-label={`${entry.title}, ${labels.selectEntry}`}
         onClick={() => onAction({ type: 'entry', entryId: entry.id })}>
         <span className="explorer-entry-title">{highlighted(entry.title, navigation.docQ, locale)}</span>
-        {sourcePointer(entry)}
         <span className="explorer-entry-summary">{highlighted(entrySummary(entry, copy), navigation.docQ, locale)}</span>
-        {entry.origin.guideLines && <span className="explorer-entry-summary">{copy.guideLines} {entry.origin.guideLines.start}–{entry.origin.guideLines.end}</span>}
       </button>
       {entryBadges(entry, copy).length > 0 && <ul className="tag-list" aria-label={copy.needs}>
         {entryBadges(entry, copy).map((badge) => <li key={badge}>{badge}</li>)}
@@ -301,15 +299,14 @@ function BrBvEntryDetails({ props, copy }: { props: DatasetViewProps; copy: Copy
   } else if (detail?.kind === 'structured') {
     content = <StructuredRows entry={selectedEntry!} copy={copy} locale={locale} />
   } else if (selectedEntry) {
-    content = <section className="explorer-json-preview"><h3>{labels.rawPreview}</h3>
-      <pre className="explorer-raw-preview">{rawText.slice(0, 20_000)}</pre></section>
+    content = <p className="explorer-entry-summary">{selectedEntry.searchText}</p>
   } else {
     content = <p className="empty-state">{locale === 'de' ? 'Wähle einen Eintrag aus der Liste.' : 'Choose an entry from the list.'}</p>
   }
 
-  return <aside className="explorer-details" aria-label={selectedEntry?.title ?? manifestEntry.filename}>
+  return <aside className="explorer-details" aria-label={selectedEntry?.title ?? labels.rawPreview}>
     <header className="explorer-details-header"><div>
-      <span className="section-eyebrow">{selectedEntry ? copy.sourcePointer : labels.filename}</span>
+      <span className="section-eyebrow">{labels.toolSources}</span>
       <h2 tabIndex={-1} data-navigation-entry-heading
         data-history-focus-key={selectedEntry ? `explorer-detail:${selectedEntry.id}` : 'explorer-source-heading'}>
         {selectedEntry?.title ?? labels.rawPreview}
@@ -317,20 +314,18 @@ function BrBvEntryDetails({ props, copy }: { props: DatasetViewProps; copy: Copy
     </div>
       {selectedEntry && <button type="button" className="quiet-button" onClick={() => onAction({ type: 'close-entry' })}>{labels.closeEntry}</button>}
     </header>
-    {selectedEntry && <p className="explorer-entry-origin">{sourcePointer(selectedEntry)}
-      {selectedEntry.origin.guideLines && <> · {copy.guideLines} {selectedEntry.origin.guideLines.start}–{selectedEntry.origin.guideLines.end}</>}
-    </p>}
-    <DetailsList rows={metadataRows} />
-    <div className="explorer-detail-actions">
-      <button type="button" className="workbench-button" onClick={() => downloadOriginalJson(sourceBytes, manifestEntry.filename, {
-        document, urls: URL, schedule: (callback) => globalThis.setTimeout(callback, 0),
-      })}>{copy.download}</button>
-    </div>
     {content}
-    <section className="explorer-json-preview"><h3>{labels.rawPreview}</h3>
-      {rawText.length > 20_000 && <p className="notice notice-warning">{copy.limited}</p>}
-      <pre className="explorer-raw-preview">{rawText.slice(0, 20_000)}</pre>
-    </section>
+    <details className="explorer-source-details"><summary>{labels.sourceDetails}</summary>
+      {selectedEntry && <p className="explorer-entry-origin">{sourcePointer(selectedEntry)}{selectedEntry.origin.guideLines && <> · {copy.guideLines} {selectedEntry.origin.guideLines.start}–{selectedEntry.origin.guideLines.end}</>}</p>}
+      <DetailsList rows={metadataRows} />
+      <div className="explorer-detail-actions"><button type="button" className="workbench-button" onClick={() => downloadOriginalJson(sourceBytes, manifestEntry.filename, {
+        document, urls: URL, schedule: (callback) => globalThis.setTimeout(callback, 0),
+      })}>{copy.download}</button></div>
+      <section className="explorer-json-preview"><h3>{labels.rawPreview}</h3>
+        {rawText.length > 20_000 && <p className="notice notice-warning">{copy.limited}</p>}
+        <pre className="explorer-raw-preview">{rawText.slice(0, 20_000)}</pre>
+      </section>
+    </details>
   </aside>
 }
 

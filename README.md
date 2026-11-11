@@ -1,123 +1,76 @@
 # CLI Tool Registry Web
 
-Eine deutschsprachige Weboberfläche für die Werkzeuge aus
-[In-Pro-Org/CliToolRegistry](https://github.com/In-Pro-Org/CliToolRegistry).
-Die Oberfläche ist mit Vite, React und TypeScript erstellt und wird über GitHub
-Pages veröffentlicht.
+Eine deutsch- und englischsprachige Weboberfläche zum Erkunden der Werkzeuge
+aus [In-Pro-Org/CliToolRegistry](https://github.com/In-Pro-Org/CliToolRegistry).
+Der Registry-Katalog liefert Namen, Beschreibungen, Plattformen, Befehle,
+Abhängigkeiten, Profile und verknüpfte Hilfe- und Referenzdaten.
 
-## Datenquelle und Aktualisierung
+## Was du hier tun kannst
 
-Die kanonischen YAML-Dateien liegen im Registry-Repository unter
-`src/CliToolRegistry/Data/Tools/`. `npm run sync:catalog` liest alle
-Katalogdateien ein und erstellt `public/registry-catalog.json`. `npm run dev`
-und `npm run build` führen diesen Abgleich automatisch aus, wenn das
-CliToolRegistry-Repository unter `../CliToolRegistry` liegt. Ein anderer Pfad
-kann über `CLI_TOOL_REGISTRY_PATH` gesetzt werden.
+- **Katalog:** Werkzeuge suchen, filtern und vergleichen. Eine Werkzeugansicht
+  bündelt Beschreibung, Plattformen, Befehle, Abhängigkeiten und verfügbare
+  Hilfe- oder Referenzdaten. Datenstände und technische Quellenangaben stehen
+  in einer eingeklappten Quellinformation.
+- **Arbeitsbereich:** Werkzeuge lokal ergänzen oder korrigieren, neue
+  Definitionen erfassen, Sammlungen anlegen und JSON- oder YAML-Dateien
+  importieren. Schemafehler und fehlende Referenzen werden an der Definition
+  angezeigt. Gültige Ergänzungen erscheinen auch im Katalog.
+- **Profile:** Mitgelieferte CliToolRegistry-Profile erkunden, kopieren oder
+  eigene Profile aus vorhandenen und lokalen Werkzeugen zusammenstellen.
+  Erforderliche und empfohlene Werkzeuge sowie Vererbung, Plattformen und
+  Verwaltungsmodus lassen sich prüfen und als YAML exportieren.
+- **Anleitung:** Bedienung, verfügbare Inhalte und Exportmöglichkeiten
+  nachschlagen.
 
-Die Website lädt den erzeugten Katalog beim Start und beim manuellen Neuladen
-und hält den letzten erfolgreichen Stand im Browsercache. Der Export ist Teil
-der veröffentlichten Website und damit für deren Besucher sichtbar.
+Sammlungen lassen sich als Registry-Profil exportieren. Der Arbeitsbereich kann
+als Sicherung heruntergeladen und später wieder importiert werden. Lokale
+Änderungen bleiben im Browserspeicher dieses Geräts, bis du sie exportierst;
+die Website schreibt nicht zurück in das Registry-Repository. Die Seite führt
+keine Befehle aus.
 
-Der GitHub-Pages-Workflow synchronisiert alle sechs Stunden den aktuellen Stand
-aus dem `develop`-Branch von CliToolRegistry. Dafür muss im Web-Repository das
-Secret `CLI_TOOL_REGISTRY_READ_TOKEN` mit lesendem Zugriff auf das private
-CliToolRegistry-Repository hinterlegt sein. Ohne dieses Secret verwendet der
-Workflow den zuletzt gespeicherten Export; lokal aktualisiert `npm run sync:catalog`
-den Export aus dem benachbarten Repository.
+Die normale Ansicht zeigt Informationen, die beim Erkunden eines Werkzeugs
+helfen. Quelldateinamen, Hashes, Zeitstempel, Dateigrößen und Quellpfade sind
+nur in den erweiterten Quellinformationen sichtbar. Die WebApp ist eine
+statische React/Vite-Anwendung.
 
-Die Oberfläche ist standardmäßig Deutsch; Englisch kann über den Sprachschalter
-gewählt werden. Beschreibungen und Befehle werden in der Originalsprache des
-Registry-Katalogs angezeigt.
+## Katalogdaten aktualisieren
 
-## Darstellung und Bedienung
+Die kanonischen YAML-Dateien liegen im CliToolRegistry-Repository unter
+`src/CliToolRegistry/Data/Tools/`. `npm run sync:catalog` liest Kataloge,
+Profile und Schemata ein und erzeugt die JSON-Dateien für die Website.
+`npm run dev` und `npm run build` führen den Abgleich automatisch aus, wenn
+das Registry-Repository unter `../CliToolRegistry` liegt. Ein anderer Pfad
+kann über `CLI_TOOL_REGISTRY_PATH` gesetzt werden; die angezeigte Quell-Ref
+lässt sich mit `CLI_TOOL_REGISTRY_REF` wählen. Der Quell-Commit wird aus dem
+aktuellen HEAD des Registry-Repositories ermittelt.
 
-Neue Besucher starten in der **Übersicht** mit einer interaktiven
-Befehlsvorschau. Die vollständig überarbeitete Oberfläche verwendet eigenständig
-umgesetzte Funktionsmuster der
-[FrankenTUI Website](https://github.com/Dicklesworthstone/frankentui_website).
-Die [Feature-Zuordnung](docs/frankentui-feature-map.md) dokumentiert die Adaption.
-Quellcode, Bildmaterial und WASM-Komponenten der Referenz werden nicht übernommen.
-
-- **Übersicht:** Einstieg mit einer Vorschau echter Katalogbefehle. Die Vorschau
-  führt nichts aus.
-- **Katalog:** Suche, Plattform-/Kategoriefilter, Sortierung, Karten, Karten+
-  und Tabelle; zunächst 48 Treffer mit „Weitere Werkzeuge laden“. Die Zahl der
-  Treffer und die angezeigte Menge stehen direkt bei den Ergebnissen.
-- **Abhängigkeiten:** Graph und vollständige Listen erforderlicher/empfohlener
-  Abhängigkeiten sowie abhängiger Werkzeuge. Fehlende IDs sind externe Referenzen.
-- **JSON-Referenzen:** Versionierte Befehls- und Fähigkeitsdaten durchsuchen.
-  Dieser Bereich zeigt JSON-Strukturen; Werkzeugabhängigkeiten gehören zum Graphen.
-- **Kataloglabor:** Tatsächliche Datenstände vergleichen, Änderungen als
-  Vorher-/Nachher-JSON prüfen und Katalog/Vergleich herunterladen. Ohne
-  Vergleichsbasis gibt es einen ausdrücklichen Hinweis; eine Commit-Historie
-  wird nicht simuliert.
-- **Anleitung:** Werkzeuge, Plattformen, Automatisierung und Datenstände erklärt.
-- **Befehlspalette:** Ctrl/Cmd+K, Pfeiltasten, Enter und Escape; alternativ
-  über den sichtbaren Schalter erreichbar.
-
-Hell, Dunkel und System bleiben als gespeicherte Theme-Präferenzen verfügbar.
-Suche, Filter, Darstellung, Bereich und Werkzeugdetails sind im URL-Zustand
-teilbar; Zurück/Vorwärts stellt den Kontext wieder her. Die Website bleibt eine
-statische React/Vite-Anwendung unter `/CliToolRegistry.Web/`.
-
-Karten+ zeigt kopierbare Befehle und die passende Installationsplattform.
-Installationshinweise und strukturierte Rezepte bleiben als solche gekennzeichnet;
-nur ein bestimmter Befehl wird als kopierbare Installation angeboten. Ein globaler
-Plattformfilter bestimmt den angezeigten Befehl. In der Tabelle steht dessen
-Plattform direkt daneben.
-Details öffnen direkt an der Karte; Escape oder „Details schließen“ führt den
-Tastaturfokus zum auslösenden Schalter zurück. Die Seite führt keine Befehle aus.
-
-Die Fußzeile trennt den Link zum Katalogrepository vom Quellcode dieser Website.
-
-Design und Interaktionsregeln sind in [DESIGN.md](DESIGN.md) und
-[UX-CONTRACT.md](UX-CONTRACT.md) dokumentiert.
+Der GitHub-Pages-Workflow synchronisiert regelmäßig den `develop`-Stand der
+CliToolRegistry. Dafür muss das Secret `CLI_TOOL_REGISTRY_READ_TOKEN` mit
+lesendem Zugriff auf das private Registry-Repository gesetzt sein. Ohne das
+Secret verwendet der Workflow die gespeicherten JSON-Dateien.
 
 ## Entwicklung
 
-Node.js 24 wird für die lokalen Prüfungen und den CI-Build verwendet.
+Node.js 24 wird für lokale Entwicklung und CI verwendet.
 
 ```sh
 npm install
 npm run dev
 ```
 
-## Katalog manuell aktualisieren
+Zum Aktualisieren der lokalen Katalog-, Profil- und Schemadateien:
 
 ```sh
 npm run sync:catalog
 ```
 
-## Build
+Der Produktionsbuild erstellt die statische Website unter dem GitHub-Pages-
+Unterpfad:
 
 ```sh
 npm run build
 ```
 
-## Deployment
-
-Ein Push auf `main` startet [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
-und veröffentlicht den Build auf GitHub Pages.
-
-## UI-Prüfungen
-
-```sh
-npx playwright install chromium
-npm run test:ui
-npm run test:model
-npm run typecheck
-npm run lint
-npm run build
-npm run test:production
-```
-
-Die Browserprüfungen verwenden reproduzierbare Katalogdaten für Interaktionen
-und den vollständigen lokalen Katalog für Desktop- und Mobilaufnahmen.
-Sie prüfen Themes, Ansichten, Filter, Plattformbefehle, Kopierfeedback,
-Tastaturfokus, Fehlerbehandlung, Cache, responsive Darstellung und
-automatische Barrierefreiheitsregeln in beiden Themes.
-Zusätzlich werden Befehlspalette, URL-Navigation, Graphbeziehungen,
-Datenstandsvergleich/Exporte, ungültige Katalogdaten und ein synthetischer
-Katalog mit 1000 Werkzeugen geprüft. Die Produktionsprüfung verwendet den
-Build unter dem tatsächlichen GitHub-Pages-Unterpfad.
-Screenshots und Fehler-Traces liegen im ignorierten Verzeichnis `test-results/`.
+Weitere Interaktions- und Darstellungsregeln stehen in [DESIGN.md](DESIGN.md)
+und [UX-CONTRACT.md](UX-CONTRACT.md). Der GitHub-Pages-Workflow veröffentlicht
+den Build nach einem Push auf `main`.

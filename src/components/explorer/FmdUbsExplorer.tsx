@@ -95,7 +95,6 @@ function entryButton(entry: ExplorerEntry, selected: boolean, props: DatasetView
       aria-label={`${entry.title}, ${copy.select}`} data-history-focus-key={`explorer-entry:${entry.id}`}
       onClick={() => props.onAction({ type: 'entry', entryId: entry.id })}>
       <span className="explorer-entry-title">{entry.title}</span>
-      {sourcePointer(entry)}
       <span className="explorer-entry-summary">{summary(entry, copy)}</span>
     </button>
   </li>
@@ -174,28 +173,27 @@ function DetailsPanel({ props, copy }: { props: DatasetViewProps; copy: Copy }) 
     ...(metadata.contract.state === 'value' ? [{ label: copy.contract, value: <code>{metadata.contract.value}</code> }] : []),
     ...(selectedEntry ? [{ label: copy.sourcePointer, value: sourcePointer(selectedEntry) }] : []),
   ]
-  return <aside className="explorer-details" aria-label={selectedEntry?.title ?? manifestEntry.filename}>
+  return <aside className="explorer-details" aria-label={selectedEntry?.title ?? labels.rawPreview}>
     <header className="explorer-details-header"><div>
-      <span className="section-eyebrow">{selectedEntry ? copy.sourcePointer : copy.file}</span>
+      <span className="section-eyebrow">{labels.toolSources}</span>
       <h2 tabIndex={-1} data-navigation-entry-heading data-history-focus-key={selectedEntry ? `explorer-detail:${selectedEntry.id}` : 'explorer-source-heading'}>
         {selectedEntry?.title ?? labels.rawPreview}
       </h2>
     </div>
       {selectedEntry && <button type="button" className="quiet-button" onClick={() => props.onAction({ type: 'close-entry' })}>{labels.closeEntry}</button>}
     </header>
-    {selectedEntry && <p className="explorer-entry-origin">{sourcePointer(selectedEntry)}</p>}
-    <DetailsList rows={rows} />
-    <div className="explorer-detail-actions">
-      <button type="button" className="workbench-button" onClick={() => downloadOriginalJson(sourceBytes, manifestEntry.filename, {
-        document, urls: URL, schedule: (callback) => globalThis.setTimeout(callback, 0),
-      })}>{copy.download}</button>
-    </div>
     {selectedEntry ? <EntryFields entry={selectedEntry} copy={copy} adapter={manifestEntry.adapter} /> : <p>{copy.choose}</p>}
-    <section className="explorer-json-preview">
-      <h3>{selectedEntry ? copy.sourceJson : copy.rawPreview}</h3>
-      {rawText.length > 20_000 && <p className="notice notice-warning">{copy.limited}</p>}
-      <pre className="explorer-raw-preview">{rawText.slice(0, 20_000)}</pre>
-    </section>
+    <details className="explorer-source-details"><summary>{labels.sourceDetails}</summary>
+      {selectedEntry && <p className="explorer-entry-origin">{sourcePointer(selectedEntry)}</p>}
+      <DetailsList rows={rows} />
+      <div className="explorer-detail-actions"><button type="button" className="workbench-button" onClick={() => downloadOriginalJson(sourceBytes, manifestEntry.filename, {
+        document, urls: URL, schedule: (callback) => globalThis.setTimeout(callback, 0),
+      })}>{copy.download}</button></div>
+      <section className="explorer-json-preview"><h3>{selectedEntry ? copy.sourceJson : copy.rawPreview}</h3>
+        {rawText.length > 20_000 && <p className="notice notice-warning">{copy.limited}</p>}
+        <pre className="explorer-raw-preview">{rawText.slice(0, 20_000)}</pre>
+      </section>
+    </details>
   </aside>
 }
 

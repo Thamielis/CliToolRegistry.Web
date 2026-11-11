@@ -41,6 +41,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run typecheck
+        env:
+          CLI_TOOL_REGISTRY_PATH: ${{ github.workspace }}/registry-source
+          CLI_TOOL_REGISTRY_REF: develop
       - run: npm run lint
       - run: npm run test:model
       - run: npm run validate:explorers

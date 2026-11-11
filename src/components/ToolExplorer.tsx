@@ -463,12 +463,10 @@ export default function ToolExplorer({
       {toolIds.length === 0 ? <div className="empty-state"><p>{labels.noTools}</p></div> : toolIds.map((id) => {
         const count = datasetsByTool.get(id)?.length ?? 0
         const action: ExplorerNavigationAction = { type: 'tool', toolId: id }
-        const catalogTool = catalogToolsById.get(id)
         return <a className="explorer-tool-card" key={id} href={hrefForAction(action)} onClick={(event) => actOnClick(event, action)}>
           <AppIcon app={{ id, name: displayName(id), icon: undefined }} className="explorer-tool-icon" />
-          <span className="explorer-tool-copy"><strong>{displayName(id)}</strong><code>{id}</code></span>
+          <span className="explorer-tool-copy"><strong>{displayName(id)}</strong></span>
           <span className="explorer-tool-count">{labels.sourceCount.replace('{count}', String(count))}</span>
-          {catalogTool && <span className="explorer-catalog-identity">{labels.catalogIdentity}: {catalogTool.id}</span>}
         </a>
       })}
     </section>
@@ -482,15 +480,15 @@ export default function ToolExplorer({
     }}>← {labels.backToIndex}</a>
     <header className="explorer-tool-heading">
       {toolId && <AppIcon app={{ id: toolId, name: toolName ?? toolId, icon: undefined }} className="explorer-tool-icon" />}
-      <div><span className="section-eyebrow">{toolId}</span><h2 tabIndex={-1} data-history-focus-key={`explorer-tool-heading:${toolId}`}>{toolName}</h2></div>
+      <div><span className="section-eyebrow">{labels.toolSources}</span><h1 id="screen-heading" tabIndex={-1} data-history-focus-key={`explorer-tool-heading:${toolId}`}>{toolName}</h1></div>
       <span className="explorer-tool-count">{labels.sourceCount.replace('{count}', String(toolDatasets.length))}</span>
     </header>
     {toolDatasets.length === 0 ? <div className="empty-state"><p>{labels.noSources}</p></div> : <ul className="explorer-source-list">
       {toolDatasets.map((source) => {
         const action: ExplorerNavigationAction = { type: 'dataset', ref: { toolId: source.toolId, datasetId: source.datasetId } }
         return <li key={source.datasetId}><a data-history-focus-key={`explorer-dataset:${source.datasetId}`} href={hrefForAction(action)} onClick={(event) => actOnClick(event, action)}>
-          <span><strong>{source.title[locale]}</strong><code>{source.datasetId}</code></span>
-          <span className="explorer-source-file"><code>{source.filename}</code><span aria-hidden="true">↗</span></span>
+          <span><strong>{source.title[locale]}</strong></span>
+          <span className="explorer-source-file"><span aria-hidden="true">↗</span></span>
         </a></li>
       })}
     </ul>}
@@ -529,6 +527,7 @@ export default function ToolExplorer({
     }
     const FamilyView = familyViews[readyDataset.manifestEntry.adapter] ?? GenericExplorerView
     return <>
+      <header className="explorer-context"><span>{toolName}</span><span aria-hidden="true">/</span><h1 id="screen-heading" tabIndex={-1}>{manifestEntry.title[locale]}</h1></header>
       {activeDiagnostics.length > 0 && <div className="notice notice-warning explorer-filter-notice" role="status">
         {labels.invalidFilter} {activeDiagnostics.map((diagnostic) => labels[
           diagnostic.reason === 'syntax' ? 'diagnosticSyntax'
@@ -581,12 +580,8 @@ export default function ToolExplorer({
           searchRef.current?.focus()
         }}>{labels.resetFilters}</button>
       </section>
-      <div className="explorer-provenance-summary">
-        <span><strong>{labels.filename}</strong> <code>{manifestEntry.filename}</code></span>
-        <span><strong>{labels.bytes}</strong> {manifestEntry.bytes.toLocaleString(locale === 'de' ? 'de-DE' : 'en-US')}</span>
-      </div>
       {readyDataset.dataset.diagnostics.map((diagnostic, index) => <p key={`${diagnostic.code}:${diagnostic.pointer}:${index}`}
-        className="notice notice-warning" role="status">{diagnostic.explanation[locale]} <code>{diagnostic.pointer || '/'}</code></p>)}
+        className="notice notice-warning" role="status">{diagnostic.explanation[locale]}</p>)}
       {readyDataset.dataset.entries.length === 0
         ? <div className="empty-state"><p>{labels.emptySource}</p></div>
         : <FamilyView {...viewProps} />}
@@ -594,11 +589,11 @@ export default function ToolExplorer({
   }
 
   return <section className="tool-explorer">
-    <header className="screen-intro">
+    {!navigation.exploreTool && <header className="screen-intro">
       <span className="section-eyebrow">{labels.toolSources}</span>
       <h1 id="screen-heading" tabIndex={-1}>{labels.indexDescription && labels.heading}</h1>
       <p>{labels.indexDescription}</p>
-    </header>
+    </header>}
     {navigation.docQTruncated && <p className="notice notice-warning" role="status">
       {labels.queryTruncated}
     </p>}
@@ -623,7 +618,7 @@ const explorerLabelKeys: Record<ExplorerLabelKey, true> = {
   toolSources: true, sourceCount: true, chooseSource: true, sections: true, search: true, searchPlaceholder: true,
   resetFilters: true, loadMore: true,
   matches: true, noTools: true, noSources: true, emptySource: true, emptySection: true, noMatches: true,
-  filterLabel: true, filename: true, digest: true, bytes: true, version: true, contract: true, generatedAt: true,
+  filterLabel: true, filename: true, digest: true, bytes: true, version: true, contract: true, generatedAt: true, sourceDetails: true,
   downloadOriginal: true, closeEntry: true, selectEntry: true, openSubtree: true, treeLimited: true, rawPreview: true,
   previewLimited: true, jsonRoot: true, invalidRoute: true, unknownTool: true, unknownDataset: true,
   unknownSection: true, unknownEntry: true, invalidFilter: true, diagnosticSyntax: true, diagnosticDomain: true,
