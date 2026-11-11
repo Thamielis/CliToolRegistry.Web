@@ -298,7 +298,7 @@ export function Workspace({ catalogTools, locale }: { catalogTools: readonly Cli
       <label className="workspace-field workspace-existing-picker"><span>{copy.addExisting}</span><select value={selectedCatalogId} onChange={(event) => setSelectedCatalogId(event.target.value)}>
         <option value="">{copy.chooseTool}</option>{catalogTools.map((tool) => <option key={tool.id} value={tool.id}>{tool.name}</option>)}</select></label>
       <button type="button" className="quiet-button" disabled={blocked || !selectedCatalogId || workspace.tools.some((item) => item.baseId === selectedCatalogId)} onClick={addCatalogCopy}>{copy.addExistingButton}</button>
-      <input ref={fileInput} className="sr-only" type="file" accept=".json,.yaml,.yml,application/json,text/yaml" onChange={(event) => { void handleFile(event.target.files?.[0]) }} />
+      <input ref={fileInput} className="sr-only" type="file" aria-label={copy.import} accept=".json,.yaml,.yml,application/json,text/yaml" onChange={(event) => { void handleFile(event.target.files?.[0]) }} />
       <button type="button" className="quiet-button" onClick={() => fileInput.current?.click()}>{copy.import}</button>
       <button type="button" className="quiet-button" disabled={blocked} onClick={() => download('cli-tool-registry-workspace.json', JSON.stringify(workspace, null, 2))}>{copy.export}</button>
     </div>

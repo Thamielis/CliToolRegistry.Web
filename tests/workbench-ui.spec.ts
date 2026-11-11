@@ -11,7 +11,9 @@ const tools = [
   { id: 'jq', name: 'jq', description: 'JSON processor', category: 'terminal', tier: 'optional', command: 'jq', platforms: ['linux'],
     catalogFile: 'tools.yml', catalogUrl: 'https://example.test/tools.yml' },
 ]
-const snapshot = { tools, fileCount: 1, loadedAt: '2026-10-09T00:00:00Z', sourceRef: 'main' }
+const snapshot = { tools, fileCount: 1, loadedAt: '2026-10-09T00:00:00Z', sourceRef: 'main',
+  sourceRepository: 'https://github.com/In-Pro-Org/CliToolRegistry', sourceRevision: 'a'.repeat(40),
+  sourceCommitDate: '2026-10-09T00:00:00Z' }
 
 async function open(page: Page, query = '') {
   await page.route('**/registry-catalog.json?*', (route) => route.fulfill({ json: snapshot }))
@@ -58,19 +60,12 @@ test('install recipes and ACFS notes stay separate from copyable commands across
   await expect(noteRow.locator('.install-note')).toContainText('Install acfs-tool through ACFS')
 })
 
-test('overview terminal uses real commands and category launchers enter filtered catalog', async ({ page, context }) => {
-  await context.grantPermissions(['clipboard-read', 'clipboard-write'])
-  await open(page)
-  await expect(page.locator('.hero-copy h1')).toContainText('Dein Terminal.')
-  await page.getByLabel('Werkzeug in der Vorschau').selectOption('git')
-  await expect(page.locator('.terminal-preview')).toContainText('sudo apt install git')
-  await page.getByLabel('Plattform in der Vorschau').selectOption('windows')
-  await expect(page.locator('.terminal-preview')).toContainText('winget install Git.Git')
-  await page.locator('.terminal-preview').getByRole('button', { name: 'Befehl kopieren' }).first().click()
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('git')
-  await page.locator('.category-launchers').getByRole('button', { name: /Terminal/ }).click()
-  await expect(page).toHaveURL(/section=catalog/)
-  await expect(page.locator('.tool-card')).toHaveCount(2)
+test('the legacy overview route opens the catalog-first screen', async ({ page }) => {
+  await open(page, '?section=overview')
+  await expect(page.locator('#screen-heading')).toHaveText('Werkzeuge im Überblick')
+  await expect(page.locator('.top-nav a.top-nav-active')).toHaveText('Katalog')
+  await expect(page.locator('.tool-card')).toHaveCount(3)
+  await expect(page.locator('.hero-copy')).toHaveCount(0)
 })
 
 test('URL state, selected detail, back/forward and reload preserve context', async ({ page }) => {
@@ -94,14 +89,15 @@ test('URL state, selected detail, back/forward and reload preserve context', asy
   await expect(page.locator('#screen-heading')).toHaveText('Dein nächster Schritt ist ein Befehl.')
 })
 
-test('tool details open from overview and command palette while preserving tool selection', async ({ page }) => {
+test('tool details open from the catalog and command palette while preserving tool selection', async ({ page }) => {
   await open(page)
-  await page.locator('.preview-open').click()
+  const detailsTrigger = page.getByRole('button', { name: 'Git, Details', exact: true })
+  await detailsTrigger.click()
   await expect(page).toHaveURL(/section=catalog.*tool=git/)
   await expect(page.locator('#tool-details-heading-git')).toBeFocused()
 
   await page.goBack()
-  await expect(page.locator('.preview-open')).toBeFocused()
+  await expect(detailsTrigger).toBeFocused()
   await page.getByRole('button', { name: 'Befehlspalette öffnen' }).click()
   await page.getByRole('combobox', { name: 'Werkzeuge und Bereiche suchen' }).fill('Git')
   await page.getByRole('dialog').getByRole('option', { name: /Git/ }).click()
@@ -149,25 +145,23 @@ test('history Back and Forward restore the saved catalog trigger and scroll posi
   expect(await page.evaluate(() => history.length)).toBe(previousLength + 1)
 })
 
-test('section history preserves explorer-owned state and native modified clicks open the linked route', async ({ page, context }) => {
+test('section history preserves explorer-owned state and modified clicks leave the original route unchanged', async ({ page, context }) => {
   await context.route('**/registry-catalog.json?*', (route) => route.fulfill({ json: snapshot }))
   await open(page, '?section=explore&q=keep&campaign=docs&exploreTool=br&dataset=robot-docs')
   const historyId = await page.evaluate(() => history.state.cliToolRegistryWorkbenchV1.historyId as string)
   await page.getByRole('link', { name: 'Katalog', exact: true }).click()
   await page.goBack()
-  await expect(page.locator('#screen-heading')).toHaveText('JSON-Referenzen erkunden')
+  await expect(page.locator('#screen-heading')).toHaveText('Agentenleitfaden')
   await expect(page).toHaveURL(/exploreTool=br/)
   await expect(page).toHaveURL(/campaign=docs/)
   expect(await page.evaluate(() => history.state.cliToolRegistryWorkbenchV1.historyId as string)).toBe(historyId)
 
-  await page.getByRole('link', { name: 'Katalog', exact: true }).click()
-  await expect(page).toHaveURL(/section=catalog/)
   const popupPromise = context.waitForEvent('page')
-  await page.locator('.top-nav').getByRole('link', { name: 'JSON-Referenzen', exact: true }).click({ modifiers: ['Control'] })
+  await page.getByRole('link', { name: 'Katalog', exact: true }).click({ modifiers: ['Control'] })
   const popup = await popupPromise
-  await expect(popup).toHaveURL(/section=explore/)
-  await expect(popup.locator('#screen-heading')).toHaveText('JSON-Referenzen erkunden')
-  await expect(page).not.toHaveURL(/section=explore/)
+  await expect(popup).toHaveURL(/section=catalog/)
+  await expect(popup.locator('#screen-heading')).toHaveText('Werkzeuge im Überblick')
+  await expect(page).toHaveURL(/section=explore/)
 })
 
 test('a delayed lazy screen cannot take focus after a newer navigation, and the skiplink focuses main content', async ({ page }) => {
@@ -176,7 +170,10 @@ test('a delayed lazy screen cannot take focus after a newer navigation, and the 
     await route.continue()
   })
   await open(page)
-  await page.locator('.top-nav').getByRole('link', { name: 'Abhängigkeiten' }).click()
+  await page.getByRole('button', { name: 'Befehlspalette öffnen' }).click()
+  const sectionSearch = page.getByRole('combobox', { name: 'Werkzeuge und Bereiche suchen' })
+  await sectionSearch.fill('Abhängigkeiten')
+  await page.getByRole('option', { name: /Abhängigkeiten/ }).click()
   await page.locator('.top-nav').getByRole('link', { name: 'Anleitung' }).click()
   await expect(page.locator('#screen-heading')).toBeFocused()
   await page.waitForTimeout(800)
@@ -281,14 +278,14 @@ test('lab first visit, successful diffs, failed refresh and exported comparison 
 })
 
 test('invalid startup cache and invalid refresh never replace a successful snapshot', async ({ page }) => {
-  await page.addInitScript(() => localStorage.setItem('cli-tool-registry.catalog.v2', JSON.stringify({ tools: [{}], loadedAt: 'bad', fileCount: 1 })))
+  await page.addInitScript(() => localStorage.setItem('cli-tool-registry.catalog.v3', JSON.stringify({ tools: [{}], loadedAt: 'bad', fileCount: 1 })))
   await open(page, '?section=catalog')
   await expect(page.locator('.tool-card')).toHaveCount(3)
   await page.route('**/registry-catalog.json?*', (route) => route.fulfill({ json: { ...snapshot, tools: [{}] } }))
   await page.getByRole('button', { name: 'Aktualisieren', exact: true }).click()
   await expect(page.getByText(/Die Live-Aktualisierung ist fehlgeschlagen/)).toBeVisible()
   await expect(page.locator('.tool-card')).toHaveCount(3)
-  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('cli-tool-registry.catalog.v2')!).tools[0].id)).toBe('git')
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('cli-tool-registry.catalog.v3')!).tools[0].id)).toBe('git')
 })
 
 test('1000 tools render bounded catalog, palette and graph with complete dependency lists', async ({ page }) => {
@@ -315,11 +312,17 @@ for (const theme of ['Dunkel', 'Hell']) {
     await page.getByRole('button', { name: theme, exact: true }).click()
     await page.getByRole('button', { name: 'Sprache', exact: true }).click()
     await page.getByRole('button', { name: 'English', exact: true }).click()
-    for (const name of ['Overview', 'Catalog', 'Dependencies', 'Catalog lab', 'Guide', 'JSON references']) {
-      await page.locator('.top-nav').getByRole('link', { name, exact: true }).click()
+    const checkScreen = async (name: string, viaPalette = false) => {
+      if (viaPalette) {
+        await page.getByRole('button', { name: 'Open command palette' }).click()
+        const search = page.getByRole('combobox', { name: 'Search tools and sections' })
+        await search.fill(name)
+        await page.getByRole('option', { name: new RegExp(name) }).click()
+      } else {
+        await page.locator('.top-nav').getByRole('link', { name, exact: true }).click()
+      }
       await expect(page.locator('#screen-heading')).toBeVisible()
       expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([])
-      if (name === 'Overview') await page.locator('.terminal-preview').evaluate((node) => Promise.all(node.getAnimations().map((animation) => animation.finished)))
       await page.screenshot({ path: testInfo.outputPath(name.replaceAll(' ', '-') + '-desktop.png') })
       for (const width of [320, 360]) {
         await page.setViewportSize({ width, height: 844 })
@@ -328,12 +331,12 @@ for (const theme of ['Dunkel', 'Hell']) {
       await page.screenshot({ path: testInfo.outputPath(name.replaceAll(' ', '-') + '-mobile.png') })
       await page.setViewportSize({ width: 1440, height: 1000 })
     }
+    for (const name of ['Catalog', 'Workspace', 'Profiles', 'Guide']) await checkScreen(name)
+    for (const name of ['Dependencies', 'Catalog lab', 'Explore data']) await checkScreen(name, true)
     await page.getByRole('button', { name: 'Open command palette' }).click()
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([])
     await page.keyboard.press('Escape')
     await page.emulateMedia({ reducedMotion: 'reduce', forcedColors: 'active' })
-    await page.locator('.top-nav').getByRole('link', { name: 'Overview', exact: true }).click()
-    expect(await page.locator('.terminal-preview').evaluate((node) => getComputedStyle(node).animationName)).toBe('none')
     expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollbarColor)).toBe('auto')
   })
 }
@@ -346,14 +349,15 @@ test('real catalog loads with subpath assets and deep query links reload', async
   await expect(page.locator('[data-edge="apr->oracle"]')).toHaveCount(1)
   await page.reload()
   await expect(page.locator('.graph-focus h2')).toBeVisible()
-  await page.locator('.top-nav').getByRole('link', { name: 'Übersicht', exact: true }).click()
-  await page.locator('.terminal-preview').evaluate((node) => Promise.all(node.getAnimations().map((animation) => animation.finished)))
-  await page.screenshot({ path: testInfo.outputPath('real-overview-desktop.png') })
+  await page.locator('.top-nav').getByRole('link', { name: 'Katalog', exact: true }).click()
+  await expect(page.locator('.tool-card').first()).toBeVisible()
+  await page.screenshot({ path: testInfo.outputPath('real-catalog-desktop.png') })
   await page.setViewportSize({ width: 390, height: 844 })
-  await page.screenshot({ path: testInfo.outputPath('real-overview-mobile.png'), fullPage: true })
+  await page.screenshot({ path: testInfo.outputPath('real-catalog-mobile.png'), fullPage: true })
   await page.setViewportSize({ width: 320, height: 900 })
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
-  await expect(page.locator('.terminal-preview img').first()).toHaveAttribute('src', /\/CliToolRegistry.Web\/tool-logos\//)
+  await page.getByRole('searchbox').fill('docker-desktop')
+  await expect(page.locator('.app-icon-frame img').first()).toHaveAttribute('src', /\/CliToolRegistry.Web\/tool-logos\//)
   await page.goto('./?section=catalog&view=list&tool=pcr')
   await expect(page.locator('.detail-structured-command')).toContainText('commandName')
   if (process.env.PLAYWRIGHT_PREVIEW === '1') {
@@ -366,7 +370,10 @@ test('lazy screen failure has accessible reload recovery that preserves its URL'
   let fail = true
   await page.route(/\/(?:src\/components\/DependencyExplorer\.tsx|assets\/DependencyExplorer-[^/]+\.js)(?:\?.*)?$/, (route) => fail ? route.abort() : route.continue())
   await open(page)
-  await page.locator('.top-nav').getByRole('link', { name: 'Abhängigkeiten', exact: true }).click()
+  await page.getByRole('button', { name: 'Befehlspalette öffnen' }).click()
+  const search = page.getByRole('combobox', { name: 'Werkzeuge und Bereiche suchen' })
+  await search.fill('Abhängigkeiten')
+  await page.getByRole('option', { name: /Abhängigkeiten/ }).click()
   await expect(page.getByRole('heading', { name: 'Dieser Bereich konnte nicht geladen werden.' })).toBeVisible()
   fail = false
   await page.getByRole('button', { name: 'Seite neu laden' }).click()
@@ -375,7 +382,7 @@ test('lazy screen failure has accessible reload recovery that preserves its URL'
 })
 
 test('good startup cache is a comparison baseline and write failures keep live data usable', async ({ page }) => {
-  await page.addInitScript((cached) => localStorage.setItem('cli-tool-registry.catalog.v2', JSON.stringify(cached)), snapshot)
+  await page.addInitScript((cached) => localStorage.setItem('cli-tool-registry.catalog.v3', JSON.stringify(cached)), snapshot)
   await page.route('**/registry-catalog.json?*', (route) => route.fulfill({ json: { ...snapshot, tools: [{ ...tools[0], command: 'git --help' }] } }))
   await page.goto('./?section=lab')
   await expect(page.locator('.change-list button')).toHaveCount(3)
@@ -384,7 +391,8 @@ test('good startup cache is a comparison baseline and write failures keep live d
   await expect(page.getByText('Der aktuelle Katalog ist verfügbar, konnte aber nicht im Browser gespeichert werden.')).toBeVisible()
   await expect(page.getByText('Keine Werkzeugänderungen zwischen diesen Datenständen.')).toBeVisible()
   await page.locator('.top-nav').getByRole('link', { name: 'Katalog', exact: true }).click()
+  await page.getByRole('button', { name: 'Karten+', exact: true }).click()
   await expect(page.locator('.tool-card')).toHaveCount(1)
-  await expect(page.locator('.tool-card code').first()).toHaveText('git')
+  await expect(page.locator('#tool-card-heading-git')).toHaveText('Git')
   await expect(page.locator('.tool-card .command-block code').first()).toHaveText('git --help')
 })

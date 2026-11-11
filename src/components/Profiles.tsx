@@ -187,10 +187,12 @@ export function Profiles({ catalogTools, locale }: { catalogTools: readonly CliT
         {selectedIsLocal && <><button type="button" className="quiet-button" onClick={() => setEditor(workspace.profiles.find((item) => item.id === selectedId) ?? null)}>{copy.edit}</button><button type="button" className="quiet-button danger" onClick={() => deleteProfile(selectedId)}>{copy.remove}</button></>}</div></header>
       {selectedSchema?.state !== 'valid' || selectedReferences.length > 0 ? <p className="workspace-error" role="alert">{copy.invalid}</p> : <p className="workspace-validity is-valid">{copy.valid}</p>}
       <section className="profile-facts"><div><strong>{copy.platforms}</strong><span>{resolved.platforms?.join(', ') ?? copy.platformAny}</span></div><div><strong>{copy.management}</strong><span>{resolved.managementMode === 'acfs' ? copy.acfs : resolved.managementMode === 'individual' ? copy.individual : '—'}</span></div></section>
-      {(resolved.hasCycle || resolved.missingProfiles.length > 0 || missing.length > 0 || selectedSchema?.state !== 'valid' || selectedReferences.length > 0) && <ul className="profile-warnings" role="status">
-        {resolved.hasCycle && <li>{copy.cycle}</li>}{resolved.missingProfiles.length > 0 && <li>{copy.missingProfiles}: {resolved.missingProfiles.join(', ')}</li>}{missing.length > 0 && <li>{copy.missingTools}: {missing.join(', ')}</li>}
-        {selectedSchema?.errors.map((error, index) => <li key={`schema-${index}`}>{error.path} {error.message}</li>)}{selectedReferences.map((error, index) => <li key={`ref-${index}`}>{error.path} {error.message}</li>)}
-      </ul>}
+      {(resolved.hasCycle || resolved.missingProfiles.length > 0 || missing.length > 0 || selectedSchema?.state !== 'valid' || selectedReferences.length > 0) && <div role="status">
+        <ul className="profile-warnings">
+          {resolved.hasCycle && <li>{copy.cycle}</li>}{resolved.missingProfiles.length > 0 && <li>{copy.missingProfiles}: {resolved.missingProfiles.join(', ')}</li>}{missing.length > 0 && <li>{copy.missingTools}: {missing.join(', ')}</li>}
+          {selectedSchema?.errors.map((error, index) => <li key={`schema-${index}`}>{error.path} {error.message}</li>)}{selectedReferences.map((error, index) => <li key={`ref-${index}`}>{error.path} {error.message}</li>)}
+        </ul>
+      </div>}
       <div className="profile-tool-groups"><section><h3>{copy.required}<span>{resolved.required.length}</span></h3><ul>{resolved.required.map((id) => <li key={id}><span>{effectiveTools.find((tool) => tool.id === id)?.name ?? id}</span><code>{id}</code></li>)}</ul></section>
         <section><h3>{copy.recommended}<span>{resolved.recommended.length}</span></h3><ul>{resolved.recommended.map((id) => <li key={id}><span>{effectiveTools.find((tool) => tool.id === id)?.name ?? id}</span><code>{id}</code></li>)}</ul></section></div>
     </article> : <p className="workspace-empty">{copy.noProfiles}</p>}</div>

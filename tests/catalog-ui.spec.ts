@@ -4,6 +4,8 @@ import { readFileSync } from 'node:fs'
 
 const snapshot = {
   fileCount: 2, loadedAt: '2026-10-08T09:00:00Z', sourceRef: 'develop',
+  sourceRepository: 'https://github.com/In-Pro-Org/CliToolRegistry', sourceRevision: 'a'.repeat(40),
+  sourceCommitDate: '2026-10-08T09:00:00Z',
   tools: [
     {
       id: 'git', name: 'Git', description: 'Verteilte Versionsverwaltung', category: 'foundation',
@@ -35,7 +37,7 @@ test('first visit is dark even with a light OS; preferences survive reload and f
   await page.emulateMedia({ colorScheme: 'light' })
   await openCatalog(page)
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
-  await expect(page.getByRole('button', { name: 'Karten+', exact: true })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByRole('button', { name: 'Karten', exact: true })).toHaveAttribute('aria-pressed', 'true')
   const themeTrigger = page.getByRole('button', { name: 'Farbschema', exact: true })
   await themeTrigger.focus()
   await page.keyboard.press('Enter')
@@ -91,6 +93,7 @@ test('table labels the install platform and keeps catalog and website sources di
 
 test('platform choice changes commands and never borrows an unsupported OS command', async ({ page }) => {
   await openCatalog(page)
+  await page.getByRole('button', { name: 'Karten+', exact: true }).click()
   const git = page.getByRole('article', { name: 'Git', exact: true })
   await git.getByRole('combobox').selectOption('linux')
   await expect(git.getByText('sudo apt-get install git', { exact: true })).toBeVisible()
@@ -128,6 +131,7 @@ test('table details share the same disclosure and return focus', async ({ page }
 test('copy succeeds and clipboard rejection has accessible feedback', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
   await openCatalog(page)
+  await page.getByRole('button', { name: 'Karten+', exact: true }).click()
   const git = page.getByRole('article', { name: 'Git', exact: true })
   await git.getByRole('button', { name: 'Befehl kopieren' }).first().click()
   await expect(git.getByRole('button', { name: 'Kopiert' })).toBeVisible()

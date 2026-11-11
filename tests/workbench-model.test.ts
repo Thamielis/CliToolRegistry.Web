@@ -18,7 +18,11 @@ import type { CatalogSnapshot, CliTool } from '../src/types/app.ts'
 
 const tool = (id: string, changes: Partial<CliTool> = {}): CliTool => ({ id, name: id, description: 'A tool', command: id,
   category: 'terminal', tier: 'optional', platforms: ['linux'], catalogFile: 'tools.yml', catalogUrl: 'https://example.com/tools.yml', ...changes })
-const snapshot = (tools: CliTool[]): CatalogSnapshot => ({ tools, fileCount: 1, loadedAt: '2026-10-09T00:00:00Z' })
+const snapshot = (tools: CliTool[]): CatalogSnapshot => ({
+  tools, fileCount: 1, loadedAt: '2026-10-09T00:00:00Z',
+  sourceRepository: 'https://github.com/In-Pro-Org/CliToolRegistry', sourceRef: 'test-fixture',
+  sourceRevision: 'a'.repeat(40), sourceCommitDate: '2026-10-09T00:00:00Z',
+})
 
 test('catalog snapshots accept tools without a declared primary command', () => {
   const explicitNull = tool('null-command', { command: null })

@@ -35,6 +35,9 @@ const catalogFixture = {
   fileCount: 3,
   loadedAt: '2026-10-11T00:00:00.000Z',
   sourceRef: 'main',
+  sourceRepository: 'https://github.com/In-Pro-Org/CliToolRegistry',
+  sourceRevision: 'b'.repeat(40),
+  sourceCommitDate: '2026-10-11T00:00:00.000Z',
 }
 
 async function routeCatalogAndManifest(page: import('@playwright/test').Page) {
@@ -51,12 +54,11 @@ test('Explorer index loads from the manifest while the catalog is unavailable an
   })
   await page.goto('./?section=explore')
 
-  await expect(page.getByRole('heading', { name: 'JSON-Referenzen erkunden' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Tool-Daten erkunden' })).toBeVisible()
   await expect(page.locator('.explorer-tool-card')).toHaveCount(6)
   const counts = await page.locator('.explorer-tool-count').allTextContents()
   expect(counts.reduce((total, text) => total + Number(text.match(/\d+/)?.[0] ?? 0), 0)).toBe(8)
   expect(datasetRequests).toBe(0)
-  await expect(page.getByText('GitHub nicht erreichbar')).toBeVisible()
 })
 test('Manifest retry is separate and recovers the independent explorer index', async ({ page }) => {
   let attempts = 0
@@ -142,7 +144,7 @@ test('back to tool page clears the dataset without triggering the single-dataset
   await page.getByRole('button', { name: 'Zur Werkzeugseite' }).click()
   await expect(page).toHaveURL(/exploreTool=fmd/)
   await expect(page).not.toHaveURL(/dataset=/)
-  await expect(page.locator('.explorer-tool-heading h2')).toHaveText('FrankenMarkdown')
+  await expect(page.locator('.explorer-tool-heading h1')).toHaveText('FrankenMarkdown')
   await expect(page.locator('.explorer-source-list')).toBeVisible()
 })
 
@@ -167,6 +169,7 @@ test('JSON previews count scalar leaves against the shared 500-node budget', asy
   }))
 
   await page.goto('./?section=explore&exploreTool=fmd&dataset=capabilities&docSection=json&entry=ptr%3A%2Flarge_values')
+  await page.locator('.explorer-source-details > summary').click()
   await expect(page.locator('.explorer-tree-limit')).toBeVisible()
   const visibleScalars = await page.locator('.explorer-json-scalar').count()
   expect(visibleScalars).toBeGreaterThan(0)
@@ -312,7 +315,7 @@ test('featureStatus filters exact scalar snapshot strings and combines with sear
   await expect(page.getByRole('button', { name: 'html, Eintrag öffnen' })).toBeVisible()
   await expect(page.getByRole('button', { name: 'html_stdout_dash, Eintrag öffnen' })).toBeVisible()
 
-  await page.getByRole('searchbox', { name: 'Dateiinhalte durchsuchen' }).fill('interactive_html')
+  await page.getByRole('searchbox', { name: 'Inhalte durchsuchen' }).fill('interactive_html')
   await expect(page.getByText('Keine Einträge passen zu Suche und Filtern.')).toBeVisible()
   await expect(page.getByRole('combobox', { name: 'Funktionsstatus' })).toHaveValue('available')
 })
@@ -322,7 +325,7 @@ test('catalog cards, enhanced cards, table, and details share manifest-backed Ex
 
   await page.goto('./?section=catalog&view=card')
   const card = page.locator('.tool-card').filter({ has: page.locator('#tool-card-heading-br') })
-  const cardLink = card.getByRole('link', { name: 'JSON-Referenzen: 2' })
+  const cardLink = card.getByRole('link', { name: 'Hilfe und Daten 2' })
   await expect(cardLink).toBeVisible()
   const expectedHref = await cardLink.getAttribute('href')
   expect(new URL(expectedHref!, page.url()).searchParams.get('section')).toBe('explore')
@@ -331,17 +334,17 @@ test('catalog cards, enhanced cards, table, and details share manifest-backed Ex
   await expect(page.locator('.tool-card').filter({ has: page.locator('#tool-card-heading-catalog-only') }).locator('.tool-explorer-link')).toHaveCount(0)
 
   await card.getByRole('button', { name: 'br, Details' }).click()
-  const detailsLink = card.locator('.tool-details').getByRole('link', { name: 'JSON-Referenzen: 2' })
+  const detailsLink = card.locator('.tool-details').getByRole('link', { name: 'Hilfe und Daten 2' })
   await expect(detailsLink).toHaveAttribute('href', expectedHref!)
 
   await page.goto('./?section=catalog&view=enhanced')
-  const enhancedLink = page.locator('.tool-card').filter({ has: page.locator('#tool-card-heading-br') }).getByRole('link', { name: 'JSON-Referenzen: 2' })
+  const enhancedLink = page.locator('.tool-card').filter({ has: page.locator('#tool-card-heading-br') }).getByRole('link', { name: 'Hilfe und Daten 2' })
   const enhancedUrl = new URL((await enhancedLink.getAttribute('href'))!, page.url())
   expect(enhancedUrl.searchParams.get('section')).toBe('explore')
   expect(enhancedUrl.searchParams.get('exploreTool')).toBe('br')
 
   await page.goto('./?section=catalog&view=list')
-  const tableLink = page.locator('.tool-table').getByRole('link', { name: 'JSON-Referenzen: 2' })
+  const tableLink = page.locator('.tool-table').getByRole('link', { name: 'Hilfe und Daten 2' })
   const tableUrl = new URL((await tableLink.getAttribute('href'))!, page.url())
   expect(tableUrl.searchParams.get('section')).toBe('explore')
   expect(tableUrl.searchParams.get('exploreTool')).toBe('br')
@@ -366,8 +369,8 @@ test('palette keeps Explore available before manifest validation and adds only v
   await page.goto('./?section=catalog')
   await page.getByRole('button', { name: 'Befehlspalette öffnen' }).click()
   const search = page.getByRole('combobox', { name: 'Werkzeuge und Bereiche suchen' })
-  await search.fill('JSON')
-  const exploreOption = page.getByRole('option', { name: /JSON/ })
+  await search.fill('Daten erkunden')
+  const exploreOption = page.getByRole('option', { name: /Daten erkunden/ })
   await expect(exploreOption).toBeVisible()
   await expect(page.getByRole('option', { name: /JSON-Quellen/ })).toHaveCount(0)
   await search.press('Enter')
