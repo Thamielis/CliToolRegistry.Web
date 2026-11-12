@@ -154,7 +154,7 @@ test('bv documentation preserves pipeline examples and reports clipboard rejecti
 test('mobile selection focuses the entry detail without returning focus to search', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 })
   await page.goto('./?section=explore&exploreTool=br&dataset=capabilities&docSection=commands')
-  const search = page.getByRole('searchbox', { name: 'Dateiinhalte durchsuchen' })
+  const search = page.getByRole('searchbox', { name: 'Inhalte durchsuchen' })
   await search.focus()
   await search.fill('agents')
   await page.getByRole('button', { name: 'agents, Eintrag öffnen' }).click()

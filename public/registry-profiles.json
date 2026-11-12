@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "1.1",
+  "profiles": {
+    "agentic-coding-flywheel": {
+      "description": "Agentic Coding Flywheel Setup für Installation aller Tools in Ubuntu.",
+      "managementMode": "acfs",
+      "platforms": [
+        "linux",
+        "wsl2"
+      ],
+      "tools": {
+        "required": [
+          "acfs"
+        ]
+      }
+    },
+    "agentic-flywheel": {
+      "description": "Aktueller Agentic-Coding-Flywheel-Stack mit Koordination, Guards, Beads, Session-Suche, Memory und Agent-Orchestrierung.",
+      "inherits": [
+        "linux-agentic-foundation"
+      ],
+      "managementMode": "individual",
+      "tools": {
+        "required": [
+          "ntm",
+          "mcp-agent-mail",
+          "ubs",
+          "bv",
+          "br",
+          "cass",
+          "cm",
+          "caam",
+          "slb",
+          "ru",
+          "dcg"
+        ],
+        "recommended": [
+          "oracle",
+          "rch",
+          "pt",
+          "fsfs",
+          "sbh",
+          "casr",
+          "dsr",
+          "asb",
+          "pcr",
+          "ee",
+          "fmd",
+          "pi",
+          "pfr"
+        ]
+      }
+    },
+    "dicklesworthstone": {
+      "description": "Interessante Tools des Flywheel Maintainers.",
+      "inherits": [
+        "agentic-flywheel"
+      ],
+      "managementMode": "individual",
+      "tools": {
+        "required": [
+          "ms"
+        ],
+        "recommended": [
+          "xf",
+          "giil"
+        ]
+      }
+    },
+    "legacy-beads-workflow": {
+      "description": "Optionaler Legacy-Workflow für das eigenständige Go-Beads-Werkzeug.",
+      "managementMode": "individual",
+      "tools": {
+        "required": [
+          "beads"
+        ]
+      }
+    },
+    "container-development": {
+      "description": "Optionale Container-/CI-Werkzeuge.",
+      "tools": {
+        "required": [
+          "docker-cli",
+          "docker-buildx"
+        ],
+        "recommended": [
+          "docker-desktop",
+          "act"
+        ]
+      }
+    },
+    "web-development": {
+      "description": "Optionale Web-/Dokumentationswerkzeuge.",
+      "tools": {
+        "required": [
+          "nodejs-lts",
+          "bun",
+          "vscode-cli",
+          "pandoc",
+          "vercel-cli",
+          "dotnet"
+        ],
+        "recommended": []
+      }
+    },
+    "windows-foundation": {
+      "description": "Grundausstattung für Windows-native Entwicklung und Agenten-CLIs.",
+      "tools": {
+        "required": [
+          "winget",
+          "powershell7",
+          "git",
+          "gh",
+          "codex-standalone",
+          "nodejs-lts",
+          "7zip",
+          "bat",
+          "ripgrep",
+          "fzf",
+          "jq",
+          "delta",
+          "uv",
+          "mise",
+          "scoop",
+          "dotnet",
+          "gum"
+        ],
+        "recommended": [
+          "git-lfs",
+          "go"
+        ]
+      }
+    },
+    "linux-agentic-foundation": {
+      "description": "Neutrale Grundausstattung für Linux und Ubuntu unter WSL2.",
+      "platforms": [
+        "linux",
+        "wsl2"
+      ],
+      "tools": {
+        "required": [
+          "curl",
+          "git",
+          "gh",
+          "codex-standalone",
+          "nodejs-lts",
+          "bun",
+          "7zip",
+          "bat",
+          "ripgrep",
+          "fzf",
+          "jq",
+          "delta",
+          "uv",
+          "mise",
+          "dolt",
+          "python3",
+          "powershell7",
+          "dotnet",
+          "gum"
+        ],
+        "recommended": [
+          "git-lfs",
+          "go"
+        ]
+      }
+    },
+    "wsl2-agentic-foundation": {
+      "description": "Grundausstattung für Ubuntu unter WSL2; ergänzt die neutrale Linux-Grundlage um eine WSL2-Grenze.",
+      "inherits": [
+        "linux-agentic-foundation"
+      ],
+      "platforms": [
+        "wsl2"
+      ]
+    }
+  }
+}

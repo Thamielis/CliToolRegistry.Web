@@ -1205,6 +1205,12 @@ select:focus-visible {
     grid-column: 2;
   }
 
+  .tool-table .category-label {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
   .tool-table td:nth-child(4),
   .tool-table td:nth-child(5) {
     grid-column: 1 / -1;

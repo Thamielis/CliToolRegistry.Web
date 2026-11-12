@@ -30,7 +30,7 @@ export function CommandPalette({ open, tools, explorerManifest, onClose, onNavig
   const [active, setActive] = useState(0)
   const results = useMemo<PaletteResult[]>(() => {
     const q = query.trim().toLocaleLowerCase(locale)
-    const sections = SECTIONS.filter((section) => t(sectionLabels[section]).toLocaleLowerCase(locale).includes(q))
+    const sections = SECTIONS.filter((section) => section !== 'overview' && t(sectionLabels[section]).toLocaleLowerCase(locale).includes(q))
       .map((section) => ({ id: section, kind: 'section' as const, label: t(sectionLabels[section]), hint: t('paletteSections'), section }))
     const catalogNames = new Map(tools.map((tool) => [tool.id, tool.name]))
     const fallbackNames = new Map(explorerRegistry.tools.map((tool) => [tool.toolId, tool.fallbackName]))

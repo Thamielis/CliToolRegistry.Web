@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/tool-profile.schema.json",
+  "title": "CliToolRegistry Profile Catalog",
+  "description": "Version 1.1 profile envelope with named profile definitions.",
+  "type": "object",
+  "required": [
+    "profiles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.1"
+    },
+    "profiles": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+(?:[-_][a-z0-9]+)*$"
+      },
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/profile"
+      }
+    }
+  },
+  "$defs": {
+    "profile": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inherits": {
+          "$ref": "#/$defs/toolIdList"
+        },
+        "tools": {
+          "type": "object",
+          "properties": {
+            "required": {
+              "$ref": "#/$defs/toolIdList"
+            },
+            "recommended": {
+              "$ref": "#/$defs/toolIdList"
+            }
+          }
+        },
+        "managementMode": {
+          "type": "string",
+          "enum": [
+            "individual",
+            "acfs"
+          ]
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "windows",
+              "linux",
+              "wsl2",
+              "macos"
+            ]
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "toolIdList": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:[-_][a-z0-9]+)*$"
+      },
+      "uniqueItems": true
+    }
+  }
+}

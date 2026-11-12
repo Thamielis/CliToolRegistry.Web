@@ -104,7 +104,7 @@ test('EE pagination stays in the URL and a new search returns to the first page'
   await expect(page.locator('.explorer-reader-heading [role=status]')).toContainText('96 von 557 Pfaden')
   await expect(page.locator('.explorer-entry-button')).toHaveCount(96)
 
-  await page.getByRole('searchbox', { name: 'Dateiinhalte durchsuchen' }).fill('backup keys export')
+  await page.getByRole('searchbox', { name: 'Inhalte durchsuchen' }).fill('backup keys export')
   await expect(page.locator('.explorer-reader-heading [role=status]')).toContainText('1 von 1 Pfaden')
   const url = new URL(page.url())
   expect(Number(url.searchParams.get('docCount') ?? 48)).toBe(48)

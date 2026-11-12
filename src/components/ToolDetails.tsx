@@ -2,8 +2,9 @@ import type { MouseEvent as ReactMouseEvent } from 'react'
 import type { CliTool, ToolCheck, ToolPlatform } from '../types/app'
 import { useLocale } from '../i18n/LocaleContext'
 import { categoryLabel, platformLabel, tierLabel } from '../i18n/catalogLabels'
-import { getPlatformCommand } from '../data/loadApps'
+import { getInstallEntries, getPlatformCommand } from '../data/loadApps'
 import { CommandBlock } from './CommandBlock'
+import { InstallBlock } from './InstallBlock'
 import { AppIcon } from './AppIcon'
 import { navigationUrl, parseNavigation, transitionExplorerNavigation, type ExplorerNavigationAction } from '../data/workbench'
 import type { ExplorerManifest } from '../types/explorer'
@@ -11,7 +12,7 @@ import type { ExplorerManifest } from '../types/explorer'
 const PLATFORMS: ToolPlatform[] = ['windows', 'linux', 'wsl2', 'macos']
 
 function commandEntries(
-  commands: Record<string, unknown> | undefined,
+  commands: Record<string, unknown> | null | undefined,
   platforms: ToolPlatform[],
   allPlatformsLabel: string,
 ) {
@@ -86,19 +87,20 @@ export function ExplorerToolLink({ tool, manifest, onExplore }: {
   }
 
   return <a className="tool-explorer-link" href={target.href} onClick={handleClick}>
-    {t('exploreToolLink').replace('{count}', String(target.datasetCount))}<span aria-hidden="true">↗</span>
+    {t('toolContentLink')} <span className="tool-content-count">{target.datasetCount}</span><span aria-hidden="true">↗</span>
   </a>
 }
 
-export function ToolDetails({ tool, onClose, manifest = null, onExplore }: {
+export function ToolDetails({ tool, onClose, manifest = null, onExplore, showDescription = true }: {
   tool: CliTool
   onClose: () => void
   manifest?: ExplorerManifest | null
   onExplore?: (action: ExplorerNavigationAction) => void
+  showDescription?: boolean
 }) {
   const { locale, t } = useLocale()
   const headingId = 'tool-details-heading-' + tool.id
-  const installCommands = commandEntries(tool.install, tool.platforms, t('allPlatforms'))
+  const installEntries = getInstallEntries(tool)
   const updateCommands = commandEntries(tool.update, tool.platforms, t('allPlatforms'))
 
   return (
@@ -117,7 +119,7 @@ export function ToolDetails({ tool, onClose, manifest = null, onExplore }: {
         </button>
       </header>
 
-      {tool.description && <p className="detail-description">{tool.description}</p>}
+      {showDescription && tool.description && <p className="detail-description">{tool.description}</p>}
 
       <div className="detail-identity">
         <span className="detail-identity-item">
@@ -136,54 +138,26 @@ export function ToolDetails({ tool, onClose, manifest = null, onExplore }: {
         )}
       </div>
 
-      <div className="detail-grid">
-        <section className="detail-section">
+      {(installEntries.length > 0 || updateCommands.length > 0 || tool.dependencies?.required?.length || tool.dependencies?.recommended?.length || tool.healthCheck || tool.versionCommand || tool.capabilitiesCommand) && <div className="detail-grid">
+        {installEntries.length > 0 && <section className="detail-section">
           <h3>{t('installCommands')}</h3>
-          {installCommands.length ? (
-            installCommands.map(({ key, label, command }) => (
-              <CommandSection key={key} label={label} command={command} />
-            ))
-          ) : (
-            <p className="muted-value">{t('installNotListed')}</p>
-          )}
-        </section>
-
-        <section className="detail-section">
-          <h3>{t('updateCommands')}</h3>
-          {updateCommands.length ? (
-            updateCommands.map(({ key, label, command }) => (
-              <CommandSection key={key} label={label} command={command} />
-            ))
-          ) : (
-            <p className="muted-value">{t('installNotListed')}</p>
-          )}
-        </section>
-
-        <section className="detail-section">
-          <h3>{t('dependencies')}</h3>
-          <div className="dependency-group">
-            <strong>{t('requiredDependencies')}</strong>
-            <p>{tool.dependencies?.required?.join(', ') || '—'}</p>
-          </div>
-          <div className="dependency-group">
-            <strong>{t('recommendedDependencies')}</strong>
-            <p>{tool.dependencies?.recommended?.join(', ') || '—'}</p>
-          </div>
-        </section>
-
-        <section className="detail-section">
-          <h3>{t('checks')}</h3>
-          <CommandSection label={t('healthCheck')} command={tool.healthCheck ?? null} />
-          <CommandSection label={t('versionCommand')} command={tool.versionCommand ?? null} />
-          <CommandSection
-            label={t('capabilitiesCommand')}
-            command={tool.capabilitiesCommand ?? null}
-          />
-          {!tool.healthCheck && !tool.versionCommand && !tool.capabilitiesCommand && (
-            <p className="muted-value">—</p>
-          )}
-        </section>
-      </div>
+          {installEntries.map(({ platform, action }) => <div className="detail-command" key={platform}>
+            <span>{platform === 'all' ? t('allPlatforms') : platformLabel(platform)}</span><InstallBlock action={action} />
+          </div>)}
+        </section>}
+        {updateCommands.length > 0 && <section className="detail-section"><h3>{t('updateCommands')}</h3>
+          {updateCommands.map(({ key, label, command }) => <CommandSection key={key} label={label} command={command} />)}
+        </section>}
+        {(tool.dependencies?.required?.length || tool.dependencies?.recommended?.length) ? <section className="detail-section"><h3>{t('dependencies')}</h3>
+          {tool.dependencies.required?.length ? <div className="dependency-group"><strong>{t('requiredDependencies')}</strong><p>{tool.dependencies.required.join(', ')}</p></div> : null}
+          {tool.dependencies.recommended?.length ? <div className="dependency-group"><strong>{t('recommendedDependencies')}</strong><p>{tool.dependencies.recommended.join(', ')}</p></div> : null}
+        </section> : null}
+        {(tool.healthCheck || tool.versionCommand || tool.capabilitiesCommand) && <section className="detail-section"><h3>{t('checks')}</h3>
+          {tool.healthCheck && <CommandSection label={t('healthCheck')} command={tool.healthCheck} />}
+          {tool.versionCommand && <CommandSection label={t('versionCommand')} command={tool.versionCommand} />}
+          {tool.capabilitiesCommand && <CommandSection label={t('capabilitiesCommand')} command={tool.capabilitiesCommand} />}
+        </section>}
+      </div>}
 
       {tool.tags && tool.tags.length > 0 && (
         <div className="detail-extra">
@@ -215,10 +189,12 @@ export function ToolDetails({ tool, onClose, manifest = null, onExplore }: {
             {t('openRepository')}
           </a>
         )}
-        <a href={tool.catalogUrl} target="_blank" rel="noreferrer">
-          {t('openCatalogSource')}: {tool.catalogFile}
-        </a>
       </footer>
+      {(tool.catalogUrl || tool.provenance?.length) && <details className="detail-source">
+        <summary>{t('sourceDetails')}</summary>
+        {tool.catalogUrl && <><span><strong>{t('openCatalogSource')}</strong> · {tool.catalogFile}</span><a href={tool.catalogUrl} target="_blank" rel="noreferrer">{t('sourceFileLink')}</a></>}
+        {tool.provenance?.length ? <ul>{tool.provenance.map((item, index) => <li key={index}><code>{item}</code></li>)}</ul> : null}
+      </details>}
     </section>
   )
 }

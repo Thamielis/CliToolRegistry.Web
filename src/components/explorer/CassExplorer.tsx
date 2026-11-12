@@ -143,7 +143,6 @@ function EntryButton({ entry, selected, props, copy, badges = [] }: {
       aria-label={`${entry.title}, ${copy.select}`} data-history-focus-key={`explorer-entry:${entry.id}`}
       onClick={() => props.onAction({ type: 'entry', entryId: entry.id })}>
       <span className="explorer-entry-title">{entry.title}</span>
-      {sourcePointer(entry)}
       <span className="explorer-entry-summary">{summary(entry)}</span>
     </button>
     {badges.length > 0 && <ul className="tag-list" aria-label={copy.argumentType}>{badges.map((badge) => <li key={badge}>{badge}</li>)}</ul>}
@@ -272,9 +271,9 @@ function CassDetails({ props, copy, selectedCommand, selectedArgument }: {
     detailContent = <p className="empty-state">{copy.chooseEntry}</p>
   }
 
-  return <aside className="explorer-details" aria-label={shownEntry?.title ?? manifestEntry.filename}>
+  return <aside className="explorer-details" aria-label={shownEntry?.title ?? labels.rawPreview}>
     <header className="explorer-details-header"><div>
-      <span className="section-eyebrow">{shownEntry ? copy.pointer : labels.filename}</span>
+      <span className="section-eyebrow">{labels.toolSources}</span>
       <h2 tabIndex={-1} data-navigation-entry-heading
         data-history-focus-key={shownEntry ? `explorer-detail:${shownEntry.id}` : 'explorer-source-heading'}>
         {shownEntry?.title ?? labels.rawPreview}
@@ -287,21 +286,21 @@ function CassDetails({ props, copy, selectedCommand, selectedArgument }: {
         {parentCommand.title}
       </button>
     </p>}
-    {shownEntry && <p className="explorer-entry-origin">{sourcePointer(shownEntry)}</p>}
-    <DetailsList rows={snapshotRows} />
-    <div className="explorer-detail-actions">
-      <button type="button" className="workbench-button" onClick={() => downloadOriginalJson(sourceBytes, manifestEntry.filename, {
-        document, urls: URL, schedule: (callback) => globalThis.setTimeout(callback, 0),
-      })}>{copy.download}</button>
-    </div>
     {detailContent}
     {!argumentDetail && commandDetail && argumentFilterActive && <p className="explorer-entry-count" role="status">
       {copy.argumentMatches.replace('{count}', String(argumentMatchesCount))}
     </p>}
-    <section className="explorer-json-preview"><h3>{labels.rawPreview}</h3>
-      {rawText.length > 20_000 && <p className="notice notice-warning">{copy.limited}</p>}
-      <pre className="explorer-raw-preview">{rawText.slice(0, 20_000)}</pre>
-    </section>
+    <details className="explorer-source-details"><summary>{labels.sourceDetails}</summary>
+      {shownEntry && <p className="explorer-entry-origin">{sourcePointer(shownEntry)}</p>}
+      <DetailsList rows={snapshotRows} />
+      <div className="explorer-detail-actions"><button type="button" className="workbench-button" onClick={() => downloadOriginalJson(sourceBytes, manifestEntry.filename, {
+        document, urls: URL, schedule: (callback) => globalThis.setTimeout(callback, 0),
+      })}>{copy.download}</button></div>
+      <section className="explorer-json-preview"><h3>{labels.rawPreview}</h3>
+        {rawText.length > 20_000 && <p className="notice notice-warning">{copy.limited}</p>}
+        <pre className="explorer-raw-preview">{rawText.slice(0, 20_000)}</pre>
+      </section>
+    </details>
   </aside>
 }
 

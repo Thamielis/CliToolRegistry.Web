@@ -1,0 +1,690 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/tool-definition.schema.json",
+  "title": "CliToolRegistry Tool Definition",
+  "description": "A single CLI, package, or extension definition. Unknown properties are retained for importer diagnostics.",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "description",
+    "category",
+    "platforms"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[-_][a-z0-9]+)*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "displayName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "acfs",
+        "agentic",
+        "agents",
+        "ai",
+        "base",
+        "ci",
+        "cli",
+        "cloud",
+        "containers",
+        "database",
+        "db",
+        "deployment",
+        "development",
+        "documentation",
+        "filesystem",
+        "foundation",
+        "frankensuite",
+        "lang",
+        "network",
+        "runtime",
+        "scm",
+        "shell",
+        "stack",
+        "terminal",
+        "tools",
+        "users",
+        "workflow"
+      ]
+    },
+    "tier": {
+      "type": "string",
+      "minLength": 1
+    },
+    "website": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri"
+    },
+    "repository": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri"
+    },
+    "wingetId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "productKind": {
+      "type": "string",
+      "enum": [
+        "cli",
+        "package",
+        "extension"
+      ],
+      "default": "cli"
+    },
+    "executableName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "executableAliases": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "default": []
+    },
+    "invocationPrefix": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "packageSource": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "winget",
+        "msstore",
+        null
+      ],
+      "default": null
+    },
+    "packageId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "default": null
+    },
+    "hostToolId": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/toolId"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "useDefaultCliCommands": {
+      "type": "boolean",
+      "default": true
+    },
+    "platforms": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "all",
+          "windows",
+          "linux",
+          "wsl2",
+          "macos"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "command": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/command"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "packageManager": {
+      "type": "object",
+      "properties": {
+        "preferred": {
+          "type": "object",
+          "propertyNames": {
+            "enum": [
+              "all",
+              "windows",
+              "linux",
+              "wsl2",
+              "macos"
+            ]
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "preferred"
+      ]
+    },
+    "dependencies": {
+      "type": "object",
+      "properties": {
+        "required": {
+          "$ref": "#/$defs/stringList"
+        },
+        "recommended": {
+          "$ref": "#/$defs/stringList"
+        }
+      },
+      "required": [
+        "required",
+        "recommended"
+      ]
+    },
+    "install": {
+      "$ref": "#/$defs/platformCommandOrValue"
+    },
+    "update": {
+      "$ref": "#/$defs/platformCommandOrValue"
+    },
+    "healthCheck": {
+      "$ref": "#/$defs/platformCommandOrValue"
+    },
+    "versionCommand": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/command"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "capabilitiesCommand": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/command"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "robotMode": {
+      "type": "object",
+      "required": [
+        "supported"
+      ],
+      "properties": {
+        "supported": {
+          "type": "boolean"
+        },
+        "command": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "supported": {
+                "const": true
+              }
+            },
+            "required": [
+              "supported"
+            ]
+          },
+          "then": {
+            "required": [
+              "command",
+              "format"
+            ],
+            "properties": {
+              "command": {
+                "type": "string",
+                "minLength": 1
+              },
+              "format": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "completions": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "command"
+            ],
+            "properties": {
+              "kind": {
+                "const": "generatedScript"
+              },
+              "command": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "commandName",
+                      "arguments"
+                    ],
+                    "properties": {
+                      "commandName": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "arguments": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "provider"
+            ],
+            "properties": {
+              "kind": {
+                "const": "nativeProtocol"
+              },
+              "provider": {
+                "const": "dotnet"
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "skill": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "tags": {
+      "$ref": "#/$defs/stringList"
+    },
+    "notes": {
+      "$ref": "#/$defs/stringList"
+    },
+    "provenance": {
+      "$ref": "#/$defs/stringList"
+    }
+  },
+  "additionalProperties": true,
+  "allOf": [
+    {
+      "if": {
+        "not": {
+          "required": [
+            "productKind"
+          ]
+        }
+      },
+      "then": {
+        "required": [
+          "command"
+        ],
+        "properties": {
+          "command": {
+            "$ref": "#/$defs/command"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "productKind": {
+            "const": "cli"
+          }
+        },
+        "required": [
+          "productKind"
+        ]
+      },
+      "then": {
+        "required": [
+          "command"
+        ],
+        "properties": {
+          "command": {
+            "$ref": "#/$defs/command"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "productKind": {
+            "enum": [
+              "package",
+              "extension"
+            ]
+          }
+        },
+        "required": [
+          "productKind"
+        ]
+      },
+      "then": {
+        "required": [
+          "packageId"
+        ],
+        "properties": {
+          "packageId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "useDefaultCliCommands": {
+            "type": "boolean",
+            "const": false,
+            "default": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "productKind": {
+            "const": "extension"
+          }
+        },
+        "required": [
+          "productKind"
+        ]
+      },
+      "then": {
+        "required": [
+          "hostToolId"
+        ],
+        "properties": {
+          "hostToolId": {
+            "$ref": "#/$defs/toolId"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "productKind": {
+            "enum": [
+              "package",
+              "extension"
+            ]
+          }
+        },
+        "required": [
+          "productKind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "id": {
+            "const": "pfr"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "then": {
+        "properties": {
+          "useDefaultCliCommands": {
+            "type": "boolean",
+            "const": false,
+            "default": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "completions": {
+            "type": "object",
+            "properties": {
+              "powershell": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "nativeProtocol"
+                  }
+                },
+                "required": [
+                  "kind"
+                ]
+              }
+            },
+            "required": [
+              "powershell"
+            ]
+          }
+        },
+        "required": [
+          "completions"
+        ]
+      },
+      "then": {
+        "properties": {
+          "id": {
+            "const": "dotnet"
+          },
+          "executableName": {
+            "const": "dotnet"
+          }
+        },
+        "required": [
+          "id",
+          "executableName"
+        ]
+      }
+    }
+  ],
+  "$defs": {
+    "toolId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[-_][a-z0-9]+)*$"
+    },
+    "stringList": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "commandObject": {
+      "type": "object",
+      "anyOf": [
+        {
+          "required": [
+            "commandName",
+            "arguments"
+          ]
+        },
+        {
+          "required": [
+            "CommandName",
+            "Arguments"
+          ]
+        }
+      ],
+      "properties": {
+        "commandName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "CommandName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "arguments": {
+          "$ref": "#/$defs/stringList"
+        },
+        "Arguments": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "command": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "$ref": "#/$defs/commandObject"
+        }
+      ]
+    },
+    "strategyCommands": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/command"
+      }
+    },
+    "packageManagerDetails": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "command"
+      ]
+    },
+    "packageManagerMap": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/packageManagerDetails"
+      }
+    },
+    "platformCommandValue": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/command"
+        },
+        {
+          "$ref": "#/$defs/strategyCommands"
+        },
+        {
+          "$ref": "#/$defs/packageManagerMap"
+        }
+      ]
+    },
+    "platformCommandMap": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "all",
+          "windows",
+          "linux",
+          "wsl2",
+          "macos"
+        ]
+      },
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/platformCommandValue"
+      }
+    },
+    "platformCommandOrValue": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/command"
+        },
+        {
+          "$ref": "#/$defs/platformCommandMap"
+        }
+      ]
+    }
+  }
+}

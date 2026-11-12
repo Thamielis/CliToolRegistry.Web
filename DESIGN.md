@@ -38,9 +38,9 @@ components:
 
 ## Overview
 
-A terminal workbench with independently implemented feature patterns from [FrankenTUI Website](https://github.com/Dicklesworthstone/frankentui_website): near-black surfaces, a faint background grid, a prominent terminal preview, warm orange actions and cyan dependency accents. The audience is developers and administrators choosing tools and copying installation commands. Product behavior is grounded in README.md, the published registry catalog, and the existing table/detail workflow. The interface supports German and English; upstream catalog descriptions remain in their source language.
+A compact, schema-driven tool explorer with independently implemented feature patterns from [FrankenTUI Website](https://github.com/Dicklesworthstone/frankentui_website): dark surfaces, a faint background grid, warm orange actions and cyan dependency accents. The audience is developers and administrators finding tools, inspecting their help and references, and preparing CliToolRegistry profiles. Product behavior is grounded in README.md, the published Registry schemas and data, and the local workspace flow. The interface supports German and English; upstream catalog descriptions remain in their source language.
 
-The user's complete-overhaul request adds Overview, Catalog, Dependencies, Catalog lab and Guide to the existing catalog. The signature is a split hero pairing large display text with real tool/platform command previews. Keep expressive light in the background and restrained panel edges. Graphs represent declared relationships; comparisons represent actual snapshots. No invented health scores or history. The reference contributes feature direction, with no copied source code, artwork or branded datasets.
+The primary navigation has four areas: Catalog, Workspace, Profiles and Guide. Tool details lead to available help and structured references; dependency views and JSON explorers retain their tool context. Keep the global header short so search and useful content appear early. The workspace edits local copies and exports valid Registry definitions; profiles can combine canonical and local tools. Source paths and file metadata stay inside a collapsed source disclosure. Graphs represent declared relationships; comparisons represent actual snapshots. No invented health scores or history. The reference contributes feature direction, with no copied source code, artwork or branded datasets.
 
 ## Colors
 
@@ -63,7 +63,7 @@ Verify exact color mirrors against runtime declarations and inspect both themes 
 
 ## Typography
 
-Use the established system sans stack for navigation, prose and large display headings; Cascadia Code and local monospace fallbacks for the brand, commands and terminal identity. No external font loading is required. The hero heading scales from 36px to 78px with viewport width; screen headings from 32px to 56px. Tool names use 19px, descriptions 13px with 1.65 line height. Full descriptions and tags wrap. Detail commands wrap and remain selectable; compact commands expose the full string through copying and the detail panel.
+Use the established system sans stack for navigation, prose and screen headings; Cascadia Code and local monospace fallbacks for commands and identifiers. No external font loading is required. Keep page titles compact and avoid large hero copy that pushes discovery controls down. Tool names use 19px, descriptions 13px with 1.65 line height. Full descriptions and tags wrap. Detail commands wrap and remain selectable; compact commands expose the full string through copying and the detail panel.
 
 ## Layout
 
@@ -79,9 +79,13 @@ Controls use an 8px radius, cards 14px, terminal marks 10px, and the brand mark 
 
 ## Components
 
-`ToolCards` owns compact and enhanced representations; `ToolTable` owns the comparison view. Both use the same filters, catalog, detail panel, locale, and `CommandBlock` feedback. Cards+ adds platform-specific installation selection, tier, and supported automation capability. Unavailable installation commands have explicit text rather than a false action.
+`ToolCards` owns compact and enhanced representations; `ToolTable` owns the comparison view. Both use the same filters, catalog, detail panel, locale, and `CommandBlock` feedback. Cards+ adds platform-specific installation selection, tier, and supported automation capability. The catalog resolver distinguishes copyable commands, structured recipes, and notes; only commands use `CommandBlock`. Table installation cells show the selected platform beside the command.
 
-`WorkbenchOverview` owns the real command preview and category launchers, and shares platform command selection with the catalog. `DependencyExplorer` renders exact ID relationships with solid required and dashed recommended edges, explicit external nodes and complete button/list equivalents. Drawing is limited to the focus plus 48 neighbors. `CatalogLab` renders actual baseline/current dates and added/removed/modified records with readable before/after JSON. `WorkbenchGuide` uses the same panel and action family. `CommandPalette` is a native modal dialog with localized combobox/listbox navigation. All interactive colors and geometry come from this stylesheet's canonical tokens.
+`Workspace` owns local tool additions and corrections, import review, collections, and browser persistence. `schemaValidation` loads the current Registry JSON schemas and supplies category and platform choices. Invalid canonical records remain explorable and can be corrected as local overrides; invalid local definitions are labeled and do not enter the catalog or profile exports. `Profiles` combines Registry profiles with local profiles, resolves inheritance and tool references, and exports the combined schema-valid profile catalog. Browser data has a downloadable recovery/export path and never writes to the Registry repository.
+
+`WorkbenchOverview` owns the real command preview and category launchers, and shares platform command selection with the catalog. `DependencyExplorer` renders exact ID relationships with solid required and dashed recommended edges, explicit external nodes and complete button/list equivalents. Drawing is limited to the focus plus 48 neighbors. `CatalogLab` renders actual baseline/current dates and added/removed/modified records with readable before/after JSON. `WorkbenchGuide` explains each main area, including the JSON explorer. `CommandPalette` is a native modal dialog with localized combobox/listbox navigation. All interactive colors and geometry come from this stylesheet's canonical tokens.
+
+Stylesheet responsibilities are split by scope: `index.css` provides the base reset, `registry.css` the original catalog structure and shared controls, `catalog-visuals.css` the workbench theme tokens and visual overrides, and `explorer.css` the JSON explorer. Keep feature-specific rules with their owning surface and avoid adding duplicate global tokens.
 
 `ViewToggle` uses labeled native buttons with pressed state and visible focus. Header theme and language controls use icon-only native `details`/`summary` disclosures with accessible names and current-value tooltips. Their choices are labeled buttons with pressed state. Selection and Escape close the disclosure and return focus to its trigger; leaving with Tab closes it. Refresh is an icon-only button with a localized name, tooltip, and loading state. Native selects are intentional: platform-owned popup geometry is accepted for catalog filters and card installation platforms. Commands are never executed by the page. Copy feedback stays inside `CommandBlock` and announces success or failure.
 
@@ -89,10 +93,14 @@ The glyphs follow the existing inline SVG family; terminal marks use literal `>_
 
 ## Do's and Don'ts
 
-- Do keep the original compact-card hierarchy: tool identity, category, description, tags, and resource links.
+- Do keep the compact-card hierarchy: tool identity, category, description, tags, and useful resource links.
+- Do show the tool name and relevant context on every help or reference surface.
+- Do keep source paths, hashes, timestamps, and file sizes behind the source disclosure.
+- Do label local changes clearly and show schema/reference issues next to the edited definition.
 - Do use semantic tokens for every registry surface and state.
 - Do preserve selection context and restore focus when closing details.
 - Don't infer tool health, version, or install support from a decorative badge.
+- Don't put catalog filenames or low-level source metadata in the primary reading flow.
 - Don't require hover, hidden scrollbars, or animation to access an action.
 
 ## Tool Identity Marks

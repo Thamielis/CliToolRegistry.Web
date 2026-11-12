@@ -1,7 +1,9 @@
 {
-  "loadedAt": "2026-11-06T17:12:12.612Z",
+  "loadedAt": "2026-10-31T19:51:37+01:00",
+  "sourceCommitDate": "2026-10-31T19:51:37+01:00",
   "sourceRepository": "https://github.com/In-Pro-Org/CliToolRegistry",
   "sourceRef": "develop",
+  "sourceRevision": "bad958bceaca4a8039742657b17d91bf36a3460c",
   "fileCount": 12,
   "tools": [
     {
@@ -79,7 +81,7 @@
         "Microsoft .NET install docs verified 2026-09-13."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "7zip",
@@ -142,7 +144,7 @@
         "Winget W-034; PackageIdentifier 7zip.7zip; Publisher Igor Pavlov; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/7/7zip/7zip/26.03/7zip.7zip.locale.en-US.yaml SHA-256 f3d3e89c49cafddf490f1de6a916109e8aea1e7b7ccc23194199414b05221725; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "filesystem.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/filesystem.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/filesystem.yml"
     },
     {
       "id": "act",
@@ -207,7 +209,7 @@
         "Winget W-005; PackageIdentifier nektos.act; Publisher cplee.org; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/n/nektos/act/0.2.89/nektos.act.locale.en-US.yaml SHA-256 f79ae4bca376d4aa2e5508358fccaabff547f711d886493d3b8eb26a1b5c4490; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "asb",
@@ -260,7 +262,7 @@
       "notes": [],
       "provenance": [],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "acfs",
@@ -325,7 +327,7 @@
         "Dicklesworthstone Flywheel profile and ACFS documentation verified 2026-09-16."
       ],
       "catalogFile": "acfs.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/acfs.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/acfs.yml"
     },
     {
       "id": "apr",
@@ -385,7 +387,7 @@
       "notes": [],
       "provenance": [],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "bat",
@@ -448,7 +450,7 @@
         "Winget W-040; PackageIdentifier sharkdp.bat; Publisher David Peter; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/s/sharkdp/bat/0.26.1/sharkdp.bat.locale.en-US.yaml SHA-256 f6cd5aa6a8f283a65ee9736da0de4e7c2adf0d9a9122d8f55503ed4f0817a403; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "filesystem.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/filesystem.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/filesystem.yml"
     },
     {
       "id": "beads",
@@ -521,7 +523,7 @@
         "Winget W-041; PackageIdentifier GasTownHall.Beads; Publisher Steve Yegge; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GasTownHall/Beads/1.3.1/GasTownHall.Beads.locale.en-US.yaml SHA-256 cf59b920732a19f4e031f46b8e3b2b5d532661c0fc901ee949f607cba884ef03; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "br",
@@ -591,7 +593,7 @@
         "Dicklesworthstone Flywheel profile and Beads Rust upstream guidance verified 2026-09-16."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "bv",
@@ -669,7 +671,7 @@
         "Dicklesworthstone Flywheel profile and Beads Viewer upstream guidance verified 2026-09-16."
       ],
       "catalogFile": "stack.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/stack.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/stack.yml"
     },
     {
       "id": "bun",
@@ -735,7 +737,7 @@
         "Winget W-042; PackageIdentifier Oven-sh.Bun; Publisher Oven-sh; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/o/Oven-sh/Bun/1.4.2/Oven-sh.Bun.locale.en-US.yaml SHA-256 5936471583267c8d493d18e2320b645da31005327b77b65decf19544b936ba7b; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "caam",
@@ -784,7 +786,7 @@
       "notes": [],
       "provenance": [],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "casr",
@@ -835,7 +837,7 @@
       "notes": [],
       "provenance": [],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "cass",
@@ -919,7 +921,7 @@
         "Dicklesworthstone Flywheel profile and CASS command guidance verified 2026-09-16."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "cm",
@@ -995,7 +997,7 @@
         "Dicklesworthstone Flywheel profile and CASS Memory upstream guidance verified 2026-09-16."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "claude-code",
@@ -1070,7 +1072,7 @@
         "Anthropic Claude Code native installation/update guidance verified 2026-09-16."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "pcr",
@@ -1165,7 +1167,7 @@
         "Installation modifies the Claude Code hook only after explicit ShouldProcess approval."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "codereview-cli",
@@ -1223,7 +1225,7 @@
         "Winget W-056; PackageIdentifier OpenCLICollective.codereview-cli; Publisher Open CLI Collective; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/o/OpenCLICollective/codereview-cli/0.10.298/OpenCLICollective.codereview-cli.locale.en-US.yaml SHA-256 a0dabe886d2ebfde7d4d6f710cc90aed06e2dda132241159a1ea225d5c588cd5; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "codex-standalone",
@@ -1312,7 +1314,7 @@
         "Winget W-031; PackageIdentifier OpenAI.Codex; Publisher OpenAI, Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/o/OpenAI/Codex/0.160.0/OpenAI.Codex.locale.en-US.yaml SHA-256 f16086bd8ab6adcf9a9e7c0ac4c92d5402897726107ca1b9a0a9b1cb3dfb1f89; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "github-copilot-cli",
@@ -1368,7 +1370,7 @@
         "Winget W-010; PackageIdentifier GitHub.Copilot; Publisher GitHub, Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GitHub/Copilot/v1.0.91/GitHub.Copilot.locale.en-US.yaml SHA-256 de87f289dd67fd884ab846dd7b87494dbe7304e2863b67ba28cfaead22dcce5d; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "curl",
@@ -1421,7 +1423,7 @@
       "notes": [],
       "provenance": [],
       "catalogFile": "network.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/network.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/network.yml"
     },
     {
       "id": "dbbrowser-sqlite",
@@ -1478,7 +1480,7 @@
         "Winget W-032; PackageIdentifier DBBrowserForSQLite.DBBrowserForSQLite; Publisher DB Browser for SQLite Team; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/DBBrowserForSQLite/DBBrowserForSQLite/3.13.1/DBBrowserForSQLite.DBBrowserForSQLite.locale.en-US.yaml SHA-256 5b98e3185b00ebae0978205b3907b4ca62afcc940d7b32ad7f73255261cfda94; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "db.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/db.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/db.yml"
     },
     {
       "id": "delta",
@@ -1546,7 +1548,7 @@
         "Winget W-043; PackageIdentifier dandavison.delta; Publisher Dan Davison; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/dandavison/delta/0.19.2/dandavison.delta.locale.en-US.yaml SHA-256 50abe536190884e5c4c90359e55e1e4a9af4d0e89713d8cfc264d85f225e9678; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/cli.yml"
     },
     {
       "id": "dcg",
@@ -1620,7 +1622,7 @@
         "Dicklesworthstone Flywheel profile and DCG upstream installation guidance verified 2026-09-16."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "dnspy",
@@ -1681,7 +1683,7 @@
         "Winget W-044; PackageIdentifier dnSpyEx.dnSpy; Publisher dnSpyEx; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/dnSpyEx/dnSpy/6.6.0/dnSpyEx.dnSpy.locale.en-US.yaml SHA-256 39635f8f78873405fab4a385bdee8802b2d7dc8d2695f024c8e881c4dc37007b; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "docker-buildx",
@@ -1748,7 +1750,7 @@
         "Winget W-003; PackageIdentifier Docker.Buildx; Publisher Docker Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/Docker/Buildx/0.37.2/Docker.Buildx.locale.en-US.yaml SHA-256 b326684b98bca052d02c5bb3f5f3617ce8beadd4671c7b637bc0d34bf3a42edf; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "docker-cli",
@@ -1813,7 +1815,7 @@
         "Winget W-002; PackageIdentifier Docker.DockerCLI; Publisher Docker Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/Docker/DockerCLI/29.8.2/Docker.DockerCLI.locale.en-US.yaml SHA-256 84a3081e75d52be6d5387d45698a0484d4dbbcee093521049267199b85570aa1; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/cli.yml"
     },
     {
       "id": "docker-desktop",
@@ -1868,7 +1870,7 @@
         "Winget W-001; PackageIdentifier Docker.DockerDesktop; Publisher Docker Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/Docker/DockerDesktop/4.93.0/Docker.DockerDesktop.locale.en-US.yaml SHA-256 ea947687e3394a92f70c418c5c78fda2cf020ecc9c88ccf3a7335b89eb529f8b; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "dolt",
@@ -1922,7 +1924,7 @@
         "Winget W-045; PackageIdentifier DoltHub.Dolt; Publisher DoltHub; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/DoltHub/Dolt/2.4.0/DoltHub.Dolt.locale.en-US.yaml SHA-256 9fb739a76a1117a2401dca2dc89ad261ad3fe8c5d29caf122307d48cd98518b9; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "db.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/db.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/db.yml"
     },
     {
       "id": "dsr",
@@ -1994,7 +1996,7 @@
       ],
       "notes": [],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "ee",
@@ -2080,7 +2082,7 @@
         "Eidetic Engine README and installation guide verified 2026-09-30; release v0.16.0."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "fdgr",
@@ -2134,7 +2136,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_drone_geometry_reconstruction upstream repository verified 2026-09-25."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "fss",
@@ -2187,7 +2189,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_surveillance_system upstream repository verified 2026-09-25."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "franken-code-browser",
@@ -2238,7 +2240,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_code_browser upstream repository verified 2026-09-25."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "frankenctl",
@@ -2313,7 +2315,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_engine upstream repository verified 2026-09-25."
       ],
       "catalogFile": "stack.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/stack.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/stack.yml"
     },
     {
       "id": "frankenfs",
@@ -2365,7 +2367,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenfs upstream repository verified 2026-09-25."
       ],
       "catalogFile": "filesystem.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/filesystem.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/filesystem.yml"
     },
     {
       "id": "frankengit",
@@ -2419,7 +2421,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankengit upstream repository verified 2026-09-25."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "fgdb",
@@ -2489,7 +2491,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankengraphdb upstream repository verified 2026-09-25."
       ],
       "catalogFile": "db.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/db.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/db.yml"
     },
     {
       "id": "frankenjax",
@@ -2543,7 +2545,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenjax upstream repository verified 2026-09-25."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "fln",
@@ -2597,7 +2599,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_lean upstream repository verified 2026-09-25."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "frankenlibc",
@@ -2649,7 +2651,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenlibc upstream repository verified 2026-09-25."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "fmn",
@@ -2717,7 +2719,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_manim upstream repository verified 2026-09-25."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "fmd",
@@ -2792,7 +2794,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_markdown upstream repository verified 2026-09-25."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "frankenmermaid",
@@ -2863,7 +2865,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenmermaid upstream repository verified 2026-09-25."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "franken-networkx",
@@ -2917,7 +2919,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_networkx upstream repository verified 2026-09-25."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "franken-node",
@@ -2991,7 +2993,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_node upstream repository verified 2026-09-25."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "franken-numpy",
@@ -3045,7 +3047,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_numpy upstream repository verified 2026-09-25."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "focr",
@@ -3121,7 +3123,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_ocr upstream repository verified 2026-09-25."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "fo-search",
@@ -3174,7 +3176,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_overlap upstream repository verified 2026-09-25."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "frankenpandas",
@@ -3228,7 +3230,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenpandas upstream repository verified 2026-09-25."
       ],
       "catalogFile": "db.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/db.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/db.yml"
     },
     {
       "id": "frankenredis",
@@ -3281,7 +3283,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenredis upstream repository verified 2026-09-25."
       ],
       "catalogFile": "db.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/db.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/db.yml"
     },
     {
       "id": "frankenscipy",
@@ -3335,7 +3337,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenscipy upstream repository verified 2026-09-25."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "fsfs",
@@ -3404,7 +3406,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankensearch upstream repository verified 2026-09-25."
       ],
       "catalogFile": "stack.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/stack.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/stack.yml"
     },
     {
       "id": "frankensim",
@@ -3456,7 +3458,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankensim upstream repository verified 2026-09-25."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "franken-snowflake",
@@ -3531,7 +3533,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_snowflake upstream repository verified 2026-09-25."
       ],
       "catalogFile": "network.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/network.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/network.yml"
     },
     {
       "id": "fsqlite",
@@ -3607,7 +3609,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankensqlite upstream repository verified 2026-09-25."
       ],
       "catalogFile": "db.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/db.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/db.yml"
     },
     {
       "id": "frankensympy",
@@ -3661,7 +3663,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankensympy upstream repository verified 2026-09-25."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "ft",
@@ -3729,7 +3731,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankenterm upstream repository verified 2026-09-25."
       ],
       "catalogFile": "shell.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/shell.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/shell.yml"
     },
     {
       "id": "frankentorch",
@@ -3783,7 +3785,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankentorch upstream repository verified 2026-09-25."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "ftts",
@@ -3860,7 +3862,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_tts upstream repository verified 2026-09-25."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "frankentui",
@@ -3914,7 +3916,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/frankentui upstream repository verified 2026-09-25."
       ],
       "catalogFile": "shell.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/shell.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/shell.yml"
     },
     {
       "id": "franken_whisper",
@@ -3985,7 +3987,7 @@
         "Dicklesworthstone FrankenSuite index and https://github.com/Dicklesworthstone/franken_whisper upstream repository verified 2026-09-25."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "fzf",
@@ -4046,7 +4048,7 @@
         "Winget W-047; PackageIdentifier junegunn.fzf; Publisher Junegunn Choi; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/junegunn/fzf/0.74.4/junegunn.fzf.locale.en-US.yaml SHA-256 235fbd57b6f8852c4ee1c31ddd15cf7bfcb3d48528cb3732839f120fc5dcc681; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/cli.yml"
     },
     {
       "id": "giil",
@@ -4116,7 +4118,7 @@
         "Dicklesworthstone Flywheel profile and GIIL upstream guidance verified 2026-09-16."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "git",
@@ -4178,7 +4180,7 @@
         "WingetIds.yml enthält Microsoft.Git; Git.Git ist als allgemeine Git-for-Windows-Variante bevorzugt."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "git-lfs",
@@ -4244,7 +4246,7 @@
         "Winget W-012; PackageIdentifier GitHub.GitLFS; Publisher GitHub, Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GitHub/GitLFS/3.8.0/GitHub.GitLFS.locale.en-US.yaml SHA-256 642a663de62995adc600dd7c4797249f83b7f6617b2eef148f010629b69eaa6e; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "gh",
@@ -4316,7 +4318,7 @@
         "Winget W-008; PackageIdentifier GitHub.cli; Publisher GitHub, Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GitHub/cli/2.102.0/GitHub.cli.locale.en-US.yaml SHA-256 35eb28d094622777e8ade11eda8abeb713cd3952ca8105e03ba020e8eb9fab84; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/cli.yml"
     },
     {
       "id": "github-copilot-app",
@@ -4369,7 +4371,7 @@
         "Winget W-009; PackageIdentifier GitHub.CopilotApp; Publisher GitHub Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GitHub/CopilotApp/1.1.26/GitHub.CopilotApp.locale.en-US.yaml SHA-256 08f28d4de55f848d044fef076daf8f55f3629295be34947db81e52a9ad78601e; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "github-desktop",
@@ -4421,7 +4423,7 @@
         "Winget W-011; PackageIdentifier GitHub.GitHubDesktop; Publisher GitHub, Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GitHub/GitHubDesktop/3.6.6/GitHub.GitHubDesktop.locale.en-US.yaml SHA-256 17def33a33d21fb35b2a8c089715d53000781a51631f00761e807b7f314ac973; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "gitversion",
@@ -4481,7 +4483,7 @@
         "Winget W-006; PackageIdentifier GitTools.GitVersion; Publisher GitTools; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GitTools/GitVersion/6.8.2/GitTools.GitVersion.locale.en-US.yaml SHA-256 d5ca4f43d0059b4055e019b14faf52de2c3b9115e242ea18f03b7d95a26e2440; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "go",
@@ -4545,7 +4547,7 @@
         "Winget W-048; PackageIdentifier GoLang.Go; Publisher https://go.dev; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/g/GoLang/Go/1.27.0/GoLang.Go.locale.en-US.yaml SHA-256 0a5321a9429a4fc37f35de984efa53cfe567cdd4640e03600b121a96e9b742cc; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "gum",
@@ -4620,7 +4622,7 @@
         "Charmbracelet Gum README installation instructions verified 2026-09-13."
       ],
       "catalogFile": "cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/cli.yml"
     },
     {
       "id": "vfs-for-git",
@@ -4673,7 +4675,7 @@
         "Winget W-014; PackageIdentifier Microsoft.VFSforGit; Publisher Microsoft Corporation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/Microsoft/VFSforGit/2.0.26259.1/Microsoft.VFSforGit.locale.en-US.yaml SHA-256 ef45744d67a74424d02d803476baafcb41c778942f9eb7d113f0ef03f4017fd0; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "intelligent-terminal",
@@ -4738,7 +4740,7 @@
         "Winget W-023; PackageIdentifier Microsoft.IntelligentTerminal; Publisher Microsoft Corporation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/Microsoft/IntelligentTerminal/0.2.2572.0/Microsoft.IntelligentTerminal.locale.en-US.yaml SHA-256 87fb212940085826b166e919dba15bd1d056ba08e0a95136bef839228bdd4497; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "shell.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/shell.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/shell.yml"
     },
     {
       "id": "irfanview",
@@ -4793,7 +4795,7 @@
         "Winget W-035; PackageIdentifier IrfanSkiljan.IrfanView; Publisher Irfan Skiljan; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/i/IrfanSkiljan/IrfanView/4.75/IrfanSkiljan.IrfanView.locale.en-US.yaml SHA-256 9c7029fa9da666ba6ed7de5b6fc690c07fa3b5dedfa2587cbe8d3ff371d9282f; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "irfanview-plugins",
@@ -4850,7 +4852,7 @@
         "Winget W-036; PackageIdentifier IrfanSkiljan.IrfanView.PlugIns; Publisher Irfan Skiljan; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/i/IrfanSkiljan/IrfanView/PlugIns/4.75/IrfanSkiljan.IrfanView.PlugIns.locale.en-US.yaml SHA-256 7b97db566f071ccb1f47bd0be4dfd7275dd440028ef350daac8c13264b5156a2; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "jq",
@@ -4916,7 +4918,7 @@
         "Winget W-049; PackageIdentifier jqlang.jq; Publisher jqlang; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/jqlang/jq/1.8.2/jqlang.jq.locale.en-US.yaml SHA-256 16303d102f1b3c6833fe7b7c54e8efc01ddef96d0c4cdae9dfcfde6b18df2db3; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/cli.yml"
     },
     {
       "id": "lazydocker",
@@ -4969,7 +4971,7 @@
         "Winget W-004; PackageIdentifier JesseDuffield.Lazydocker; Publisher JesseDuffield; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/JesseDuffield/Lazydocker/0.25.2/JesseDuffield.Lazydocker.locale.en-US.yaml SHA-256 5b4d4549acb17ed85de2114197a1ce2bcab1c4f9ffccc79e10417bd03bdfd16c; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "less",
@@ -5030,7 +5032,7 @@
         "Winget W-050; PackageIdentifier jftuga.less; Publisher John Taylor; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/jftuga/less/710/jftuga.less.locale.en-US.yaml SHA-256 d251f021db70ab06aa2cdaa3921c038123197c09f6a76503a16deaf8c591b2bb; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/cli.yml"
     },
     {
       "id": "mcp-agent-mail",
@@ -5106,7 +5108,7 @@
         "Dicklesworthstone Flywheel profile and MCP Agent Mail upstream guidance verified 2026-09-16."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "mdbook",
@@ -5159,7 +5161,7 @@
         "Winget W-024; PackageIdentifier Rustlang.mdBook; Publisher The Rust Programming Language; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/r/Rustlang/mdBook/0.5.4/Rustlang.mdBook.locale.en-US.yaml SHA-256 f1f11f72b4b77420e641c78e939dfe06d6e0f743b5c700fcd79e06e00e735846; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "mdbook-mermaid",
@@ -5210,7 +5212,7 @@
         "Winget W-025; PackageIdentifier badboy.mdbook-mermaid; Publisher Jan-Erik Rediger; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/b/badboy/mdbook-mermaid/0.17.1/badboy.mdbook-mermaid.locale.en-US.yaml SHA-256 a560138ed51cf0adb84aad1088a13003ab2a0a77e92f42091caab1496bf75a69; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "mdbook-toc",
@@ -5263,7 +5265,7 @@
         "Winget W-026; PackageIdentifier badboy.mdbook-toc; Publisher Jan-Erik Rediger; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/b/badboy/mdbook-toc/0.15.4/badboy.mdbook-toc.locale.en-US.yaml SHA-256 ec3e74207e40d3b163bfc3c545eb034bb66408281182517eace88a1f98499506; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "ms",
@@ -5337,7 +5339,7 @@
         "Dicklesworthstone Flywheel profile and Meta Skill upstream guidance verified 2026-09-16."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "vscode-insiders",
@@ -5389,7 +5391,7 @@
         "Winget W-019; PackageIdentifier Microsoft.VisualStudioCode.Insiders; Publisher Microsoft Corporation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/Microsoft/VisualStudioCode/Insiders/1.127.0/Microsoft.VisualStudioCode.Insiders.locale.en-US.yaml SHA-256 88a5c91b62f811676785adf672f5f7a361a1d738f84b4b95b041490dac3d27fc; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "mise",
@@ -5456,7 +5458,7 @@
         "Winget W-054; PackageIdentifier jdx.mise; Publisher jdx; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/jdx/mise/2026.9.18/jdx.mise.locale.en-US.yaml SHA-256 34f51846be76403fd7fc83af3b15059e4f2ca2e8e517cdab6cf6de8f144ea813; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "nodejs-lts",
@@ -5530,7 +5532,7 @@
         "Winget W-039; PackageIdentifier OpenJS.NodeJS.LTS; Publisher Node.js Foundation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/o/OpenJS/NodeJS/LTS/24.19.0/OpenJS.NodeJS.LTS.locale.en-US.yaml SHA-256 248fa897dcc3a9f164004e0f344c4e8768a097e0c417154e6b21068d8c4141c4; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "ntm",
@@ -5611,7 +5613,7 @@
         "Dicklesworthstone Flywheel profile and NTM robot-mode guidance verified 2026-09-16."
       ],
       "catalogFile": "shell.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/shell.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/shell.yml"
     },
     {
       "id": "obsidian",
@@ -5677,7 +5679,7 @@
         "Winget W-027; PackageIdentifier Obsidian.Obsidian; Publisher Obsidian; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/o/Obsidian/Obsidian/1.13.7/Obsidian.Obsidian.locale.en-US.yaml SHA-256 bb991303fcc8ad305c3656c48894ce2b1f6821b02adba362f0c8a1c2152f2872; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "ollama",
@@ -5751,7 +5753,7 @@
         "Ollama installation/update guidance verified 2026-09-16."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "oracle",
@@ -5806,7 +5808,7 @@
       "notes": [],
       "provenance": [],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "pandoc",
@@ -5867,7 +5869,7 @@
         "Winget W-028; PackageIdentifier JohnMacFarlane.Pandoc; Publisher John MacFarlane; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/JohnMacFarlane/Pandoc/3.12/JohnMacFarlane.Pandoc.locale.en-US.yaml SHA-256 662cee806fd6ff3b79f20747e9ff1c2b0709429dffbdf4553afcf7e422da2b89; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "pi",
@@ -5942,7 +5944,7 @@
         "Installer keeps completion and agent-skill installation disabled by default."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "pfr",
@@ -6019,7 +6021,7 @@
         "Version is unknown because the pinned executable has no verified version option."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "powershell7",
@@ -6094,7 +6096,7 @@
         "Microsoft PowerShell installation docs verified 2026-09-13."
       ],
       "catalogFile": "shell.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/shell.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/shell.yml"
     },
     {
       "id": "pt",
@@ -6166,7 +6168,7 @@
       ],
       "notes": [],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "putty",
@@ -6225,7 +6227,7 @@
         "Winget W-038; PackageIdentifier PuTTY.PuTTY; Publisher Simon Tatham; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/p/PuTTY/PuTTY/0.85.0.0/PuTTY.PuTTY.locale.en-US.yaml SHA-256 d836f99e084f869727a46bc7f6581336881f6732453d118481e4713a280bb086; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "network.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/network.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/network.yml"
     },
     {
       "id": "python3",
@@ -6276,7 +6278,7 @@
       "notes": [],
       "provenance": [],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "rch",
@@ -6325,7 +6327,7 @@
       "notes": [],
       "provenance": [],
       "catalogFile": "stack.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/stack.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/stack.yml"
     },
     {
       "id": "ru",
@@ -6400,7 +6402,7 @@
         "Dicklesworthstone Flywheel profile and Repo Updater upstream guidance verified 2026-09-16."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "reportgenerator",
@@ -6469,7 +6471,7 @@
         "Winget W-007; PackageIdentifier DanielPalme.ReportGenerator; Publisher Daniel Palme; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/DanielPalme/ReportGenerator/5.5.4/DanielPalme.ReportGenerator.locale.en-US.yaml SHA-256 32bc5d5567a9ef1dea5eaa689165f0c2e40ceafe8ed9fc59a5415fc011243739; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "ripgrep",
@@ -6533,7 +6535,7 @@
         "Winget W-053; PackageIdentifier BurntSushi.ripgrep.MSVC; Publisher BurntSushi; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/b/BurntSushi/ripgrep/MSVC/15.2.0/BurntSushi.ripgrep.MSVC.locale.en-US.yaml SHA-256 118454462ec66dc5f9450d7c04f25d0afc75553dd684b5f9ddb8677d1f0bd73b; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "filesystem.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/filesystem.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/filesystem.yml"
     },
     {
       "id": "scoop",
@@ -6584,7 +6586,7 @@
       "notes": [],
       "provenance": [],
       "catalogFile": "base.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/base.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/base.yml"
     },
     {
       "id": "sed",
@@ -6638,7 +6640,7 @@
         "Winget W-051; PackageIdentifier mbuilov.sed; Publisher Michael M. Builov; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/mbuilov/sed/4.9/mbuilov.sed.locale.en-US.yaml SHA-256 4f23cc78b5f00d92799e92a806a8ebd3621b130f756204b9e34ccae9ead2571a; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "filesystem.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/filesystem.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/filesystem.yml"
     },
     {
       "id": "slb",
@@ -6714,7 +6716,7 @@
         "Dicklesworthstone Flywheel profile and SLB upstream guidance verified 2026-09-16."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "source2prompt",
@@ -6769,7 +6771,7 @@
       "notes": [],
       "provenance": [],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     },
     {
       "id": "sbh",
@@ -6847,7 +6849,7 @@
         "Uses the verified `version` subcommand; no `--version` default is inferred."
       ],
       "catalogFile": "filesystem.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/filesystem.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/filesystem.yml"
     },
     {
       "id": "ubs",
@@ -6920,7 +6922,7 @@
         "Dicklesworthstone Flywheel profile and UBS upstream guidance verified 2026-09-16."
       ],
       "catalogFile": "stack.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/stack.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/stack.yml"
     },
     {
       "id": "unigetui",
@@ -6981,7 +6983,7 @@
         "Winget W-037; PackageIdentifier Devolutions.UniGetUI; Publisher Devolutions Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/Devolutions/UniGetUI/2026.3.0/Devolutions.UniGetUI.locale.en-US.yaml SHA-256 8efe6ebdbc56086b83de8933b109395741ab57206dc80f2367daf622ea2f0cdd; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "usage",
@@ -7038,7 +7040,7 @@
         "Winget W-046; PackageIdentifier jdx.usage; Publisher jdx; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/jdx/usage/6.11.1/jdx.usage.locale.en-US.yaml SHA-256 61115a9f430fa012888729d9b0316cc13cabe5905ac3fca432f0ebd01c2637c7; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "cli.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cli.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/cli.yml"
     },
     {
       "id": "uv",
@@ -7106,7 +7108,7 @@
         "Winget W-052; PackageIdentifier astral-sh.uv; Publisher Astral Software Inc.; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/a/astral-sh/uv/0.12.21/astral-sh.uv.locale.en-US.yaml SHA-256 2c7a6cba4d0ba2963764f47e6231754f6a355b0bc2da7f4bfb87c89d11d3b95c; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "vercel-cli",
@@ -7160,7 +7162,7 @@
       "notes": [],
       "provenance": [],
       "catalogFile": "cloud.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/cloud.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/cloud.yml"
     },
     {
       "id": "visualstudio-buildtools",
@@ -7213,7 +7215,7 @@
         "Winget W-015; PackageIdentifier Microsoft.VisualStudio.BuildTools; Publisher Microsoft Corporation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/Microsoft/VisualStudio/BuildTools/18.10.2/Microsoft.VisualStudio.BuildTools.locale.en-US.yaml SHA-256 ee72799ee1cadd8d2ae6b7a9c95832197f17577b844b4dc0a78cccd8d0bcc850; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "vscode-cli",
@@ -7272,7 +7274,7 @@
         "Winget W-017; PackageIdentifier Microsoft.VisualStudioCode; Publisher Microsoft Corporation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/Microsoft/VisualStudioCode/1.140.0/Microsoft.VisualStudioCode.locale.en-US.yaml SHA-256 ecb4c1553547556107e7634c9542375f7a1dacc405f5f17b75ac1c5eabc6cdc3; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "visualstudio-cmdpal",
@@ -7325,7 +7327,7 @@
         "Winget W-016; PackageIdentifier davidegiacometti.VisualStudioForCmdPal; Publisher davidegiacometti; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/d/davidegiacometti/VisualStudioForCmdPal/0.1.0/davidegiacometti.VisualStudioForCmdPal.locale.en-US.yaml SHA-256 9d65765ae57879be2646feb6d9de914c6fb140dfab4a64fd50cedb7ae1d468ff; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "wget",
@@ -7381,7 +7383,7 @@
         "Winget W-055; PackageIdentifier JernejSimoncic.Wget; Publisher Jernej Simoncic; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/j/JernejSimoncic/Wget/1.21.4/JernejSimoncic.Wget.locale.en-US.yaml SHA-256 ab9eb574778beab687fc9d90a13dc5928a41b6076d215c5bf320f1cd782d86d5; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "network.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/network.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/network.yml"
     },
     {
       "id": "winapp",
@@ -7447,7 +7449,7 @@
         "Winget W-022; PackageIdentifier Microsoft.WinAppCli; Publisher Microsoft Corporation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/Microsoft/WinAppCli/0.7.0/Microsoft.WinAppCli.locale.en-US.yaml SHA-256 cad71e950273e8d1ec3669b0c7c355fcb00fb2009d34d07100a45caf5e86f028; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "tools.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/tools.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/tools.yml"
     },
     {
       "id": "winget",
@@ -7499,7 +7501,7 @@
         "Registry-Erweiterung; keine WingetIds.yml-Zeile erforderlich."
       ],
       "catalogFile": "base.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/base.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/base.yml"
     },
     {
       "id": "windows-sdk-28000",
@@ -7552,7 +7554,7 @@
         "Winget W-021; PackageIdentifier Microsoft.WindowsSDK.10.0.28000; Publisher Microsoft Corporation; manifest c44b031aa9a13327e7124bd0153eed29dd9708e4/manifests/m/Microsoft/WindowsSDK/10/0/28000/10.0.28000.2526/Microsoft.WindowsSDK.10.0.28000.locale.en-US.yaml SHA-256 2633d7aa58b4c0ad543b98d38ade3e538a25f1a9757c1e390837409ee5407e92; verified 2026-10-29 against frozen plan/winget-primary-evidence.json."
       ],
       "catalogFile": "lang.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/lang.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/lang.yml"
     },
     {
       "id": "wsl2",
@@ -7602,7 +7604,7 @@
       "notes": [],
       "provenance": [],
       "catalogFile": "base.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/base.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/base.yml"
     },
     {
       "id": "xf",
@@ -7676,7 +7678,7 @@
         "Dicklesworthstone Flywheel profile and XF upstream guidance verified 2026-09-16."
       ],
       "catalogFile": "agents.yml",
-      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/develop/src/CliToolRegistry/Data/Tools/agents.yml"
+      "catalogUrl": "https://github.com/In-Pro-Org/CliToolRegistry/blob/bad958bceaca4a8039742657b17d91bf36a3460c/src/CliToolRegistry/Data/Tools/agents.yml"
     }
   ]
 }

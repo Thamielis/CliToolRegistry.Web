@@ -5,6 +5,9 @@ const snapshot = {
   fileCount: 1,
   loadedAt: '2026-10-08T00:00:00Z',
   sourceRef: 'test-fixture',
+  sourceRepository: 'https://github.com/In-Pro-Org/CliToolRegistry',
+  sourceRevision: 'a'.repeat(40),
+  sourceCommitDate: '2026-10-08T00:00:00Z',
   tools: [
     {
       id: 'git', name: 'Git', description: 'Distributed version control', category: 'foundation',

@@ -1,9 +1,19 @@
 import type { CatalogSnapshot, CliTool, ToolPlatform } from '../types/app'
 
+export type InstallAction =
+  | { kind: 'command'; command: string; method?: string }
+  | { kind: 'recipe'; commandName: string; arguments: string[]; method?: string; note?: string }
+  | { kind: 'note'; note: string; method?: string }
+
+export interface InstallEntry {
+  platform: ToolPlatform | 'all'
+  action: InstallAction
+}
+
 export const CATALOG_DIRECTORY = 'src/CliToolRegistry/Data/Tools'
 export const CATALOG_REPOSITORY_URL = 'https://github.com/In-Pro-Org/CliToolRegistry'
 export const CATALOG_SOURCE_URL = CATALOG_REPOSITORY_URL
-const CACHE_KEY = 'cli-tool-registry.catalog.v2'
+const CACHE_KEY = 'cli-tool-registry.catalog.v3'
 
 let activeRequest: Promise<CatalogSnapshot> | null = null
 
@@ -15,7 +25,9 @@ export function isCatalogSnapshot(value: unknown): value is CatalogSnapshot {
   if (!isRecord(value) || !Array.isArray(value.tools) || typeof value.loadedAt !== 'string' ||
     !Number.isFinite(Date.parse(value.loadedAt)) || typeof value.fileCount !== 'number' ||
     !Number.isSafeInteger(value.fileCount) || value.fileCount < 0) return false
-  if (['sourceRef', 'sourceRepository'].some((key) => value[key] != null && typeof value[key] !== 'string')) return false
+  if (typeof value.sourceRepository !== 'string' || typeof value.sourceRef !== 'string' ||
+    typeof value.sourceRevision !== 'string' || !/^[0-9a-f]{40}$/i.test(value.sourceRevision) ||
+    typeof value.sourceCommitDate !== 'string' || !Number.isFinite(Date.parse(value.sourceCommitDate))) return false
   const ids = new Set<string>()
   const strings = (items: unknown) => items === undefined ||
     Array.isArray(items) && items.every((item) => typeof item === 'string')
@@ -25,8 +37,9 @@ export function isCatalogSnapshot(value: unknown): value is CatalogSnapshot {
     try { return ['http:', 'https:'].includes(new URL(link).protocol) } catch { return false }
   }
   return value.tools.every((tool) => {
-    if (!isRecord(tool) || !['id', 'name', 'description', 'category', 'tier', 'catalogFile', 'catalogUrl']
-      .every((key) => typeof tool[key] === 'string') || !tool.id || ids.has(tool.id as string) ||
+    if (!isRecord(tool) || !['id', 'name', 'description', 'category', 'catalogFile', 'catalogUrl']
+      .every((key) => typeof tool[key] === 'string' && tool[key] !== '') || !tool.id || ids.has(tool.id as string) ||
+      (tool.tier !== undefined && typeof tool.tier !== 'string') ||
       (tool.command !== undefined && tool.command !== null && typeof tool.command !== 'string') ||
       !Array.isArray(tool.platforms) || !tool.platforms.every((p) => ['windows', 'linux', 'wsl2', 'macos'].includes(p)) ||
       !strings(tool.tags) || !strings(tool.notes) || !safeLink(tool.website) || !safeLink(tool.repository) ||
@@ -91,36 +104,111 @@ export function writeCatalogCache(snapshot: CatalogSnapshot): boolean {
   }
 }
 
-function extractCommand(value: unknown): string | null {
-  if (typeof value === 'string') return value
+const INSTALL_METADATA_KEYS = new Set([
+  'id', 'method', 'url', 'description', 'supported', 'format', 'commandName', 'arguments', 'note',
+])
+
+function classifyCommand(command: string, method?: string): InstallAction | null {
+  const value = command.trim()
+  if (!value) return null
+
+  const informationalEcho = value.match(/^echo\s+(?:"(Install .+? through ACFS)"|'(Install .+? through ACFS)'|(Install .+? through ACFS))$/i)
+  if (informationalEcho) {
+    return {
+      kind: 'note',
+      note: informationalEcho[1] ?? informationalEcho[2] ?? informationalEcho[3],
+      ...(method !== undefined ? { method } : {}),
+    }
+  }
+
+  return { kind: 'command', command, ...(method !== undefined ? { method } : {}) }
+}
+
+export function resolveInstallAction(value: unknown, method?: string): InstallAction | null {
+  if (typeof value === 'string') return classifyCommand(value, method)
   if (!isRecord(value)) return null
-  if (typeof value.command === 'string') return value.command
-  if (typeof value.note === 'string') return value.note
+
+  const declaredMethod = typeof value.method === 'string' ? value.method : method
+  if (typeof value.command === 'string') return classifyCommand(value.command, declaredMethod)
+
+  if (typeof value.commandName === 'string' && Array.isArray(value.arguments) &&
+    value.arguments.every((argument) => typeof argument === 'string')) {
+    return {
+      kind: 'recipe',
+      commandName: value.commandName,
+      arguments: value.arguments as string[],
+      ...(declaredMethod !== undefined ? { method: declaredMethod } : {}),
+      ...(typeof value.note === 'string' ? { note: value.note } : {}),
+    }
+  }
+
+  if (typeof value.note === 'string') {
+    return { kind: 'note', note: value.note, ...(declaredMethod !== undefined ? { method: declaredMethod } : {}) }
+  }
 
   for (const [key, nested] of Object.entries(value)) {
-    if (['id', 'method', 'url', 'description', 'supported', 'format'].includes(key)) continue
-    const command = extractCommand(nested)
-    if (command) return command
+    if (INSTALL_METADATA_KEYS.has(key)) continue
+    if (typeof nested === 'string') {
+      const action = classifyCommand(nested, key)
+      if (action) return action
+      continue
+    }
+    if (isRecord(nested)) {
+      const action = resolveInstallAction(nested, key)
+      if (action) return action
+    }
   }
   return null
 }
 
-export function getPlatformCommand(
-  commands: Record<string, unknown> | undefined,
+export function getPlatformInstallAction(
+  commands: Record<string, unknown> | null | undefined,
   platform: ToolPlatform,
-): string | null {
+): InstallAction | null {
   if (!commands) return null
-  return extractCommand(commands[platform]) ?? extractCommand(commands.all)
+  const direct = resolveInstallAction(commands[platform])
+  if (direct && direct.kind !== 'note') return direct
+
+  const universal = resolveInstallAction(commands.all, 'all')
+  if (universal && universal.kind !== 'note') return universal
+  return direct ?? universal
 }
 
-export function getInstallCommand(tool: CliTool, platform: ToolPlatform | 'all'): string | null {
-  if (platform !== 'all') {
-    return getPlatformCommand(tool.install, platform)
+export function getInstallEntries(tool: CliTool): InstallEntry[] {
+  const supportedPlatforms = tool.platforms
+  const universal = resolveInstallAction(tool.install?.all, 'all')
+  if (supportedPlatforms.length === 0) {
+    return universal ? [{ platform: 'all', action: universal }] : []
   }
 
-  for (const supportedPlatform of tool.platforms) {
-    const command = getPlatformCommand(tool.install, supportedPlatform)
-    if (command) return command
+  const direct = supportedPlatforms.map((platform) => ({
+    platform,
+    action: resolveInstallAction(tool.install?.[platform]),
+  }))
+  if (!direct.some((entry) => entry.action) && universal) {
+    return [{ platform: 'all', action: universal }]
   }
-  return getPlatformCommand(tool.install, 'windows')
+
+  return direct.flatMap((entry): InstallEntry[] => {
+    const action = entry.action ?? universal
+    return action ? [{ platform: entry.platform, action }] : []
+  })
+}
+
+export function getInstallAction(tool: CliTool, platform: ToolPlatform | 'all'): InstallEntry | null {
+  if (platform !== 'all') {
+    const action = getPlatformInstallAction(tool.install, platform)
+    return action ? { platform, action } : null
+  }
+
+  const entries = getInstallEntries(tool)
+  return entries.find((entry) => entry.action.kind !== 'note') ?? entries[0] ?? null
+}
+
+export function getPlatformCommand(
+  commands: Record<string, unknown> | null | undefined,
+  platform: ToolPlatform,
+): string | null {
+  const action = getPlatformInstallAction(commands, platform)
+  return action?.kind === 'command' ? action.command : null
 }

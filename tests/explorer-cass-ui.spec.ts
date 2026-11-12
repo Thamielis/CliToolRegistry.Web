@@ -124,7 +124,7 @@ test('Cass reset and section navigation use central URL transitions', async ({ p
   expect(resetUrl.searchParams.has('argType')).toBe(false)
   expect(resetUrl.searchParams.has('argRequired')).toBe(false)
   expect(resetUrl.searchParams.has('entry')).toBe(false)
-  await expect(page.getByRole('searchbox', { name: 'Dateiinhalte durchsuchen' })).toBeFocused()
+  await expect(page.getByRole('searchbox', { name: 'Inhalte durchsuchen' })).toBeFocused()
 
   await page.locator('.explorer-section-tabs a[href*="docSection=limits"]').click()
   await expect(page).toHaveURL(/docSection=limits/)

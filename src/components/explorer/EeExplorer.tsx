@@ -159,7 +159,6 @@ function EntryButton({ entry, selected, props, copy }: {
     aria-label={`${entry.title}, ${copy.select}`} data-history-focus-key={`explorer-entry:${entry.id}`}
     onClick={() => props.onAction({ type: 'entry', entryId: entry.id })}>
     <span className="explorer-entry-title">{entry.title}</span>
-    {sourcePointer(entry)}
     <span className="explorer-entry-summary">{copy.available}: {entry.detail.availableInSnapshot ? copy.availableYes : copy.availableNo}</span>
   </button>
 }
@@ -241,13 +240,13 @@ function sourceJsonValue(source: JsonValue, key: string, copy: Copy): ReactNode 
 }
 
 function EnvelopeSummary({ source, copy }: { source: JsonValue; copy: Copy }) {
-  return <section className="explorer-provenance-summary ee-envelope-summary" aria-label={copy.envelope}>
+  return <details className="explorer-source-details ee-envelope-disclosure"><summary>{copy.envelope}</summary><section className="explorer-provenance-summary ee-envelope-summary" aria-label={copy.envelope}>
     <strong>{copy.envelope}</strong>
     <span><strong>success</strong> {sourceJsonValue(source, 'success', copy)}</span>
     <span><strong>degraded</strong> {sourceJsonValue(source, 'degraded', copy)}</span>
     <span><strong>error</strong> {sourceJsonValue(source, 'error', copy)}</span>
     <span>{copy.envelopeNote}</span>
-  </section>
+  </section></details>
 }
 
 function EeDetails({ props, copy }: { props: DatasetViewProps; copy: Copy }) {
@@ -293,28 +292,27 @@ function EeDetails({ props, copy }: { props: DatasetViewProps; copy: Copy }) {
     content = <p className="empty-state">{copy.choose}</p>
   }
 
-  return <aside className="explorer-details" aria-label={selectedEntry?.title ?? manifestEntry.filename}>
+  return <aside className="explorer-details" aria-label={selectedEntry?.title ?? labels.rawPreview}>
     <header className="explorer-details-header"><div>
-      <span className="section-eyebrow">{selectedEntry ? copy.pointer : copy.file}</span>
+      <span className="section-eyebrow">{labels.toolSources}</span>
       <h2 tabIndex={-1} data-navigation-entry-heading data-history-focus-key={selectedEntry ? `explorer-detail:${selectedEntry.id}` : 'explorer-source-heading'}>
         {selectedEntry?.title ?? labels.rawPreview}
       </h2>
     </div>
       {selectedEntry && <button type="button" className="quiet-button" onClick={() => props.onAction({ type: 'close-entry' })}>{labels.closeEntry}</button>}
     </header>
-    {selectedEntry && <p className="explorer-entry-origin">{sourcePointer(selectedEntry)}</p>}
-    {detailsList(metadataRows)}
-    <div className="explorer-detail-actions">
-      <button type="button" className="workbench-button" onClick={() => downloadOriginalJson(sourceBytes, manifestEntry.filename, {
-        document, urls: URL, schedule: (callback) => globalThis.setTimeout(callback, 0),
-      })}>{copy.download}</button>
-    </div>
     {content}
-    <section className="explorer-json-preview">
-      <h3>{selectedEntry ? copy.sourceJson : copy.rawPreview}</h3>
-      {rawText.length > 20_000 && <p className="notice notice-warning">{copy.limited}</p>}
-      <pre className="explorer-raw-preview">{rawText.slice(0, 20_000)}</pre>
-    </section>
+    <details className="explorer-source-details"><summary>{labels.sourceDetails}</summary>
+      {selectedEntry && <p className="explorer-entry-origin">{sourcePointer(selectedEntry)}</p>}
+      {detailsList(metadataRows)}
+      <div className="explorer-detail-actions"><button type="button" className="workbench-button" onClick={() => downloadOriginalJson(sourceBytes, manifestEntry.filename, {
+        document, urls: URL, schedule: (callback) => globalThis.setTimeout(callback, 0),
+      })}>{copy.download}</button></div>
+      <section className="explorer-json-preview"><h3>{selectedEntry ? copy.sourceJson : copy.rawPreview}</h3>
+        {rawText.length > 20_000 && <p className="notice notice-warning">{copy.limited}</p>}
+        <pre className="explorer-raw-preview">{rawText.slice(0, 20_000)}</pre>
+      </section>
+    </details>
   </aside>
 }
 
@@ -353,7 +351,7 @@ function EeExplorerView(props: DatasetViewProps, copy: Copy) {
                 <button type="button" className="explorer-entry-button" aria-current={props.selectedEntry?.id === entry.id ? 'true' : undefined}
                   aria-label={`${entry.title}, ${props.labels.selectEntry}`} data-history-focus-key={`explorer-entry:${entry.id}`}
                   onClick={() => props.onAction({ type: 'entry', entryId: entry.id })}>
-                  <span className="explorer-entry-title">{entry.title}</span>{sourcePointer(entry)}
+                  <span className="explorer-entry-title">{entry.title}</span>
                   <span className="explorer-entry-summary">{entry.searchText}</span>
                 </button>
               </li>)}
